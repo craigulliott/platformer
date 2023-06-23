@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    platformer (0.0.0)
+    platformer (1.0.0)
       activemodel (~> 7.0)
       activerecord (~> 7.0)
       activesupport (~> 7.0)
