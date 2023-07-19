@@ -8,6 +8,21 @@ on:
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: specs_user
+          POSTGRES_PASSWORD: specs_password
+          POSTGRES_DB: platformer_migrations
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
     steps:
 
       # Execute "release please" action
@@ -31,7 +46,7 @@ jobs:
       # Setup ruby if a release was created
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0.0
+          ruby-version: 3.1.4
         if: ${{ steps.release.outputs.release_created }}
 
       # Bundle install
@@ -41,15 +56,23 @@ jobs:
       # run the linter
       - name: Run standard linter
         run: bundle exec standardrb
+        if: ${{ steps.release.outputs.release_created }}
 
       # run the type checker
       - name: Run steep type checker
         run: bundle exec steep check
+        if: ${{ steps.release.outputs.release_created }}
+
+      # move the database configuration into place
+      - name: Move database configuration file
+        run: mv config/database.ci.yaml config/database.yaml
+        if: ${{ steps.release.outputs.release_created }}
 
       # run the tests
       - name: Run rspec test suite
         if: ${{ steps.release.outputs.release_created }}
         run: bundle exec rspec
+        if: ${{ steps.release.outputs.release_created }}
 
       # Publish the Gem to ruby gems
       - name: Publish gem

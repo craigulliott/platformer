@@ -7,6 +7,8 @@
 /spec/reports/
 /tmp/
 
+/config/database.yaml
+
 .DS_Store
 
 # rspec failure tracking

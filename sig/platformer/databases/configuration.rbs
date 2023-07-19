@@ -1,0 +1,24 @@
+# TypeProf 0.21.7
+
+# Classes
+module Platformer
+  module Databases
+    module Configuration
+      @@configuration_file_contents: untyped
+
+      def self.to_h: (untyped Symbol, Symbol name) -> {host: String, port: String, username: String, password: String, encoding: String, adapter: String, schema_search_path: String}
+      def self.configuration_value: (:postgres database_type, untyped name, :host | :password | :port | :username key) -> String | nil
+      def self.require_configuration_value: (:postgres database_type, untyped name, :host | :port | :username key) -> String
+      def self.configuration_file_contents: -> untyped
+
+      class MissingConfigurationError < StandardError
+      end
+
+      class MissingRequiredNameError < StandardError
+      end
+
+      class UnexpectedDatabaseTypeError < StandardError
+      end
+    end
+  end
+end

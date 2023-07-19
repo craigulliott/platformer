@@ -43,12 +43,9 @@ module Platformer
                 ]
               end
 
-              add_method :case_insensitive
-              add_method :required
-              add_method :unique
-              add_method :description do
-                requires :description, :string
-              end
+              import_shared :field_comment
+              import_shared :immutable_validators
+              import_shared :text_validators
             end
           end
         end

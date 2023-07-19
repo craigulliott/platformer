@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary = "Create SaaS Platforms through configuration"
   spec.description = "Easily create highly scalable and performant SaaS platforms through configuration"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 3.0.0"
+  spec.required_ruby_version = ">= 3.1.4"
 
   spec.metadata["source_code_uri"] = "https://github.com/craigulliott/platformer/"
   spec.metadata["changelog_uri"] = "https://github.com/craigulliott/platformer/blob/main/CHANGELOG.md"
@@ -20,8 +20,16 @@ Gem::Specification.new do |spec|
 
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "dsl_compose", "~> 1.0"
+  spec.add_dependency "dsl_compose", "~> 2.0"
+  spec.add_dependency "dynamic_migrations", "~> 1.0"
+
+  spec.add_dependency "pg", "~> 1.5"
+  spec.add_dependency "activerecord-postgis-adapter", "~> 8.0"
+
   spec.add_dependency "activesupport", "~> 7.0"
   spec.add_dependency "activemodel", "~> 7.0"
   spec.add_dependency "activerecord", "~> 7.0"
+
+  spec.add_development_dependency "pg_spec_helper", "~> 1.4"
+  spec.add_development_dependency "class_spec_helper", "~> 1.0"
 end

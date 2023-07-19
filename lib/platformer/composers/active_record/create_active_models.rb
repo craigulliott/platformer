@@ -1,0 +1,62 @@
+# frozen_string_literal: true
+
+module Platformer
+  module Composers
+    module ActiveRecord
+      class CreateActiveModels < DSLCompose::Parser
+        # Dynamically create ActiveRecord classes to represent each
+        # of our model definitions.
+        #
+        # For example, if we have created a UserModel and an OrganizationModel
+        # which extend PlatformModel, then this composer will generate a `User`
+        # and an `Organization` class which are extended from ActiveRecord::Base
+        for_children_of PlatformModel do |child_class:|
+          description <<-DESCRIPTION
+            Dynamically create an ActiveRecord class which corresponds to this model class.
+          DESCRIPTION
+
+          has_subclasses = child_class.subclasses.count > 0
+
+          if has_subclasses
+            description <<-DESCRIPTION
+              Because this model class is subclassed by #{child_class.subclasses.count}
+              other classes including `#{child_class.subclasses.first.name}` the corresponding
+              ActiveRecord class will be marked as abstract with `self.abstract_class = true`
+            DESCRIPTION
+          end
+
+          active_record_class = ClassMap.create_active_record_class_from_model_class child_class do
+            # if the model has subclasses, then this is an abstract class
+            if has_subclasses
+              self.abstract_class = true
+            end
+          end
+
+          # make the database connections, and set the desired schemas
+          for_dsl :use_postgres_database do |configuration_name:, database:|
+            description <<-DESCRIPTION
+              Configure and connect to the `#{configuration_name}` postgres server
+              and the #{database.nil? ? "default" : database} database.
+            DESCRIPTION
+
+            # set up the request database connection for this class
+            server = Databases.postgres_server(configuration_name)
+            # if no database name was provided, then use the default database
+            db = database.nil? ? server.default_database : server.database(database)
+            active_record_class.establish_connection(db.active_record_configuration)
+          end
+
+          # set the desired postgres schema for models which extend this model
+          for_dsl :schema do |schema_name:|
+            description <<-DESCRIPTION
+              Configure the ActiveRecord class to use the `#{schema_name}` database schema
+              for this model by setting `table_name_prefix` to `#{schema_name}.`.
+            DESCRIPTION
+
+            active_record_class.table_name_prefix = "#{schema_name}."
+          end
+        end
+      end
+    end
+  end
+end

@@ -1,0 +1,26 @@
+# TypeProf 0.21.7
+
+# Classes
+module Platformer
+  module ClassMap
+    self.@created_application_record_class: true
+
+    def self.validate_class_extends!: (Class provided_class, Class base_class) -> true
+    def self.namespace_from_class: (Class provided_class) -> singleton(Object)
+    def self.base_application_record_class: (Class model_class) -> Class
+    def self.create_active_record_class_from_model_class: (untyped model_class) -> untyped
+    def self.get_active_record_class_from_model_class: (untyped model_class) -> untyped
+
+    class ClassDoesNotExtendError < StandardError
+    end
+
+    class ApplicationRecordAlreadyExistsError < StandardError
+    end
+
+    class ActiveRecordClassAlreadyCreatedError < StandardError
+    end
+
+    class ActiveRecordClassDoesNotExistError < StandardError
+    end
+  end
+end

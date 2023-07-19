@@ -1,0 +1,162 @@
+module Platformer
+  module ClassMap
+    class ClassDoesNotExtendError < StandardError
+    end
+
+    class ApplicationRecordAlreadyExistsError < StandardError
+    end
+
+    class ActiveRecordClassAlreadyCreatedError < StandardError
+    end
+
+    class ActiveRecordClassDoesNotExistError < StandardError
+    end
+
+    # Returns true is `provided_class` is extended from `base_class`
+    # otherwise raises an error
+    def self.validate_class_extends! provided_class, base_class
+      if provided_class < base_class
+        true
+      else
+        raise ClassDoesNotExtendError, "Unexpected class #{provided_class}. Was expecting a class which extends from #{base_class}"
+      end
+    end
+
+    # Returns the constant representing the namespace of the provided class.  If the provided
+    # class is not namespaced, then `Object` (ruby's top most namespace) is returned.
+    #
+    # For example. If the provided class was `Foo::Bar`, then the constant `Foo` would be
+    # returned. If the provided class was `Foo`, then the constant `Object` would be returned.
+    def self.namespace_from_class provided_class
+      # Split a class name into an array of strings, where each item in the array represents one
+      # one part of the classes hierachy, but not the class name itself.
+      #
+      # For example, if the class was "Users::Admin", then the resulting array would be ["Users"]
+      # if the class was "Aaa::Bbb::Ccc", then the resulting array would be ["Aaa", "Bbb"]
+      namespace_parts = provided_class.name.split("::")[0..-2]
+      # if the model was namespaced, then recombine the parts and return the constant
+      if namespace_parts.any?
+        namespace_parts.join("::").constantize
+      else
+        # Object is the top most namespace
+        Object
+      end
+    end
+
+    # Returns the `ApplicationRecord` class. This class is used as the base class for all active
+    # record models. If the `ApplicationRecord` class does not exist, then it is created.
+    def self.application_record_class
+      # does the application record class already exist?
+      if Object.const_defined?(:ApplicationRecord)
+
+        # raise an error if this class was created or defined by another means
+        unless @created_application_record_class
+          raise ApplicationRecordAlreadyExistsError, "The ApplicationRecord class already exists, but was not created by Platformer. This is not supported."
+        end
+
+        # return the existing ApplicationRecord class
+        ApplicationRecord
+
+      else
+        # we note that this class was created here, so that we can raise an error
+        # if the class was created another way (such as manually by the user)
+        @created_application_record_class = true
+
+        # create a new anonymous class which extends ActiveRecord::Base
+        base_class = Class.new(ActiveRecord::Base)
+
+        # name it and add it to the top most scope
+        Object.const_set :ApplicationRecord, base_class
+
+        # properly configure the ApplicationRecord class
+        base_class.class_eval do
+          # ApplicationRecord is always an abstract class
+          self.abstract_class = true
+          # Connect to the default postgres database
+          establish_connection(Databases.postgres_server(:primary).default_database.active_record_configuration)
+        end
+
+        # return this new ApplicationRecord class
+        base_class
+      end
+    end
+
+    # When provided with a model class, this will return the ActiveRecord
+    # class of the Model classes direct ansestor.
+    #
+    # For example...
+    #
+    # class UsersModel < PlatformModel
+    #   # note, because this class has descendents, it will also be
+    #   # automatically created as an abstract class
+    # end
+    #
+    # class AdminModel < UsersModel
+    # end
+    #
+    # With the model class hieracy above, the following results will be returned
+    #   `base_application_record_class AdminModel` will return `Users`
+    #   `base_application_record_class UsersModel` will return `ApplicationRecord`
+    def self.base_application_record_class model_class
+      # if there is no namespace, then just return ApplicationRecord
+      if model_class.ancestors[1] == PlatformModel
+        application_record_class
+
+      else
+        # return the active_record class which was already created for this
+        # models direct ancestor
+        get_active_record_class_from_model_class model_class.ancestors[1]
+      end
+    end
+
+    # Provided with a model definition class, will create and return a valid
+    # active record model. If the active record model already exists then an
+    # error is raised
+    #
+    # For example, when provided with Users::UserModel this will create and
+    # return the corresponding Users::User (which will subclass Users::UsersRecord)
+    def self.create_active_record_class_from_model_class model_class, &block
+      # assert that the provided class is a subclass of PlatformModel
+      validate_class_extends! model_class, PlatformModel
+
+      class_name = model_class.name.split("::").last.gsub(/Model\Z/, "")
+
+      new_class = Class.new(base_application_record_class(model_class))
+      namespace = namespace_from_class model_class
+
+      # assert the class has not already been created
+      if namespace.const_defined? class_name
+        raise ActiveRecordClassAlreadyCreatedError, "Active record class `#{class_name}` already exists"
+      end
+
+      namespace.const_set class_name, new_class
+
+      if block
+        new_class.class_eval(&block)
+      end
+
+      new_class
+    end
+
+    # Provided with a model definition class, will return the corresponding
+    # active record model. If the active record model does not already exists
+    # then an error is raised
+    #
+    # For example, will return Users::User from Users::UserModel
+    def self.get_active_record_class_from_model_class model_class
+      # assert that the provided class is a subclass of PlatformModel
+      validate_class_extends! model_class, PlatformModel
+      # remove "Model" from the end of the class name, and then convert
+      # the string into a constant
+      class_name = model_class.name.gsub(/Model\Z/, "")
+
+      # assert the class already exists
+      unless Object.const_defined? class_name
+        raise ActiveRecordClassDoesNotExistError, "Active record class `#{class_name}` does not exist"
+      end
+
+      # turn the class name into a constant, and return it
+      class_name.constantize
+    end
+  end
+end

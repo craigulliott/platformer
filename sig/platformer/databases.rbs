@@ -1,0 +1,16 @@
+# TypeProf 0.21.7
+
+# Classes
+module Platformer
+  module Databases
+    self.@postgres_servers: Hash[Symbol, {pg_configuration: untyped, active_record_configuration: untyped, server: untyped}]
+
+    def self.add_postgres_database: (Symbol server_name, Symbol database_name) -> {pg_configuration: untyped, active_record_configuration: untyped, server: untyped}
+    def self.add_postgres_server: (Symbol server_name) -> {pg_configuration: untyped, active_record_configuration: untyped, server: untyped}
+    def self.get_postgres_server: (Symbol server_name) -> {pg_configuration: untyped, active_record_configuration: untyped, server: untyped}?
+    def self.clear_configuration: -> void
+
+    class ServerAlreadyExistsError < StandardError
+    end
+  end
+end
