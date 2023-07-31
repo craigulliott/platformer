@@ -7,21 +7,21 @@ module Platformer
       end
 
       # returns the configuration value if it exists, else nil
-      def self.value database_type, name, key
-        if file_contents[database_type.to_s].nil?
-          raise MissingConfigurationError, "no database configuration found for `#{database_type}` in database.yaml"
+      def self.value server_type, name, key
+        if file_contents[server_type.to_s].nil?
+          raise MissingConfigurationError, "no database configuration found for `#{server_type}` in database.yaml"
         end
 
-        if file_contents[database_type.to_s][name.to_s].nil?
-          raise MissingConfigurationError, "no configuration found for #{database_type}.#{name} in database.yaml"
+        if file_contents[server_type.to_s][name.to_s].nil?
+          raise MissingConfigurationError, "no configuration found for #{server_type}.#{name} in database.yaml"
         end
 
-        file_contents[database_type.to_s][name.to_s][key.to_s]
+        file_contents[server_type.to_s][name.to_s][key.to_s]
       end
 
       # returns the configuration value if it exists, else raises an error
-      def self.require_value database_type, name, key
-        value(database_type, name, key) || raise(MissingConfigurationError, "no `#{key}` found for #{database_type}.#{name} in database.yaml")
+      def self.require_value server_type, name, key
+        value(server_type, name, key) || raise(MissingConfigurationError, "no `#{key}` found for #{server_type}.#{name} in database.yaml")
       end
 
       # opens the configuration yaml file, and returns the contents as a hash

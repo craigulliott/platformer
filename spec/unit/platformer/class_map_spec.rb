@@ -85,6 +85,10 @@ RSpec.describe Platformer::ClassMap do
         class_map_module.create_active_record_class_from_model_class(BaseModel)
       end
 
+      after(:each) do
+        destroy_class Base
+      end
+
       it "returns Base for a class which extends BaseModel" do
         expect(class_map_module.base_application_record_class(ChildModel)).to be Base
       end

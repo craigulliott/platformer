@@ -1,4 +1,3 @@
-class PlatformCallback
-  include DSLCompose::Composer
+class PlatformCallback < PlatformBase
   include Platformer::DSLs::Callbacks::AfterStageChange
 end

@@ -2,23 +2,23 @@ module Platformer
   module DSLs
     module Models
       module Fields
-        module FloatField
+        module DoubleField
           def self.included klass
-            klass.define_dsl :float_field do
-              description "Add a float field to this model."
+            klass.define_dsl :double_field do
+              description "Add a double field to this model."
 
               # the name of the field
               requires :name, :symbol do
-                description "The name of this float field"
+                description "The name of this double field"
                 import_shared :field_name_validators
               end
 
               # add an optional attribute which can be used to
-              # denote this as an array of floats
+              # denote this as an array of doubles
               optional :array, :boolean do
                 description <<-DESCRIPTION
-                  If true, then this field will be an array of floats, and
-                  will be backed by a `real[]` type in PostgreSQL.
+                  If true, then this field will be an array of doubles, and
+                  will be backed by a `double precision[]` type in PostgreSQL.
                 DESCRIPTION
               end
 

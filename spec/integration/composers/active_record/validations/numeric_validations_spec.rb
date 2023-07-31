@@ -2,12 +2,12 @@
 
 require "spec_helper"
 
-RSpec.describe Platformer::Composers::ActiveRecord::CreateActiveModels do
+RSpec.describe Platformer::Composers::ActiveRecord::Validations::NumericValidations do
   let(:pg_helper) { RSpec.configuration.pg_spec_helper }
 
   before(:each) do
     create_class :TestBaseModel, PlatformModel do
-      use_postgres_database :primary
+      database :postgres, :primary
     end
   end
 
@@ -28,7 +28,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::CreateActiveModels do
 
       # now that the UserModel has been created, we rerun the relevant composers
       Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
-      Platformer::Composers::ActiveRecord::Validations::IntegerValidations.rerun
+      Platformer::Composers::ActiveRecord::Validations::NumericValidations.rerun
     end
 
     after(:each) do

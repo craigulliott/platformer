@@ -20,8 +20,8 @@ Gem::Specification.new do |spec|
 
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "dsl_compose", "~> 2.0"
-  spec.add_dependency "dynamic_migrations", "~> 1.0"
+  spec.add_dependency "dsl_compose", "~> 2.2"
+  spec.add_dependency "dynamic_migrations", "~> 2.0"
 
   spec.add_dependency "pg", "~> 1.5"
   spec.add_dependency "activerecord-postgis-adapter", "~> 8.0"

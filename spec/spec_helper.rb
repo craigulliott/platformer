@@ -25,7 +25,7 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = ".rspec_status"
 
   # the configuration for our test database (loaded from config/database.yaml)
-  database_configuration = Platformer::Databases.postgres_server(:primary).default_database.pg_configuration
+  database_configuration = Platformer::Databases.server(:postgres, :primary).default_database.pg_configuration
 
   # make pg_spec_helper conveniently accessable within our test suite
   config.add_setting :pg_spec_helper

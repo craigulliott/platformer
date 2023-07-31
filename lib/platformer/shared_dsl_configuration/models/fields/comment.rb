@@ -5,7 +5,7 @@ module Platformer
         module Fields
           module Comment
             DSLCompose::SharedConfiguration.add :field_comment do
-              add_method :comment do
+              add_unique_method :comment do
                 description <<-DESCRIPTION
                   This method is used to describe a specific use of this
                   field within a model, this description will be added to

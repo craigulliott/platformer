@@ -94,6 +94,72 @@ module Platformer
                     DESCRIPTION
                   end
                 end
+
+                add_method :validate_equal_to do
+                  description <<-DESCRIPTION
+                    Ensure that the value provided to this field is equal to a
+                    provided value. This will create an active record validation,
+                    a database constraint and will be used in API validation and
+                    generated documentation.
+                  DESCRIPTION
+
+                  requires :value, :float do
+                    description <<-DESCRIPTION
+                      The value to validate against. The provided value must be
+                      equal to this value
+                    DESCRIPTION
+                  end
+
+                  optional :message, :string do
+                    description <<-DESCRIPTION
+                      The message which will be raised if the validation fails.
+                    DESCRIPTION
+                  end
+                end
+
+                add_method :validate_in do
+                  description <<-DESCRIPTION
+                    Ensure that the value provided to this field is equal to one of
+                    the provided values. This will create an active record validation,
+                    a database constraint and will be used in API validation and
+                    generated documentation.
+                  DESCRIPTION
+
+                  requires :value, :float, array: true do
+                    description <<-DESCRIPTION
+                      The value or array of values to validate against. The provided
+                      value must be equal to one of these values.
+                    DESCRIPTION
+                  end
+
+                  optional :message, :string do
+                    description <<-DESCRIPTION
+                      The message which will be raised if the validation fails.
+                    DESCRIPTION
+                  end
+                end
+
+                add_method :validate_not_in do
+                  description <<-DESCRIPTION
+                    Ensure that the value provided to this field is not equal to one of
+                    the provided values. This will create an active record validation,
+                    a database constraint and will be used in API validation and
+                    generated documentation.
+                  DESCRIPTION
+
+                  requires :value, :float, array: true do
+                    description <<-DESCRIPTION
+                      The value or array of values to validate against. The provided
+                      value must not be equal to any of these values.
+                    DESCRIPTION
+                  end
+
+                  optional :message, :string do
+                    description <<-DESCRIPTION
+                      The message which will be raised if the validation fails.
+                    DESCRIPTION
+                  end
+                end
               end
             end
           end

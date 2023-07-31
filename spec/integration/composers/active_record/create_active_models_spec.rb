@@ -49,7 +49,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::CreateActiveModels do
   describe "for a new UserModel which connects to a postgres server and a default database" do
     before(:each) do
       create_class "Users::UserModel", PlatformModel do
-        use_postgres_database :primary
+        database :postgres, :primary
       end
     end
 
@@ -72,7 +72,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::CreateActiveModels do
   describe "for a new UserModel which connects to a postgres server and a specific database" do
     before(:each) do
       create_class "Users::UserModel", PlatformModel do
-        use_postgres_database :primary, database: :specific_database
+        database :postgres, :primary, database_name: :specific_database
       end
     end
 

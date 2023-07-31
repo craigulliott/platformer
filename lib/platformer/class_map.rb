@@ -22,6 +22,26 @@ module Platformer
       end
     end
 
+    warn "not tested"
+    def self.subclasses base_class
+      base_class.subclasses.filter { |subclass| class_is_still_defined? subclass }
+    end
+
+    warn "not tested"
+    def self.has_subclasses? base_class
+      base_class.subclasses.filter { |subclass| class_is_still_defined? subclass }.any?
+    end
+
+    warn "not tested"
+    def self.no_subclasses? base_class
+      has_subclasses?(base_class) == false
+    end
+
+    warn "not tested"
+    def self.class_is_still_defined? klass
+      Object.const_defined?(klass.name) && Object.const_get(klass.name).equal?(klass)
+    end
+
     # Returns the constant representing the namespace of the provided class.  If the provided
     # class is not namespaced, then `Object` (ruby's top most namespace) is returned.
     #
@@ -73,7 +93,7 @@ module Platformer
           # ApplicationRecord is always an abstract class
           self.abstract_class = true
           # Connect to the default postgres database
-          establish_connection(Databases.postgres_server(:primary).default_database.active_record_configuration)
+          establish_connection(Databases.server(:postgres, :primary).default_database.active_record_configuration)
         end
 
         # return this new ApplicationRecord class
@@ -109,6 +129,16 @@ module Platformer
       end
     end
 
+    warn "not tested"
+    def self.active_record_class_name_from_model_class model_class
+      model_class.name.split("::").last.gsub(/Model\Z/, "")
+    end
+
+    warn "not tested"
+    def self.active_record_table_name_from_model_class model_class
+      active_record_class_name_from_model_class(model_class).underscore.pluralize.to_sym
+    end
+
     # Provided with a model definition class, will create and return a valid
     # active record model. If the active record model already exists then an
     # error is raised
@@ -119,7 +149,7 @@ module Platformer
       # assert that the provided class is a subclass of PlatformModel
       validate_class_extends! model_class, PlatformModel
 
-      class_name = model_class.name.split("::").last.gsub(/Model\Z/, "")
+      class_name = active_record_class_name_from_model_class model_class
 
       new_class = Class.new(base_application_record_class(model_class))
       namespace = namespace_from_class model_class

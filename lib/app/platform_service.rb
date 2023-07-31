@@ -1,3 +1,2 @@
-class PlatformService
-  include DSLCompose::Composer
+class PlatformService < PlatformBase
 end
