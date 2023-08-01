@@ -14,7 +14,11 @@ module Platformer
                   :id,
                   # Reserved for state machines
                   :stage,
-                  # Reserved for undeletable records
+                  # Reserved for the automatically set ActiveRecord columns
+                  :created_at,
+                  :updated_at,
+                  # Reserved for our soft delete mechanism
+                  :deleted_at,
                   :undeleted,
                   # Reserved for Single Table Inheritance.
                   :type,
@@ -25,8 +29,6 @@ module Platformer
                 validate_not_end_with [
                   # Reserved for foreign keys
                   :_id,
-                  # Reserved for timestamps
-                  :_at,
                   # Reserved for the type part of polymorphic associations
                   :_type,
                   # Reserved for active records count cache column

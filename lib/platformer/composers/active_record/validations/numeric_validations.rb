@@ -5,11 +5,11 @@ module Platformer
     module ActiveRecord
       module Validations
         class NumericValidations < DSLCompose::Parser
-          # install all the greater than validations for each model
+          # install all the common numeric validations for each model
           for_children_of PlatformModel do |child_class:|
             model = ClassMap.get_active_record_class_from_model_class(child_class)
 
-            for_dsl [:integer_field, :float_field] do |name:|
+            for_dsl [:integer_field, :float_field, :double_field, :numeric_field] do |name:|
               description <<-DESCRIPTION
                 Create an validation on this active record model which asserts that
                 the value of `#{name}` is an integer and a whole number.

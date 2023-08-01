@@ -61,14 +61,6 @@ RSpec.describe Platformer::ClassMap do
     end
   end
 
-  describe :application_record_class do
-    it "returns the ApplicationRecord class" do
-      # note, it is not possible to specifically test the creation of the ApplicationRecord class, as it
-      # was probably created autmatically by a previous test. So, we just test that the class is returned
-      expect(class_map_module.application_record_class).to be ApplicationRecord
-    end
-  end
-
   describe :base_application_record_class do
     before(:each) do
       create_class "BaseModel", PlatformModel

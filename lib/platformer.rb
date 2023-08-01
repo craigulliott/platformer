@@ -4,7 +4,6 @@ ENV["RACK_ENV"] ||= "development"
 
 require "dsl_compose"
 require "dynamic_migrations"
-require "active_record"
 
 require "platformer/version"
 
@@ -12,6 +11,11 @@ require "platformer/databases"
 require "platformer/databases/postgres/server"
 require "platformer/databases/postgres/server/database"
 require "platformer/databases/configuration"
+
+require "active_record"
+Dir[File.expand_path "lib/active_record/**/*.rb"].each do |f|
+  require_relative f
+end
 
 require "platformer/class_map"
 
@@ -34,6 +38,7 @@ Dir[File.expand_path "lib/platformer/dsl_readers/**/*.rb"].each do |f|
   require_relative f
 end
 
+require "app/application_record"
 require "app/platform_base"
 require "app/platform_model"
 require "app/platform_callback"

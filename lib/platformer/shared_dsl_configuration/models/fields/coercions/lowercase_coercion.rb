@@ -6,7 +6,7 @@ module Platformer
           module Coercions
             module LowercaseCoercion
               DSLCompose::SharedConfiguration.add :lowercase_coercion do
-                add_method :lowercase do
+                add_unique_method :lowercase do
                   description <<-DESCRIPTION
                     Ensures that the value of this field is a lowercase string.
                     If it contains uppercase letters, then it will be converted automatically

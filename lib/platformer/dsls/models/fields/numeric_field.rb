@@ -17,6 +17,8 @@ module Platformer
               requires :name, :symbol do
                 description "The name of your field."
                 import_shared :field_name_validators
+                # Reserved for timestamps
+                validate_not_end_with :_at
               end
 
               # add an optional attribute which can be used to
@@ -71,6 +73,7 @@ module Platformer
               import_shared :field_comment
               import_shared :immutable_validators
               import_shared :numeric_validators
+              import_shared :zero_to_null_coercion
             end
           end
         end

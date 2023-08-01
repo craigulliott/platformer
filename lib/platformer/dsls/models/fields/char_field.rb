@@ -16,6 +16,8 @@ module Platformer
               requires :name, :symbol do
                 description "The name of your field."
                 import_shared :field_name_validators
+                # Reserved for timestamps
+                validate_not_end_with :_at
               end
 
               # add an optional attribute which can be used to
@@ -23,7 +25,7 @@ module Platformer
               optional :array, :boolean do
                 description <<-DESCRIPTION
                   If true, then this field will be an array of chars, and
-                  will be backed by a `char(precision,scale)[]` type in PostgreSQL.
+                  will be backed by a `char(length)[]` type in PostgreSQL.
                 DESCRIPTION
               end
 
@@ -47,6 +49,9 @@ module Platformer
               import_shared :unique_field
               import_shared :field_comment
               import_shared :immutable_validators
+              import_shared :lowercase_coercion
+              import_shared :uppercase_coercion
+              import_shared :trim_and_nullify_coercion
             end
           end
         end

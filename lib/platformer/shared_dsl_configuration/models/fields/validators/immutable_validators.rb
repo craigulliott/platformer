@@ -7,7 +7,7 @@ module Platformer
             module NumericValidators
               # immutable validators which are shared between all fields
               DSLCompose::SharedConfiguration.add :immutable_validators do
-                add_method :validate_immutable do
+                add_method :immutable do
                   description <<-DESCRIPTION
                     Ensures that the value of this field can not be changed
                     after it is initially created. This will create an active
@@ -22,7 +22,7 @@ module Platformer
                   end
                 end
 
-                add_method :validate_immutable_once_set do
+                add_method :immutable_once_set do
                   description <<-DESCRIPTION
                     Ensures that the value of this field can not be changed
                     after it is has been set. This means that the value can

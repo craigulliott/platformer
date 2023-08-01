@@ -7,7 +7,7 @@ require "platformer"
 require "class_spec_helper"
 require "pg_spec_helper"
 
-# acrtive record logging
+# active record logging
 ActiveRecord::Base.logger = Logger.new(STDOUT)
 
 CLASS_SPEC_HELPER = ClassSpecHelper.new
@@ -25,11 +25,15 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = ".rspec_status"
 
   # the configuration for our test database (loaded from config/database.yaml)
-  database_configuration = Platformer::Databases.server(:postgres, :primary).default_database.pg_configuration
+  database_configuration = Platformer::Databases.server(:postgres, :primary).default_database
 
-  # make pg_spec_helper conveniently accessable within our test suite
+  # default active record configuration
+  config.add_setting :default_database_configuration
+  config.default_database_configuration = database_configuration.active_record_configuration
+
+  # make pg_spec_helper conveniently accessible within our test suite
   config.add_setting :pg_spec_helper
-  config.pg_spec_helper = PGSpecHelper.new(**database_configuration)
+  config.pg_spec_helper = PGSpecHelper.new(**database_configuration.pg_configuration)
   # dont modify the postgis schema
   config.pg_spec_helper.ignore_schema :postgis
 

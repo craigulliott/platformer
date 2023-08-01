@@ -15,14 +15,15 @@ RSpec.describe Platformer::Composers::ActiveRecord::Validations::NumericValidati
     destroy_class TestBase
   end
 
-  describe "for a new UserModel which defines a simple new model with an integer field and validations" do
+  describe "for a new UserModel which defines a simple new model with an integer field" do
     before(:each) do
-      pg_helper.create_table :public, :users
-      pg_helper.create_column :public, :users, :age, :integer
+      pg_helper.create_model :public, :users do
+        add_column :foo, :integer
+      end
 
       # create a definition for a new User
       create_class "Users::UserModel", TestBaseModel do
-        integer_field :age do
+        integer_field :foo do
         end
       end
 
@@ -35,22 +36,22 @@ RSpec.describe Platformer::Composers::ActiveRecord::Validations::NumericValidati
       destroy_class Users::User
     end
 
-    it "creates the expected numericality_validator" do
+    it "has the expected default numericality_validator because this is a numeric field" do
       numericality_validator = Users::User.validators.find { |v| v.instance_of? ActiveRecord::Validations::NumericalityValidator }
 
       expect(numericality_validator).to_not be_nil
       expect(numericality_validator.options).to eql({only_integer: true})
-      expect(numericality_validator.attributes).to eql([:age])
+      expect(numericality_validator.attributes).to eql([:foo])
     end
 
-    it "creates a numericality_validator which fails when expected" do
-      user = Users::User.new age: :foo
+    it "has a numericality_validator which fails when expected" do
+      user = Users::User.new foo: "abc"
 
       expect(user.valid?).to be false
     end
 
-    it "creates a numericality_validator which succeeds when expected" do
-      user = Users::User.new age: 1
+    it "has a numericality_validator which succeeds when expected" do
+      user = Users::User.new foo: 1
 
       expect(user.valid?).to be true
     end

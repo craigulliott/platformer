@@ -63,44 +63,6 @@ module Platformer
       end
     end
 
-    # Returns the `ApplicationRecord` class. This class is used as the base class for all active
-    # record models. If the `ApplicationRecord` class does not exist, then it is created.
-    def self.application_record_class
-      # does the application record class already exist?
-      if Object.const_defined?(:ApplicationRecord)
-
-        # raise an error if this class was created or defined by another means
-        unless @created_application_record_class
-          raise ApplicationRecordAlreadyExistsError, "The ApplicationRecord class already exists, but was not created by Platformer. This is not supported."
-        end
-
-        # return the existing ApplicationRecord class
-        ApplicationRecord
-
-      else
-        # we note that this class was created here, so that we can raise an error
-        # if the class was created another way (such as manually by the user)
-        @created_application_record_class = true
-
-        # create a new anonymous class which extends ActiveRecord::Base
-        base_class = Class.new(ActiveRecord::Base)
-
-        # name it and add it to the top most scope
-        Object.const_set :ApplicationRecord, base_class
-
-        # properly configure the ApplicationRecord class
-        base_class.class_eval do
-          # ApplicationRecord is always an abstract class
-          self.abstract_class = true
-          # Connect to the default postgres database
-          establish_connection(Databases.server(:postgres, :primary).default_database.active_record_configuration)
-        end
-
-        # return this new ApplicationRecord class
-        base_class
-      end
-    end
-
     # When provided with a model class, this will return the ActiveRecord
     # class of the Model classes direct ansestor.
     #
@@ -120,7 +82,7 @@ module Platformer
     def self.base_application_record_class model_class
       # if there is no namespace, then just return ApplicationRecord
       if model_class.ancestors[1] == PlatformModel
-        application_record_class
+        ApplicationRecord
 
       else
         # return the active_record class which was already created for this

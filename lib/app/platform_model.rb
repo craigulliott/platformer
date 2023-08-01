@@ -27,7 +27,7 @@ class PlatformModel < PlatformBase
   include Platformer::DSLs::Models::Fields::DateField
   include Platformer::DSLs::Models::Fields::DateTimeField
   # text
-  include Platformer::DSLs::Models::Fields::StringField
+  include Platformer::DSLs::Models::Fields::TextField
   include Platformer::DSLs::Models::Fields::CharField
   # enums
   include Platformer::DSLs::Models::Fields::EnumField
