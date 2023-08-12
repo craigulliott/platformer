@@ -17,7 +17,7 @@ module Platformer
             # for each time the :char_field DSL was used on this Model
             for_dsl_or_inherited_dsl :char_field do |name:, array:, reader:, length:|
               # update the dynamic documentation
-              description <<-DESCRIPTION
+              description <<~DESCRIPTION
                 Update DynamicMigrations and add an #{array ? "array of chars" : "char"}
                 column named `#{name}` to the `#{table.schema.name}'.'#{table.name}` table.
               DESCRIPTION
@@ -35,11 +35,7 @@ module Platformer
               default = reader.default&.default
 
               # The data type of the column.
-              data_type = if length.nil?
-                "char"
-              else
-                "char(#{length})"
-              end
+              data_type = length.nil? ? "char" : "char(#{length})"
 
               if array
                 data_type += "[]"

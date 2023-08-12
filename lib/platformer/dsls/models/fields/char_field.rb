@@ -5,7 +5,7 @@ module Platformer
         module CharField
           def self.included klass
             klass.define_dsl :char_field do
-              description <<-DESCRIPTION
+              description <<~DESCRIPTION
                 Add a char field to this model. The char type can store text of
                 a specific length.
               DESCRIPTION
@@ -23,14 +23,14 @@ module Platformer
               # add an optional attribute which can be used to
               # denote this as an array of chars
               optional :array, :boolean do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   If true, then this field will be an array of chars, and
                   will be backed by a `char(length)[]` type in PostgreSQL.
                 DESCRIPTION
               end
 
               optional :length, :integer do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   If provided, then length is the total number of characters
                   which can be held in this field.
                 DESCRIPTION

@@ -5,7 +5,7 @@ module Platformer
         module TextField
           def self.included klass
             klass.define_dsl :text_field do
-              description <<-DESCRIPTION
+              description <<~DESCRIPTION
                 Add a text field to this model. The text type can store text of
                 a specific length.
               DESCRIPTION
@@ -23,7 +23,7 @@ module Platformer
               # add an optional attribute which can be used to
               # denote this as an array of texts
               optional :array, :boolean do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   If true, then this field will be an array of texts, and
                   will be backed by a `text[]` type in PostgreSQL.
                 DESCRIPTION

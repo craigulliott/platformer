@@ -7,7 +7,7 @@ module Platformer
             module UppercaseCoercion
               DSLCompose::SharedConfiguration.add :uppercase_coercion do
                 add_unique_method :uppercase do
-                  description <<-DESCRIPTION
+                  description <<~DESCRIPTION
                     Ensures that the value of this field is an uppercase string.
                     If it contains lowercase letters, then it will be converted automatically
                     to uppercase. This coercion logic will be installed into active record,

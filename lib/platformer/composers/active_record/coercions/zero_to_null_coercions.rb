@@ -11,7 +11,7 @@ module Platformer
 
             for_dsl [:integer_field, :float_field, :double_field, :numeric_field] do |name:|
               for_method :zero_to_null do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Create a before_validation callback on this active_record class which
                   will convert `#{name}` into null if it has a value equal to 0.
                 DESCRIPTION

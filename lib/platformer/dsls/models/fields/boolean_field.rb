@@ -18,7 +18,7 @@ module Platformer
               # add an optional attribute which can be used to
               # denote this as an array of booleans
               optional :array, :boolean do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   If true, then this field will be an array of booleans, and
                   will be backed by a `bool[]` type in PostgreSQL.
                 DESCRIPTION
@@ -40,12 +40,12 @@ module Platformer
               #
               # assert the boolean is true
               add_method :validate_is_true do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Ensure that the value provided to this field is `true`.
                 DESCRIPTION
 
                 optional :message, :string do
-                  description <<-DESCRIPTION
+                  description <<~DESCRIPTION
                     The message which will be raised if the validation fails.
                   DESCRIPTION
                 end
@@ -53,12 +53,12 @@ module Platformer
 
               # assert the boolean is false
               add_method :validate_is_false do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Ensure that the value provided to this field is `false`.
                 DESCRIPTION
 
                 optional :message, :string do
-                  description <<-DESCRIPTION
+                  description <<~DESCRIPTION
                     The message which will be raised if the validation fails.
                   DESCRIPTION
                 end

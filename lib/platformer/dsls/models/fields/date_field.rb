@@ -5,7 +5,7 @@ module Platformer
         module DateField
           def self.included klass
             klass.define_dsl :date_field do
-              description <<-DESCRIPTION
+              description <<~DESCRIPTION
                 Add a date field to this model.
               DESCRIPTION
 
@@ -20,7 +20,7 @@ module Platformer
               # add an optional attribute which can be used to
               # denote this as an array of dates
               optional :array, :boolean do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   If true, then this field will be an array of dates, and
                   will be backed by a `date(length)[]` type in PostgreSQL.
                 DESCRIPTION

@@ -10,7 +10,7 @@ module Platformer
             model = ClassMap.get_active_record_class_from_model_class(child_class)
 
             for_dsl [:integer_field, :float_field, :double_field, :numeric_field] do |name:|
-              description <<-DESCRIPTION
+              description <<~DESCRIPTION
                 Create an validation on this active record model which asserts that
                 the value of `#{name}` is an integer and a whole number.
               DESCRIPTION
@@ -18,7 +18,7 @@ module Platformer
               model.validates name, numericality: {only_integer: true}
 
               for_method :validate_greater_than do |value:|
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` is greater than #{value}.
                 DESCRIPTION
@@ -27,7 +27,7 @@ module Platformer
               end
 
               for_method :validate_greater_than_or_equal_to do |value:|
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` is greater than or equal to #{value}.
                 DESCRIPTION
@@ -36,7 +36,7 @@ module Platformer
               end
 
               for_method :validate_less_than do |value:|
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` is less than #{value}.
                 DESCRIPTION
@@ -45,7 +45,7 @@ module Platformer
               end
 
               for_method :validate_less_than_or_equal_to do |value:|
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` is less than or equal to #{value}.
                 DESCRIPTION
@@ -54,7 +54,7 @@ module Platformer
               end
 
               for_method :validate_equal_to do |value:|
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` is equal to the number #{value}.
                 DESCRIPTION

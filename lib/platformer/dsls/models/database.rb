@@ -4,7 +4,7 @@ module Platformer
       module Database
         def self.included klass
           klass.define_dsl :database do
-            description <<-DESCRIPTION
+            description <<~DESCRIPTION
               Selects the server, database and schema which will be
               used to store data for this model and all models which
               extend this one.
@@ -16,7 +16,7 @@ module Platformer
             DESCRIPTION
 
             requires :server_type, :symbol do
-              description <<-DESCRIPTION
+              description <<~DESCRIPTION
                 The type of this database, such as `postgres`
 
                 This should correspond to a configuration block that is
@@ -27,7 +27,7 @@ module Platformer
             end
 
             requires :server_name, :symbol do
-              description <<-DESCRIPTION
+              description <<~DESCRIPTION
                 The name of the database connection to use. This should
                 be the name of a database configuration block that is
                 defined within `config/database.yaml` and nested within
@@ -66,7 +66,7 @@ module Platformer
             end
 
             optional :database_name, :symbol do
-              description <<-DESCRIPTION
+              description <<~DESCRIPTION
                 The name of the database which should be used on this
                 server. If you do not provide a database name then
                 then the default database for this server will be
@@ -76,7 +76,7 @@ module Platformer
           end
 
           klass.define_dsl :schema do
-            description <<-DESCRIPTION
+            description <<~DESCRIPTION
               For databases which support it (such as `postgres`), this is the
               name of the postgres servers database schema where the data for
               this model will be persisted. If you do not provide a schema name,
@@ -119,7 +119,7 @@ module Platformer
             DESCRIPTION
 
             requires :schema_name, :symbol do
-              description <<-DESCRIPTION
+              description <<~DESCRIPTION
                 The name of the schema to use.
               DESCRIPTION
             end

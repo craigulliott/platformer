@@ -17,7 +17,7 @@ module Platformer
             # for each time the :numeric_field DSL was used on this Model
             for_dsl_or_inherited_dsl :numeric_field do |name:, array:, reader:, precision:, scale:|
               # update the dynamic documentation
-              description <<-DESCRIPTION
+              description <<~DESCRIPTION
                 Update DynamicMigrations and add an #{array ? "array of numerics" : "numeric"}
                 column named `#{name}` to the `#{table.schema.name}'.'#{table.name}` table.
               DESCRIPTION

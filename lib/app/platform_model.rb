@@ -5,7 +5,7 @@ class PlatformModel < PlatformBase
     end
   end
 
-  describe_class <<-DESCRIPTION
+  describe_class <<~DESCRIPTION
     Create model definitions in app/model to describe your records
   DESCRIPTION
 

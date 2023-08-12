@@ -15,7 +15,7 @@ module Platformer
         text dsl_method.description
 
         # a ruby preview of this method with all possible arguments
-        code <<-CODE
+        code <<~CODE
           class MyModel
             #{dsl.name} #{dsl_arguments_summary} do
               #{dsl_method.name} #{dsl_method_arguments_summary}

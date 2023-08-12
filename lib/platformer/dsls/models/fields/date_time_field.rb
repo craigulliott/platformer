@@ -5,7 +5,7 @@ module Platformer
         module DateTimeField
           def self.included klass
             klass.define_dsl :date_time_field do
-              description <<-DESCRIPTION
+              description <<~DESCRIPTION
                 Add a date_time (timestamp) field to this model.
               DESCRIPTION
 
@@ -20,7 +20,7 @@ module Platformer
               # add an optional attribute which can be used to
               # denote this as an array of timestamps
               optional :array, :boolean do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   If true, then this field will be an array of timestamps, and
                   will be backed by a `timestamp[]` type in PostgreSQL.
                 DESCRIPTION

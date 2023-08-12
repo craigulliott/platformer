@@ -11,7 +11,7 @@ module Platformer
 
             for_dsl [:char_field, :text_field] do |name:|
               for_method :trim_and_nullify do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Create a before_validation callback on this active_record class which
                   strips any whitespace off the front and back of the value of the `#{name}`
                   field, and will also convert any empty strings to null.

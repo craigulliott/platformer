@@ -15,23 +15,30 @@ RSpec.describe Platformer::Documentation::Markdown do
 
   describe :text do
     it "cleans up and returns a new section of markdown" do
-      test_string = <<-TEST_STRING
+      test_string = <<~TEST_STRING
 
 
-      Foo
-      Bar
+        Foo
+        Bar
 
-      Should work fine with special chars $
-      * and so on
+        Should work fine with special chars $
+        * and so on
 
-      It should not remove too much indentation from lines which have additional indentation
-        Such as this
+        It should not remove too much indentation from lines which have additional indentation
+          Such as this
 
       TEST_STRING
 
-      expected_string = "Foo\nBar\n\nShould work fine with special chars $\n* and so on\n\nIt should not remove too much indentation from lines which have additional indentation\n  Such as this"
+      expect(markdown.text(test_string)).to eq <<~EXPECTED_STRING.strip
+        Foo
+        Bar
 
-      expect(markdown.text(test_string)).to eq(expected_string)
+        Should work fine with special chars $
+        * and so on
+
+        It should not remove too much indentation from lines which have additional indentation
+          Such as this
+      EXPECTED_STRING
     end
 
     it "returns nil for an empty string" do

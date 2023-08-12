@@ -3,12 +3,12 @@ module Platformer
     module Description
       def self.included klass
         klass.define_dsl :description do
-          description <<-DESCRIPTION
+          description <<~DESCRIPTION
             Add descriptions to your classes.
           DESCRIPTION
 
           requires :description, :string do
-            description <<-DESCRIPTION
+            description <<~DESCRIPTION
               The description to add. This accepts markdown.
             DESCRIPTION
           end

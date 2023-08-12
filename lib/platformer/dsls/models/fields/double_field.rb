@@ -18,7 +18,7 @@ module Platformer
               # add an optional attribute which can be used to
               # denote this as an array of doubles
               optional :array, :boolean do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   If true, then this field will be an array of doubles, and
                   will be backed by a `double precision[]` type in PostgreSQL.
                 DESCRIPTION

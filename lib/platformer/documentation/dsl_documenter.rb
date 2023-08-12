@@ -10,7 +10,7 @@ module Platformer
         arguments_summary = ArgumentsDocumenter.new(dsl.arguments).summary_string
 
         # a ruby preview of this method with all possible arguments
-        code <<-CODE
+        code <<~CODE
           class MyModel
             #{dsl.name} #{arguments_summary}
           end

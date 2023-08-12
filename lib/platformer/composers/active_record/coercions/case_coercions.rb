@@ -11,8 +11,8 @@ module Platformer
 
             for_dsl [:char_field, :text_field] do |name:|
               for_method :uppercase do
-                description <<-DESCRIPTION
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
+                description <<~DESCRIPTION
                   Create a before_validation callback on this active_record class which
                   uppercases the value of `#{name}` before any create or update operations.
                   Injects into ActiveRecord and overrides the write_attribute method, this
@@ -32,7 +32,7 @@ module Platformer
               end
 
               for_method :lowercase do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Create a before_validation callback on this active_record class which
                   lowercases the value of `#{name}` before any create or update operations.
                   Injects into ActiveRecord and overrides the write_attribute method, this

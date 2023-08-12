@@ -21,7 +21,7 @@ module Platformer
 
               # if the validate_greater_than validation was used
               for_method :validate_greater_than do |value:|
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must be greater than #{value}.
@@ -30,14 +30,14 @@ module Platformer
                 validation_name = "#{column.table.schema.name}_#{column.table.name}_#{column.name}_gt".to_sym
 
                 # add the validation to the table
-                table.add_validation validation_name, [column.name], <<-SQL
+                table.add_validation validation_name, [column.name], <<~SQL
                   "#{column.name}" > #{value}
                 SQL
               end
 
               # if the validate_greater_than_or_equal_to validation was used
               for_method :validate_greater_than_or_equal_to do |value:|
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must be greater than or equal to #{value}.
@@ -46,14 +46,14 @@ module Platformer
                 validation_name = "#{column.table.schema.name}_#{column.table.name}_#{column.name}_gte".to_sym
 
                 # add the validation to the table
-                table.add_validation validation_name, [column.name], <<-SQL
+                table.add_validation validation_name, [column.name], <<~SQL
                   "#{column.name}" >= #{value}
                 SQL
               end
 
               # if the validate_less_than validation was used
               for_method :validate_less_than do |value:|
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must be less than #{value}.
@@ -62,14 +62,14 @@ module Platformer
                 validation_name = "#{column.table.schema.name}_#{column.table.name}_#{column.name}_gt".to_sym
 
                 # add the validation to the table
-                table.add_validation validation_name, [column.name], <<-SQL
+                table.add_validation validation_name, [column.name], <<~SQL
                   "#{column.name}" < #{value}
                 SQL
               end
 
               # if the validate_less_than_or_equal_to validation was used
               for_method :validate_less_than_or_equal_to do |value:|
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must be less than or equal to #{value}.
@@ -78,14 +78,14 @@ module Platformer
                 validation_name = "#{column.table.schema.name}_#{column.table.name}_#{column.name}_gte".to_sym
 
                 # add the validation to the table
-                table.add_validation validation_name, [column.name], <<-SQL
+                table.add_validation validation_name, [column.name], <<~SQL
                   "#{column.name}" <= #{value}
                 SQL
               end
 
               # if the validate_equal_to validation was used
               for_method :validate_equal_to do |value:|
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must be equal to the number #{value}.
@@ -94,7 +94,7 @@ module Platformer
                 validation_name = "#{column.table.schema.name}_#{column.table.name}_#{column.name}_eq".to_sym
 
                 # add the validation to the table
-                table.add_validation validation_name, [column.name], <<-SQL
+                table.add_validation validation_name, [column.name], <<~SQL
                   "#{column.name}" = #{value}
                 SQL
               end

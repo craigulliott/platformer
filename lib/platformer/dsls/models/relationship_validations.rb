@@ -12,7 +12,7 @@
 #   # this is because we throw an exception when the SQL conditional passes true
 #   # meaning, the validation actually passes when the condition returns false
 #   before_write table_name, scope_name, conditions: "#{options[:condition_prepend]} NOT EXISTS (#{block.call}) #{options[:condition_append]} ", when: options[:when] do
-#     <<-SQL
+#     <<~SQL
 #       #{action}
 #     SQL
 #   end
@@ -27,7 +27,7 @@
 #   # this is because we throw an exception when the SQL conditional passes true
 #   # meaning, the validation actually passes when the condition returns false
 #   before_create table_name, scope_name, conditions: "#{options[:condition_prepend]} NOT EXISTS (#{block.call}) #{options[:condition_append]} ", when: options[:when] do
-#     <<-SQL
+#     <<~SQL
 #       #{action}
 #     SQL
 #   end
@@ -42,7 +42,7 @@
 #   # this is because we throw an exception when the SQL conditional passes true
 #   # meaning, the validation actually passes when the condition returns false
 #   before_update table_name, scope_name, conditions: "#{options[:condition_prepend]} NOT EXISTS (#{block.call}) #{options[:condition_append]} ", when: options[:when] do
-#     <<-SQL
+#     <<~SQL
 #       #{action}
 #     SQL
 #   end
@@ -58,7 +58,7 @@
 #   # this is because we throw an exception when the SQL conditional passes true
 #   # meaning, the validation actually passes when the condition returns false
 #   before_write table_name, scope_name, conditions: "#{options[:condition_prepend]} EXISTS (#{block.call}) #{options[:condition_append]} ", when: options[:when] do
-#     <<-SQL
+#     <<~SQL
 #       #{action}
 #     SQL
 #   end
@@ -74,7 +74,7 @@
 #   # this is because we throw an exception when the SQL conditional passes true
 #   # meaning, the validation actually passes when the condition returns false
 #   after_write table_name, scope_name, conditions: "#{options[:condition_prepend]} EXISTS (#{block.call}) #{options[:condition_append]} ", when: options[:when] do
-#     <<-SQL
+#     <<~SQL
 #       #{action}
 #     SQL
 #   end
@@ -89,7 +89,7 @@
 #   # this is because we throw an exception when the SQL conditional passes true
 #   # meaning, the validation actually passes when the condition returns false
 #   before_create table_name, scope_name, conditions: "#{options[:condition_prepend]} EXISTS (#{block.call}) #{options[:condition_append]} ", when: options[:when] do
-#     <<-SQL
+#     <<~SQL
 #       #{action}
 #     SQL
 #   end
@@ -104,7 +104,7 @@
 #   # this is because we throw an exception when the SQL conditional passes true
 #   # meaning, the validation actually passes when the condition returns false
 #   before_update table_name, scope_name, conditions: "#{options[:condition_prepend]} EXISTS (#{block.call}) #{options[:condition_append]} ", when: options[:when] do
-#     <<-SQL
+#     <<~SQL
 #       #{action}
 #     SQL
 #   end
@@ -118,7 +118,7 @@
 #   # note, the SQL condition is EXISTS even though this method is validate_not_exists
 #   # this is because we throw an exception when the SQL conditional passes true
 #   # meaning, the validation actually passes when the condition returns false
-#   conditions = <<-CONDITIONS
+#   conditions = <<~CONDITIONS
 #     OLD.deleted_at IS NULL
 #     AND NEW.deleted_at IS NOT NULL
 #     AND
@@ -128,7 +128,7 @@
 #   CONDITIONS
 
 #   before_update table_name, scope_name, conditions: conditions, when: options[:when] do
-#     <<-SQL
+#     <<~SQL
 #       #{action}
 #     SQL
 #   end
@@ -142,7 +142,7 @@
 #   # note, the SQL condition is EXISTS even though this method is validate_not_exists
 #   # this is because we throw an exception when the SQL conditional passes true
 #   # meaning, the validation actually passes when the condition returns false
-#   conditions = <<-CONDITIONS
+#   conditions = <<~CONDITIONS
 #     OLD.published_at IS NULL
 #     AND NEW.published_at IS NOT NULL
 #     AND
@@ -152,7 +152,7 @@
 #   CONDITIONS
 
 #   before_update table_name, scope_name, conditions: conditions, when: options[:when] do
-#     <<-SQL
+#     <<~SQL
 #       #{action}
 #     SQL
 #   end
@@ -166,7 +166,7 @@
 #   # note, the SQL condition is EXISTS even though this method is validate_not_exists
 #   # this is because we throw an exception when the SQL conditional passes true
 #   # meaning, the validation actually passes when the condition returns false
-#   conditions = <<-CONDITIONS
+#   conditions = <<~CONDITIONS
 #     OLD.deleted_at IS NOT NULL
 #     AND NEW.deleted_at IS NULL
 #     AND
@@ -176,7 +176,7 @@
 #   CONDITIONS
 
 #   before_update table_name, scope_name, conditions: conditions, when: options[:when] do
-#     <<-SQL
+#     <<~SQL
 #       #{action}
 #     SQL
 #   end
@@ -190,7 +190,7 @@
 #   # note, the SQL condition is EXISTS even though this method is validate_not_exists
 #   # this is because we throw an exception when the SQL conditional passes true
 #   # meaning, the validation actually passes when the condition returns false
-#   conditions = <<-CONDITIONS
+#   conditions = <<~CONDITIONS
 #     OLD.published_at IS NOT NULL
 #     AND NEW.published_at IS NULL
 #     AND
@@ -200,7 +200,7 @@
 #   CONDITIONS
 
 #   before_update table_name, scope_name, conditions: conditions, when: options[:when] do
-#     <<-SQL
+#     <<~SQL
 #       #{action}
 #     SQL
 #   end

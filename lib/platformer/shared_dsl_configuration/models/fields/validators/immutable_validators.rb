@@ -8,7 +8,7 @@ module Platformer
               # immutable validators which are shared between all fields
               DSLCompose::SharedConfiguration.add :immutable_validators do
                 add_method :immutable do
-                  description <<-DESCRIPTION
+                  description <<~DESCRIPTION
                     Ensures that the value of this field can not be changed
                     after it is initially created. This will create an active
                     record validation, a database constraint and will be used
@@ -16,14 +16,14 @@ module Platformer
                   DESCRIPTION
 
                   optional :message, :string do
-                    description <<-DESCRIPTION
+                    description <<~DESCRIPTION
                       The message which will be raised if the validation fails.
                     DESCRIPTION
                   end
                 end
 
                 add_method :immutable_once_set do
-                  description <<-DESCRIPTION
+                  description <<~DESCRIPTION
                     Ensures that the value of this field can not be changed
                     after it is has been set. This means that the value can
                     initially be set to null, and can remain as null for some
@@ -34,7 +34,7 @@ module Platformer
                   DESCRIPTION
 
                   optional :message, :string do
-                    description <<-DESCRIPTION
+                    description <<~DESCRIPTION
                       The message which will be raised if the validation fails.
                     DESCRIPTION
                   end

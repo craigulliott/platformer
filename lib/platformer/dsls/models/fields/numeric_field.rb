@@ -5,7 +5,7 @@ module Platformer
         module NumericField
           def self.included klass
             klass.define_dsl :numeric_field do
-              description <<-DESCRIPTION
+              description <<~DESCRIPTION
                 Add a numeric field to this model. The numeric type can store numbers
                 with a lot of digits. Typically, you use the numeric type for numbers
                 that require exactness such as monetary amounts or quantities.
@@ -24,14 +24,14 @@ module Platformer
               # add an optional attribute which can be used to
               # denote this as an array of numerics
               optional :array, :boolean do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   If true, then this field will be an array of numerics, and
                   will be backed by a `numeric(precision,scale)[]` type in PostgreSQL.
                 DESCRIPTION
               end
 
               optional :precision, :integer do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   If provided, then precision is the total number of digits
                   which can be held in this field. The largest value you can provide
                   here is 1000, but if you ommit this argument then a default
@@ -46,7 +46,7 @@ module Platformer
               end
 
               optional :scale, :integer do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Must be used in conjunction with the precision value, the scale
                   is the number of digits in the fraction part of a number. For
                   example, the number 1234.567 has the precision 7 and scale 3.

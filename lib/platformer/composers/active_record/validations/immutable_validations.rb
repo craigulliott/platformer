@@ -11,7 +11,7 @@ module Platformer
 
             for_dsl [:integer_field, :float_field, :double_field, :numeric_field] do |name:|
               for_method :immutable do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` can not be changed after the record is created.
                 DESCRIPTION
@@ -20,7 +20,7 @@ module Platformer
               end
 
               for_method :immutable_once_set do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` can not be changed after the value has been set.
                   If a record exists, and the value is null, then it can be set at any

@@ -4,7 +4,7 @@
 # uninsertable_row :bars, {
 #   name: 'override the name used for the function and trigger',
 #   scope_name: :deleted_foo, # used in the generation of a name
-#   conditions: <<-SQL
+#   conditions: <<~SQL
 #     ( SELECT
 #         deleted_at IS NULL
 #         FROM foos.foos

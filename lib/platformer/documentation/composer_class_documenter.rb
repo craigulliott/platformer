@@ -7,7 +7,7 @@ module Platformer
 
         text composer_class.class_description
 
-        text <<-DOCS
+        text <<~DOCS
           You can use the following methods to configure this class
         DOCS
 

@@ -4,8 +4,8 @@ module Platformer
   module Composers
     module Migrations
       module Columns
-        # Add all integer columns to their respective tables within DynamicMigrations
-        class IntegerColumns < DSLCompose::Parser
+        # Add all text columns to their respective tables within DynamicMigrations
+        class TextColumns < DSLCompose::Parser
           # Process the parser for every decendant of PlatformModel which does not have
           # it's own decendents. These represent Models which will have a coresponding
           # ActiveRecord class created for them, and thus a table within the database
@@ -14,11 +14,11 @@ module Platformer
             # the result cached within the CreateStructure parser
             table = ModelToTableStructure.get_table_structure child_class
 
-            # for each time the :integer_field DSL was used on this Model
-            for_dsl_or_inherited_dsl :integer_field do |name:, array:, reader:|
+            # for each time the :text_field DSL was used on this Model
+            for_dsl_or_inherited_dsl :text_field do |name:, array:, reader:|
               # update the dynamic documentation
               description <<~DESCRIPTION
-                Update DynamicMigrations and add an #{array ? "array of integers" : "integer"}
+                Update DynamicMigrations and add an #{array ? "array of texts" : "text"}
                 column named `#{name}` to the `#{table.schema.name}'.'#{table.name}` table.
               DESCRIPTION
 
@@ -34,8 +34,8 @@ module Platformer
               # the default value for this column, or null if one was not provided
               default = reader.default&.default
 
-              # the data type of the column
-              data_type = array ? :"integer[]" : :integer
+              # The data type of the column.
+              data_type = array ? :"text[]" : :text
 
               # add the column to the DynamicMigrations table
               table.add_column name, data_type, null: allow_null, default: default, description: comment_text

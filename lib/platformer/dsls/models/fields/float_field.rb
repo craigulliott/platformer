@@ -18,7 +18,7 @@ module Platformer
               # add an optional attribute which can be used to
               # denote this as an array of floats
               optional :array, :boolean do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   If true, then this field will be an array of floats, and
                   will be backed by a `real[]` type in PostgreSQL.
                 DESCRIPTION

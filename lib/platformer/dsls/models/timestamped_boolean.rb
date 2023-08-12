@@ -4,7 +4,7 @@ module Platformer
       module Deletable
         def self.included klass
           klass.define_dsl :timestamped_boolean do
-            description <<-DESCRIPTION
+            description <<~DESCRIPTION
               Timestamped booleans are boolean field which also include a
               timestamp for when the state was set.
 
@@ -21,7 +21,7 @@ module Platformer
             DESCRIPTION
 
             required :past_participle, :symbol do
-              description <<-DESCRIPTION
+              description <<~DESCRIPTION
                 The name of this timestamped boolean, such as added,
                 published, claimed or revoked.
               DESCRIPTION

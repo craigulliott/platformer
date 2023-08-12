@@ -6,7 +6,7 @@ module Platformer
           def self.included klass
             klass.define_dsl :has_one do
               requires :name, :class do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   todo
                 DESCRIPTION
               end

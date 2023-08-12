@@ -17,7 +17,7 @@ module Platformer
             # for each time the :float_field DSL was used on this Model
             for_dsl_or_inherited_dsl :float_field do |name:, array:, reader:|
               # update the dynamic documentation
-              description <<-DESCRIPTION
+              description <<~DESCRIPTION
                 Update DynamicMigrations and add an #{array ? "array of floats" : "float"}
                 column named `#{name}` to the `#{table.schema.name}'.'#{table.name}` table.
               DESCRIPTION

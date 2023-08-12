@@ -20,7 +20,7 @@ module Platformer
               # add an optional attribute which can be used to
               # denote this as an array of integers
               optional :array, :boolean do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   If true, then this field will be an array of integers, and
                   will be backed by an `integer[]` type in PostgreSQL.
                 DESCRIPTION
@@ -44,14 +44,14 @@ module Platformer
               #
               # assert the number is an even number
               add_method :validate_even do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Ensure that the value provided to this field is even. This will
                   create an active record validation, a database constraint and
                   will be used in API validation and generated documentation.
                 DESCRIPTION
 
                 optional :message, :string do
-                  description <<-DESCRIPTION
+                  description <<~DESCRIPTION
                     The message which will be raised if the validation fails.
                   DESCRIPTION
                 end
@@ -59,14 +59,14 @@ module Platformer
 
               # assert the number is an odd number
               add_method :validate_odd do
-                description <<-DESCRIPTION
+                description <<~DESCRIPTION
                   Ensure that the value provided to this field is odd. This will
                   create an active record validation, a database constraint and
                   will be used in API validation and generated documentation.
                 DESCRIPTION
 
                 optional :message, :string do
-                  description <<-DESCRIPTION
+                  description <<~DESCRIPTION
                     The message which will be raised if the validation fails.
                   DESCRIPTION
                 end

@@ -4,7 +4,7 @@ module Platformer
       module Deletable
         def self.included klass
           klass.define_dsl :audit_log do
-            description <<-DESCRIPTION
+            description <<~DESCRIPTION
               When used on a model definition, this method will allow the model
               to be soft deleted. Soft deletable models have `undeleted` (null | true)
               and `deleted_at` (null | timestamp) columns in their associated postgres
@@ -19,7 +19,7 @@ module Platformer
             DESCRIPTION
 
             optional :undeletable, :boolean do
-              description <<-DESCRIPTION
+              description <<~DESCRIPTION
                 If set to true, then mechanisms and permissions will be added which allow
                 soft deletable models to be undeleted
               DESCRIPTION

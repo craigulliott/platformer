@@ -58,7 +58,7 @@ module Platformer
       # add a section of documentation
       def text documentation
         unless documentation.nil? || documentation == ""
-          markdown = sanitize_section documentation
+          markdown = documentation.strip
           sections << markdown
           markdown
         end
@@ -67,9 +67,9 @@ module Platformer
       # add a code block
       def code syntax, language = :ruby
         unless syntax.nil? || syntax == ""
-          markdown = sanitize_section <<-CODEBLOCK
+          markdown = <<~CODEBLOCK.strip
             ```#{language}
-            #{sanitize_section syntax}
+            #{syntax}
             ```
           CODEBLOCK
           sections << markdown
@@ -92,22 +92,6 @@ module Platformer
       # change snake case and lowercase space selerated words into title case
       def titleize string
         string.to_s.split(/_| /).map { |word| word[0] && (word[0].upcase + word[1..-1]) }.join(" ").strip
-      end
-
-      # This method is used to trim empty lines from the start and end of
-      # a block of markdown, it will also fix the indentation of heredoc
-      # strings by removing the leading whitespace from the first line, and
-      # that same amount of white space from every other line
-      def sanitize_section string
-        # replace all tabs with spaces
-        string = string.gsub(/\t/, "  ")
-        # remove empty lines from the start of the string
-        string = string.gsub(/\A( *\n)+/, "")
-        # remove empty lines from the end of the string
-        string = string.gsub(/( *\n)+\Z/, "")
-        # removes the number of leading spaces on the first line, from
-        # all the other lines
-        string.gsub(/^#{string[/\A */]}/, "")
       end
     end
   end
