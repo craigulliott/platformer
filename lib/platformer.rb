@@ -11,6 +11,10 @@ require "platformer/databases"
 require "platformer/databases/postgres/server"
 require "platformer/databases/postgres/server/database"
 require "platformer/databases/configuration"
+require "platformer/databases/migrations"
+require "platformer/databases/migrations/migration_file"
+require "platformer/databases/migrations/current"
+require "platformer/databases/migrations/current/loader"
 
 require "active_record"
 Dir[File.expand_path "lib/active_record/**/*.rb"].each do |f|

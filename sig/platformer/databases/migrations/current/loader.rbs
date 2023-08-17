@@ -1,0 +1,21 @@
+# TypeProf 0.21.7
+
+# Classes
+module Platformer
+  module Databases
+    class Migrations
+      class Current
+        class Loader
+          MIGRATION_PATH_REGEX: Regexp
+          @base_path: Pathname
+
+          def initialize: (Pathname base_path) -> void
+          def migrations: -> Array[MigrationFile]
+
+          class UnexpectedMigrationFile < StandardError
+          end
+        end
+      end
+    end
+  end
+end

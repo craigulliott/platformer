@@ -1,0 +1,32 @@
+# TypeProf 0.21.7
+
+# Classes
+module Platformer
+  module Databases
+    class Migrations
+      class Current
+        @migrations_by_timestamp: Hash[untyped, untyped]
+        @migrations_by_name: Hash[untyped, Hash[untyped, untyped]]
+
+        def initialize: (Pathname base_path) -> void
+        def create_migration: (base_path: Pathname, type: Symbol, server_name: Symbol, database_name: Symbol, schema_name: Symbol, name: Symbol, ?contents: nil | String) -> Migration
+        def migrations: -> Array[Migration]
+
+        private
+        def generate_timestamp: -> Integer
+        def most_recent_timestamp: -> Integer
+        def generate_name: (Symbol type, Symbol server_name, Symbol database_name, Symbol schema_name, Symbol name) -> Symbol
+        def add_migration: (Migration migration) -> Migration
+        def add_migration_by_timestamp: (Migration migration) -> Migration
+        def add_migration_by_name_and_path: (Migration migration) -> Migration
+        def migration_name_exists?: (Symbol type, Symbol server_name, Symbol database_name, Symbol schema_name, Symbol name) -> bool
+
+        class DuplicateMigrationTimestampError < StandardError
+        end
+
+        class DuplicateMigrationNameError < StandardError
+        end
+      end
+    end
+  end
+end

@@ -1,0 +1,34 @@
+# TypeProf 0.21.7
+
+# Classes
+module Platformer
+  module Databases
+    class Migrations
+      class MigrationFile
+        attr_reader base_path: Pathname
+        attr_reader type: Symbol
+        attr_reader server_name: Symbol
+        attr_reader database_name: Symbol
+        attr_reader schema_name: Symbol
+        attr_reader timestamp: Integer
+        attr_reader name: Symbol
+
+        def initialize: (base_path: Pathname, type: Symbol, server_name: Symbol, database_name: Symbol, schema_name: Symbol, timestamp: untyped, name: Symbol) -> void
+        def create_file: (String migration_contents) -> void
+        def create_file_folders: -> void
+        def contents: -> String
+        def exists_on_disk?: -> bool
+
+        private
+        def full_path: -> Pathname
+        def relative_path: -> String
+
+        class MissingMigrationContentsError < StandardError
+        end
+
+        class MigrationFileAlreadyExistsError < StandardError
+        end
+      end
+    end
+  end
+end

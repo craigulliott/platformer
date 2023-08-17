@@ -1,0 +1,4 @@
+require "platformer"
+
+path = File.expand_path(__dir__)
+Dir.glob("#{path}/platformer/tasks/**/*.rake").each { |f| import f }

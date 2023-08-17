@@ -69,4 +69,54 @@ RSpec.describe Platformer::Databases::Postgres::Server do
       expect(server.default_database.name).to eql(database_configuration["postgres"]["primary"]["default_database"].to_sym)
     end
   end
+
+  describe :databases do
+    it "returns an empty array because no databases have been configured" do
+      expect(server.databases).to eql []
+    end
+
+    describe "after two databases have been configured" do
+      let(:foo_database) { server.database(:foo_database) }
+      let(:bar_database) { server.database(:bar_database) }
+
+      before do
+        foo_database
+        bar_database
+      end
+
+      it "returns an array of the expected Databases" do
+        expect(server.databases).to eql [foo_database, bar_database]
+      end
+    end
+  end
+
+  describe :database_names do
+    it "returns an empty array because no databases have been configured" do
+      expect(server.database_names).to eql []
+    end
+
+    describe "after two databases have been configured" do
+      let(:foo_database) { server.database(:foo_database) }
+      let(:bar_database) { server.database(:bar_database) }
+
+      before do
+        foo_database
+        bar_database
+      end
+
+      it "returns an array of the expected Database names" do
+        expect(server.database_names).to eql [:foo_database, :bar_database]
+      end
+    end
+  end
+
+  describe :with_connection do
+    it "yields with a connection argument" do
+      connection = nil
+      server.with_connection do |c|
+        connection = c
+      end
+      expect(connection).to be_a(PG::Connection)
+    end
+  end
 end
