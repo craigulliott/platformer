@@ -33,16 +33,30 @@ module Platformer
 
         module HasZeroToNullCoersions
           def write_attribute(attr_name, value)
-            if self.class.zero_to_null_coercion_attribute?(attr_name.to_s) && value == 0
-              value = nil
+            if self.class.zero_to_null_coercion_attribute?(attr_name.to_s)
+              # standard columns
+              if value == 0
+                value = nil
+
+              # array columns
+              elsif value.is_a?(Array)
+                value = value.map { |v| (v == 0) ? nil : v }
+              end
             end
 
             super
           end
 
           def _write_attribute(attr_name, value)
-            if self.class.zero_to_null_coercion_attribute?(attr_name.to_s) && value == 0
-              value = nil
+            if self.class.zero_to_null_coercion_attribute?(attr_name.to_s)
+              # standard columns
+              if value == 0
+                value = nil
+
+              # array columns
+              elsif value.is_a?(Array)
+                value = value.map { |v| (v == 0) ? nil : v }
+              end
             end
 
             super

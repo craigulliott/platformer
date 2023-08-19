@@ -91,7 +91,7 @@ module Platformer
 
       # change snake case and lowercase space selerated words into title case
       def titleize string
-        string.to_s.split(/_| /).map { |word| word[0] && (word[0].upcase + word[1..-1]) }.join(" ").strip
+        string.to_s.split(/_| /).map { |word| word[0] && (word[0].upcase + word[1..]) }.join(" ").strip
       end
     end
   end

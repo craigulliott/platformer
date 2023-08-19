@@ -2,16 +2,15 @@
 module Platformer
   module Databases
     class Migrations
-      @base_path: untyped
-      @current_migrations: untyped
-      @loader: bot
+      @base_path: Pathname
+      @current: Current
 
-      def initialize: (untyped base_path) -> void
+      def initialize: (Pathname base_path) -> void
       def generate_migration_files: () -> void
 
       private
       def current: -> Current
-      def load_database_structure: -> untyped
+      def load_database_structure: -> void
     end
   end
 end

@@ -9,18 +9,30 @@ module Platformer
           for_children_of PlatformModel do |child_class:|
             model = ClassMap.get_active_record_class_from_model_class(child_class)
 
-            for_dsl [:integer_field, :float_field, :double_field, :numeric_field] do |name:|
+            for_dsl [:integer_field, :float_field, :double_field, :numeric_field] do |array:, name:|
               for_method :zero_to_null do
                 description <<~DESCRIPTION
                   Create a before_validation callback on this active_record class which
-                  will convert `#{name}` into null if it has a value equal to 0.
+                  will convert #{array ? "all values of 0" : "the value 0"} in the `#{name}`
+                  field into null. This logic is also injected into ActiveRecord
+                  and overrides the write_attribute method, this will ensure that the coercion
+                  happens even if callbacks are skipped.
                 DESCRIPTION
 
                 # add the before_validation callback to the active record class
-                model.before_validation do
-                  value = send(name)
-                  if value == 0
-                    send "#{name}=", nil
+                if array
+                  model.before_validation do
+                    value = send(name)
+                    if value.is_a?(Array)
+                      send "#{name}=", value.map { |v| (v == 0) ? nil : v }
+                    end
+                  end
+                else
+                  model.before_validation do
+                    value = send(name)
+                    if value == 0
+                      send "#{name}=", nil
+                    end
                   end
                 end
 

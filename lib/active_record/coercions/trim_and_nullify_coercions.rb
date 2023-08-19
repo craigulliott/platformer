@@ -33,18 +33,36 @@ module Platformer
 
         module HasTrimAndNullifyCoersions
           def write_attribute(attr_name, value)
-            if self.class.trim_and_nullify_coercion_attribute?(attr_name.to_s) && !value.nil?
-              value = value.strip
-              value = nil if value == ""
+            if self.class.trim_and_nullify_coercion_attribute?(attr_name.to_s)
+              # array columns
+              if value.is_a?(Array)
+                # strip whitespace from the front and back, and convert
+                # empty strings to null
+                value = value.map { |v| v.is_a?(String) ? v.strip : v }.map { |v| (v == "") ? nil : v }
+
+              # standard columns (not arrays)
+              elsif value.is_a? String
+                value = value.strip
+                value = nil if value == ""
+              end
             end
 
             super
           end
 
           def _write_attribute(attr_name, value)
-            if self.class.trim_and_nullify_coercion_attribute?(attr_name.to_s) && !value.nil?
-              value = value.strip
-              value = nil if value == ""
+            if self.class.trim_and_nullify_coercion_attribute?(attr_name.to_s)
+              # array columns
+              if value.is_a?(Array)
+                # strip whitespace from the front and back, and convert
+                # empty strings to null
+                value = value.map { |v| v.is_a?(String) ? v.strip : v }.map { |v| (v == "") ? nil : v }
+
+              # standard columns (not arrays)
+              elsif value.is_a? String
+                value = value.strip
+                value = nil if value == ""
+              end
             end
 
             super

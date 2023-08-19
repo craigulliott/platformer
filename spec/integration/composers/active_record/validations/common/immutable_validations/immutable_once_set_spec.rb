@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Platformer::Composers::ActiveRecord::Validations::ImmutableValidations do
+RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::ImmutableValidations do
   let(:pg_helper) { RSpec.configuration.pg_spec_helper }
 
   before(:each) do
@@ -24,13 +24,14 @@ RSpec.describe Platformer::Composers::ActiveRecord::Validations::ImmutableValida
       # create a definition for a new User
       create_class "Users::UserModel", TestBaseModel do
         integer_field :foo do
+          allow_null
           immutable_once_set
         end
       end
 
       # now that the UserModel has been created, we rerun the relevant composers
       Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
-      Platformer::Composers::ActiveRecord::Validations::ImmutableValidations.rerun
+      Platformer::Composers::ActiveRecord::Validations::Common::ImmutableValidations.rerun
     end
 
     after(:each) do

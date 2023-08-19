@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Platformer::Composers::ActiveRecord::Validations::NumericValidations do
+RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::NumericValidations do
   let(:pg_helper) { RSpec.configuration.pg_spec_helper }
 
   before(:each) do
@@ -29,7 +29,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::Validations::NumericValidati
 
       # now that the UserModel has been created, we rerun the relevant composers
       Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
-      Platformer::Composers::ActiveRecord::Validations::NumericValidations.rerun
+      Platformer::Composers::ActiveRecord::Validations::Common::NumericValidations.rerun
     end
 
     after(:each) do

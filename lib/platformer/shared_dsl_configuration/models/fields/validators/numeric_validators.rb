@@ -22,9 +22,20 @@ module Platformer
                     DESCRIPTION
                   end
 
+                  # add `deferrable: boolean` and `initially_deferred: boolean` options
+                  import_shared :deferrable_constraint
+
                   optional :message, :string do
                     description <<~DESCRIPTION
-                      The message which will be raised if the validation fails.
+                      The message which will be displayed if the validation fails.
+                    DESCRIPTION
+                  end
+
+                  optional :comment, :string do
+                    description <<~DESCRIPTION
+                      A comment which explains the reason for this validation
+                      on this field. This will be used to generate documentation,
+                      and will be added as a comment to the database constraint.
                     DESCRIPTION
                   end
                 end
@@ -44,9 +55,20 @@ module Platformer
                     DESCRIPTION
                   end
 
+                  # add `deferrable: boolean` and `initially_deferred: boolean` options
+                  import_shared :deferrable_constraint
+
                   optional :message, :string do
                     description <<~DESCRIPTION
-                      The message which will be raised if the validation fails.
+                      The message which will be displayed if the validation fails.
+                    DESCRIPTION
+                  end
+
+                  optional :comment, :string do
+                    description <<~DESCRIPTION
+                      A comment which explains the reason for this validation
+                      on this field. This will be used to generate documentation,
+                      and will be added as a comment to the database constraint.
                     DESCRIPTION
                   end
                 end
@@ -66,9 +88,20 @@ module Platformer
                     DESCRIPTION
                   end
 
+                  # add `deferrable: boolean` and `initially_deferred: boolean` options
+                  import_shared :deferrable_constraint
+
                   optional :message, :string do
                     description <<~DESCRIPTION
-                      The message which will be raised if the validation fails.
+                      The message which will be displayed if the validation fails.
+                    DESCRIPTION
+                  end
+
+                  optional :comment, :string do
+                    description <<~DESCRIPTION
+                      A comment which explains the reason for this validation
+                      on this field. This will be used to generate documentation,
+                      and will be added as a comment to the database constraint.
                     DESCRIPTION
                   end
                 end
@@ -88,9 +121,20 @@ module Platformer
                     DESCRIPTION
                   end
 
+                  # add `deferrable: boolean` and `initially_deferred: boolean` options
+                  import_shared :deferrable_constraint
+
                   optional :message, :string do
                     description <<~DESCRIPTION
-                      The message which will be raised if the validation fails.
+                      The message which will be displayed if the validation fails.
+                    DESCRIPTION
+                  end
+
+                  optional :comment, :string do
+                    description <<~DESCRIPTION
+                      A comment which explains the reason for this validation
+                      on this field. This will be used to generate documentation,
+                      and will be added as a comment to the database constraint.
                     DESCRIPTION
                   end
                 end
@@ -110,9 +154,20 @@ module Platformer
                     DESCRIPTION
                   end
 
+                  # add `deferrable: boolean` and `initially_deferred: boolean` options
+                  import_shared :deferrable_constraint
+
                   optional :message, :string do
                     description <<~DESCRIPTION
-                      The message which will be raised if the validation fails.
+                      The message which will be displayed if the validation fails.
+                    DESCRIPTION
+                  end
+
+                  optional :comment, :string do
+                    description <<~DESCRIPTION
+                      A comment which explains the reason for this validation
+                      on this field. This will be used to generate documentation,
+                      and will be added as a comment to the database constraint.
                     DESCRIPTION
                   end
                 end
@@ -132,9 +187,20 @@ module Platformer
                     DESCRIPTION
                   end
 
+                  # add `deferrable: boolean` and `initially_deferred: boolean` options
+                  import_shared :deferrable_constraint
+
                   optional :message, :string do
                     description <<~DESCRIPTION
-                      The message which will be raised if the validation fails.
+                      The message which will be displayed if the validation fails.
+                    DESCRIPTION
+                  end
+
+                  optional :comment, :string do
+                    description <<~DESCRIPTION
+                      A comment which explains the reason for this validation
+                      on this field. This will be used to generate documentation,
+                      and will be added as a comment to the database constraint.
                     DESCRIPTION
                   end
                 end
@@ -154,9 +220,20 @@ module Platformer
                     DESCRIPTION
                   end
 
+                  # add `deferrable: boolean` and `initially_deferred: boolean` options
+                  import_shared :deferrable_constraint
+
                   optional :message, :string do
                     description <<~DESCRIPTION
-                      The message which will be raised if the validation fails.
+                      The message which will be displayed if the validation fails.
+                    DESCRIPTION
+                  end
+
+                  optional :comment, :string do
+                    description <<~DESCRIPTION
+                      A comment which explains the reason for this validation
+                      on this field. This will be used to generate documentation,
+                      and will be added as a comment to the database constraint.
                     DESCRIPTION
                   end
                 end

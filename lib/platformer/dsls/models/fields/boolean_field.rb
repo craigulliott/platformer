@@ -5,7 +5,7 @@ module Platformer
         module BooleanField
           def self.included klass
             klass.define_dsl :boolean_field do
-              description "Add an boolean field to this model."
+              description "Add a boolean field to this model."
 
               # the name of the field
               requires :name, :symbol do
@@ -32,9 +32,11 @@ module Platformer
 
               # Common methods which are shared between fields
               import_shared :allow_null
+              import_shared :empty_array_to_null_coercion
               import_shared :unique_field
               import_shared :field_comment
               import_shared :immutable_validators
+              import_shared :remove_null_array_values_coercion
 
               # boolean specific validations
               #
@@ -49,6 +51,14 @@ module Platformer
                     The message which will be raised if the validation fails.
                   DESCRIPTION
                 end
+
+                optional :comment, :string do
+                  description <<~DESCRIPTION
+                    A comment which explains the reason for this validation
+                    on this field. This will be used to generate documentation,
+                    and will be added as a comment to the database constraint.
+                  DESCRIPTION
+                end
               end
 
               # assert the boolean is false
@@ -60,6 +70,14 @@ module Platformer
                 optional :message, :string do
                   description <<~DESCRIPTION
                     The message which will be raised if the validation fails.
+                  DESCRIPTION
+                end
+
+                optional :comment, :string do
+                  description <<~DESCRIPTION
+                    A comment which explains the reason for this validation
+                    on this field. This will be used to generate documentation,
+                    and will be added as a comment to the database constraint.
                   DESCRIPTION
                 end
               end

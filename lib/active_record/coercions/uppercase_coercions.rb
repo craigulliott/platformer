@@ -33,16 +33,30 @@ module Platformer
 
         module HasUppercaseCoersions
           def write_attribute(attr_name, value)
-            if self.class.uppercase_coercion_attribute?(attr_name.to_s) && !value.nil?
-              value = value.to_s.upcase
+            if self.class.uppercase_coercion_attribute?(attr_name.to_s)
+              # array columns
+              if value.is_a?(Array)
+                value = value.map(&:upcase)
+
+              # standard columns
+              elsif !value.nil?
+                value = value.to_s.upcase
+              end
             end
 
             super
           end
 
           def _write_attribute(attr_name, value)
-            if self.class.uppercase_coercion_attribute?(attr_name.to_s) && !value.nil?
-              value = value.to_s.upcase
+            if self.class.uppercase_coercion_attribute?(attr_name.to_s)
+              # array columns
+              if value.is_a?(Array)
+                value = value.map(&:upcase)
+
+              # standard columns
+              elsif !value.nil?
+                value = value.to_s.upcase
+              end
             end
 
             super

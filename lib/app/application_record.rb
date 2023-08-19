@@ -9,4 +9,8 @@ class ApplicationRecord < ActiveRecord::Base
   include Platformer::ActiveRecord::Coercions::LowercaseCoercions
   include Platformer::ActiveRecord::Coercions::TrimAndNullifyCoercions
   include Platformer::ActiveRecord::Coercions::ZeroToNullCoercions
+  # this coercion should come after other coercions which manipulate array values
+  include Platformer::ActiveRecord::Coercions::RemoveNullArrayValuesCoercions
+  # this coercion should come last, because other coercions may remove items
+  include Platformer::ActiveRecord::Coercions::EmptyArrayToNullCoercions
 end

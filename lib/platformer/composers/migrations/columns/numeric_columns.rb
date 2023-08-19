@@ -6,6 +6,9 @@ module Platformer
       module Columns
         # Add all numeric columns to their respective tables within DynamicMigrations
         class NumericColumns < DSLCompose::Parser
+          class PrecisionMustBeProvidedError < StandardError
+          end
+
           # Process the parser for every decendant of PlatformModel which does not have
           # it's own decendents. These represent Models which will have a coresponding
           # ActiveRecord class created for them, and thus a table within the database
@@ -37,7 +40,7 @@ module Platformer
               # The data type of the column.
               if precision.nil?
                 unless scale.nil?
-                  raise "Precision must be provided if scale is provided"
+                  raise PrecisionMustBeProvided, "Precision must be provided if scale is provided"
                 end
                 data_type = "numeric"
               else

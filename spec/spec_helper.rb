@@ -8,7 +8,7 @@ require "class_spec_helper"
 require "pg_spec_helper"
 
 # active record logging
-ActiveRecord::Base.logger = Logger.new(STDOUT)
+ActiveRecord::Base.logger = Logger.new($stdout)
 
 CLASS_SPEC_HELPER = ClassSpecHelper.new
 

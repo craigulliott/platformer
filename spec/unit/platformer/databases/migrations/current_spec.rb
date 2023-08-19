@@ -30,8 +30,7 @@ RSpec.describe Platformer::Databases::Migrations::Current do
 
   describe :create_migration do
     it "adds a new migration to the list and saves it to disk" do
-      current.create_migration base_path: base_path,
-        type: :postgres,
+      current.create_migration type: :postgres,
         server_name: :test_server,
         database_name: :test_database,
         schema_name: :test_schema,
@@ -47,8 +46,7 @@ RSpec.describe Platformer::Databases::Migrations::Current do
 
     describe "after a migration has been created" do
       before(:each) do
-        current.create_migration base_path: base_path,
-          type: :postgres,
+        current.create_migration type: :postgres,
           server_name: :test_server,
           database_name: :test_database,
           schema_name: :test_schema,
@@ -59,8 +57,7 @@ RSpec.describe Platformer::Databases::Migrations::Current do
       end
 
       it "adds a number to automatically increment the migration name if it collides with the migration which already exists" do
-        current.create_migration base_path: base_path,
-          type: :postgres,
+        current.create_migration type: :postgres,
           server_name: :test_server,
           database_name: :test_database,
           schema_name: :test_schema,
@@ -85,8 +82,7 @@ RSpec.describe Platformer::Databases::Migrations::Current do
 
     describe "after a migration has been created" do
       before(:each) do
-        current.create_migration base_path: base_path,
-          type: :postgres,
+        current.create_migration type: :postgres,
           server_name: :test_server,
           database_name: :test_database,
           schema_name: :test_schema,

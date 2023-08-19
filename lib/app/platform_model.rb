@@ -29,6 +29,7 @@ class PlatformModel < PlatformBase
   # text
   include Platformer::DSLs::Models::Fields::TextField
   include Platformer::DSLs::Models::Fields::CharField
+  include Platformer::DSLs::Models::Fields::CitextField
   # enums
   include Platformer::DSLs::Models::Fields::EnumField
   # JSON

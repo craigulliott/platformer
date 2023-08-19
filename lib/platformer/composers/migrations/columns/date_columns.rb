@@ -39,6 +39,7 @@ module Platformer
 
               # add the column to the DynamicMigrations table
               table.add_column name, data_type, null: allow_null, default: default, description: comment_text
+
             end
           end
         end

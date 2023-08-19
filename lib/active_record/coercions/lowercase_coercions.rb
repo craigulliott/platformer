@@ -33,16 +33,30 @@ module Platformer
 
         module HasLowercaseCoersions
           def write_attribute(attr_name, value)
-            if self.class.lowercase_coercion_attribute?(attr_name.to_s) && !value.nil?
-              value = value.to_s.downcase
+            if self.class.lowercase_coercion_attribute?(attr_name.to_s)
+              # array columns
+              if value.is_a?(Array)
+                value = value.map(&:downcase)
+
+              # standard columns
+              elsif !value.nil?
+                value = value.to_s.downcase
+              end
             end
 
             super
           end
 
           def _write_attribute(attr_name, value)
-            if self.class.lowercase_coercion_attribute?(attr_name.to_s) && !value.nil?
-              value = value.to_s.downcase
+            if self.class.lowercase_coercion_attribute?(attr_name.to_s)
+              # array columns
+              if value.is_a?(Array)
+                value = value.map(&:downcase)
+
+              # standard columns
+              elsif !value.nil?
+                value = value.to_s.downcase
+              end
             end
 
             super
