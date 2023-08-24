@@ -2,7 +2,7 @@ module Platformer
   module DSLs
     module Models
       module Fields
-        module JSONField
+        module JsonField
           def self.included klass
             klass.define_dsl :json_field do
               description <<~DESCRIPTION
@@ -26,6 +26,14 @@ module Platformer
                   to null. This coercion logic will be installed into active record,
                   the API and the database as a stored procedure.
                 DESCRIPTION
+
+                optional :comment, :string do
+                  description <<~DESCRIPTION
+                    A comment which explains the reason for adding coercing empty arrays
+                    to null on this field. This will be used to generate documentation,
+                    and will be added as a comment to the database constraint.
+                  DESCRIPTION
+                end
               end
 
               # Methods

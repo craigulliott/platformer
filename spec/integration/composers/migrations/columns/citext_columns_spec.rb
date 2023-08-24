@@ -10,9 +10,9 @@ RSpec.describe Platformer::Composers::Migrations::Columns::CitextColumns do
       end
     end
 
-    describe "with a citext column named foo" do
+    describe "with a citext column named my_citext" do
       before(:each) do
-        Users::UserModel.citext_field :foo
+        Users::UserModel.citext_field :my_citext
       end
 
       it "creates the expected columns within the DynamicMigrations table" do
@@ -22,18 +22,18 @@ RSpec.describe Platformer::Composers::Migrations::Columns::CitextColumns do
         Platformer::Composers::Migrations::Columns::CitextColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :citext
+        expect(table.has_column?(:my_citext)).to be true
+        expect(table.column(:my_citext).data_type).to be :citext
         # check for the expected defaults
-        expect(table.column(:foo).null).to be false
-        expect(table.column(:foo).description).to be_nil
-        expect(table.column(:foo).default).to be_nil
+        expect(table.column(:my_citext).null).to be false
+        expect(table.column(:my_citext).description).to be_nil
+        expect(table.column(:my_citext).default).to be_nil
       end
     end
 
-    describe "with a citext column named foo that has a default, allows null and has a comment" do
+    describe "with a citext column named my_citext that has a default, allows null and has a comment" do
       before(:each) do
-        Users::UserModel.citext_field :foo do
+        Users::UserModel.citext_field :my_citext do
           allow_null
           comment "This is a comment"
           default "Hi Katy!"
@@ -47,18 +47,18 @@ RSpec.describe Platformer::Composers::Migrations::Columns::CitextColumns do
         Platformer::Composers::Migrations::Columns::CitextColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :citext
+        expect(table.has_column?(:my_citext)).to be true
+        expect(table.column(:my_citext).data_type).to be :citext
         # check for the expected values
-        expect(table.column(:foo).null).to be true
-        expect(table.column(:foo).description).to eq "This is a comment"
-        expect(table.column(:foo).default).to eq "Hi Katy!"
+        expect(table.column(:my_citext).null).to be true
+        expect(table.column(:my_citext).description).to eq "This is a comment"
+        expect(table.column(:my_citext).default).to eq "Hi Katy!"
       end
     end
 
-    describe "with an array of citexts column named foo" do
+    describe "with an array of citexts column named my_citext" do
       before(:each) do
-        Users::UserModel.citext_field :foo, array: true
+        Users::UserModel.citext_field :my_citext, array: true
       end
 
       it "creates the expected columns within the DynamicMigrations table" do
@@ -68,8 +68,8 @@ RSpec.describe Platformer::Composers::Migrations::Columns::CitextColumns do
         Platformer::Composers::Migrations::Columns::CitextColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :"citext[]"
+        expect(table.has_column?(:my_citext)).to be true
+        expect(table.column(:my_citext).data_type).to be :"citext[]"
       end
     end
   end

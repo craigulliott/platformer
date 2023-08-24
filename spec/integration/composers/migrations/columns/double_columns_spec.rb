@@ -10,9 +10,9 @@ RSpec.describe Platformer::Composers::Migrations::Columns::DoubleColumns do
       end
     end
 
-    describe "with a double column named foo" do
+    describe "with a double column named my_double" do
       before(:each) do
-        Users::UserModel.double_field :foo
+        Users::UserModel.double_field :my_double
       end
 
       it "creates the expected columns within the DynamicMigrations table" do
@@ -22,18 +22,18 @@ RSpec.describe Platformer::Composers::Migrations::Columns::DoubleColumns do
         Platformer::Composers::Migrations::Columns::DoubleColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :"double precision"
+        expect(table.has_column?(:my_double)).to be true
+        expect(table.column(:my_double).data_type).to be :"double precision"
         # check for the expected defaults
-        expect(table.column(:foo).null).to be false
-        expect(table.column(:foo).description).to be_nil
-        expect(table.column(:foo).default).to be_nil
+        expect(table.column(:my_double).null).to be false
+        expect(table.column(:my_double).description).to be_nil
+        expect(table.column(:my_double).default).to be_nil
       end
     end
 
-    describe "with a double column named foo that has a default, allows null and has a comment" do
+    describe "with a double column named my_double that has a default, allows null and has a comment" do
       before(:each) do
-        Users::UserModel.double_field :foo do
+        Users::UserModel.double_field :my_double do
           allow_null
           comment "This is a comment"
           default 5
@@ -47,18 +47,18 @@ RSpec.describe Platformer::Composers::Migrations::Columns::DoubleColumns do
         Platformer::Composers::Migrations::Columns::DoubleColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :"double precision"
+        expect(table.has_column?(:my_double)).to be true
+        expect(table.column(:my_double).data_type).to be :"double precision"
         # check for the expected values
-        expect(table.column(:foo).null).to be true
-        expect(table.column(:foo).description).to eq "This is a comment"
-        expect(table.column(:foo).default).to eq 5
+        expect(table.column(:my_double).null).to be true
+        expect(table.column(:my_double).description).to eq "This is a comment"
+        expect(table.column(:my_double).default).to eq 5
       end
     end
 
-    describe "with an array of doubles column named foo" do
+    describe "with an array of doubles column named my_double" do
       before(:each) do
-        Users::UserModel.double_field :foo, array: true
+        Users::UserModel.double_field :my_double, array: true
       end
 
       it "creates the expected columns within the DynamicMigrations table" do
@@ -68,8 +68,8 @@ RSpec.describe Platformer::Composers::Migrations::Columns::DoubleColumns do
         Platformer::Composers::Migrations::Columns::DoubleColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :"double precision[]"
+        expect(table.has_column?(:my_double)).to be true
+        expect(table.column(:my_double).data_type).to be :"double precision[]"
       end
     end
   end

@@ -53,6 +53,8 @@ module Platformer
               import_shared :case_coercions
               import_shared :trim_and_nullify_coercion
               import_shared :remove_null_array_values_coercion
+              import_shared :string_validators
+              import_shared :comparison_validators
             end
           end
         end

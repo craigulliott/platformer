@@ -14,7 +14,7 @@ module Platformer
             \/(?<type>[a-z_]+)
             \/(?<server_name>[a-z_]+)
             \/(?<database_name>[a-z_]+)
-            \/(?<schema_name>[a-z_]+)
+            (?<optional_schema>\/(?<schema_name>[a-z_]+))? # schema is optional
             \/(?<timestamp>\d{14})
             _(?<name>[a-z_]+)
             \.rb
@@ -35,7 +35,7 @@ module Platformer
                   type: matches[:type].to_sym,
                   server_name: matches[:server_name].to_sym,
                   database_name: matches[:database_name].to_sym,
-                  schema_name: matches[:schema_name].to_sym,
+                  schema_name: matches[:schema_name]&.to_sym,
                   timestamp: matches[:timestamp].to_i,
                   name: matches[:name].to_sym
                 )

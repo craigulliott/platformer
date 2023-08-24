@@ -35,6 +35,10 @@ module Platformer
           # corresponding DSL) then the default database is used.
           database = dsl_reader.has_database_name? ? server.database(dsl_reader.database_name) : server.default_database
 
+          # add this configured database to the model class so that we can use it
+          # in the other migration composers
+          child_class.set_configured_database database
+
           # The database object has a reference to a corresponding DynamicMigrations
           # database object. We get this object, as we will be adding schema and tables to
           # it below.
@@ -60,10 +64,9 @@ module Platformer
 
           table_structure = schema.add_table table_name
 
-          # add this child_class and table_strcuture pair to the
-          # ModelToTableStructure class, this will provide faster
-          # retrieval for the other migration composers
-          ModelToTableStructure.add child_class, table_structure
+          # add this table_strcuture to the model class so that we can use it
+          # in the other migration composers
+          child_class.set_table_structure table_structure
         end
       end
     end

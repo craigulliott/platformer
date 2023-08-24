@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::ImmutableValidations do
+RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::Immutable do
   let(:pg_helper) { RSpec.configuration.pg_spec_helper }
 
   before(:each) do
@@ -30,7 +30,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::Immutab
 
       # now that the UserModel has been created, we rerun the relevant composers
       Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
-      Platformer::Composers::ActiveRecord::Validations::Common::ImmutableValidations.rerun
+      Platformer::Composers::ActiveRecord::Validations::Common::Immutable.rerun
     end
 
     after(:each) do

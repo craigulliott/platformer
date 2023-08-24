@@ -5,38 +5,17 @@ module Platformer
     module Migrations
       module Columns
         # Add all json columns to their respective tables within DynamicMigrations
-        class JSONColumns < DSLCompose::Parser
-          # Process the parser for every decendant of PlatformModel which does not have
-          # it's own decendents. These represent Models which will have a coresponding
-          # ActiveRecord class created for them, and thus a table within the database
-          for_final_children_of PlatformModel do |child_class:|
-            # the table structure object from DynamicMigrations, this was created and
-            # the result cached within the CreateStructure parser
-            table = ModelToTableStructure.get_table_structure child_class
+        class JsonColumns < FieldParser
+          for_field :json_field do |name:, table:, default:, comment_text:, allow_null:|
+            # update the dynamic documentation
+            description <<~DESCRIPTION
+              Update DynamicMigrations and add a json column named `#{name}`
+              to the `#{table.schema.name}'.'#{table.name}` table.
+              #{allow_null ? "This column can be null." : ""}
+            DESCRIPTION
 
-            # for each time the :json_field DSL was used on this Model
-            for_dsl_or_inherited_dsl :json_field do |name:, reader:|
-              # update the dynamic documentation
-              description <<~DESCRIPTION
-                Update DynamicMigrations and add a json column named `#{name}`
-                to the `#{table.schema.name}'.'#{table.name}` table.
-              DESCRIPTION
-
-              # is the column allowed to be null
-              allow_null = method_called? :allow_null
-              if allow_null
-                description "This column can be null."
-              end
-
-              # get the comment for this column, or null if one was not provided
-              comment_json = reader.comment&.comment
-
-              # the default value for this column, or null if one was not provided
-              default = reader.default&.default
-
-              # add the column to the DynamicMigrations table
-              table.add_column name, :json, null: allow_null, default: default, description: comment_json
-            end
+            # add the column to the DynamicMigrations table
+            table.add_column name, :jsonb, null: allow_null, default: default, description: comment_text
           end
         end
       end

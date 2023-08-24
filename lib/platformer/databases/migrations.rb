@@ -45,7 +45,7 @@ module Platformer
         Databases.servers(:postgres).each do |server|
           server.databases.each do |database|
             database.structure.connect
-            database.structure.recursively_build_schemas_from_database
+            database.structure.recursively_load_database_structure
             database.structure.disconnect
           end
         end

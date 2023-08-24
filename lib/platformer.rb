@@ -5,6 +5,28 @@ ENV["RACK_ENV"] ||= "development"
 require "dsl_compose"
 require "dynamic_migrations"
 
+# for generating uuids
+require "securerandom"
+
+# iso country codes and names (also provides international dialing codes)
+require "countries"
+
+# language ISO codes
+require "iso-639"
+
+# currency codes, money related functions, formatting and currency conversion
+require "money"
+
+# orm (ActiveRecord)
+require "active_record"
+
+# convenience method to simplify the requires below
+def recursive_require path
+  Dir[File.expand_path path].each do |f|
+    require_relative f
+  end
+end
+
 require "platformer/version"
 
 require "platformer/databases"
@@ -16,10 +38,9 @@ require "platformer/databases/migrations/migration_file"
 require "platformer/databases/migrations/current"
 require "platformer/databases/migrations/current/loader"
 
-require "active_record"
-Dir[File.expand_path "lib/active_record/**/*.rb"].each do |f|
-  require_relative f
-end
+recursive_require "lib/active_record/**/*.rb"
+
+recursive_require "lib/platformer/constants/**/*.rb"
 
 require "platformer/class_map"
 
@@ -30,17 +51,11 @@ require "platformer/documentation/composer_class_documenter"
 require "platformer/documentation/dsl_documenter"
 require "platformer/documentation/dsl_method_documenter"
 
-Dir[File.expand_path "lib/platformer/shared_dsl_configuration/**/*.rb"].each do |f|
-  require_relative f
-end
+recursive_require "lib/platformer/shared_dsl_configuration/**/*.rb"
 
-Dir[File.expand_path "lib/platformer/dsls/**/*.rb"].each do |f|
-  require_relative f
-end
+recursive_require "lib/platformer/dsls/**/*.rb"
 
-Dir[File.expand_path "lib/platformer/dsl_readers/**/*.rb"].each do |f|
-  require_relative f
-end
+recursive_require "lib/platformer/dsl_readers/**/*.rb"
 
 require "app/application_record"
 require "app/platform_base"
@@ -48,9 +63,20 @@ require "app/platform_model"
 require "app/platform_callback"
 require "app/platform_service"
 
-Dir[File.expand_path "lib/platformer/composers/**/*.rb"].each do |f|
-  require_relative f
-end
+require "platformer/composers/base_field_parser"
+require "platformer/composers/migrations/field_parser"
+require "platformer/composers/active_record/field_parser"
+
+# composers, run in the required order
+recursive_require "lib/platformer/composers/active_record/**/*.rb"
+recursive_require "lib/platformer/composers/graphql/**/*.rb"
+
+require "platformer/composers/migrations/create_structure"
+recursive_require "lib/platformer/composers/migrations/columns/**/*.rb"
+recursive_require "lib/platformer/composers/migrations/indexes/**/*.rb"
+recursive_require "lib/platformer/composers/migrations/associations/**/*.rb"
+# the rest can be run in any order (and it's safe to require them twice)
+recursive_require "lib/platformer/composers/**/*.rb"
 
 module Platformer
 end

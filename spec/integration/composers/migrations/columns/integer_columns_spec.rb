@@ -10,9 +10,9 @@ RSpec.describe Platformer::Composers::Migrations::Columns::IntegerColumns do
       end
     end
 
-    describe "with an integer column named foo" do
+    describe "with an integer column named my_integer" do
       before(:each) do
-        Users::UserModel.integer_field :foo
+        Users::UserModel.integer_field :my_integer
       end
 
       it "creates the expected columns within the DynamicMigrations table" do
@@ -22,18 +22,18 @@ RSpec.describe Platformer::Composers::Migrations::Columns::IntegerColumns do
         Platformer::Composers::Migrations::Columns::IntegerColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :integer
+        expect(table.has_column?(:my_integer)).to be true
+        expect(table.column(:my_integer).data_type).to be :integer
         # check for the expected defaults
-        expect(table.column(:foo).null).to be false
-        expect(table.column(:foo).description).to be_nil
-        expect(table.column(:foo).default).to be_nil
+        expect(table.column(:my_integer).null).to be false
+        expect(table.column(:my_integer).description).to be_nil
+        expect(table.column(:my_integer).default).to be_nil
       end
     end
 
-    describe "with an integer column named foo that has a default, allows null and has a comment" do
+    describe "with an integer column named my_integer that has a default, allows null and has a comment" do
       before(:each) do
-        Users::UserModel.integer_field :foo do
+        Users::UserModel.integer_field :my_integer do
           allow_null
           comment "This is a comment"
           default 5
@@ -47,18 +47,18 @@ RSpec.describe Platformer::Composers::Migrations::Columns::IntegerColumns do
         Platformer::Composers::Migrations::Columns::IntegerColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :integer
+        expect(table.has_column?(:my_integer)).to be true
+        expect(table.column(:my_integer).data_type).to be :integer
         # check for the expected values
-        expect(table.column(:foo).null).to be true
-        expect(table.column(:foo).description).to eq "This is a comment"
-        expect(table.column(:foo).default).to eq 5
+        expect(table.column(:my_integer).null).to be true
+        expect(table.column(:my_integer).description).to eq "This is a comment"
+        expect(table.column(:my_integer).default).to eq 5
       end
     end
 
-    describe "with an array of integers column named foo" do
+    describe "with an array of integers column named my_integer" do
       before(:each) do
-        Users::UserModel.integer_field :foo, array: true
+        Users::UserModel.integer_field :my_integer, array: true
       end
 
       it "creates the expected columns within the DynamicMigrations table" do
@@ -68,8 +68,8 @@ RSpec.describe Platformer::Composers::Migrations::Columns::IntegerColumns do
         Platformer::Composers::Migrations::Columns::IntegerColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :"integer[]"
+        expect(table.has_column?(:my_integer)).to be true
+        expect(table.column(:my_integer).data_type).to be :"integer[]"
       end
     end
   end

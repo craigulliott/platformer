@@ -16,6 +16,8 @@ class PlatformModel < PlatformBase
 
   # install all our Field DSLs
   #
+  # uuid
+  include Platformer::DSLs::Models::Fields::UuidField
   # numeric fields
   include Platformer::DSLs::Models::Fields::IntegerField
   include Platformer::DSLs::Models::Fields::FloatField
@@ -30,18 +32,25 @@ class PlatformModel < PlatformBase
   include Platformer::DSLs::Models::Fields::TextField
   include Platformer::DSLs::Models::Fields::CharField
   include Platformer::DSLs::Models::Fields::CitextField
-  # enums
+  # enums / constants
   include Platformer::DSLs::Models::Fields::EnumField
-  # JSON
-  include Platformer::DSLs::Models::Fields::JSONField
+  include Platformer::DSLs::Models::Fields::CurrencyField
+  include Platformer::DSLs::Models::Fields::CountryField
+  include Platformer::DSLs::Models::Fields::LanguageField
+  # json
+  include Platformer::DSLs::Models::Fields::JsonField
+  # network
+  include Platformer::DSLs::Models::Fields::IpAddressField
+  include Platformer::DSLs::Models::Fields::MacAddressField
+  include Platformer::DSLs::Models::Fields::CidrField
   # special fields
   include Platformer::DSLs::Models::Fields::PhoneNumberField
   include Platformer::DSLs::Models::Fields::EmailField
 
   # install all our relationship DSLs
-  include Platformer::DSLs::Models::Relationships::BelongsTo
-  include Platformer::DSLs::Models::Relationships::HasMany
-  include Platformer::DSLs::Models::Relationships::HasOne
+  include Platformer::DSLs::Models::Associations::BelongsTo
+  include Platformer::DSLs::Models::Associations::HasMany
+  include Platformer::DSLs::Models::Associations::HasOne
 
   # install our GraphQL DSLs
   include Platformer::DSLs::Models::GraphQL::RootNode

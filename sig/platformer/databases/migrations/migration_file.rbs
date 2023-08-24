@@ -9,11 +9,11 @@ module Platformer
         attr_reader type: Symbol
         attr_reader server_name: Symbol
         attr_reader database_name: Symbol
-        attr_reader schema_name: Symbol
+        attr_reader schema_name: Symbol?
         attr_reader timestamp: Integer
         attr_reader name: Symbol
 
-        def initialize: (base_path: Pathname, type: Symbol, server_name: Symbol, database_name: Symbol, schema_name: Symbol, timestamp: untyped, name: Symbol) -> void
+        def initialize: (base_path: Pathname, type: Symbol, server_name: Symbol, database_name: Symbol, schema_name: Symbol?, timestamp: untyped, name: Symbol) -> void
         def create_file: (String migration_contents) -> void
         def create_file_folders: -> void
         def contents: -> String

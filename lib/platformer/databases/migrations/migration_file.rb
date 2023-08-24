@@ -43,12 +43,12 @@ module Platformer
           # ensure the file folder exists
           create_file_folders full_path
           # write the migration to disk
-          File.write(full_path, <<~RUBY)
-            module Migrations
-              module #{type.to_s.camelize}
-                module #{server_name.to_s.camelize}
-                  module #{database_name.to_s.camelize}
-                    module #{schema_name.to_s.camelize}
+          if schema_name.nil?
+            File.write(full_path, <<~RUBY)
+              module Migrations
+                module #{type.to_s.camelize}
+                  module #{server_name.to_s.camelize}
+                    module #{database_name.to_s.camelize}
                       class #{name.to_s.camelize} < ActiveRecord::Migration[7.0]
                         # include the enhahnced migration methods
                         include DynamicMigrations::ActiveRecord::Migrators
@@ -61,8 +61,29 @@ module Platformer
                   end
                 end
               end
-            end
-          RUBY
+            RUBY
+          else
+            File.write(full_path, <<~RUBY)
+              module Migrations
+                module #{type.to_s.camelize}
+                  module #{server_name.to_s.camelize}
+                    module #{database_name.to_s.camelize}
+                      module #{schema_name.to_s.camelize}
+                        class #{name.to_s.camelize} < ActiveRecord::Migration[7.0]
+                          # include the enhahnced migration methods
+                          include DynamicMigrations::ActiveRecord::Migrators
+
+                          def change
+                            #{contents.gsub("\n", "\n              ")}
+                          end
+                        end
+                      end
+                    end
+                  end
+                end
+              end
+            RUBY
+          end
         end
 
         # return the contents of the file, raises an error
@@ -93,7 +114,11 @@ module Platformer
         end
 
         def relative_path
-          "./#{type}/#{server_name}/#{database_name}/#{schema_name}/#{timestamp}_#{name}.rb"
+          if schema_name.nil?
+            "./#{type}/#{server_name}/#{database_name}/#{timestamp}_#{name}.rb"
+          else
+            "./#{type}/#{server_name}/#{database_name}/#{schema_name}/#{timestamp}_#{name}.rb"
+          end
         end
       end
     end

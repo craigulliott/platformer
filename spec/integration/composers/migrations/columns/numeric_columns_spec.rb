@@ -10,9 +10,9 @@ RSpec.describe Platformer::Composers::Migrations::Columns::NumericColumns do
       end
     end
 
-    describe "with a numeric column named foo" do
+    describe "with a numeric column named my_numeric" do
       before(:each) do
-        Users::UserModel.numeric_field :foo
+        Users::UserModel.numeric_field :my_numeric
       end
 
       it "creates the expected columns within the DynamicMigrations table" do
@@ -22,18 +22,18 @@ RSpec.describe Platformer::Composers::Migrations::Columns::NumericColumns do
         Platformer::Composers::Migrations::Columns::NumericColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :numeric
+        expect(table.has_column?(:my_numeric)).to be true
+        expect(table.column(:my_numeric).data_type).to be :numeric
         # check for the expected defaults
-        expect(table.column(:foo).null).to be false
-        expect(table.column(:foo).description).to be_nil
-        expect(table.column(:foo).default).to be_nil
+        expect(table.column(:my_numeric).null).to be false
+        expect(table.column(:my_numeric).description).to be_nil
+        expect(table.column(:my_numeric).default).to be_nil
       end
     end
 
-    describe "with a numeric column named foo that has a default, allows null and has a comment" do
+    describe "with a numeric column named my_numeric that has a default, allows null and has a comment" do
       before(:each) do
-        Users::UserModel.numeric_field :foo do
+        Users::UserModel.numeric_field :my_numeric do
           allow_null
           comment "This is a comment"
           default 5
@@ -47,18 +47,18 @@ RSpec.describe Platformer::Composers::Migrations::Columns::NumericColumns do
         Platformer::Composers::Migrations::Columns::NumericColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :numeric
+        expect(table.has_column?(:my_numeric)).to be true
+        expect(table.column(:my_numeric).data_type).to be :numeric
         # check for the expected values
-        expect(table.column(:foo).null).to be true
-        expect(table.column(:foo).description).to eq "This is a comment"
-        expect(table.column(:foo).default).to eq 5
+        expect(table.column(:my_numeric).null).to be true
+        expect(table.column(:my_numeric).description).to eq "This is a comment"
+        expect(table.column(:my_numeric).default).to eq 5
       end
     end
 
-    describe "with an array of numerics column named foo" do
+    describe "with an array of numerics column named my_numeric" do
       before(:each) do
-        Users::UserModel.numeric_field :foo, array: true
+        Users::UserModel.numeric_field :my_numeric, array: true
       end
 
       it "creates the expected columns within the DynamicMigrations table" do
@@ -68,14 +68,14 @@ RSpec.describe Platformer::Composers::Migrations::Columns::NumericColumns do
         Platformer::Composers::Migrations::Columns::NumericColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :"numeric[]"
+        expect(table.has_column?(:my_numeric)).to be true
+        expect(table.column(:my_numeric).data_type).to be :"numeric[]"
       end
     end
 
-    describe "with a numeric column named foo which has a specific precision and scale" do
+    describe "with a numeric column named my_numeric which has a specific precision and scale" do
       before(:each) do
-        Users::UserModel.numeric_field :foo, precision: 12, scale: 2
+        Users::UserModel.numeric_field :my_numeric, precision: 12, scale: 2
       end
 
       it "creates the expected columns within the DynamicMigrations table" do
@@ -85,8 +85,8 @@ RSpec.describe Platformer::Composers::Migrations::Columns::NumericColumns do
         Platformer::Composers::Migrations::Columns::NumericColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :"numeric(12,2)"
+        expect(table.has_column?(:my_numeric)).to be true
+        expect(table.column(:my_numeric).data_type).to be :"numeric(12,2)"
       end
     end
   end

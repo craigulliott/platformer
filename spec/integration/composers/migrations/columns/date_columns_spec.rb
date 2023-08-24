@@ -10,9 +10,9 @@ RSpec.describe Platformer::Composers::Migrations::Columns::DateColumns do
       end
     end
 
-    describe "with a date column named foo" do
+    describe "with a date column named my_date" do
       before(:each) do
-        Users::UserModel.date_field :foo
+        Users::UserModel.date_field :my_date
       end
 
       it "creates the expected columns within the DynamicMigrations table" do
@@ -22,18 +22,18 @@ RSpec.describe Platformer::Composers::Migrations::Columns::DateColumns do
         Platformer::Composers::Migrations::Columns::DateColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :date
+        expect(table.has_column?(:my_date)).to be true
+        expect(table.column(:my_date).data_type).to be :date
         # check for the expected defaults
-        expect(table.column(:foo).null).to be false
-        expect(table.column(:foo).description).to be_nil
-        expect(table.column(:foo).default).to be_nil
+        expect(table.column(:my_date).null).to be false
+        expect(table.column(:my_date).description).to be_nil
+        expect(table.column(:my_date).default).to be_nil
       end
     end
 
-    describe "with a date column named foo that has a default, allows null and has a comment" do
+    describe "with a date column named my_date that has a default, allows null and has a comment" do
       before(:each) do
-        Users::UserModel.date_field :foo do
+        Users::UserModel.date_field :my_date do
           allow_null
           comment "This is a comment"
           default "2023-05-08"
@@ -47,18 +47,18 @@ RSpec.describe Platformer::Composers::Migrations::Columns::DateColumns do
         Platformer::Composers::Migrations::Columns::DateColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :date
+        expect(table.has_column?(:my_date)).to be true
+        expect(table.column(:my_date).data_type).to be :date
         # check for the expected values
-        expect(table.column(:foo).null).to be true
-        expect(table.column(:foo).description).to eq "This is a comment"
-        expect(table.column(:foo).default).to eql "2023-05-08"
+        expect(table.column(:my_date).null).to be true
+        expect(table.column(:my_date).description).to eq "This is a comment"
+        expect(table.column(:my_date).default).to eql "2023-05-08"
       end
     end
 
-    describe "with an array of dates column named foo" do
+    describe "with an array of dates column named my_date" do
       before(:each) do
-        Users::UserModel.date_field :foo, array: true
+        Users::UserModel.date_field :my_date, array: true
       end
 
       it "creates the expected columns within the DynamicMigrations table" do
@@ -68,8 +68,8 @@ RSpec.describe Platformer::Composers::Migrations::Columns::DateColumns do
         Platformer::Composers::Migrations::Columns::DateColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :"date[]"
+        expect(table.has_column?(:my_date)).to be true
+        expect(table.column(:my_date).data_type).to be :"date[]"
       end
     end
   end

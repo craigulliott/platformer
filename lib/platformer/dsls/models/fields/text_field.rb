@@ -41,6 +41,8 @@ module Platformer
               import_shared :unique_field
               import_shared :field_comment
               import_shared :immutable_validators
+              import_shared :string_validators
+              import_shared :comparison_validators
               import_shared :case_coercions
               import_shared :trim_and_nullify_coercion
               import_shared :remove_null_array_values_coercion

@@ -33,6 +33,10 @@ module Platformer
             end
           end
 
+          # add this active record class to the model class so that we can use it
+          # in other ActiveRecord composers
+          child_class.set_active_record_class active_record_class
+
           # make the database connections, and set the desired schemas
           for_dsl :database do |server_type:, server_name:, database_name:|
             description <<~DESCRIPTION

@@ -10,9 +10,9 @@ RSpec.describe Platformer::Composers::Migrations::Columns::CharColumns do
       end
     end
 
-    describe "with a char column named foo" do
+    describe "with a char column named my_char" do
       before(:each) do
-        Users::UserModel.char_field :foo
+        Users::UserModel.char_field :my_char
       end
 
       it "creates the expected columns within the DynamicMigrations table" do
@@ -22,18 +22,18 @@ RSpec.describe Platformer::Composers::Migrations::Columns::CharColumns do
         Platformer::Composers::Migrations::Columns::CharColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :char
+        expect(table.has_column?(:my_char)).to be true
+        expect(table.column(:my_char).data_type).to be :char
         # check for the expected defaults
-        expect(table.column(:foo).null).to be false
-        expect(table.column(:foo).description).to be_nil
-        expect(table.column(:foo).default).to be_nil
+        expect(table.column(:my_char).null).to be false
+        expect(table.column(:my_char).description).to be_nil
+        expect(table.column(:my_char).default).to be_nil
       end
     end
 
-    describe "with a char column named foo that has a default, allows null and has a comment" do
+    describe "with a char column named my_char that has a default, allows null and has a comment" do
       before(:each) do
-        Users::UserModel.char_field :foo do
+        Users::UserModel.char_field :my_char do
           allow_null
           comment "This is a comment"
           default "Hi Katy!"
@@ -47,18 +47,18 @@ RSpec.describe Platformer::Composers::Migrations::Columns::CharColumns do
         Platformer::Composers::Migrations::Columns::CharColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :char
+        expect(table.has_column?(:my_char)).to be true
+        expect(table.column(:my_char).data_type).to be :char
         # check for the expected values
-        expect(table.column(:foo).null).to be true
-        expect(table.column(:foo).description).to eq "This is a comment"
-        expect(table.column(:foo).default).to eq "Hi Katy!"
+        expect(table.column(:my_char).null).to be true
+        expect(table.column(:my_char).description).to eq "This is a comment"
+        expect(table.column(:my_char).default).to eq "Hi Katy!"
       end
     end
 
-    describe "with an array of chars column named foo" do
+    describe "with an array of chars column named my_char" do
       before(:each) do
-        Users::UserModel.char_field :foo, array: true
+        Users::UserModel.char_field :my_char, array: true
       end
 
       it "creates the expected columns within the DynamicMigrations table" do
@@ -68,14 +68,14 @@ RSpec.describe Platformer::Composers::Migrations::Columns::CharColumns do
         Platformer::Composers::Migrations::Columns::CharColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :"char[]"
+        expect(table.has_column?(:my_char)).to be true
+        expect(table.column(:my_char).data_type).to be :"char[]"
       end
     end
 
-    describe "with a char column named foo which has a specific length" do
+    describe "with a char column named my_char which has a specific length" do
       before(:each) do
-        Users::UserModel.char_field :foo, length: 8
+        Users::UserModel.char_field :my_char, length: 8
       end
 
       it "creates the expected columns within the DynamicMigrations table" do
@@ -85,8 +85,8 @@ RSpec.describe Platformer::Composers::Migrations::Columns::CharColumns do
         Platformer::Composers::Migrations::Columns::CharColumns.rerun
 
         table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:foo)).to be true
-        expect(table.column(:foo).data_type).to be :"char(8)"
+        expect(table.has_column?(:my_char)).to be true
+        expect(table.column(:my_char).data_type).to be :"char(8)"
       end
     end
   end
