@@ -6,7 +6,7 @@ module Platformer
       module Coercions
         module Common
           # install validations to assert that the zero_to_null coercion rules were followed
-          class ZeroToNull < FieldParser
+          class ZeroToNull < Parsers::FinalModels::ForFields
             for_numeric_fields do |name:, table:, column:, array:, default:, comment_text:, allow_null:|
               for_method :zero_to_null do |method_name:, comment:|
                 description <<~DESCRIPTION

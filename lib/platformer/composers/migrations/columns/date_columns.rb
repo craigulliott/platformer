@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all date columns to their respective tables within DynamicMigrations
-        class DateColumns < FieldParser
+        class DateColumns < Parsers::FinalModels::ForFields
           for_field :date_field do |name:, table:, array:, default:, comment_text:, allow_null:|
             # update the dynamic documentation
             description <<~DESCRIPTION

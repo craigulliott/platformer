@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all language columns to their respective tables within DynamicMigrations
-        class LanguageColumns < FieldParser
+        class LanguageColumns < Parsers::FinalModels::ForFields
           # for each time the :language_field DSL was used on this Model
           for_field :language_field do |name:, database:, table:, array:, default:, comment_text:, allow_null:|
             enum_type_name = database.find_or_create_shared_enum Constants::ISO::LanguageCode

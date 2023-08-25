@@ -5,7 +5,7 @@ module Platformer
     module ActiveRecord
       module Coercions
         module Fields
-          class Json < FieldParser
+          class Json < Parsers::AllModels::ForFields
             # install all the empty_json_to_null coercions for each model
             for_field :json_field do |name:, model:, allow_null:|
               for_method :empty_json_to_null do

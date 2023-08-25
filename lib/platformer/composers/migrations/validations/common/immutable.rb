@@ -6,7 +6,7 @@ module Platformer
       module Validations
         module Common
           # Install immutable validations for the respective columns within DynamicMigrations
-          class Immutable < FieldParser
+          class Immutable < Parsers::FinalModels::ForFields
             for_all_fields except: :phone_number do |name:, database:, table:, column:, array:, default:, comment_text:, allow_null:|
               # if the validate_greater_than validation was used
               for_method [:immutable, :immutable_once_set] do |method_name:|

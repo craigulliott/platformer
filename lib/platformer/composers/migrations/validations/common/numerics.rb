@@ -6,7 +6,7 @@ module Platformer
       module Validations
         module Common
           # Add all numeric validations to their respective columns within DynamicMigrations
-          class Numerics < FieldParser
+          class Numerics < Parsers::FinalModels::ForFields
             for_numeric_fields do |name:, table:, column:, array:, default:, comment_text:, allow_null:|
               # if the validate_greater_than validation was used
               for_method :validate_greater_than do |value:, deferrable:, initially_deferred:, comment:|

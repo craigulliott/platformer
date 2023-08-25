@@ -6,7 +6,7 @@ module Platformer
       module Coercions
         module Common
           # install validations to assert that the remove_null_array_values coercion rules were followed
-          class RemoveNullArrayValues < FieldParser
+          class RemoveNullArrayValues < Parsers::FinalModels::ForFields
             for_all_fields except: [:json_field, :phone_number] do |name:, table:, column:, array:, default:, comment_text:, allow_null:|
               for_method :remove_null_array_values do |comment:|
                 unless array

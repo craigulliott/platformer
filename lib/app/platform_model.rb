@@ -52,6 +52,9 @@ class PlatformModel < PlatformBase
   include Platformer::DSLs::Models::Associations::HasMany
   include Platformer::DSLs::Models::Associations::HasOne
 
+  # install our modul utilities
+  include Platformer::DSLs::Models::StateMachine
+
   # install our GraphQL DSLs
   include Platformer::DSLs::Models::GraphQL::RootNode
 

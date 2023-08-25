@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all currency columns to their respective tables within DynamicMigrations
-        class CurrencyColumns < FieldParser
+        class CurrencyColumns < Parsers::FinalModels::ForFields
           # for each time the :currency_field DSL was used on this Model
           for_field :currency_field do |name:, database:, table:, array:, default:, comment_text:, allow_null:|
             enum_type_name = database.find_or_create_shared_enum Constants::ISO::CurrencyCode

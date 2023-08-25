@@ -63,9 +63,11 @@ require "app/platform_model"
 require "app/platform_callback"
 require "app/platform_service"
 
-require "platformer/composers/base_field_parser"
-require "platformer/composers/migrations/field_parser"
-require "platformer/composers/active_record/field_parser"
+require "platformer/parsers/for_field_macros"
+require "platformer/parsers/all_models"
+require "platformer/parsers/all_models/for_fields"
+require "platformer/parsers/final_models"
+require "platformer/parsers/final_models/for_fields"
 
 # composers, run in the required order
 recursive_require "lib/platformer/composers/active_record/**/*.rb"

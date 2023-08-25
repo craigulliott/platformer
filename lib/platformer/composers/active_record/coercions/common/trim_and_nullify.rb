@@ -5,7 +5,7 @@ module Platformer
     module ActiveRecord
       module Coercions
         module Common
-          class TrimAndNullify < FieldParser
+          class TrimAndNullify < Parsers::AllModels::ForFields
             # install all the trim_and_nullify coercions for each model
             for_string_fields do |name:, model:, array:, allow_null:|
               for_method :trim_and_nullify do

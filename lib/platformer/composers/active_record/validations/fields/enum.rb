@@ -6,7 +6,7 @@ module Platformer
       module Validations
         module Fields
           # install all the validations specifically designed for enum fields
-          class Enum < FieldParser
+          class Enum < Parsers::AllModels::ForFields
             for_field :enum_field do |name:, values:, model:, array:, default:, comment_text:, allow_null:|
               unless array
                 description <<~DESCRIPTION

@@ -6,7 +6,7 @@ module Platformer
       module Validations
         module Fields
           # install all the validations specifically designed for boolean fields
-          class Boolean < FieldParser
+          class Boolean < Parsers::AllModels::ForFields
             class IncompatibleWithArrayFieldError < StandardError
             end
 

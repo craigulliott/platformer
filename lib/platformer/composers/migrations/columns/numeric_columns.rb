@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all numeric columns to their respective tables within DynamicMigrations
-        class NumericColumns < FieldParser
+        class NumericColumns < Parsers::FinalModels::ForFields
           class PrecisionMustBeProvidedError < StandardError
           end
 

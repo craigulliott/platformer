@@ -5,7 +5,7 @@ module Platformer
     module ActiveRecord
       module Coercions
         module Common
-          class ZeroToNull < FieldParser
+          class ZeroToNull < Parsers::AllModels::ForFields
             # install all the zero_to_null coercions for each model
             for_numeric_fields do |name:, model:, array:, allow_null:|
               for_method :zero_to_null do

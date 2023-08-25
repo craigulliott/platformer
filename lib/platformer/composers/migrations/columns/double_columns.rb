@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all double columns to their respective tables within DynamicMigrations
-        class DoubleColumns < FieldParser
+        class DoubleColumns < Parsers::FinalModels::ForFields
           for_field :double_field do |name:, table:, array:, default:, comment_text:, allow_null:|
             # update the dynamic documentation
             description <<~DESCRIPTION

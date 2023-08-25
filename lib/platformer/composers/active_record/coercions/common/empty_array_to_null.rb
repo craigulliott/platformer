@@ -5,7 +5,7 @@ module Platformer
     module ActiveRecord
       module Coercions
         module Common
-          class EmptyArrayToNull < FieldParser
+          class EmptyArrayToNull < Parsers::AllModels::ForFields
             class UnsupportedEmptyArrayToNullError < StandardError
             end
 

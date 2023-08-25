@@ -6,7 +6,7 @@ module Platformer
       module Validations
         module Common
           # Add all string validations to their respective columns within DynamicMigrations
-          class Strings < FieldParser
+          class Strings < Parsers::FinalModels::ForFields
             for_string_fields do |name:, table:, column:, array:, default:, comment_text:, allow_null:|
               # if the validate_minimum_length validation was used
               for_method [

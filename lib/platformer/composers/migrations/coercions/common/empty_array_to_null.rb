@@ -6,7 +6,7 @@ module Platformer
       module Coercions
         module Common
           # install validations to assert that the empty_array_to_null coercion rules were followed
-          class EmptyArrayToNull < FieldParser
+          class EmptyArrayToNull < Parsers::FinalModels::ForFields
             class UnsupportedEmptyArrayToNullError < StandardError
             end
 

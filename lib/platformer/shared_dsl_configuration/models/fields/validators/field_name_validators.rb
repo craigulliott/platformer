@@ -13,7 +13,7 @@ module Platformer
                   # Reserved for the primary key
                   :id,
                   # Reserved for state machines
-                  :stage,
+                  :state_machine_current_state,
                   # Reserved for the automatically set ActiveRecord columns
                   :created_at,
                   :updated_at,

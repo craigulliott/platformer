@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all citext columns to their respective tables within DynamicMigrations
-        class CitextColumns < FieldParser
+        class CitextColumns < Parsers::FinalModels::ForFields
           for_field :citext_field do |name:, table:, database:, array:, default:, comment_text:, allow_null:|
             # update the dynamic documentation
             description <<~DESCRIPTION

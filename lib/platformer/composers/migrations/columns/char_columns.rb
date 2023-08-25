@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all char columns to their respective tables within DynamicMigrations
-        class CharColumns < FieldParser
+        class CharColumns < Parsers::FinalModels::ForFields
           # for each time the :char_field DSL was used on this Model
           for_field :char_field do |name:, table:, array:, default:, length:, comment_text:, allow_null:|
             # update the dynamic documentation

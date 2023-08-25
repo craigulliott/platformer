@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module Migrations
       # Add all unique constraints to their respective columns within DynamicMigrations
-      class UniqueConstraints < FieldParser
+      class UniqueConstraints < Parsers::FinalModels::ForFields
         class WhereCanNotBeUsedWithDeferrableError < StandardError
         end
 

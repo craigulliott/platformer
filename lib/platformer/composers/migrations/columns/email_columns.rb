@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all email columns to their respective tables within DynamicMigrations
-        class EmailColumns < FieldParser
+        class EmailColumns < Parsers::FinalModels::ForFields
           for_field :email_field do |name:, table:, array:, default:, comment_text:, allow_null:|
             # update the dynamic documentation
             description <<~DESCRIPTION

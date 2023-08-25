@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all boolean columns to their respective tables within DynamicMigrations
-        class BooleanColumns < FieldParser
+        class BooleanColumns < Parsers::FinalModels::ForFields
           for_field :boolean_field do |name:, table:, array:, default:, comment_text:, allow_null:|
             description <<~DESCRIPTION
               Update DynamicMigrations and add an #{array ? "array of booleans" : "boolean"}

@@ -65,7 +65,7 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.3)
-    pg_spec_helper (1.9.9)
+    pg_spec_helper (1.9.10)
       pg (~> 1.5)
     phony (2.20.7)
     racc (1.7.1)

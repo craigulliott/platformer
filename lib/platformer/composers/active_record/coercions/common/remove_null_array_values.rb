@@ -5,7 +5,7 @@ module Platformer
     module ActiveRecord
       module Coercions
         module Common
-          class RemoveNullArrayValues < FieldParser
+          class RemoveNullArrayValues < Parsers::AllModels::ForFields
             # install all the remove_null_array_values coercions for each model
             for_all_fields except: [:json_field, :phone_number] do |name:, model:, array:, allow_null:|
               for_method :remove_null_array_values do

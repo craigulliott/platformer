@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all enum columns to their respective tables within DynamicMigrations
-        class EnumColumns < FieldParser
+        class EnumColumns < Parsers::FinalModels::ForFields
           # for each time the :enum_field DSL was used on this Model
           for_field :enum_field do |name:, values:, schema:, table:, array:, default:, comment_text:, allow_null:|
             enum_type_name = :"#{table.name}__#{name}_values"
