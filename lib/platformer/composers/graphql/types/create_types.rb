@@ -1,0 +1,39 @@
+# frozen_string_literal: true
+
+module Platformer
+  module Composers
+    module GraphQL
+      module Types
+        # Create GraphQL Types classes to represent each of our model definitions.
+        #
+        # For example, if we have created a UserModel and an OrganizationModel
+        # which extend PlatformModel, then this composer will generate a `Types::User`
+        # and a `Types::Organization` class which are extended from Types::BaseObject
+        class CreateTypes < DSLCompose::Parser
+          # Process the parser for every decendant of PlatformModel
+          for_final_children_of PlatformModel do |child_class:|
+            # if one was provided, then extract the description of this model
+            class_description = nil
+            for_dsl :description do |description:|
+              class_description = description
+            end
+
+            description <<~DESCRIPTION
+              Create a GraphQL Types class which corresponds to this model class.
+            DESCRIPTION
+
+            graphql_type_class = ClassMap.create_graphql_type_class_from_model_class child_class
+            # add this graphql class to the model class so that we can use it
+            # in other ActiveRecord composers
+            child_class.set_graphql_type_class graphql_type_class
+
+            # if a description is available, then set it on the graphql type object
+            if class_description
+              graphql_type_class.description class_description
+            end
+          end
+        end
+      end
+    end
+  end
+end

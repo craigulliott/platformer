@@ -40,6 +40,10 @@ module Platformer
                 # the database configuratiom object
                 final_args[:database] = child_class.configured_database
 
+              when :graphql_type
+                # the graphql_type configuratiom object
+                final_args[:graphql_type] = child_class.graphql_type_class
+
               when :column
                 # Get the coresponding column object from DynamicMigrations for this field
                 # column is not available until the first field composer runs, and builds it

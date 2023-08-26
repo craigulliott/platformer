@@ -20,7 +20,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::BelongsTo do
       # now that the UserModel has been created, we rerun the composer
       # and it's dependent composers
       Platformer::Composers::Migrations::CreateStructure.rerun
-      Platformer::Composers::Migrations::Columns::UuidColumns.rerun
+      Platformer::Composers::Migrations::Columns::Uuid.rerun
       Platformer::Composers::Migrations::Associations::BelongsTo.rerun
 
       local_table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:gamification).table(:badges)
@@ -49,7 +49,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::BelongsTo do
       # now that the BarModel has been created, we rerun the composer
       # and it's dependent composers
       Platformer::Composers::Migrations::CreateStructure.rerun
-      Platformer::Composers::Migrations::Columns::UuidColumns.rerun
+      Platformer::Composers::Migrations::Columns::Uuid.rerun
       Platformer::Composers::Migrations::Associations::BelongsTo.rerun
 
       local_table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:foos)
@@ -61,7 +61,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::BelongsTo do
       # now that the BarModel has been created, we rerun the composer
       # and it's dependent composers
       Platformer::Composers::Migrations::CreateStructure.rerun
-      Platformer::Composers::Migrations::Columns::UuidColumns.rerun
+      Platformer::Composers::Migrations::Columns::Uuid.rerun
       Platformer::Composers::Migrations::Associations::BelongsTo.rerun
 
       local_table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:foos)

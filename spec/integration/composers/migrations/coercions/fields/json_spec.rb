@@ -17,7 +17,7 @@ RSpec.describe Platformer::Composers::Migrations::Coercions::Fields::Json do
       # now that the UserModel has been created, we rerun the composer
       # and it's dependent composers
       Platformer::Composers::Migrations::CreateStructure.rerun
-      Platformer::Composers::Migrations::Columns::JsonColumns.rerun
+      Platformer::Composers::Migrations::Columns::Json.rerun
       Platformer::Composers::Migrations::Coercions::Fields::Json.rerun
 
       table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)

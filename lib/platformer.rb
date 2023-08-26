@@ -20,6 +20,9 @@ require "money"
 # orm (ActiveRecord)
 require "active_record"
 
+# graphql
+require "graphql"
+
 # convenience method to simplify the requires below
 def recursive_require path
   Dir[File.expand_path path].each do |f|
@@ -40,6 +43,17 @@ require "platformer/databases/migrations/current/loader"
 
 recursive_require "lib/active_record/**/*.rb"
 
+require "app/application_record"
+
+require "app/types/base_object"
+require "app/types/base_argument"
+require "app/types/base_field"
+require "app/types/query_type"
+require "app/types/mutation_type"
+
+recursive_require "lib/app/mutations/**/*.rb"
+recursive_require "lib/app/api.rb"
+
 recursive_require "lib/platformer/constants/**/*.rb"
 
 require "platformer/class_map"
@@ -57,7 +71,6 @@ recursive_require "lib/platformer/dsls/**/*.rb"
 
 recursive_require "lib/platformer/dsl_readers/**/*.rb"
 
-require "app/application_record"
 require "app/platform_base"
 require "app/platform_model"
 require "app/platform_callback"

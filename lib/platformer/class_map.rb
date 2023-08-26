@@ -47,7 +47,10 @@ module Platformer
     #
     # For example. If the provided class was `Foo::Bar`, then the constant `Foo` would be
     # returned. If the provided class was `Foo`, then the constant `Object` would be returned.
-    def self.namespace_from_class provided_class
+    #
+    # If base is provided, then the namespace will be pushed inside the provided object
+    warn "not tested"
+    def self.namespace_from_class provided_class, base = nil
       # Split a class name into an array of strings, where each item in the array represents one
       # one part of the classes hierachy, but not the class name itself.
       #
@@ -56,10 +59,23 @@ module Platformer
       namespace_parts = provided_class.name.split("::")[0..-2]
       # if the model was namespaced, then recombine the parts and return the constant
       if namespace_parts.any?
+        if base
+          # if a base was provided, then make sure each part of the namespace
+          # exists under this base, and create it if needed
+          position = base
+          progressive_name = ""
+          namespace_parts.each do |namespace|
+            progressive_name << "#{position.name}::#{namespace}"
+            position = base.const_defined?(progressive_name) ? base.const_get(progressive_name) : position.const_set(namespace, Module.new)
+          end
+          # add the base to the beginning of the final name
+          namespace_parts.unshift base.name
+        end
+        # turn the name into a constant
         namespace_parts.join("::").constantize
       else
-        # Object is the top most namespace
-        Object
+        # Object is the top most namespace (unless another base was provided)
+        base || Object
       end
     end
 
@@ -118,7 +134,36 @@ module Platformer
 
       # assert the class has not already been created
       if namespace.const_defined? class_name
-        raise ActiveRecordClassAlreadyCreatedError, "Active record class `#{class_name}` already exists"
+        raise ActiveRecordClassAlreadyCreatedError, "ActiveRecord class `#{class_name}` already exists"
+      end
+
+      namespace.const_set class_name, new_class
+
+      if block
+        new_class.class_eval(&block)
+      end
+
+      new_class
+    end
+
+    # Provided with a model definition class, will create and return a valid
+    # graphql type. If the graphql type already exists then an error is raised
+    #
+    # For example, when provided with Users::UserModel this will create and
+    # return the corresponding Types::Users::User
+    warn "not tested"
+    def self.create_graphql_type_class_from_model_class model_class, &block
+      # assert that the provided class is a subclass of PlatformModel
+      validate_class_extends! model_class, PlatformModel
+
+      class_name = active_record_class_name_from_model_class model_class
+
+      new_class = Class.new(Types::BaseObject)
+      namespace = namespace_from_class model_class, Types
+
+      # assert the class has not already been created
+      if namespace.const_defined? class_name
+        raise ActiveRecordClassAlreadyCreatedError, "GraphQL Type class `#{class_name}` already exists"
       end
 
       namespace.const_set class_name, new_class

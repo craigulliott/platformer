@@ -23,7 +23,7 @@ RSpec.describe Platformer::Composers::Migrations::Validations::Fields::Boolean d
       # now that the UserModel has been created, we rerun the composer
       # and it's dependent composers
       Platformer::Composers::Migrations::CreateStructure.rerun
-      Platformer::Composers::Migrations::Columns::BooleanColumns.rerun
+      Platformer::Composers::Migrations::Columns::Boolean.rerun
       Platformer::Composers::Migrations::Validations::Fields::Boolean.rerun
 
       table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)

@@ -36,6 +36,9 @@ Gem::Specification.new do |spec|
   # language ISO codes
   spec.add_dependency "iso-639", "~> 0.3"
 
+  # graphql
+  spec.add_dependency "graphql", "~> 2.0"
+
   # state machines
   spec.add_dependency "aasm", "~> 5.5"
 

@@ -62,4 +62,56 @@ class PlatformModel < PlatformBase
   def self.inherited subclass
     raise InvalidModelClassName unless subclass.name.end_with? "Model"
   end
+
+  # we cache the resulting structure object here so that the
+  # other parsers can more easily access it
+  def self.set_table_structure table_structure
+    @table_structure = table_structure
+  end
+
+  def self.table_structure
+    if @table_structure.nil?
+      raise NoTableStructureForModelError, "No table structure object has been added for class `#{self.class}`"
+    end
+    @table_structure
+  end
+
+  # we cache the resulting database object here so that the
+  # other parsers can more easily access it
+  def self.set_configured_database configured_database
+    @configured_database = configured_database
+  end
+
+  def self.configured_database
+    if @configured_database.nil?
+      raise NoDatabaseForModelError, "No database object has been added for class `#{self.class}`"
+    end
+    @configured_database
+  end
+
+  # we cache the resulting ActiveRecord class here so that the
+  # other parsers can more easily access it
+  def self.set_active_record_class klass
+    @active_record_class = klass
+  end
+
+  def self.active_record_class
+    if @active_record_class.nil?
+      raise NoActiveRecordClassForModelError, "No ActiveRecord class has been added for class `#{self.class}`"
+    end
+    @active_record_class
+  end
+
+  # we cache the resulting GraphQL type class here so that the
+  # other parsers can more easily access it
+  def self.set_graphql_type_class klass
+    @graphql_type_class = klass
+  end
+
+  def self.graphql_type_class
+    if @graphql_type_class.nil?
+      raise NoActiveRecordClassForModelError, "No GraphQL type class has been added for class `#{self.class}`"
+    end
+    @graphql_type_class
+  end
 end

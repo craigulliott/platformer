@@ -17,7 +17,7 @@ RSpec.describe Platformer::Composers::Migrations::Coercions::Common::EmptyArrayT
       # now that the UserModel has been created, we rerun the composer
       # and it's dependent composers
       Platformer::Composers::Migrations::CreateStructure.rerun
-      Platformer::Composers::Migrations::Columns::IntegerColumns.rerun
+      Platformer::Composers::Migrations::Columns::Integer.rerun
       Platformer::Composers::Migrations::Coercions::Common::EmptyArrayToNull.rerun
 
       table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)

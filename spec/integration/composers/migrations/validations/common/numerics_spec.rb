@@ -26,10 +26,10 @@ RSpec.describe Platformer::Composers::Migrations::Validations::Common::Numerics 
       # now that the UserModel has been created, we rerun the composer
       # and it's dependent composers
       Platformer::Composers::Migrations::CreateStructure.rerun
-      Platformer::Composers::Migrations::Columns::IntegerColumns.rerun
-      Platformer::Composers::Migrations::Columns::FloatColumns.rerun
-      Platformer::Composers::Migrations::Columns::NumericColumns.rerun
-      Platformer::Composers::Migrations::Columns::DoubleColumns.rerun
+      Platformer::Composers::Migrations::Columns::Integer.rerun
+      Platformer::Composers::Migrations::Columns::Float.rerun
+      Platformer::Composers::Migrations::Columns::Numeric.rerun
+      Platformer::Composers::Migrations::Columns::Double.rerun
       Platformer::Composers::Migrations::Validations::Common::Numerics.rerun
 
       table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)

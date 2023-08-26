@@ -20,8 +20,8 @@ RSpec.describe Platformer::Composers::Migrations::Coercions::Common::Case do
       # now that the UserModel has been created, we rerun the composer
       # and it's dependent composers
       Platformer::Composers::Migrations::CreateStructure.rerun
-      Platformer::Composers::Migrations::Columns::CharColumns.rerun
-      Platformer::Composers::Migrations::Columns::TextColumns.rerun
+      Platformer::Composers::Migrations::Columns::Char.rerun
+      Platformer::Composers::Migrations::Columns::Text.rerun
       Platformer::Composers::Migrations::Coercions::Common::Case.rerun
 
       table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
@@ -52,8 +52,8 @@ RSpec.describe Platformer::Composers::Migrations::Coercions::Common::Case do
       # now that the UserModel has been created, we rerun the composer
       # and it's dependent composers
       Platformer::Composers::Migrations::CreateStructure.rerun
-      Platformer::Composers::Migrations::Columns::CharColumns.rerun
-      Platformer::Composers::Migrations::Columns::TextColumns.rerun
+      Platformer::Composers::Migrations::Columns::Char.rerun
+      Platformer::Composers::Migrations::Columns::Text.rerun
       Platformer::Composers::Migrations::Coercions::Common::Case.rerun
 
       table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
