@@ -6,6 +6,7 @@ require "byebug"
 require "platformer"
 require "class_spec_helper"
 require "pg_spec_helper"
+require_relative "helpers/recreate_graphql_schema"
 
 # active record logging
 # ActiveRecord::Base.logger = Logger.new($stdout)
@@ -18,6 +19,12 @@ end
 
 def destroy_class klass
   CLASS_SPEC_HELPER.destroy_class klass
+end
+
+RECREATE_GRAPHQL_SCHEMA = Helpers::RecreateGraphQLSchema.new
+
+def recreate_graphql_schema
+  RECREATE_GRAPHQL_SCHEMA.recreate_graphql_schema
 end
 
 RSpec.configure do |config|

@@ -10,7 +10,7 @@ module Platformer
             class IncompatibleWithArrayFieldError < StandardError
             end
 
-            for_string_fields do |name:, model:, array:, allow_null:|
+            for_string_fields do |name:, active_record_class:, array:, allow_null:|
               for_method [
                 :validate_minimum_length,
                 :validate_maximum_length,
@@ -48,7 +48,7 @@ module Platformer
                   validation_key => value
                 }
                 args[:length][:message] = message unless message.nil?
-                model.validates name, **args
+                active_record_class.validates name, **args
               end
 
               for_method :validate_format do |value:, message:|
@@ -69,7 +69,7 @@ module Platformer
                   with: value
                 }
                 args[:format][:message] = message unless message.nil?
-                model.validates name, **args
+                active_record_class.validates name, **args
               end
 
               for_method [
@@ -105,7 +105,7 @@ module Platformer
                   }
                   args[:inclusion][:message] = message unless message.nil?
                 end
-                model.validates name, **args
+                active_record_class.validates name, **args
               end
 
               for_method :validate_is_value do |value:, message:|
@@ -119,7 +119,7 @@ module Platformer
                 DESCRIPTION
 
                 # add the validation to the active record class
-                model.validates name, {
+                active_record_class.validates name, {
                   allow_nil: allow_null,
                   inclusion: {
                     in: [value],

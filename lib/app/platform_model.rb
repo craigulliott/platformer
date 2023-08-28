@@ -89,29 +89,15 @@ class PlatformModel < PlatformBase
     @configured_database
   end
 
-  # we cache the resulting ActiveRecord class here so that the
-  # other parsers can more easily access it
-  def self.set_active_record_class klass
-    @active_record_class = klass
-  end
-
   def self.active_record_class
-    if @active_record_class.nil?
-      raise NoActiveRecordClassForModelError, "No ActiveRecord class has been added for class `#{self.class}`"
-    end
-    @active_record_class
+    get_equivilent_class ApplicationRecord
   end
 
-  # we cache the resulting GraphQL type class here so that the
-  # other parsers can more easily access it
-  def self.set_graphql_type_class klass
-    @graphql_type_class = klass
+  def self.schema_class
+    get_equivilent_class PlatformSchema
   end
 
   def self.graphql_type_class
-    if @graphql_type_class.nil?
-      raise NoActiveRecordClassForModelError, "No GraphQL type class has been added for class `#{self.class}`"
-    end
-    @graphql_type_class
+    get_equivilent_class Types::BaseObject
   end
 end

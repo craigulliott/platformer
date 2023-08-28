@@ -10,7 +10,7 @@ module Platformer
             class IncompatibleImmutableValidationError < StandardError
             end
 
-            for_all_fields except: :phone_number do |name:, model:, array:, allow_null:|
+            for_all_fields except: :phone_number do |name:, active_record_class:, array:, allow_null:|
               for_method :immutable do |message:|
                 description <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
@@ -23,7 +23,7 @@ module Platformer
                 args[:allow_nil] = allow_null
                 args[:immutable] = true
                 args[:message] = message unless message.nil?
-                model.validates name, **args
+                active_record_class.validates name, **args
               end
 
               for_method :immutable_once_set do |message:|
@@ -45,7 +45,7 @@ module Platformer
                 args[:allow_nil] = allow_null
                 args[:immutable_once_set] = true
                 args[:message] = message unless message.nil?
-                model.validates name, **args
+                active_record_class.validates name, **args
               end
             end
           end

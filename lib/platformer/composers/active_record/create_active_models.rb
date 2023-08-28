@@ -8,14 +8,14 @@ module Platformer
       # For example, if we have created a UserModel and an OrganizationModel
       # which extend PlatformModel, then this composer will generate a `User`
       # and an `Organization` class which are extended from ActiveRecord::Base
-      class CreateActiveModels < DSLCompose::Parser
+      class CreateActiveModels < Parsers::AllModels
         # Process the parser for every decendant of PlatformModel
-        for_children_of PlatformModel do |child_class:|
+        for_models do |model_class:|
           description <<~DESCRIPTION
             Create an ActiveRecord class which corresponds to this model class.
           DESCRIPTION
 
-          subclasses = ClassMap.subclasses(child_class)
+          subclasses = ClassMap.subclasses(model_class)
           has_subclasses = subclasses.count > 0
 
           if has_subclasses
@@ -26,16 +26,12 @@ module Platformer
             DESCRIPTION
           end
 
-          active_record_class = ClassMap.create_active_record_class_from_model_class child_class do
+          active_record_class = ClassMap.create_active_record_class_from_model_class model_class do
             # if the model has subclasses, then this is an abstract class
             if has_subclasses
               self.abstract_class = true
             end
           end
-
-          # add this active record class to the model class so that we can use it
-          # in other ActiveRecord composers
-          child_class.set_active_record_class active_record_class
 
           # make the database connections, and set the desired schemas
           for_dsl :database do |server_type:, server_name:, database_name:|

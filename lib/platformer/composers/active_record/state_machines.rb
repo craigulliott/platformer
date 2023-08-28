@@ -10,7 +10,7 @@ module Platformer
         class ReservedAttributeNameError < StandardError
         end
 
-        for_dsl :state_machine do |name:, model:, log_transitions:, comment:|
+        for_dsl :state_machine do |name:, active_record_class:, log_transitions:, comment:|
           state_machine_name = name || :state
           namespace = (state_machine_name == :state) ? :state_machine : :"#{state_machine_name}_state_machine"
 
@@ -41,7 +41,7 @@ module Platformer
           end
 
           unless state_configurations.keys.count >= 2
-            raise MissingStatesError, "The state machine for #{model.name} must have at least 2 states"
+            raise MissingStatesError, "The state machine for #{active_record_class.name} must have at least 2 states"
           end
 
           description <<~DESCRIPTION
@@ -59,8 +59,8 @@ module Platformer
               #{comment}
             DESCRIPTION
 
-            if model.instance_methods.include? name
-              raise ReservedAttributeNameError, "The field name `#{name}` is reserved. An instance method of the same name already exists on this #{model.name}"
+            if active_record_class.instance_methods.include? name
+              raise ReservedAttributeNameError, "The field name `#{name}` is reserved. An instance method of the same name already exists on this #{active_record_class.name}"
             end
 
             # build the hash representation of the desired states
@@ -77,12 +77,12 @@ module Platformer
           require "aasm"
 
           # include AASM (Acts As State Machine) in the model
-          model.send(:include, AASM)
+          active_record_class.send(:include, AASM)
 
           initial_state_name = state_configurations.keys.first
 
           # add the desired state machine
-          model.aasm state_machine_name, column: state_machine_name, timestamps: true, create_scopes: false, namespace: namespace do
+          active_record_class.aasm state_machine_name, column: state_machine_name, timestamps: true, create_scopes: false, namespace: namespace do
             # install the states
             state_configurations.keys.each do |state_name|
               state state_name, initial: state_name == initial_state_name

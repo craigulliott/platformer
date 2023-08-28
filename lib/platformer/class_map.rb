@@ -103,7 +103,7 @@ module Platformer
       else
         # return the active_record class which was already created for this
         # models direct ancestor
-        get_active_record_class_from_model_class model_class.ancestors[1]
+        model_class.ancestors[1].active_record_class
       end
     end
 
@@ -173,27 +173,6 @@ module Platformer
       end
 
       new_class
-    end
-
-    # Provided with a model definition class, will return the corresponding
-    # active record model. If the active record model does not already exists
-    # then an error is raised
-    #
-    # For example, will return Users::User from Users::UserModel
-    def self.get_active_record_class_from_model_class model_class
-      # assert that the provided class is a subclass of PlatformModel
-      validate_class_extends! model_class, PlatformModel
-      # remove "Model" from the end of the class name, and then convert
-      # the string into a constant
-      class_name = model_class.name.gsub(/Model\Z/, "")
-
-      # assert the class already exists
-      unless Object.const_defined? class_name
-        raise ActiveRecordClassDoesNotExistError, "Active record class `#{class_name}` does not exist"
-      end
-
-      # turn the class name into a constant, and return it
-      class_name.constantize
     end
   end
 end

@@ -6,20 +6,20 @@ module Platformer
       # Create a table within DynamicMigrations for the correct server, database and
       # schema to represent the table which is expected to exist for each model which
       # has been defined for our system.
-      class CreateStructure < DSLCompose::Parser
+      class CreateStructure < Parsers::FinalModels
         # Process the parser for every decendant of PlatformModel which does not have
         # it's own decendents. These represent Models which will have a coresponding
         # ActiveRecord class created for them, and thus a table within the database
-        for_final_children_of PlatformModel do |child_class:|
+        for_final_models do |model_class:|
           # Create a dsl reader for the Database DSLs.
-          dsl_reader = DatabaseDSLReader.new child_class
+          dsl_reader = DSLReaders::Models::Database.new model_class
 
           # Get the table name from the active record class.
-          table_name = ClassMap.active_record_table_name_from_model_class(child_class)
+          table_name = ClassMap.active_record_table_name_from_model_class(model_class)
 
           # Get the database server object using the `server_type` and `server_name`
           # configuration values. These values come from the most recent use of the
-          # database related DSLs which were used on the `child_class` or one it's
+          # database related DSLs which were used on the `model_class` or one it's
           # ancestors.
           #
           # The first time this server is requested, the Databases class will create
@@ -31,13 +31,13 @@ module Platformer
           server = Databases.server(dsl_reader.server_type, dsl_reader.server_name)
 
           # Get either the current or default database object from the server object,
-          # If a database_name was not provided for this `child_class` (via the
+          # If a database_name was not provided for this `model_class` (via the
           # corresponding DSL) then the default database is used.
           database = dsl_reader.has_database_name? ? server.database(dsl_reader.database_name) : server.default_database
 
           # add this configured database to the model class so that we can use it
           # in the other migration composers
-          child_class.set_configured_database database
+          model_class.set_configured_database database
 
           # The database object has a reference to a corresponding DynamicMigrations
           # database object. We get this object, as we will be adding schema and tables to
@@ -66,7 +66,7 @@ module Platformer
 
           # add this table_strcuture to the model class so that we can use it
           # in the other migration composers
-          child_class.set_table_structure table_structure
+          model_class.set_table_structure table_structure
         end
       end
     end

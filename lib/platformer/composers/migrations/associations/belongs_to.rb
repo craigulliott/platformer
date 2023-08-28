@@ -3,8 +3,8 @@ module Platformer
     module Migrations
       module Associations
         class BelongsTo < Parsers::FinalModels
-          for_dsl :belongs_to do |child_class:, foreign_model:, local_column_names:, foreign_column_names:, comment:, deferrable:, initially_deferred:, on_delete:, on_update:|
-            local_table = child_class.table_structure
+          for_dsl :belongs_to do |model_class:, foreign_model:, local_column_names:, foreign_column_names:, comment:, deferrable:, initially_deferred:, on_delete:, on_update:|
+            local_table = model_class.table_structure
             foreign_table = foreign_model.table_structure
 
             allow_null = method_called?(:allow_null)

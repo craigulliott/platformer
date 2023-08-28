@@ -7,7 +7,7 @@ module Platformer
         module Fields
           # install all the validations specifically designed for enum fields
           class Enum < Parsers::AllModels::ForFields
-            for_field :enum_field do |name:, values:, model:, array:, default:, comment_text:, allow_null:|
+            for_field :enum_field do |name:, values:, active_record_class:, array:, default:, comment_text:, allow_null:|
               unless array
                 description <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
@@ -15,7 +15,7 @@ module Platformer
                   the values '#{values.join("','")}'.
                 DESCRIPTION
                 # add the validation to the active record class
-                model.validates name, inclusion: values, allow_nil: allow_null
+                active_record_class.validates name, inclusion: values, allow_nil: allow_null
               end
             end
           end

@@ -10,7 +10,7 @@ module Platformer
             class IncompatibleWithArrayFieldError < StandardError
             end
 
-            for_numeric_fields do |name:, model:, array:, dsl_name:, allow_null:|
+            for_numeric_fields do |name:, active_record_class:, array:, dsl_name:, allow_null:|
               unless array
                 if dsl_name == :integer_field
                   description <<~DESCRIPTION
@@ -18,14 +18,14 @@ module Platformer
                     the value of `#{name}` is numerical and a whole number.
                   DESCRIPTION
                   # add the validation to the active record class
-                  model.validates name, allow_nil: allow_null, numericality: {only_integer: true}
+                  active_record_class.validates name, allow_nil: allow_null, numericality: {only_integer: true}
                 else
                   description <<~DESCRIPTION
                     Create a validation on this active record model which asserts that
                     the value of `#{name}` is numerical.
                   DESCRIPTION
                   # add the validation to the active record class
-                  model.validates name, allow_nil: allow_null, numericality: true
+                  active_record_class.validates name, allow_nil: allow_null, numericality: true
                 end
               end
 
@@ -71,7 +71,7 @@ module Platformer
                   validation_method_name => value
                 }
                 args[:numericality][:message] = message unless message.nil?
-                model.validates name, **args
+                active_record_class.validates name, **args
               end
 
               for_method :validate_equal_to do |value:, message:|
@@ -85,7 +85,7 @@ module Platformer
                 DESCRIPTION
 
                 # add the validation to the active record class
-                model.validates name, {
+                active_record_class.validates name, {
                   allow_nil: allow_null,
                   inclusion: {
                     in: [value],

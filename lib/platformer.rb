@@ -43,16 +43,43 @@ require "platformer/databases/migrations/current/loader"
 
 recursive_require "lib/active_record/**/*.rb"
 
-require "app/application_record"
+# the base class which all active record models extend from
+require "app/active_record/application_record"
 
-require "app/types/base_object"
-require "app/types/base_argument"
-require "app/types/base_field"
-require "app/types/query_type"
-require "app/types/mutation_type"
+# GraphQL
+#
+# the base classes which all other types extend from
+require "app/graphql/types/base_argument"
+require "app/graphql/types/base_field"
+require "app/graphql/types/base_object"
+require "app/graphql/types/base_connection"
+require "app/graphql/types/base_edge"
+require "app/graphql/types/base_enum"
+require "app/graphql/types/base_input_object"
+require "app/graphql/types/base_interface"
+require "app/graphql/types/base_scalar"
+require "app/graphql/types/base_union"
+# the node type is a special type which is qequired for a
+# standards compliant server, it uses global ids for fetching
+# any available object
+require "app/graphql/types/node_type"
+# base classes for mutations and subscriptions
+require "app/graphql/mutations/base_mutation"
+require "app/graphql/subscriptions/base_subscription"
+# the base schema and root types, the main business logic is
+# contained within these classes, so that we can easily recreate
+# the server from within our specs..
+require "app/graphql/schema_base/queries_base"
+require "app/graphql/schema_base/mutations_base"
+require "app/graphql/schema_base/subscriptions_base"
+require "app/graphql/schema_base"
+# the schema and root types
+require "app/graphql/schema/queries"
+require "app/graphql/schema/mutations"
+require "app/graphql/schema/subscriptions"
+require "app/graphql/schema"
 
 recursive_require "lib/app/mutations/**/*.rb"
-recursive_require "lib/app/api.rb"
 
 recursive_require "lib/platformer/constants/**/*.rb"
 
@@ -73,6 +100,7 @@ recursive_require "lib/platformer/dsl_readers/**/*.rb"
 
 require "app/platform_base"
 require "app/platform_model"
+require "app/platform_schema"
 require "app/platform_callback"
 require "app/platform_service"
 
@@ -81,6 +109,7 @@ require "platformer/parsers/all_models"
 require "platformer/parsers/all_models/for_fields"
 require "platformer/parsers/final_models"
 require "platformer/parsers/final_models/for_fields"
+require "platformer/parsers/schemas"
 
 # composers, run in the required order
 recursive_require "lib/platformer/composers/active_record/**/*.rb"
@@ -92,6 +121,10 @@ recursive_require "lib/platformer/composers/migrations/indexes/**/*.rb"
 recursive_require "lib/platformer/composers/migrations/associations/**/*.rb"
 # the rest can be run in any order (and it's safe to require them twice)
 recursive_require "lib/platformer/composers/**/*.rb"
+
+# initialize the GraphQL server last, because it requires all the queries, mutations
+# and subscriptions to been composed first
+Schema.initialize_all
 
 module Platformer
 end

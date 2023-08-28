@@ -7,7 +7,7 @@ module Platformer
         module Common
           class TrimAndNullify < Parsers::AllModels::ForFields
             # install all the trim_and_nullify coercions for each model
-            for_string_fields do |name:, model:, array:, allow_null:|
+            for_string_fields do |name:, active_record_class:, array:, allow_null:|
               for_method :trim_and_nullify do
                 description <<~DESCRIPTION
                   Create a before_validation callback on this active_record class which
@@ -20,14 +20,14 @@ module Platformer
 
                 # add the before_validation callback to the active record class
                 if array
-                  model.before_validation do
+                  active_record_class.before_validation do
                     value = send(name)
                     if value.is_a?(Array)
                       send "#{name}=", value.map { |v| v.is_a?(String) ? v.strip : v }.map { |v| (v == "") ? nil : v }
                     end
                   end
                 else
-                  model.before_validation do
+                  active_record_class.before_validation do
                     value = send(name)
                     if value.is_a? String
                       v = value.strip
@@ -37,7 +37,7 @@ module Platformer
                 end
 
                 # inject this into the class and override the write_attribute system
-                model.attr_trim_and_nullify_coercion name
+                active_record_class.attr_trim_and_nullify_coercion name
               end
             end
           end

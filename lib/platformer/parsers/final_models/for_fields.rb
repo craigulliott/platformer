@@ -10,8 +10,8 @@ module Platformer
         include ForFieldMacros
 
         def self.for_fields field_names, &block
-          for_dsl field_names do |child_class:, dsl_name:, reader:, name:, dsl_arguments:|
-            # only keep the arguments which the block is trying to use
+          for_dsl field_names do |model_class:, dsl_name:, reader:, name:, dsl_arguments:|
+            # only provide the arguments which the block is trying to use
             final_args = {}
             desired_arg_names = block.parameters.map(&:last)
             desired_arg_names.each do |arg_name|
@@ -28,26 +28,40 @@ module Platformer
 
               when :table
                 # the table structure object from DynamicMigrations, this was created and
-                # the result cached within the CreateStructure parser
-                final_args[:table] = child_class.table_structure
+                # the result cached within the CreateStructure composer
+                final_args[:table] = model_class.table_structure
 
               when :schema
                 # the schema structure object from DynamicMigrations, this was created and
-                # the result cached within the CreateStructure parser (via the table)
-                final_args[:schema] = child_class.table_structure.schema
+                # the result cached within the CreateStructure composer (via the table)
+                final_args[:schema] = model_class.table_structure.schema
 
               when :database
                 # the database configuratiom object
-                final_args[:database] = child_class.configured_database
+                final_args[:database] = model_class.configured_database
 
-              when :graphql_type
-                # the graphql_type configuratiom object
-                final_args[:graphql_type] = child_class.graphql_type_class
+              when :model_class
+                final_args[:model_class] = model_class
+
+              when :schema_class
+                # get the equivilent Schema definition class (based on naming conventions)
+                # will raise an error if the desired Schema class does not exist
+                final_args[:schema_class] = model_class.schema_class
+
+              when :graphql_type_class
+                # get the equivilent GraphQL Type class (based on naming conventions)
+                # will raise an error if the desired Type class does not exist
+                final_args[:graphql_type_class] = model_class.graphql_type_class
+
+              when :active_record_class
+                # get the equivilent ActiveRecord class (based on naming conventions)
+                # will raise an error if the ActiveRecord class does not exist
+                final_args[:active_record_class] = model_class.active_record_class
 
               when :column
                 # Get the coresponding column object from DynamicMigrations for this field
                 # column is not available until the first field composer runs, and builds it
-                final_args[:column] = child_class.table_structure.column(name)
+                final_args[:column] = model_class.table_structure.column(name)
 
               when :reader
                 final_args[:reader] = reader

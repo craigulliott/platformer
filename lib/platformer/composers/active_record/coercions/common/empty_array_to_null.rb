@@ -9,7 +9,7 @@ module Platformer
             class UnsupportedEmptyArrayToNullError < StandardError
             end
 
-            for_all_fields except: [:jsom_field, :phone_number] do |name:, model:, array:, allow_null:|
+            for_all_fields except: [:jsom_field, :phone_number] do |name:, active_record_class:, array:, allow_null:|
               for_method :empty_array_to_null do
                 unless array
                   raise UnsupportedEmptyArrayToNullError, "`empty_array_to_null` can only be used on array fields"
@@ -23,7 +23,7 @@ module Platformer
                 DESCRIPTION
 
                 # add the before_validation callback to the active record class
-                model.before_validation do
+                active_record_class.before_validation do
                   value = send(name)
                   if value.is_a?(Array) && value.empty?
                     send "#{name}=", nil
@@ -31,7 +31,7 @@ module Platformer
                 end
 
                 # inject this into the class and override the write_attribute system
-                model.attr_empty_array_to_null_coercion name
+                active_record_class.attr_empty_array_to_null_coercion name
               end
             end
           end

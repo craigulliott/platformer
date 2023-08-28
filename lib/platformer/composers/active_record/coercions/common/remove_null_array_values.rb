@@ -7,7 +7,7 @@ module Platformer
         module Common
           class RemoveNullArrayValues < Parsers::AllModels::ForFields
             # install all the remove_null_array_values coercions for each model
-            for_all_fields except: [:json_field, :phone_number] do |name:, model:, array:, allow_null:|
+            for_all_fields except: [:json_field, :phone_number] do |name:, active_record_class:, array:, allow_null:|
               for_method :remove_null_array_values do
                 unless array
                   raise UnsupportedRemoveNullArrayValuesError, "`remove_null_array_values` can only be used on array fields"
@@ -21,7 +21,7 @@ module Platformer
                 DESCRIPTION
 
                 # add the before_validation callback to the active record class
-                model.before_validation do
+                active_record_class.before_validation do
                   value = send(name)
                   if value.is_a?(Array)
                     send "#{name}=", value.filter { |v| !v.nil? }
@@ -29,7 +29,7 @@ module Platformer
                 end
 
                 # inject this into the class and override the write_attribute system
-                model.attr_remove_null_array_values_coercion name
+                active_record_class.attr_remove_null_array_values_coercion name
               end
             end
           end

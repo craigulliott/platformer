@@ -10,8 +10,8 @@ module Platformer
         include ForFieldMacros
 
         def self.for_fields field_names, &block
-          for_dsl field_names do |child_class:, dsl_name:, reader:, name:, dsl_arguments:|
-            # only keep the arguments which the block is trying to use
+          for_dsl field_names do |model_class:, dsl_name:, reader:, name:, dsl_arguments:|
+            # only provide the arguments which the block is trying to use
             final_args = {}
             desired_arg_names = block.parameters.map(&:last)
             desired_arg_names.each do |arg_name|
@@ -26,13 +26,13 @@ module Platformer
               when :comment_text
                 final_args[:comment_text] = reader.comment&.comment
 
-              when :model
-                # the ActiveRecord class, this was created and
-                # the result cached within the CreateActiveModels parser
-                final_args[:model] = child_class.active_record_class
+              when :active_record_class
+                # get the equivilent ActiveRecord class (based on naming conventions)
+                # will raise an error if the ActiveRecord class does not exist
+                final_args[:active_record_class] = model_class.active_record_class
 
-              when :child_class
-                final_args[:child_class] = child_class
+              when :model_class
+                final_args[:model_class] = model_class
 
               when :reader
                 final_args[:reader] = reader

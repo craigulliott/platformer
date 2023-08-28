@@ -7,7 +7,7 @@ module Platformer
         module Common
           # Install a presence validation for all fields which are not allow_null for each model
           class NotNull < Parsers::AllModels::ForFields
-            for_all_fields except: :phone_number do |name:, model:, allow_null:|
+            for_all_fields except: :phone_number do |name:, active_record_class:, allow_null:|
               unless allow_null
                 description <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
@@ -15,7 +15,7 @@ module Platformer
                 DESCRIPTION
 
                 # add the validation to the active record class
-                model.validates name, {
+                active_record_class.validates name, {
                   not_nil: true
                 }
               end
