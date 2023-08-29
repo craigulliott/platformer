@@ -114,7 +114,7 @@ module Platformer
               class Users:AvatarModel < UsersModel
                 ...
               end
-              ````
+              ```
 
             DESCRIPTION
 
