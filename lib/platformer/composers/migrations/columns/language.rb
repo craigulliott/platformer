@@ -11,7 +11,7 @@ module Platformer
             enum_type_name = database.find_or_create_shared_enum Constants::ISO::LanguageCode
 
             # update the dynamic documentation
-            description <<~DESCRIPTION
+            add_documentation <<~DESCRIPTION
               Update DynamicMigrations and add an #{array ? "array of languages" : "language"}
               column named `#{name}` to the `#{table.schema.name}'.'#{table.name}` table.
               #{allow_null ? "This column can be null." : ""}. The column type is

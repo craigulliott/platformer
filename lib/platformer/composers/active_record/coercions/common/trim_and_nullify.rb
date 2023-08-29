@@ -9,7 +9,7 @@ module Platformer
             # install all the trim_and_nullify coercions for each model
             for_string_fields do |name:, active_record_class:, array:, allow_null:|
               for_method :trim_and_nullify do
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a before_validation callback on this active_record class which
                   strips any whitespace off the front and back of
                   #{array ? "all values" : "the value"} of the `#{name}`

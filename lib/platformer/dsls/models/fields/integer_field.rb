@@ -5,6 +5,8 @@ module Platformer
         module IntegerField
           def self.included klass
             klass.define_dsl :integer_field do
+              namespace :fields
+              title "Add an Integer field to your Model"
               description "Add an integer field to this model."
 
               # Arguments

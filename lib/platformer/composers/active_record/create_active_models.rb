@@ -11,7 +11,7 @@ module Platformer
       class CreateActiveModels < Parsers::AllModels
         # Process the parser for every decendant of PlatformModel
         for_models do |model_class:|
-          description <<~DESCRIPTION
+          add_documentation <<~DESCRIPTION
             Create an ActiveRecord class which corresponds to this model class.
           DESCRIPTION
 
@@ -19,7 +19,7 @@ module Platformer
           has_subclasses = subclasses.count > 0
 
           if has_subclasses
-            description <<~DESCRIPTION
+            add_documentation <<~DESCRIPTION
               Because this model class is subclassed by #{subclasses.count}
               other classes including `#{subclasses.first.name}` the corresponding
               ActiveRecord class will be marked as abstract with `self.abstract_class = true`
@@ -35,7 +35,7 @@ module Platformer
 
           # make the database connections, and set the desired schemas
           for_dsl :database do |server_type:, server_name:, database_name:|
-            description <<~DESCRIPTION
+            add_documentation <<~DESCRIPTION
               Configure and connect to the `#{server_name}` #{server_type} server
               and the #{database_name.nil? ? "default" : database_name} database.
             DESCRIPTION
@@ -49,7 +49,7 @@ module Platformer
 
           # set the desired postgres schema for models which extend this model
           for_dsl :schema do |schema_name:|
-            description <<~DESCRIPTION
+            add_documentation <<~DESCRIPTION
               Configure the ActiveRecord class to use the `#{schema_name}` database schema
               for this model by setting `table_name_prefix` to `#{schema_name}.`.
             DESCRIPTION

@@ -16,7 +16,7 @@ module Platformer
                   raise UnsupportedEmptyArrayToNullError, "`empty_array_to_null` can only be used on array fields"
                 end
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that the `#{column.name}`
                   column does not equal an empty array. This is because this field has an

@@ -5,6 +5,8 @@ module Platformer
         module BelongsTo
           def self.included klass
             klass.define_dsl :belongs_to do
+              namespace :associations
+
               description <<~DESCRIPTION
                 Specifies a one-to-one association with another class. This will
                 automatically create the appropriate foreign key column on this

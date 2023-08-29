@@ -9,7 +9,7 @@ module Platformer
           class TrimAndNullify < Parsers::FinalModels::ForFields
             for_string_fields do |name:, database:, table:, column:, array:, default:, comment_text:, allow_null:|
               for_method :trim_and_nullify do |method_name:, comment:|
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column have been trimmed and are not empty strings.

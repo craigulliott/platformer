@@ -5,6 +5,8 @@ module Platformer
         module EmailField
           def self.included klass
             klass.define_dsl :email_field do
+              namespace :fields
+              title "Add an Email field to your Model"
               description <<~DESCRIPTION
                 Add an email field to this model. Email fields are case
                 insensitive, and have their format automatically validated.

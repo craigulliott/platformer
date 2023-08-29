@@ -9,7 +9,7 @@ module Platformer
           class Boolean < Parsers::FinalModels::ForFields
             for_field :boolean_field do |name:, table:, column:, array:, default:, comment_text:, allow_null:|
               for_method :validate_is_true do |comment:|
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must be true (can not be false).
@@ -25,7 +25,7 @@ module Platformer
               end
 
               for_method :validate_is_false do |comment:|
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must be false (can not be true).

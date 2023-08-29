@@ -14,11 +14,11 @@ module Platformer
           state_machine_name = name || :state
           namespace = (state_machine_name == :state) ? :state_machine : :"#{state_machine_name}_state_machine"
 
-          description <<~DESCRIPTION
+          add_documentation <<~DESCRIPTION
             Create a state machine with the name `#{state_machine_name}` on this active record model.
           DESCRIPTION
 
-          description <<~DESCRIPTION
+          add_documentation <<~DESCRIPTION
             #{comment}
             The state machine has the following states:
           DESCRIPTION
@@ -27,7 +27,7 @@ module Platformer
           state_configurations = {}
           for_method :state do |name:, requires_presence_of:, requires_absence_of:, comment:|
             # generated documentation for this model
-            description <<~DESCRIPTION
+            add_documentation <<~DESCRIPTION
               `:#{name}`
 
               #{comment}
@@ -44,7 +44,7 @@ module Platformer
             raise MissingStatesError, "The state machine for #{active_record_class.name} must have at least 2 states"
           end
 
-          description <<~DESCRIPTION
+          add_documentation <<~DESCRIPTION
             #{comment}
             The state machine has the following actions:
           DESCRIPTION
@@ -53,7 +53,7 @@ module Platformer
           action_configurations = {}
           for_method :action do |name:, from:, to:, guards:, comment:|
             # generated documentation for this model
-            description <<~DESCRIPTION
+            add_documentation <<~DESCRIPTION
               `:#{name}`
 
               #{comment}

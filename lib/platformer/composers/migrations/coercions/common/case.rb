@@ -12,7 +12,7 @@ module Platformer
                 wanted_case = method_name
                 unwanted_case = (method_name == :uppercase) ? :lowercase : :uppercase
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must not contain any #{unwanted_case} letters.

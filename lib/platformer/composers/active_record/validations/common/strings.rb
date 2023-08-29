@@ -35,7 +35,7 @@ module Platformer
                   validation_key = :is
                 end
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` #{desc}.
                 DESCRIPTION
@@ -56,7 +56,7 @@ module Platformer
                   raise IncompatibleWithArrayFieldError, "Can not use this validation on array fields"
                 end
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` is of the format #{value}.
                 DESCRIPTION
@@ -83,7 +83,7 @@ module Platformer
                 # so we can easily differentiate between these two methods
                 not_in = method_name == :validate_not_in
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` must #{not_in ? "not be" : "be"} one of
                   #{values.to_sentence}.
@@ -113,7 +113,7 @@ module Platformer
                   raise IncompatibleWithArrayFieldError, "Can not use this validation on array fields"
                 end
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` is exactly `#{value}`.
                 DESCRIPTION

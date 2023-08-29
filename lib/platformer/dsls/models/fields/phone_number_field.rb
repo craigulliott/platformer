@@ -5,6 +5,8 @@ module Platformer
         module PhoneNumberField
           def self.included klass
             klass.define_dsl :phone_number_field do
+              namespace :fields
+              title "Add a Phone Number field to your Model"
               description <<~DESCRIPTION
                 Add an phone_number field to this model. The phone_number is backed
                 a seperate columns for the dialing_code and the phone_number, and

@@ -9,7 +9,7 @@ module Platformer
           class Json < Parsers::FinalModels::ForFields
             for_fields :json_field do |name:, table:, column:|
               for_method :empty_json_to_null do |method_name:, comment:|
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that the `#{column.name}`
                   column does not equal an empty json object. This is because this field has an

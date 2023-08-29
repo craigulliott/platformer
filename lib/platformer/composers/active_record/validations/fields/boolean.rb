@@ -12,7 +12,7 @@ module Platformer
 
             for_field :boolean_field do |name:, active_record_class:, array:, default:, comment_text:, allow_null:|
               unless array
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` is #{allow_null ? "null, " : ""}true or false.
                 DESCRIPTION
@@ -25,7 +25,7 @@ module Platformer
                   raise IncompatibleWithArrayFieldError, "Can not use this validation on array fields"
                 end
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` is #{allow_null ? "null or " : ""}true (not false).
                 DESCRIPTION
@@ -44,7 +44,7 @@ module Platformer
                   raise IncompatibleWithArrayFieldError, "Can not use this validation on array fields"
                 end
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` is #{allow_null ? "null or " : ""}false (not true).
                 DESCRIPTION

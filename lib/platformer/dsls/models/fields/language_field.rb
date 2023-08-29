@@ -5,6 +5,8 @@ module Platformer
         module LanguageField
           def self.included klass
             klass.define_dsl :language_field do
+              namespace :fields
+              title "Add a Language field to your Model"
               description "Add a language field to this model."
 
               # Arguments

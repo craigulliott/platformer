@@ -1,6 +1,13 @@
 module Platformer
   class Documentation
     class Markdown
+      attr_reader :file_path
+
+      def initialize base_path, filename
+        @base_path = File.expand_path base_path
+        @file_path = @base_path + "/#{filename}"
+      end
+
       # given a string, creates a markdown h1
       def h1 header
         unless header.nil? || header == ""
@@ -55,6 +62,15 @@ module Platformer
         end
       end
 
+      # a header which used bold text
+      def subsection_header header
+        unless header.nil? || header == ""
+          markdown = "**#{header.to_s.strip}**"
+          sections << markdown
+          markdown
+        end
+      end
+
       # add a section of documentation
       def text documentation
         unless documentation.nil? || documentation == ""
@@ -77,21 +93,54 @@ module Platformer
         end
       end
 
+      # definitions can be a single string or an array of strings
+      def definition_list item_name, definitions
+        # if a single definition is passed in, wrap it in an array
+        definitions = [definitions] unless definitions.is_a? Array
+
+        lines = []
+        lines << "#{escape_underscores item_name.to_s.strip}"
+        definitions.each do |definition|
+          lines << ":   #{escape_underscores definition.to_s.tr("\n", " ").strip}"
+        end
+
+        markdown = lines.join("\n")
+        sections << markdown
+        markdown
+      end
+
+      def link_document name, other_markdown_document
+        h2 name
+
+        relative_path = other_markdown_document.file_path.gsub(@base_path, "").gsub(/^\//, "")
+        sections << <<~IMPORT
+          [#{name}](#{relative_path})
+        IMPORT
+      end
+
+      def write_to_file
+        ensure_folder_exists
+        File.write(@file_path, to_markdown)
+      end
+
+      private
+
       # Clears the database configuration object, this is primarily used from witin
       # the test suite
       def to_markdown
         sections.join "\n\n"
       end
 
-      private
+      def ensure_folder_exists
+        FileUtils.mkdir_p @base_path
+      end
+
+      def escape_underscores string
+        string.gsub("_", "\\_")
+      end
 
       def sections
         @sections ||= []
-      end
-
-      # change snake case and lowercase space selerated words into title case
-      def titleize string
-        string.to_s.split(/_| /).map { |word| word[0] && (word[0].upcase + word[1..]) }.join(" ").strip
       end
     end
   end

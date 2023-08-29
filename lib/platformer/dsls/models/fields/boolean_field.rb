@@ -5,6 +5,8 @@ module Platformer
         module BooleanField
           def self.included klass
             klass.define_dsl :boolean_field do
+              namespace :fields
+              title "Add a Boolean field to your Model"
               description "Add a boolean field to this model."
 
               # the name of the field

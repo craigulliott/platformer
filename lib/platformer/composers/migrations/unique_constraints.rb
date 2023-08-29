@@ -22,22 +22,22 @@ module Platformer
             column_names = [name] + scope
 
             if where
-              description <<~DESCRIPTION
+              add_documentation <<~DESCRIPTION
                 Add a unique index to this table (`#{column.table.schema.name}'.'#{column.table.name}`)
                 which covers the column#{(column_names.count > 1) ? "s" : ""} #{column_names.to_sentence}
                 and applies to rows where `#{where}` is true.
               DESCRIPTION
             else
-              description <<~DESCRIPTION
+              add_documentation <<~DESCRIPTION
                 Add a unique constraint to this table (`#{column.table.schema.name}'.'#{column.table.name}`)
                 which covers the columns #{column_names.to_sentence}.
               DESCRIPTION
               if deferrable
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   This constraint is deferrable and is #{initially_deferred ? "" : "not "}deferred by default.
                 DESCRIPTION
               else
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   This constraint is not deferrable.
                 DESCRIPTION
               end

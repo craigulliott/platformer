@@ -13,7 +13,7 @@ module Platformer
                   raise UnsupportedRemoveNullArrayValuesError, "`remove_null_array_values` can only be used on array fields"
                 end
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that the `#{column.name}`
                   array column does not contain any null values.

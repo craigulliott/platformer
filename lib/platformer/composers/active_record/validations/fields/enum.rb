@@ -9,7 +9,7 @@ module Platformer
           class Enum < Parsers::AllModels::ForFields
             for_field :enum_field do |name:, values:, active_record_class:, array:, default:, comment_text:, allow_null:|
               unless array
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` is #{allow_null ? "null or " : ""} one of
                   the values '#{values.join("','")}'.

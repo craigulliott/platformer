@@ -9,7 +9,7 @@ module Platformer
 
             allow_null = method_called?(:allow_null)
 
-            description <<~DESCRIPTION
+            add_documentation <<~DESCRIPTION
               Create a has_many association, where `#{local_table.schema.name}'.'#{local_table.name}` records
               can have many `#{foreign_table.schema.name}'.'#{foreign_table.name}` records.
             DESCRIPTION
@@ -25,7 +25,7 @@ module Platformer
                 This table belongs to `#{foreign_table.schema.name}'.'#{foreign_table.name}` table.
               DESCRIPTION
 
-              description <<~DESCRIPTION
+              add_documentation <<~DESCRIPTION
                 A uuid column named `#{column_name}` was automatically created on the foreign table.
               DESCRIPTION
 
@@ -48,7 +48,7 @@ module Platformer
             local_column_descriptions = local_columns.map { |c| "#{c.name} (#{c.data_type})" }
             foreign_column_descriptions = foreign_columns.map { |c| "#{c.name} (#{c.data_type})" }
 
-            description <<~DESCRIPTION
+            add_documentation <<~DESCRIPTION
               The association is between the foreign columns #{foreign_column_descriptions.to_sentence}
               and the local columns #{local_column_descriptions.to_sentence}.
             DESCRIPTION
@@ -79,17 +79,17 @@ module Platformer
                 description: comment
               }
 
-              description <<~DESCRIPTION
+              add_documentation <<~DESCRIPTION
                 A foreign key constraint named #{foreign_key_name} was created between these columns.
                 The ON DELETE action is `#{on_delete_action_name}` and the ON UPDATE action is `#{on_update_action_name}`.
               DESCRIPTION
 
               if deferrable
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   This constraint is deferrable and is #{initially_deferred ? "" : "not "}deferred by default.
                 DESCRIPTION
               else
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   This constraint is not deferrable.
                 DESCRIPTION
               end
@@ -97,7 +97,7 @@ module Platformer
               # create the foreign key constraint
               foreign_table.add_foreign_key_constraint foreign_key_name, foreign_column_names, local_schema_name, local_table_name, local_column_names, **options
             else
-              description <<~DESCRIPTION
+              add_documentation <<~DESCRIPTION
                 A foreign key constraint was not created because the tables are in different databases.
               DESCRIPTION
             end

@@ -15,7 +15,7 @@ module Platformer
                   raise UnsupportedEmptyArrayToNullError, "`empty_array_to_null` can only be used on array fields"
                 end
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a before_validation callback on this active_record class which
                   will convert `#{name}` into null if it is an empty array. This logic
                   is also injected into ActiveRecord and overrides the write_attribute method,

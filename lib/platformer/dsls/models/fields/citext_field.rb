@@ -5,6 +5,8 @@ module Platformer
         module CitextField
           def self.included klass
             klass.define_dsl :citext_field do
+              namespace :fields
+              title "Add a Citext field to your Model"
               description <<~DESCRIPTION
                 Add a citext field to this model. The citext type can store citext of
                 a specific length.

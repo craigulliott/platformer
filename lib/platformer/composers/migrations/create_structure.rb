@@ -48,7 +48,7 @@ module Platformer
           schema_name = dsl_reader.schema_name
 
           # update the dynamic documentation
-          description <<~DESCRIPTION
+          add_documentation <<~DESCRIPTION
             Update the #{dsl_reader.server_type} server named `#{dsl_reader.server_name}`
             within DynamicMigrations. Create a table named `#{schema_name}`.`#{table_name}` within
             the #{dsl_reader.has_database_name? ? "`#{dsl_reader.database_name}`" : "default"} database.

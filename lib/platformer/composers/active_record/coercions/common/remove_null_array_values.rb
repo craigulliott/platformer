@@ -13,7 +13,7 @@ module Platformer
                   raise UnsupportedRemoveNullArrayValuesError, "`remove_null_array_values` can only be used on array fields"
                 end
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a before_validation callback on this active_record class which
                   will remove any null values from the `#{name}` array column. This logic
                   is also injected into ActiveRecord and overrides the write_attribute method,

@@ -5,6 +5,8 @@ module Platformer
         module CurrencyField
           def self.included klass
             klass.define_dsl :currency_field do
+              namespace :fields
+              title "Add a Currency field to your Model"
               description "Add a currency field to this model."
 
               # Arguments

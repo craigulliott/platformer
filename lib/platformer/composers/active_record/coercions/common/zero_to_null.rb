@@ -9,7 +9,7 @@ module Platformer
             # install all the zero_to_null coercions for each model
             for_numeric_fields do |name:, active_record_class:, array:, allow_null:|
               for_method :zero_to_null do
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a before_validation callback on this active_record class which
                   will convert #{array ? "all values of 0" : "the value 0"} in the `#{name}`
                   field into null. This logic is also injected into ActiveRecord

@@ -87,10 +87,9 @@ require "platformer/class_map"
 
 require "platformer/documentation"
 require "platformer/documentation/markdown"
-require "platformer/documentation/arguments_documenter"
-require "platformer/documentation/composer_class_documenter"
-require "platformer/documentation/dsl_documenter"
-require "platformer/documentation/dsl_method_documenter"
+require "platformer/documentation/composer_documentation"
+require "platformer/documentation/dsl_documentation"
+require "platformer/documentation/namespace_documentation"
 
 recursive_require "lib/platformer/shared_dsl_configuration/**/*.rb"
 

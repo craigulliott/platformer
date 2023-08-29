@@ -5,6 +5,8 @@ module Platformer
         module DoubleField
           def self.included klass
             klass.define_dsl :double_field do
+              namespace :fields
+              title "Add a Double field to your Model"
               description "Add a double field to this model."
 
               # the name of the field

@@ -5,7 +5,9 @@ module Platformer
         module CountryField
           def self.included klass
             klass.define_dsl :country_field do
-              description "Add a country field to this model."
+              namespace :fields
+              title "Add a Country field to your Model"
+              description "Add a Country field to this model."
 
               # Arguments
               #

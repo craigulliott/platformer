@@ -5,6 +5,8 @@ module Platformer
         module FloatField
           def self.included klass
             klass.define_dsl :float_field do
+              namespace :fields
+              title "Add a Float field to your Model"
               description "Add a float field to this model."
 
               # the name of the field

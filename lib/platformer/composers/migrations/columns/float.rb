@@ -8,7 +8,7 @@ module Platformer
         class Float < Parsers::FinalModels::ForFields
           for_field :float_field do |name:, table:, array:, default:, comment_text:, allow_null:|
             # update the dynamic documentation
-            description <<~DESCRIPTION
+            add_documentation <<~DESCRIPTION
               Update DynamicMigrations and add an #{array ? "array of floats" : "float"}
               column named `#{name}` to the `#{table.schema.name}'.'#{table.name}` table.
               #{allow_null ? "This column can be null." : ""}

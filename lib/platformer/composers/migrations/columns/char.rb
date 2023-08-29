@@ -9,7 +9,7 @@ module Platformer
           # for each time the :char_field DSL was used on this Model
           for_field :char_field do |name:, table:, array:, default:, length:, comment_text:, allow_null:|
             # update the dynamic documentation
-            description <<~DESCRIPTION
+            add_documentation <<~DESCRIPTION
               Update DynamicMigrations and add an #{array ? "array of chars" : "char"}
               column named `#{name}` to the `#{table.schema.name}'.'#{table.name}` table.
               #{allow_null ? "This column can be null." : ""}

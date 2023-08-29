@@ -9,7 +9,7 @@ module Platformer
           class NotNull < Parsers::AllModels::ForFields
             for_all_fields except: :phone_number do |name:, active_record_class:, allow_null:|
               unless allow_null
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` is not NULL.
                 DESCRIPTION

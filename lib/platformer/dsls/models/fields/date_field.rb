@@ -5,6 +5,8 @@ module Platformer
         module DateField
           def self.included klass
             klass.define_dsl :date_field do
+              namespace :fields
+              title "Add a Date field to your Model"
               description <<~DESCRIPTION
                 Add a date field to this model.
               DESCRIPTION

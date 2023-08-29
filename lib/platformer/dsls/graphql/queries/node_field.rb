@@ -19,7 +19,7 @@ module Platformer
 
               requires :foreign_model, :class do
                 description <<~DESCRIPTION
-                  The model which is aoociated to this model via the `has_one` or `belongs_to`
+                  The model which is associated to this model via the `has_one` or `belongs_to`
                   association.
                 DESCRIPTION
               end

@@ -5,8 +5,10 @@ module Platformer
         module DateTimeField
           def self.included klass
             klass.define_dsl :date_time_field do
+              namespace :fields
+              title "Add a DateTime field to your Model"
               description <<~DESCRIPTION
-                Add a date_time (timestamp) field to this model.
+                Add a date\\_time (timestamp) field to this model.
               DESCRIPTION
 
               # Arguments

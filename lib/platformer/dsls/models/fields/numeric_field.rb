@@ -5,6 +5,8 @@ module Platformer
         module NumericField
           def self.included klass
             klass.define_dsl :numeric_field do
+              namespace :fields
+              title "Add a Numeric field to your Model"
               description <<~DESCRIPTION
                 Add a numeric field to this model. The numeric type can store numbers
                 with a lot of digits. Typically, you use the numeric type for numbers

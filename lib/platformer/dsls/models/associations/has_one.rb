@@ -5,6 +5,8 @@ module Platformer
         module HasOne
           def self.included klass
             klass.define_dsl :has_one do
+              namespace :associations
+
               description <<~DESCRIPTION
                 Specifies a one-to-one association with another class. This will
                 automatically create the appropriate foreign key column on the other

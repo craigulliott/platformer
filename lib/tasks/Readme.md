@@ -1,0 +1,1 @@
+This folder is for development rake tasks, not for rake tasks which should be made available to projects which use this gem

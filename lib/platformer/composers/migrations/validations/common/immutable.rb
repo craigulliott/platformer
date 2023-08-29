@@ -14,7 +14,7 @@ module Platformer
                 # validation is not enforced until the first time the value changes away from null
                 once_set = method_name == :immutable_once_set
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Add a trigger to this table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   and call a function which prevents the value of `#{name}` from
                   #{once_set ? " being updated after it has been first set to a value (meaning,

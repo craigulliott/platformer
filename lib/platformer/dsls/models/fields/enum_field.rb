@@ -5,6 +5,8 @@ module Platformer
         module EnumField
           def self.included klass
             klass.define_dsl :enum_field do
+              namespace :fields
+              title "Add an Enum field to your Model"
               description "Add an enum field to this model."
 
               # Arguments

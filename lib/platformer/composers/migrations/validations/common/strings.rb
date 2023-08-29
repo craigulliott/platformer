@@ -32,14 +32,14 @@ module Platformer
                   operator = "="
                 end
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must #{desc}.
                 DESCRIPTION
 
                 if deferrable
-                  description <<~DESCRIPTION
+                  add_documentation <<~DESCRIPTION
                     This constraint is deferrable and is #{initially_deferred ? "" : "not "}deferred by default.
                   DESCRIPTION
                 end
@@ -53,14 +53,14 @@ module Platformer
 
               # if the validate_format validation was used
               for_method :validate_format do |value:, deferrable:, initially_deferred:, comment:|
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must be of the format #{value}.
                 DESCRIPTION
 
                 if deferrable
-                  description <<~DESCRIPTION
+                  add_documentation <<~DESCRIPTION
                     This constraint is deferrable and is #{initially_deferred ? "" : "not "}deferred by default.
                   DESCRIPTION
                 end
@@ -83,14 +83,14 @@ module Platformer
                 # so we can easily differentiate between these two methods
                 not_in = method_name == :validate_not_in
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must #{not_in ? "not be" : "be"} one of #{values.to_sentence}.
                 DESCRIPTION
 
                 if deferrable
-                  description <<~DESCRIPTION
+                  add_documentation <<~DESCRIPTION
                     This constraint is deferrable and is #{initially_deferred ? "" : "not "}deferred by default.
                   DESCRIPTION
                 end
@@ -108,14 +108,14 @@ module Platformer
 
               # if the validate_in validation was used
               for_method :validate_is_value do |value:, deferrable:, initially_deferred:, comment:|
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column exactly equal `#{value}`.
                 DESCRIPTION
 
                 if deferrable
-                  description <<~DESCRIPTION
+                  add_documentation <<~DESCRIPTION
                     This constraint is deferrable and is #{initially_deferred ? "" : "not "}deferred by default.
                   DESCRIPTION
                 end

@@ -9,7 +9,7 @@ module Platformer
           class ZeroToNull < Parsers::FinalModels::ForFields
             for_numeric_fields do |name:, table:, column:, array:, default:, comment_text:, allow_null:|
               for_method :zero_to_null do |method_name:, comment:|
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that the `#{column.name}`
                   column does not #{array ? "contain any values of 0" : "equal 0"}. This is

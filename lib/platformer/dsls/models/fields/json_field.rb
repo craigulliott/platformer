@@ -5,6 +5,8 @@ module Platformer
         module JsonField
           def self.included klass
             klass.define_dsl :json_field do
+              namespace :fields
+              title "Add a JSON field to your Model"
               description <<~DESCRIPTION
                 Add a json field to this model.
               DESCRIPTION

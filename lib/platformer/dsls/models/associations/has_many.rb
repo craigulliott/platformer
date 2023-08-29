@@ -5,6 +5,8 @@ module Platformer
         module HasMany
           def self.included klass
             klass.define_dsl :has_many do
+              namespace :associations
+
               description <<~DESCRIPTION
                 Specifies a one-to-many association with another class. This will
                 automatically create the appropriate foreign key column on the other

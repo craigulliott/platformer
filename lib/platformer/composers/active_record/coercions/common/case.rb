@@ -11,7 +11,7 @@ module Platformer
               for_method [:uppercase, :lowercase] do |method_name:|
                 wanted_case = method_name
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a before_validation callback on this active_record class which
                   #{wanted_case}s #{array ? "all values" : "the value"} of `#{name}` before any
                   create or update operations. This logic is also injected into ActiveRecord

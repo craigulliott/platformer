@@ -5,6 +5,8 @@ module Platformer
         module IpAddressField
           def self.included klass
             klass.define_dsl :ip_address_field do
+              namespace :fields
+              title "Add an IpAddress field to your Model"
               description "Add a field to this model for storing IPv4 and IPv6 ip addresses."
 
               # Arguments

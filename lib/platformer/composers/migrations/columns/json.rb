@@ -8,7 +8,7 @@ module Platformer
         class Json < Parsers::FinalModels::ForFields
           for_field :json_field do |name:, table:, default:, comment_text:, allow_null:|
             # update the dynamic documentation
-            description <<~DESCRIPTION
+            add_documentation <<~DESCRIPTION
               Update DynamicMigrations and add a json column named `#{name}`
               to the `#{table.schema.name}'.'#{table.name}` table.
               #{allow_null ? "This column can be null." : ""}

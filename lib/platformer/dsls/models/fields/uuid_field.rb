@@ -5,6 +5,8 @@ module Platformer
         module UuidField
           def self.included klass
             klass.define_dsl :uuid_field do
+              namespace :fields
+              title "Add a UUID field to your Model"
               description "Add a field to this model for storing IPv4 and IPv6 hosts and networks."
 
               # Arguments

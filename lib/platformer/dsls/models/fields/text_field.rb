@@ -5,6 +5,8 @@ module Platformer
         module TextField
           def self.included klass
             klass.define_dsl :text_field do
+              namespace :fields
+              title "Add a Text field to your Model"
               description <<~DESCRIPTION
                 Add a text field to this model. The text type can store text of
                 a specific length.

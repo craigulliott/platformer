@@ -10,14 +10,14 @@ module Platformer
             for_numeric_fields do |name:, table:, column:, array:, default:, comment_text:, allow_null:|
               # if the validate_greater_than validation was used
               for_method :validate_greater_than do |value:, deferrable:, initially_deferred:, comment:|
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must be greater than #{value}.
                 DESCRIPTION
 
                 if deferrable
-                  description <<~DESCRIPTION
+                  add_documentation <<~DESCRIPTION
                     This constraint is deferrable and is #{initially_deferred ? "" : "not "}deferred by default.
                   DESCRIPTION
                 end
@@ -33,14 +33,14 @@ module Platformer
 
               # if the validate_greater_than_or_equal_to validation was used
               for_method :validate_greater_than_or_equal_to do |value:, deferrable:, initially_deferred:, comment:|
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must be greater than or equal to #{value}.
                 DESCRIPTION
 
                 if deferrable
-                  description <<~DESCRIPTION
+                  add_documentation <<~DESCRIPTION
                     This constraint is deferrable and is #{initially_deferred ? "" : "not "}deferred by default.
                   DESCRIPTION
                 end
@@ -56,14 +56,14 @@ module Platformer
 
               # if the validate_less_than validation was used
               for_method :validate_less_than do |value:, deferrable:, initially_deferred:, comment:|
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must be less than #{value}.
                 DESCRIPTION
 
                 if deferrable
-                  description <<~DESCRIPTION
+                  add_documentation <<~DESCRIPTION
                     This constraint is deferrable and is #{initially_deferred ? "" : "not "}deferred by default.
                   DESCRIPTION
                 end
@@ -79,14 +79,14 @@ module Platformer
 
               # if the validate_less_than_or_equal_to validation was used
               for_method :validate_less_than_or_equal_to do |value:, deferrable:, initially_deferred:, comment:|
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must be less than or equal to #{value}.
                 DESCRIPTION
 
                 if deferrable
-                  description <<~DESCRIPTION
+                  add_documentation <<~DESCRIPTION
                     This constraint is deferrable and is #{initially_deferred ? "" : "not "}deferred by default.
                   DESCRIPTION
                 end
@@ -102,14 +102,14 @@ module Platformer
 
               # if the validate_equal_to validation was used
               for_method :validate_equal_to do |value:, deferrable:, initially_deferred:, comment:|
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
                   to the `#{column.name}` column must be equal to the number #{value}.
                 DESCRIPTION
 
                 if deferrable
-                  description <<~DESCRIPTION
+                  add_documentation <<~DESCRIPTION
                     This constraint is deferrable and is #{initially_deferred ? "" : "not "}deferred by default.
                   DESCRIPTION
                 end

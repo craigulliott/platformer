@@ -9,7 +9,7 @@ module Platformer
             # install all the empty_json_to_null coercions for each model
             for_field :json_field do |name:, active_record_class:, allow_null:|
               for_method :empty_json_to_null do
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a before_validation callback on this active_record class which
                   will convert empty objects in the `#{name}` field into null. This logic
                   is also injected into ActiveRecord and overrides the write_attribute method,

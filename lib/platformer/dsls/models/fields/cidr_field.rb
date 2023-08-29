@@ -5,6 +5,8 @@ module Platformer
         module CidrField
           def self.included klass
             klass.define_dsl :cidr_field do
+              namespace :fields
+              title "Add a Cidr field to your Model"
               description <<~DESCRIPTION
                 Add a field to this model for storing IPv4 or IPv6 network
                 specifications, such as `192.168.0.0/24` or

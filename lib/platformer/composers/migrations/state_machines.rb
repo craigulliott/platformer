@@ -22,7 +22,7 @@ module Platformer
           end
 
           # update the dynamic documentation
-          description <<~DESCRIPTION
+          add_documentation <<~DESCRIPTION
             Update DynamicMigrations and add an enum column named `#{name}` to
             the `#{table.schema.name}'.'#{table.name}` table. This column is used to
             track the current state of the state machine named `#{name}`. The column

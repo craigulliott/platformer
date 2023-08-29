@@ -12,7 +12,7 @@ module Platformer
 
             for_all_fields except: :phone_number do |name:, active_record_class:, array:, allow_null:|
               for_method :immutable do |message:|
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` can not be changed after the record is created.
                 DESCRIPTION
@@ -31,7 +31,7 @@ module Platformer
                   raise IncompatibleImmutableValidationError, "You can not use `immutable_once_set` on fields which do not allow nil values. Switch this field to allow null values, or use `immutable` instead."
                 end
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` can not be changed after the value has been set.
                   If a record exists, and the value is null, then it can be set at any

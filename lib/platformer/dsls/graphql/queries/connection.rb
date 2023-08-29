@@ -20,7 +20,7 @@ module Platformer
 
               requires :foreign_model, :class do
                 description <<~DESCRIPTION
-                  The model which is aoociated to this model via the `has_many` aassociation.
+                  The model which is associated to this model via the `has_many` association.
                 DESCRIPTION
               end
 
@@ -33,7 +33,7 @@ module Platformer
 
               add_method :edge do
                 description <<~DESCRIPTION
-                  When a has_many association between a model and its foreign models
+                  When a has\\_many association between a model and its foreign models
                   employs a join table—specified by the through: option—you can use this
                   method to surface additional data from the intermediary model. For
                   instance, if a user is connected to multiple organizations via a

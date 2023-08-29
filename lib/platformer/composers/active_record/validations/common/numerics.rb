@@ -13,14 +13,14 @@ module Platformer
             for_numeric_fields do |name:, active_record_class:, array:, dsl_name:, allow_null:|
               unless array
                 if dsl_name == :integer_field
-                  description <<~DESCRIPTION
+                  add_documentation <<~DESCRIPTION
                     Create a validation on this active record model which asserts that
                     the value of `#{name}` is numerical and a whole number.
                   DESCRIPTION
                   # add the validation to the active record class
                   active_record_class.validates name, allow_nil: allow_null, numericality: {only_integer: true}
                 else
-                  description <<~DESCRIPTION
+                  add_documentation <<~DESCRIPTION
                     Create a validation on this active record model which asserts that
                     the value of `#{name}` is numerical.
                   DESCRIPTION
@@ -58,7 +58,7 @@ module Platformer
                   validation_method_name = :less_than_or_equal_to
                 end
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` #{desc} #{value}.
                 DESCRIPTION
@@ -79,7 +79,7 @@ module Platformer
                   raise IncompatibleWithArrayFieldError, "Can not use this validation on array fields"
                 end
 
-                description <<~DESCRIPTION
+                add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
                   the value of `#{name}` is equal to the number #{value}.
                 DESCRIPTION

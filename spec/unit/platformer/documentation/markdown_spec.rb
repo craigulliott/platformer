@@ -151,18 +151,4 @@ RSpec.describe Platformer::Documentation::Markdown do
       end
     end
   end
-
-  describe :titleize do
-    it "titleizes strings as expected" do
-      expect(markdown.send(:titleize, "foo")).to eq "Foo"
-      expect(markdown.send(:titleize, "_foo")).to eq "Foo"
-      expect(markdown.send(:titleize, "foo_")).to eq "Foo"
-      expect(markdown.send(:titleize, "foo_bar")).to eq "Foo Bar"
-      expect(markdown.send(:titleize, "f b")).to eq "F B"
-      expect(markdown.send(:titleize, "foo bar")).to eq "Foo Bar"
-      expect(markdown.send(:titleize, "foo_bar_hi there")).to eq "Foo Bar Hi There"
-      expect(markdown.send(:titleize, :foo)).to eq "Foo"
-      expect(markdown.send(:titleize, "Hello1_2_3")).to eq "Hello1 2 3"
-    end
-  end
 end

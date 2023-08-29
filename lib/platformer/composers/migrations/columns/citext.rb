@@ -8,7 +8,7 @@ module Platformer
         class Citext < Parsers::FinalModels::ForFields
           for_field :citext_field do |name:, table:, database:, array:, default:, comment_text:, allow_null:|
             # update the dynamic documentation
-            description <<~DESCRIPTION
+            add_documentation <<~DESCRIPTION
               Update DynamicMigrations and add an #{array ? "array of citexts" : "citext"}
               column named `#{name}` to the `#{table.schema.name}'.'#{table.name}` table.
               #{allow_null ? "This column can be null." : ""}

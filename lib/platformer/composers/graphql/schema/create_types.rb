@@ -18,7 +18,7 @@ module Platformer
               class_description = description
             end
 
-            description <<~DESCRIPTION
+            add_documentation <<~DESCRIPTION
               Create a GraphQL Types class which corresponds to this model class.
             DESCRIPTION
 

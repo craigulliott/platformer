@@ -5,6 +5,8 @@ module Platformer
         module CharField
           def self.included klass
             klass.define_dsl :char_field do
+              namespace :fields
+              title "Add a Char field to your Model"
               description <<~DESCRIPTION
                 Add a char field to this model. The char type can store text of
                 a specific length.

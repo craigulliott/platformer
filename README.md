@@ -27,6 +27,15 @@ Create your new platform:
 
     $ platformer create my_platform_name
 
+## Documentation
+
+    $ npm install -g spec-md
+
+    $ rake documentation:generate
+    $ spec-md ./docs/index.md > ./docs.html
+
+Todo
+
 ## Getting Started
 
 Todo
