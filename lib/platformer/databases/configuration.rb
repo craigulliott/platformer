@@ -27,7 +27,7 @@ module Platformer
       # opens the configuration yaml file, and returns the contents as a hash
       # caches the result for future use
       def self.file_contents
-        @@file_contents ||= YAML.load_file("config/database.yaml")
+        @@file_contents ||= YAML.load_file(Platformer.root("config/database.yaml"))
       end
     end
   end

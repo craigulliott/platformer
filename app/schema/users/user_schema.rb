@@ -2,7 +2,7 @@ module Users
   # represents a node in our graph, a node is basically an object in our schema
 
   # there should be a 1:1 mapping between models and schema files (unless the model is internal)
-  class UserSchema < PlatformSchema
+  class UserSchema < BaseSchema
     # make available as a root node
     root_node do
       by_id

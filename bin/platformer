@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+ENV["PLATFORMER_ROOT"] ||= File.expand_path("../", __dir__)
+
+require "fileutils"
+require "platformer"
+
+case ARGV[0]&.downcase&.to_sym
+when :new
+  name = ARGV[1]
+  unless name
+    puts "Usage: platformer new name"
+    exit false
+  end
+
+  puts "Creating new platform #{name}"
+  target_path = File.expand_path(name)
+
+  puts "Creating directory `#{target_path}`"
+  FileUtils.mkdir target_path
+
+  puts "Scaffolding project"
+  source_path = Platformer.root "scaffold"
+  FileUtils.cp_r "#{source_path}/.", target_path
+
+  puts "Entering directory `#{target_path}`"
+  Dir.chdir target_path
+
+  puts "Installing dependencies"
+  system "bundle install"
+
+  puts "Initializing git repository"
+  system "git init"
+
+  puts "Done!"
+
+else
+  puts "Usage: platformer [new]"
+  exit false
+end

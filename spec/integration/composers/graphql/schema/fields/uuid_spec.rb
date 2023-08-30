@@ -5,10 +5,10 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::Uuid do
   describe "for a new UserModel which defines a simple new model with a uuid field" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         uuid_field :my_uuid
       end
-      create_class "Users::UserSchema", PlatformSchema do
+      create_class "Users::UserSchema", Platformer::BaseSchema do
         fields [
           :my_uuid
         ]

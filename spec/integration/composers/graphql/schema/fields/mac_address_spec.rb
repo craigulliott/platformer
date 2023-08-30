@@ -5,10 +5,10 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::MacAddress do
   describe "for a new UserModel which defines a simple new model with a mac_address field" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         mac_address_field :my_mac_address
       end
-      create_class "Users::UserSchema", PlatformSchema do
+      create_class "Users::UserSchema", Platformer::BaseSchema do
         fields [
           :my_mac_address
         ]

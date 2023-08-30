@@ -15,13 +15,13 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::RootCollection do
       end
 
       # define the platform model for this user
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         database :postgres, :primary
         char_field :my_char
       end
 
       # define the graphql schema for this user
-      create_class "Users::UserSchema", PlatformSchema do
+      create_class "Users::UserSchema", Platformer::BaseSchema do
         # root node causes this to be added as a root level query in the schema
         root_collection do
           by_exact_string :my_char
@@ -49,7 +49,7 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::RootCollection do
       Platformer::Composers::GraphQL::Schema::Fields::Char.rerun
       Platformer::Composers::GraphQL::Schema::RootCollection.rerun
 
-      Schema.initialize_all
+      Schema.initialize!
 
       Users::User.create! my_char: "a"
       Users::User.create! my_char: "b"

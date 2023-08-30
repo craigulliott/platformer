@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::Migrations::Columns::DateTime do
   describe "for a new UserModel which defines a simple new model in a postgres database" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         database :postgres, :primary
       end
     end

@@ -5,10 +5,10 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::Citext do
   describe "for a new UserModel which defines a simple new model with a citext field" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         citext_field :my_citext
       end
-      create_class "Users::UserSchema", PlatformSchema do
+      create_class "Users::UserSchema", Platformer::BaseSchema do
         fields [
           :my_citext
         ]

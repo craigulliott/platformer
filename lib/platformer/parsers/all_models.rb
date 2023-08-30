@@ -1,6 +1,6 @@
 module Platformer
   module Parsers
-    # Process the parser for every descendant of PlatformModel, which includes
+    # Process the parser for every descendant of BaseModel, which includes
     # models in the class hierarchy that may be abstract and lack a corresponding
     # database table. This class hierarchy adheres to the ActiveRecord convention,
     # which makes this parser the preferred method for parsing our models and generating
@@ -18,8 +18,8 @@ module Platformer
     class AllModels < DSLCompose::Parser
       # yields the provided block for all models
       def self.for_models &block
-        # Processes every ancestor of the PlatformModel class.
-        for_children_of PlatformModel do |child_class:|
+        # Processes every ancestor of the BaseModel class.
+        for_children_of BaseModel do |child_class:|
           # yield the block with the expected arguments
           instance_exec(model_class: child_class, &block)
         end
@@ -28,7 +28,7 @@ module Platformer
       # Create a convenience method which can be used in parsers which extend this one
       # and abstract away some common code.
       def self.for_dsl dsl_names, &block
-        # Processes every ancestor of the PlatformModel class.
+        # Processes every ancestor of the BaseModel class.
         for_models do |model_class:|
           # Yields the provided block and provides the requested values for
           # each use of the provided DSL on the current model class (not any

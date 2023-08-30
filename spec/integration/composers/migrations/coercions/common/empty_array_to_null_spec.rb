@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::Migrations::Coercions::Common::EmptyArrayToNull do
   describe "for a new UserModel which defines a simple new model with an array of integers and a empty_array_to_null coercion" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         database :postgres, :primary
         integer_field :array_of_integers_field, array: true do
           empty_array_to_null

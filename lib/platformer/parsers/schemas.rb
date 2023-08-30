@@ -1,14 +1,14 @@
 module Platformer
   module Parsers
-    # Process the parser for every descendant of PlatformSchema.
+    # Process the parser for every descendant of BaseSchema.
     class Schemas < DSLCompose::Parser
       class ArgumentNotAvailableError < StandardError
       end
 
       # yields the provided block for all final schemas
       def self.for_final_schemas &block
-        # Processes every ancestor of the PlatformSchema class.
-        for_final_children_of PlatformSchema do |child_class:|
+        # Processes every ancestor of the BaseSchema class.
+        for_final_children_of BaseSchema do |child_class:|
           # only provide the arguments which the block is trying to use
           final_args = {}
           desired_arg_names = block.parameters.map(&:last)
@@ -46,7 +46,7 @@ module Platformer
       # Create a convenience method which can be used in parsers which extend this one
       # and abstract away some common code.
       def self.for_dsl dsl_names, &block
-        # Processes every ancestor of the PlatformSchema class.
+        # Processes every ancestor of the BaseSchema class.
         for_final_schemas do |schema_class:|
           # Yields the provided block and provides the requested values for
           # each use of the provided DSL on the current model class (not any

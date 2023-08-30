@@ -10,7 +10,7 @@ module Platformer
         # called, then this composer will generate a `users_badge` field and install
         # it onto Schema::Queries.
         class RootCollection < Parsers::Schemas
-          # Process the parser for every final decendant of PlatformSchema
+          # Process the parser for every final decendant of BaseSchema
           for_dsl :root_collection do |schema_reader:, reader:, model_class:, graphql_type_class:, active_record_class:|
             # the field name, such as `users` or `users_avatars`
             field_name = schema_reader.public_name.pluralize

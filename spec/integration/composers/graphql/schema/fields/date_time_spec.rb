@@ -5,10 +5,10 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::DateTime do
   describe "for a new UserModel which defines a simple new model with a date_time field" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         date_time_field :my_date_time
       end
-      create_class "Users::UserSchema", PlatformSchema do
+      create_class "Users::UserSchema", Platformer::BaseSchema do
         fields [
           :my_date_time
         ]

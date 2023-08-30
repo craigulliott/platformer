@@ -33,7 +33,7 @@ namespace :db do
     resolve any differences
   DESC
   task :generate_migrations do
-    Platformer::Databases::Migrations.new(Platformer.root).generate_migration_files
+    Platformer::Databases::Migrations.new(Platformer.root("db/migrations")).generate_migration_files
   end
 
   desc "Delete any migration files which have not been commited to git"

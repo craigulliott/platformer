@@ -7,10 +7,10 @@ module Platformer
         # Create GraphQL Type classes to represent each model in the schema.
         #
         # For example, if we have created a UserSchema and an OrganizationSchema
-        # which extend PlatformSchema, then this composer will generate a `Types::User`
+        # which extend BaseSchema, then this composer will generate a `Types::User`
         # and a `Types::Organization` class which are extended from Types::BaseObject
         class CreateTypes < Parsers::Schemas
-          # Process the parser for every final decendant of PlatformSchema
+          # Process the parser for every final decendant of BaseSchema
           for_final_schemas do |model_class:|
             # if one was provided, then extract the description
             class_description = nil

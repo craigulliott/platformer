@@ -6,7 +6,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::StateMachines do
   let(:pg_helper) { RSpec.configuration.pg_spec_helper }
 
   before(:each) do
-    create_class :TestBaseModel, PlatformModel do
+    create_class :TestBaseModel, Platformer::BaseModel do
       database :postgres, :primary
     end
   end

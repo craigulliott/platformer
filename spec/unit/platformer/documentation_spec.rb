@@ -16,7 +16,7 @@ RSpec.describe Platformer::Documentation do
   describe :add_composer_class do
     it "documents a composer class without error" do
       expect {
-        documentation.add_composer_class(PlatformModel)
+        documentation.add_composer_class(Platformer::BaseModel)
       }.to_not raise_error
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe Platformer::Documentation do
 
     describe "after a composer class has been added" do
       before(:each) do
-        documentation.add_composer_class(PlatformModel)
+        documentation.add_composer_class(Platformer::BaseModel)
       end
 
       it "returns a longer string" do

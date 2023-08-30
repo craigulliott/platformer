@@ -8,7 +8,7 @@ RSpec.describe Platformer::Documentation::Markdown do
   describe :initialize do
     it "initializes without error" do
       expect {
-        Platformer::Documentation::Markdown.new
+        Platformer::Documentation::Markdown.new "./tmp", "docs.md"
       }.to_not raise_error
     end
   end

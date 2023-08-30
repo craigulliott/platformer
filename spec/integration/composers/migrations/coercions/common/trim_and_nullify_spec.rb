@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::Migrations::Coercions::Common::TrimAndNullify do
   describe "for a new UserModel which defines a simple new model, char column, array of chars column and a trim and nullify coercion" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         database :postgres, :primary
         char_field :char_field do
           trim_and_nullify

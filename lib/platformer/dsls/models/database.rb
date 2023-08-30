@@ -86,8 +86,8 @@ module Platformer
               be placed in their own schema. For example.
 
               ```ruby
-              # All of our model classes extend from PlatformModel.
-              class PlatformModel
+              # All of our model classes extend from BaseModel.
+              class BaseModel
                 # A default database server configuration for all models in
                 # the platform to use
                 # and the default database on that server

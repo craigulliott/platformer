@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
-ENV["RACK_ENV"] = "test"
+ENV["PLATFORMER_ENV"] = "test"
 
-require "byebug"
+ENV["PLATFORMER_ROOT"] ||= File.expand_path("../", __dir__)
+
 require "platformer"
+
+Platformer.initialize!
+
 require "class_spec_helper"
 require "pg_spec_helper"
 require_relative "helpers/recreate_graphql_schema"
@@ -106,7 +110,7 @@ RSpec.configure do |config|
 
   # after each spec, clear all the dynamic DSL executions
   config.after(:each) do
-    PlatformModel.dsls.clear
+    Platformer::BaseModel.dsls.clear
   end
 
   # reset our database structure after each test (this deletes all

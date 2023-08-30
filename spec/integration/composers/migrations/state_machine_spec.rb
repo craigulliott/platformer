@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::Migrations::StateMachines do
   describe "for a new PhotoModel which defines a simple new model numeric columns and each type of numeric validation" do
     before(:each) do
-      create_class "PhotoModel", PlatformModel do
+      create_class "PhotoModel", Platformer::BaseModel do
         database :postgres, :primary
         state_machine do
           state :new

@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::Migrations::Coercions::Common::Case do
   describe "for a new UserModel which defines a simple new model, text and char columns and each type of case coercion" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         database :postgres, :primary
         char_field :uppercase_char_field do
           uppercase
@@ -37,7 +37,7 @@ RSpec.describe Platformer::Composers::Migrations::Coercions::Common::Case do
 
   describe "for a new UserModel which defines a simple new model, array of text and array of char columns and each type of case coercion" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         database :postgres, :primary
         char_field :uppercase_char_field, array: true do
           uppercase

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-ENV["RACK_ENV"] ||= "development"
-
 require "dsl_compose"
 require "dynamic_migrations"
 
@@ -23,14 +21,26 @@ require "active_record"
 # graphql
 require "graphql"
 
-# convenience method to simplify the requires below
-def recursive_require path
-  Dir[File.expand_path path].each do |f|
+# sinatra is a thin webserver built on top of rack
+require "sinatra/base"
+require "sinatra/json"
+
+# required for parsing json request bodies
+require "rack/contrib"
+
+def recursive_require_relative path
+  Dir[File.expand_path(File.dirname(__FILE__) + "/#{path}")].each do |f|
     require_relative f
   end
 end
 
 require "platformer/version"
+
+require "platformer/environment"
+require "platformer/root"
+require "platformer/load_tasks"
+
+require "platformer/server"
 
 require "platformer/databases"
 require "platformer/databases/postgres/server"
@@ -41,7 +51,7 @@ require "platformer/databases/migrations/migration_file"
 require "platformer/databases/migrations/current"
 require "platformer/databases/migrations/current/loader"
 
-recursive_require "lib/active_record/**/*.rb"
+recursive_require_relative "active_record/**/*.rb"
 
 # the base class which all active record models extend from
 require "app/active_record/application_record"
@@ -79,9 +89,9 @@ require "app/graphql/schema/mutations"
 require "app/graphql/schema/subscriptions"
 require "app/graphql/schema"
 
-recursive_require "lib/app/mutations/**/*.rb"
+recursive_require_relative "app/mutations/**/*.rb"
 
-recursive_require "lib/platformer/constants/**/*.rb"
+recursive_require_relative "platformer/constants/**/*.rb"
 
 require "platformer/class_map"
 
@@ -91,17 +101,24 @@ require "platformer/documentation/composer_documentation"
 require "platformer/documentation/dsl_documentation"
 require "platformer/documentation/namespace_documentation"
 
-recursive_require "lib/platformer/shared_dsl_configuration/**/*.rb"
+recursive_require_relative "platformer/shared_dsl_configuration/**/*.rb"
 
-recursive_require "lib/platformer/dsls/**/*.rb"
+recursive_require_relative "platformer/dsls/**/*.rb"
 
-recursive_require "lib/platformer/dsl_readers/**/*.rb"
+recursive_require_relative "platformer/dsl_readers/**/*.rb"
 
-require "app/platform_base"
-require "app/platform_model"
-require "app/platform_schema"
-require "app/platform_callback"
-require "app/platform_service"
+# The base composer classes
+# These classes contain all the platformer DSL's, and everything in a
+# platformer projects app folder inherits from these classes
+require "platformer/base"
+require "platformer/base_callback"
+require "platformer/base_job"
+require "platformer/base_model"
+require "platformer/base_mutation"
+require "platformer/base_policy"
+require "platformer/base_schema"
+require "platformer/base_service"
+require "platformer/base_subscription"
 
 require "platformer/parsers/for_field_macros"
 require "platformer/parsers/all_models"
@@ -110,20 +127,37 @@ require "platformer/parsers/final_models"
 require "platformer/parsers/final_models/for_fields"
 require "platformer/parsers/schemas"
 
-# composers, run in the required order
-recursive_require "lib/platformer/composers/active_record/**/*.rb"
-recursive_require "lib/platformer/composers/graphql/**/*.rb"
-
-require "platformer/composers/migrations/create_structure"
-recursive_require "lib/platformer/composers/migrations/columns/**/*.rb"
-recursive_require "lib/platformer/composers/migrations/indexes/**/*.rb"
-recursive_require "lib/platformer/composers/migrations/associations/**/*.rb"
-# the rest can be run in any order (and it's safe to require them twice)
-recursive_require "lib/platformer/composers/**/*.rb"
-
-# initialize the GraphQL server last, because it requires all the queries, mutations
-# and subscriptions to been composed first
-Schema.initialize_all
-
 module Platformer
+  include Environment
+  include Root
+  include LoadTasks
+
+  # The composers parse the DSL's and dynamically create the platform. This must occur
+  # after the platformer environment has been configured and all of the app files have
+  # been loaded.
+  def self.compose!
+    # composers, run in the required order
+    recursive_require_relative "platformer/composers/active_record/**/*.rb"
+    recursive_require_relative "platformer/composers/graphql/**/*.rb"
+
+    require "platformer/composers/migrations/create_structure"
+    recursive_require_relative "platformer/composers/migrations/columns/**/*.rb"
+    recursive_require_relative "platformer/composers/migrations/indexes/**/*.rb"
+    recursive_require_relative "platformer/composers/migrations/associations/**/*.rb"
+    # the rest can be run in any order (and it's safe to require them twice)
+    recursive_require_relative "platformer/composers/**/*.rb"
+  end
+
+  # compose and initialize the platform
+  def self.initialize!
+    # run all the composers
+    compose!
+
+    # Connect to the default postgres database
+    ApplicationRecord.establish_connection(Platformer::Databases.server(:postgres, :primary).default_database.active_record_configuration)
+
+    # initialize the GraphQL server last, because it requires all the queries, mutations
+    # and subscriptions to been composed first
+    Schema.initialize!
+  end
 end

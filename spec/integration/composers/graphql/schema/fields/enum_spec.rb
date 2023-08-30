@@ -5,10 +5,10 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::Enum do
   describe "for a new UserModel which defines a simple new model with an enum field" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         enum_field :my_enum, ["foo", "bar"]
       end
-      create_class "Users::UserSchema", PlatformSchema do
+      create_class "Users::UserSchema", Platformer::BaseSchema do
         fields [
           :my_enum
         ]

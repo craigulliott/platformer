@@ -6,10 +6,10 @@ module Platformer
       # Create ActiveRecord classes to represent each of our model definitions.
       #
       # For example, if we have created a UserModel and an OrganizationModel
-      # which extend PlatformModel, then this composer will generate a `User`
+      # which extend BaseModel, then this composer will generate a `User`
       # and an `Organization` class which are extended from ActiveRecord::Base
       class CreateActiveModels < Parsers::AllModels
-        # Process the parser for every decendant of PlatformModel
+        # Process the parser for every decendant of BaseModel
         for_models do |model_class:|
           add_documentation <<~DESCRIPTION
             Create an ActiveRecord class which corresponds to this model class.

@@ -14,7 +14,7 @@ namespace :documentation do
     # dynamically generate the documentation for all our DSLs
     base_path = File.expand_path("docs/generated/")
     # process each composer class (these are where our DSLs are defined)
-    Platformer::Documentation.new(:models, PlatformModel, base_path).generate
-    Platformer::Documentation.new(:schemas, PlatformSchema, base_path).generate
+    Platformer::Documentation.new(:models, BaseModel, base_path).generate
+    Platformer::Documentation.new(:schemas, BaseSchema, base_path).generate
   end
 end

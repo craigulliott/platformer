@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::ActiveRecord::CreateActiveModels do
   describe "for a new UserModel which defines a simple new model with an integer field" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         integer_field :age
       end
     end
@@ -25,7 +25,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::CreateActiveModels do
 
   describe "for a new FooModel which extends a BarModel" do
     before(:each) do
-      create_class "BarModel", PlatformModel do
+      create_class "BarModel", Platformer::BaseModel do
       end
       create_class "FooModel", BarModel do
       end
@@ -48,7 +48,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::CreateActiveModels do
 
   describe "for a new UserModel which connects to a postgres server and a default database" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         database :postgres, :primary
       end
     end
@@ -71,7 +71,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::CreateActiveModels do
 
   describe "for a new UserModel which connects to a postgres server and a specific database" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         database :postgres, :primary, database_name: :specific_database
       end
     end
@@ -93,7 +93,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::CreateActiveModels do
 
   describe "for a new UserModel which uses a specifc postgres database schema" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         schema :users
       end
     end

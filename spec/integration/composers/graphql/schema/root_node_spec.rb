@@ -15,13 +15,13 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::RootNode do
       end
 
       # define the platform model for this user
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         database :postgres, :primary
         integer_field :my_integer
       end
 
       # define the graphql schema for this user
-      create_class "Users::UserSchema", PlatformSchema do
+      create_class "Users::UserSchema", Platformer::BaseSchema do
         # root node causes this to be added as a root level query in the schema
         root_node do
           by_id
@@ -49,7 +49,7 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::RootNode do
       Platformer::Composers::GraphQL::Schema::Fields::Integer.rerun
       Platformer::Composers::GraphQL::Schema::RootNode.rerun
 
-      Schema.initialize_all
+      Schema.initialize!
 
       user = Users::User.create! my_integer: 123
 

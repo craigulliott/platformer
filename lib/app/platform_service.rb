@@ -1,2 +1,0 @@
-class PlatformService < PlatformBase
-end

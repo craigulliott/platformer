@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::Migrations::Validations::Fields::Boolean do
   describe "for a new UserModel which defines a simple new model, boolean columns and each type of numeric validation" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         database :postgres, :primary
         boolean_field :my_bool do
           # no special validations

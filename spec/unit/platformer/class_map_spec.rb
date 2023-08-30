@@ -7,9 +7,9 @@ RSpec.describe Platformer::ClassMap do
 
   describe :validate_class_extends! do
     before(:each) do
-      create_class "BaseModel", PlatformModel
+      create_class "BaseModel", Platformer::BaseModel
       create_class "ChildModel", BaseModel
-      create_class "UnrelatedModel", PlatformModel
+      create_class "UnrelatedModel", Platformer::BaseModel
     end
 
     it "raises an error if the class does not extend the provided base class" do
@@ -63,12 +63,12 @@ RSpec.describe Platformer::ClassMap do
 
   describe :base_application_record_class do
     before(:each) do
-      create_class "BaseModel", PlatformModel
+      create_class "BaseModel", Platformer::BaseModel
       create_class "ChildModel", BaseModel
-      create_class "UnrelatedModel", PlatformModel
+      create_class "UnrelatedModel", Platformer::BaseModel
     end
 
-    it "returns ApplicationRecord for a model class which extends PlatformModel" do
+    it "returns ApplicationRecord for a model class which extends BaseModel" do
       expect(class_map_module.base_application_record_class(BaseModel)).to be ApplicationRecord
     end
 
@@ -90,7 +90,7 @@ RSpec.describe Platformer::ClassMap do
   describe :create_active_record_class_from_model_class do
     describe "for a User model definition which is namespaced within Users" do
       before(:each) do
-        create_class "Users::UserModel", PlatformModel do
+        create_class "Users::UserModel", Platformer::BaseModel do
           integer_field :age
         end
       end
@@ -123,7 +123,7 @@ RSpec.describe Platformer::ClassMap do
 
     describe "for a Foo model definition which is not namespaced" do
       before(:each) do
-        create_class "FooModel", PlatformModel do
+        create_class "FooModel", Platformer::BaseModel do
           integer_field :age
         end
       end

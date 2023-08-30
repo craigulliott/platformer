@@ -1,7 +1,7 @@
 module Platformer
   module Parsers
-    # Apply the parser to every 'final descendant' of PlatformModel—a final descendant
-    # being a class that inherits from PlatformModel but is not further subclassed.
+    # Apply the parser to every 'final descendant' of BaseModel—a final descendant
+    # being a class that inherits from BaseModel but is not further subclassed.
     # Classes identified by this strategy are those with their own data storage, while
     # omitted classes serve merely to share configurations among the classes that extend them.
     #
@@ -13,8 +13,8 @@ module Platformer
 
       # yields the provided block for all final models
       def self.for_final_models &block
-        # Processes every ancestor of the PlatformModel class.
-        for_final_children_of PlatformModel do |child_class:|
+        # Processes every ancestor of the BaseModel class.
+        for_final_children_of BaseModel do |child_class:|
           # yield the block with the expected arguments
           instance_exec(model_class: child_class, &block)
         end
@@ -23,7 +23,7 @@ module Platformer
       # yields the provided block for all final models which use the provided DSL
       # on the model class or one of it's ancestors
       def self.for_dsl dsl_names, &block
-        # Processes every ancestor of the PlatformModel class.
+        # Processes every ancestor of the BaseModel class.
         for_final_models do |model_class:|
           # Yields the provided block and provides the requested values for
           # each use of the provided DSL

@@ -5,9 +5,9 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::GraphQL::Schema::CreateTypes do
   describe "for a new UserModel which defines a simple new model with an associated schema" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
       end
-      create_class "Users::UserSchema", PlatformSchema do
+      create_class "Users::UserSchema", Platformer::BaseSchema do
       end
     end
 

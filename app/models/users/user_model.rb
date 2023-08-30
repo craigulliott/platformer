@@ -1,5 +1,5 @@
 module Users
-  class UserModel < PlatformModel
+  class UserModel < BaseModel
     integer_field :age, array: true do
       allow_null
       default 5

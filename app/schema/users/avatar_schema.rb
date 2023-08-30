@@ -1,6 +1,6 @@
 module Users
   # represents a node in our graph, a node is basically an object in our schema
-  class Avatar < PlatformSchema
+  class Avatar < BaseSchema
     # for records like avatars and categories which are used commonly
     # and are not numerous
     cache_locally timeout: 1.hour

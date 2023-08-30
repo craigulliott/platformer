@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::Migrations::UniqueConstraints do
   describe "for a new UserModel which defines a simple new model numeric columns and each type of numeric validation" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         database :postgres, :primary
         integer_field :my_integer do
           unique

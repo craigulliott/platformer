@@ -10,7 +10,7 @@ class SchemaBase < GraphQL::Schema
   #
   # This is wrapped in a singleton method so we can easily recreate the server
   # from within our specs and initialize it with the new fields.
-  def self.initialize_all
+  def self.initialize!
     query(Schema::Queries)
     mutation(Schema::Mutations)
     subscription(Schema::Subscriptions)

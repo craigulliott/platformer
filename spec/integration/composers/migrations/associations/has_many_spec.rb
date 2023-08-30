@@ -5,12 +5,12 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::Migrations::Associations::HasMany do
   describe "for a new BadgeModel which has many UserModels" do
     before(:each) do
-      create_class "Users::UserModel", PlatformModel do
+      create_class "Users::UserModel", Platformer::BaseModel do
         database :postgres, :primary
         uuid_field :id
         has_many "Gamification::BadgeModel"
       end
-      create_class "Gamification::BadgeModel", PlatformModel do
+      create_class "Gamification::BadgeModel", Platformer::BaseModel do
         database :postgres, :primary
         schema :gamification
       end
@@ -32,12 +32,12 @@ RSpec.describe Platformer::Composers::Migrations::Associations::HasMany do
 
   describe "for a new FooModel which has_many BarModels with custom local and foreign columns" do
     before(:each) do
-      create_class "BarModel", PlatformModel do
+      create_class "BarModel", Platformer::BaseModel do
         database :postgres, :primary
         uuid_field :a_id
         uuid_field :b_id
       end
-      create_class "FooModel", PlatformModel do
+      create_class "FooModel", Platformer::BaseModel do
         database :postgres, :primary
         uuid_field :a_id
         uuid_field :b_id

@@ -84,7 +84,7 @@ module Platformer
     #
     # For example...
     #
-    # class UsersModel < PlatformModel
+    # class UsersModel < BaseModel
     #   # note, because this class has descendents, it will also be
     #   # automatically created as an abstract class
     # end
@@ -97,7 +97,7 @@ module Platformer
     #   `base_application_record_class UsersModel` will return `ApplicationRecord`
     def self.base_application_record_class model_class
       # if there is no namespace, then just return ApplicationRecord
-      if model_class.ancestors[1] == PlatformModel
+      if model_class.ancestors[1] == BaseModel
         ApplicationRecord
 
       else
@@ -124,8 +124,8 @@ module Platformer
     # For example, when provided with Users::UserModel this will create and
     # return the corresponding Users::User (which will subclass Users::UsersRecord)
     def self.create_active_record_class_from_model_class model_class, &block
-      # assert that the provided class is a subclass of PlatformModel
-      validate_class_extends! model_class, PlatformModel
+      # assert that the provided class is a subclass of BaseModel
+      validate_class_extends! model_class, BaseModel
 
       class_name = active_record_class_name_from_model_class model_class
 
@@ -153,8 +153,8 @@ module Platformer
     # return the corresponding Types::Users::User
     warn "not tested"
     def self.create_graphql_type_class_from_model_class model_class, &block
-      # assert that the provided class is a subclass of PlatformModel
-      validate_class_extends! model_class, PlatformModel
+      # assert that the provided class is a subclass of BaseModel
+      validate_class_extends! model_class, BaseModel
 
       class_name = active_record_class_name_from_model_class model_class
 
