@@ -3,74 +3,82 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::Migrations::Columns::IpAddress do
-  describe "for a new UserModel which defines a simple new model in a postgres database" do
+  describe "for a User Model which has a ip_address column named my_ip_address" do
     before(:each) do
-      create_class "Users::UserModel", Platformer::BaseModel do
-        database :postgres, :primary
-      end
-    end
-
-    describe "with a inet column named my_ip_address" do
-      before(:each) do
-        Users::UserModel.ip_address_field :my_ip_address
-      end
-
-      it "creates the expected columns within the DynamicMigrations table" do
-        # now that the UserModel has been created, we rerun the composer
-        # and it's dependent composers
-        Platformer::Composers::Migrations::CreateStructure.rerun
-        Platformer::Composers::Migrations::Columns::IpAddress.rerun
-
-        table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:my_ip_address)).to be true
-        expect(table.column(:my_ip_address).data_type).to be :inet
-        # check for the expected defaults
-        expect(table.column(:my_ip_address).null).to be false
-        expect(table.column(:my_ip_address).description).to be_nil
-        expect(table.column(:my_ip_address).default).to be_nil
-      end
-    end
-
-    describe "with a inet column named my_ip_address that has a default, allows null and has a comment" do
-      before(:each) do
-        Users::UserModel.ip_address_field :my_ip_address do
-          allow_null
-          comment "This is a comment"
-          default "192.168.0.1"
+      scaffold do
+        model_for "Users::User" do
+          database :postgres, :primary
+          ip_address_field :my_ip_address
         end
       end
+    end
 
-      it "creates the expected columns within the DynamicMigrations table" do
-        # now that the UserModel has been created, we rerun the composer
-        # and it's dependent composers
-        Platformer::Composers::Migrations::CreateStructure.rerun
-        Platformer::Composers::Migrations::Columns::IpAddress.rerun
+    subject {
+      Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
+    }
 
-        table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:my_ip_address)).to be true
-        expect(table.column(:my_ip_address).data_type).to be :inet
-        # check for the expected values
-        expect(table.column(:my_ip_address).null).to be true
-        expect(table.column(:my_ip_address).description).to eq "This is a comment"
-        expect(table.column(:my_ip_address).default).to eq "192.168.0.1"
+    context "creates the expected columns within the DynamicMigrations table" do
+      it { expect(subject.has_column?(:my_ip_address)).to be true }
+
+      it { expect(subject.column(:my_ip_address).data_type).to be :inet }
+
+      it { expect(subject.column(:my_ip_address).null).to be false }
+
+      it { expect(subject.column(:my_ip_address).description).to be_nil }
+
+      it { expect(subject.column(:my_ip_address).default).to be_nil }
+    end
+  end
+
+  describe "for a User Model which has a ip_address column named my_ip_address that has a default value, allows null and has a comment" do
+    before(:each) do
+      scaffold do
+        model_for "Users::User" do
+          database :postgres, :primary
+          ip_address_field :my_ip_address do
+            allow_null
+            comment "This is a comment"
+            default "192.168.0.1"
+          end
+        end
       end
     end
 
-    describe "with an array of inets column named my_ip_address" do
-      before(:each) do
-        Users::UserModel.ip_address_field :my_ip_address, array: true
-      end
+    subject {
+      Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
+    }
 
-      it "creates the expected columns within the DynamicMigrations table" do
-        # now that the UserModel has been created, we rerun the composer
-        # and it's dependent composers
-        Platformer::Composers::Migrations::CreateStructure.rerun
-        Platformer::Composers::Migrations::Columns::IpAddress.rerun
+    context "creates the expected columns within the DynamicMigrations table" do
+      it { expect(subject.has_column?(:my_ip_address)).to be true }
 
-        table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:my_ip_address)).to be true
-        expect(table.column(:my_ip_address).data_type).to be :"inet[]"
+      it { expect(subject.column(:my_ip_address).data_type).to be :inet }
+
+      it { expect(subject.column(:my_ip_address).null).to be true }
+
+      it { expect(subject.column(:my_ip_address).description).to eq "This is a comment" }
+
+      it { expect(subject.column(:my_ip_address).default).to eq "192.168.0.1" }
+    end
+  end
+
+  describe "for a User Model with an array of ip_addresss column named my_ip_address" do
+    before(:each) do
+      scaffold do
+        model_for "Users::User" do
+          database :postgres, :primary
+          ip_address_field :my_ip_address, array: true
+        end
       end
+    end
+
+    subject {
+      Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
+    }
+
+    context "creates the expected columns within the DynamicMigrations table" do
+      it { expect(subject.has_column?(:my_ip_address)).to be true }
+
+      it { expect(subject.column(:my_ip_address).data_type).to be :"inet[]" }
     end
   end
 end

@@ -5,67 +5,53 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::Strings do
   let(:pg_helper) { RSpec.configuration.pg_spec_helper }
 
-  before(:each) do
-    create_class :TestBaseModel, Platformer::BaseModel do
-      database :postgres, :primary
-    end
-  end
-
-  after(:each) do
-    destroy_class TestBase
-  end
-
   describe "for a new UserModel which defines a simple new model with string fields and string validations" do
     before(:each) do
-      pg_helper.create_model :public, :users do
-        add_column :my_char, :char
-        add_column :my_text, :text
-        add_column :my_second_char, :char
-        add_column :my_second_text, :text
-        add_column :my_third_char, :char
-        add_column :my_third_text, :text
-        add_column :my_fourth_char, :char
+      scaffold do
+        table_for "Users::User" do
+          add_column :my_char, :char
+          add_column :my_text, :text
+          add_column :my_second_char, :char
+          add_column :my_second_text, :text
+          add_column :my_third_char, :char
+          add_column :my_third_text, :text
+          add_column :my_fourth_char, :char
+        end
+
+        model_for "Users::User" do
+          database :postgres, :primary
+          schema :users
+
+          char_field :my_char do
+            allow_null
+            validate_minimum_length 3, message: "invalid my_char"
+          end
+          text_field :my_text do
+            allow_null
+            validate_maximum_length 5, message: "invalid my_text"
+          end
+          char_field :my_second_char do
+            allow_null
+            validate_length_is 10, message: "invalid my_second_char"
+          end
+          text_field :my_second_text do
+            allow_null
+            validate_format(/[a-z]+/, message: "invalid my_second_text")
+          end
+          char_field :my_third_char do
+            allow_null
+            validate_in ["foo", "bar"], message: "invalid my_third_char"
+          end
+          text_field :my_third_text do
+            allow_null
+            validate_not_in ["foo", "bar"], message: "invalid my_third_text"
+          end
+          char_field :my_fourth_char do
+            allow_null
+            validate_is_value "exact_value", message: "invalid my_fourth_char"
+          end
+        end
       end
-
-      # create a definition for a new User
-      create_class "Users::UserModel", TestBaseModel do
-        char_field :my_char do
-          allow_null
-          validate_minimum_length 3, message: "invalid my_char"
-        end
-        text_field :my_text do
-          allow_null
-          validate_maximum_length 5, message: "invalid my_text"
-        end
-        char_field :my_second_char do
-          allow_null
-          validate_length_is 10, message: "invalid my_second_char"
-        end
-        text_field :my_second_text do
-          allow_null
-          validate_format(/[a-z]+/, message: "invalid my_second_text")
-        end
-        char_field :my_third_char do
-          allow_null
-          validate_in ["foo", "bar"], message: "invalid my_third_char"
-        end
-        text_field :my_third_text do
-          allow_null
-          validate_not_in ["foo", "bar"], message: "invalid my_third_text"
-        end
-        char_field :my_fourth_char do
-          allow_null
-          validate_is_value "exact_value", message: "invalid my_fourth_char"
-        end
-      end
-
-      # now that the UserModel has been created, we rerun the relevant composers
-      Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
-      Platformer::Composers::ActiveRecord::Validations::Common::Strings.rerun
-    end
-
-    after(:each) do
-      destroy_class Users::User
     end
 
     let(:user) {

@@ -7,7 +7,7 @@ module Platformer
         module Common
           class Case < Parsers::AllModels::ForFields
             # install all the uppercase coercions for each model
-            for_string_fields do |name:, active_record_class:, array:, allow_null:|
+            for_string_fields except: :citext_field do |name:, active_record_class:, array:, allow_null:|
               for_method [:uppercase, :lowercase] do |method_name:|
                 wanted_case = method_name
 

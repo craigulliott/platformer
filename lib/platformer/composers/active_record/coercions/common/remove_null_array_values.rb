@@ -7,7 +7,7 @@ module Platformer
         module Common
           class RemoveNullArrayValues < Parsers::AllModels::ForFields
             # install all the remove_null_array_values coercions for each model
-            for_all_fields except: [:json_field, :phone_number] do |name:, active_record_class:, array:, allow_null:|
+            for_all_fields except: [:json_field, :phone_number_field] do |name:, active_record_class:, array:, allow_null:|
               for_method :remove_null_array_values do
                 unless array
                   raise UnsupportedRemoveNullArrayValuesError, "`remove_null_array_values` can only be used on array fields"

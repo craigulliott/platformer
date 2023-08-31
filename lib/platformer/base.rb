@@ -17,7 +17,7 @@ module Platformer
 
     include DSLCompose::Composer
 
-    # base documentation for the models which inherit from this clas
+    # base documentation for the models which inherit from this class
     def self.describe_class class_description
       @class_description = class_description
     end
@@ -28,7 +28,7 @@ module Platformer
 
     # for swapping between classes, such as finding the Model class from it's
     # corresponding Schema class. If the corresponding model does not exist
-    # then an error is thrown.
+    # then nil will be returned.
     warn "not tested"
     def self.get_equivilent_class target_base_class
       if target_base_class < self
@@ -68,13 +68,50 @@ module Platformer
         raise UnexpectedBaseError, "Unexpected base class `#{self}`"
       end
 
-      # assert the class already exists
-      unless Object.const_defined? class_name
-        raise EquivilentClassDoesNotExistError, "Class `#{class_name}` does not exist"
+      # if the constant exists, then return it, else return nil
+      if Object.const_defined? class_name
+        class_name&.constantize
       end
+    end
 
-      # turn the class name into a constant, and return it
-      class_name.constantize
+    def self.callback_class
+      get_equivilent_class BaseCallback
+    end
+
+    def self.job_class
+      get_equivilent_class BaseJob
+    end
+
+    def self.model_class
+      get_equivilent_class BaseModel
+    end
+
+    def self.mutation_class
+      get_equivilent_class BaseMutation
+    end
+
+    def self.policy_class
+      get_equivilent_class BasePolicy
+    end
+
+    def self.schema_class
+      get_equivilent_class BaseSchema
+    end
+
+    def self.service_class
+      get_equivilent_class BaseService
+    end
+
+    def self.subscription_class
+      get_equivilent_class BaseSubscription
+    end
+
+    def self.active_record_class
+      get_equivilent_class ApplicationRecord
+    end
+
+    def self.graphql_type_class
+      get_equivilent_class Types::BaseObject
     end
   end
 end

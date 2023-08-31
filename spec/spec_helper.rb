@@ -5,25 +5,18 @@ ENV["PLATFORMER_ENV"] = "test"
 ENV["PLATFORMER_ROOT"] ||= File.expand_path("../", __dir__)
 
 require "platformer"
+require "byebug"
 
 Platformer.initialize!
 
-require "class_spec_helper"
 require "pg_spec_helper"
 require_relative "helpers/recreate_graphql_schema"
+require_relative "helpers/scaffold"
 
 # active record logging
 # ActiveRecord::Base.logger = Logger.new($stdout)
 
 CLASS_SPEC_HELPER = ClassSpecHelper.new
-
-def create_class fully_qualified_class_name, base_class = nil, &block
-  CLASS_SPEC_HELPER.create_class fully_qualified_class_name, base_class, &block
-end
-
-def destroy_class klass
-  CLASS_SPEC_HELPER.destroy_class klass
-end
 
 RECREATE_GRAPHQL_SCHEMA = Helpers::RecreateGraphQLSchema.new
 
@@ -34,6 +27,8 @@ end
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
+
+  config.include Scaffold
 
   # the configuration for our test database (loaded from config/database.yaml)
   database_configuration = Platformer::Databases.server(:postgres, :primary).default_database
@@ -99,7 +94,7 @@ RSpec.configure do |config|
 
   # remove all classes which were created for specs
   config.after(:each) do
-    CLASS_SPEC_HELPER.remove_all_dynamically_created_classes
+    destroy_dynamically_created_classes
   end
 
   # if any tests create global configuration, then we need to clear it

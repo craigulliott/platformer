@@ -5,29 +5,29 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::Country do
   describe "for a new UserModel which defines a simple new model with a country field" do
     before(:each) do
-      create_class "Users::UserModel", Platformer::BaseModel do
-        country_field :my_country
-      end
-      create_class "Users::UserSchema", Platformer::BaseSchema do
-        fields [
-          :my_country
-        ]
+      scaffold do
+        model_for "Users::User" do
+          database :postgres, :primary
+          country_field :my_country
+        end
+        schema_for "Users::User" do
+          fields [
+            :my_country
+          ]
+        end
       end
     end
 
-    after(:each) do
-      destroy_class Types::Users::User
-    end
+    subject {
+      Types::Users::User.fields["myCountry"]
+    }
 
-    it "creates the expected GraphQL Type class" do
-      # now that the UserModel has been created, we rerun the composer
-      Platformer::Composers::GraphQL::Schema::CreateTypes.rerun
-      Platformer::Composers::GraphQL::Schema::Fields::Country.rerun
+    context "creates the expected GraphQL Type class" do
+      it { expect(subject).to be_a GraphQL::Schema::Field }
 
-      expect(Types::Users::User.fields["myCountry"]).to be_a GraphQL::Schema::Field
+      it { expect(subject.type).to be_a GraphQL::Schema::NonNull }
 
-      expect(Types::Users::User.fields["myCountry"].type).to be_a GraphQL::Schema::NonNull
-      expect(Types::Users::User.fields["myCountry"].type.of_type).to eq GraphQL::Types::String
+      it { expect(subject.type.of_type).to eq GraphQL::Types::String }
     end
   end
 end

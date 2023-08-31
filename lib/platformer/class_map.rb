@@ -3,13 +3,10 @@ module Platformer
     class ClassDoesNotExtendError < StandardError
     end
 
-    class ApplicationRecordAlreadyExistsError < StandardError
-    end
-
     class ActiveRecordClassAlreadyCreatedError < StandardError
     end
 
-    class ActiveRecordClassDoesNotExistError < StandardError
+    class GraphQLTypeClassAlreadyCreatedError < StandardError
     end
 
     # Returns true is `provided_class` is extended from `base_class`
@@ -63,10 +60,10 @@ module Platformer
           # if a base was provided, then make sure each part of the namespace
           # exists under this base, and create it if needed
           position = base
-          progressive_name = ""
+          progressive_name = "::"
           namespace_parts.each do |namespace|
             progressive_name << "#{position.name}::#{namespace}"
-            position = base.const_defined?(progressive_name) ? base.const_get(progressive_name) : position.const_set(namespace, Module.new)
+            position = Object.const_defined?(progressive_name) ? Object.const_get(progressive_name) : position.const_set(namespace, Module.new)
           end
           # add the base to the beginning of the final name
           namespace_parts.unshift base.name
@@ -133,8 +130,8 @@ module Platformer
       namespace = namespace_from_class model_class
 
       # assert the class has not already been created
-      if namespace.const_defined? class_name
-        raise ActiveRecordClassAlreadyCreatedError, "ActiveRecord class `#{class_name}` already exists"
+      if Object.const_defined? "::#{namespace}::#{class_name}"
+        raise ActiveRecordClassAlreadyCreatedError, "ActiveRecord class `::#{namespace}::#{class_name}` already exists"
       end
 
       namespace.const_set class_name, new_class
@@ -162,8 +159,8 @@ module Platformer
       namespace = namespace_from_class model_class, Types
 
       # assert the class has not already been created
-      if namespace.const_defined? class_name
-        raise ActiveRecordClassAlreadyCreatedError, "GraphQL Type class `#{class_name}` already exists"
+      if Object.const_defined? "::#{namespace}::#{class_name}"
+        raise GraphQLTypeClassAlreadyCreatedError, "GraphQL Type class `::#{namespace}::#{class_name}` already exists"
       end
 
       namespace.const_set class_name, new_class

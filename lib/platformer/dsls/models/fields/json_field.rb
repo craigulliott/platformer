@@ -48,6 +48,7 @@ module Platformer
               import_shared :allow_null
               import_shared :field_comment
               import_shared :immutable_validators
+              import_shared :unique_field
             end
           end
         end

@@ -7,6 +7,9 @@ module Platformer
 
       # yields the provided block for all final schemas
       def self.for_final_schemas &block
+        # remember the parser name (class name), so we can present more useful errors
+        parser_name = name
+
         # Processes every ancestor of the BaseSchema class.
         for_final_children_of BaseSchema do |child_class:|
           # only provide the arguments which the block is trying to use
@@ -34,9 +37,13 @@ module Platformer
               if dsl_arguments.key? arg_name
                 final_args[arg_name] = dsl_arguments[arg_name]
               else
-                raise ArgumentNotAvailableError, "Can not find an equivilent argument for name `#{arg_name}`"
+                raise ArgumentNotAvailableError, arg_name
               end
             end
+          rescue ArgumentNotAvailableError
+            raise ArgumentNotAvailableError, "Can not find an equivilent argument for name `#{error.message}` while parsing DSL `#{dsl_name}` within composer `#{parser_name}`"
+          rescue
+            raise $!, "Error for DSL `#{dsl_name}` within composer `#{parser_name}`: Original Error Message: #{$!}", $!.backtrace
           end
           # yield the block with the expected arguments
           instance_exec(**final_args, &block)
@@ -69,12 +76,12 @@ module Platformer
 
               when :graphql_type_class
                 # get the equivilent GraphQL Type class (based on naming conventions)
-                # will raise an error if the desired Type class does not exist
+                # will return nil if the desired Type class does not exist
                 final_args[:graphql_type_class] = schema_class.graphql_type_class
 
               when :model_class
                 # get the equivilent Model definition class (based on naming conventions)
-                # will raise an error if the desired Model class does not exist
+                # will return nil if the desired Model class does not exist
                 final_args[:model_class] = schema_class.model_class
 
               when :active_record_class
@@ -92,9 +99,13 @@ module Platformer
                 if dsl_arguments.key? arg_name
                   final_args[arg_name] = dsl_arguments[arg_name]
                 else
-                  raise ArgumentNotAvailableError, "Can not find an equivilent argument for name `#{arg_name}`"
+                  raise ArgumentNotAvailableError, arg_name
                 end
               end
+            rescue ArgumentNotAvailableError
+              raise ArgumentNotAvailableError, "Can not find an equivilent argument for name `#{error.message}` while parsing DSL `#{dsl_name}` within composer `#{parser_name}`"
+            rescue
+              raise $!, "Error for DSL `#{dsl_name}` within composer `#{parser_name}`: Original Error Message: #{$!}", $!.backtrace
             end
             # yield the block with the expected arguments
             instance_exec(**final_args, &block)

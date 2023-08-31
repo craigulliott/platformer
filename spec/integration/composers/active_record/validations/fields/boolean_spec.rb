@@ -5,36 +5,21 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::ActiveRecord::Validations::Fields::Boolean do
   let(:pg_helper) { RSpec.configuration.pg_spec_helper }
 
-  before(:each) do
-    create_class :TestBaseModel, Platformer::BaseModel do
-      database :postgres, :primary
-    end
-  end
-
-  after(:each) do
-    destroy_class TestBase
-  end
-
   describe "for a new UserModel which defines a simple new model with a boolean field which is validated to always being true" do
     before(:each) do
-      pg_helper.create_model :public, :users do
-        add_column :foo, :boolean
-      end
+      scaffold do
+        table_for "Users::User" do
+          add_column :foo, :boolean
+        end
+        model_for "Users::User" do
+          database :postgres, :primary
+          schema :users
 
-      # create a definition for a new User
-      create_class "Users::UserModel", TestBaseModel do
-        boolean_field :foo do
-          validate_is_true
+          boolean_field :foo do
+            validate_is_true
+          end
         end
       end
-
-      # now that the UserModel has been created, we rerun the relevant composers
-      Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
-      Platformer::Composers::ActiveRecord::Validations::Fields::Boolean.rerun
-    end
-
-    after(:each) do
-      destroy_class Users::User
     end
 
     it "has the expected default inclusion validator which all boolean fields have, and the specific `is true`` validator" do

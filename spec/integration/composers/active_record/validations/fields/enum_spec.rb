@@ -5,35 +5,22 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::ActiveRecord::Validations::Fields::Enum do
   let(:pg_helper) { RSpec.configuration.pg_spec_helper }
 
-  before(:each) do
-    create_class :TestBaseModel, Platformer::BaseModel do
-      database :postgres, :primary
-    end
-  end
-
-  after(:each) do
-    destroy_class TestBase
-  end
-
   describe "for a new UserModel which defines a simple new model with a enum field" do
     before(:each) do
       pg_helper.create_enum :public, :enum_values, ["foo", "bar"]
-      pg_helper.create_model :public, :users do
-        add_column :my_enum, :enum_values
+      scaffold do
+        table_for "Users::User" do
+          add_column :my_enum, :enum_values
+        end
+
+        # create a definition for a new User
+        model_for "Users::User" do
+          database :postgres, :primary
+          schema :users
+
+          enum_field :my_enum, ["foo", "bar"]
+        end
       end
-
-      # create a definition for a new User
-      create_class "Users::UserModel", TestBaseModel do
-        enum_field :my_enum, ["foo", "bar"]
-      end
-
-      # now that the UserModel has been created, we rerun the relevant composers
-      Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
-      Platformer::Composers::ActiveRecord::Validations::Fields::Enum.rerun
-    end
-
-    after(:each) do
-      destroy_class Users::User
     end
 
     it "has the expected default inclusion validator which all enum fields have" do

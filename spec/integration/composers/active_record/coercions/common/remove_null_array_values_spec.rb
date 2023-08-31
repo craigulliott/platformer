@@ -5,36 +5,22 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::ActiveRecord::Coercions::Common::RemoveNullArrayValues do
   let(:pg_helper) { RSpec.configuration.pg_spec_helper }
 
-  before(:each) do
-    create_class :TestBaseModel, Platformer::BaseModel do
-      database :postgres, :primary
-    end
-  end
-
-  after(:each) do
-    destroy_class TestBase
-  end
-
   describe "for a new UserModel which defines a simple new model with an array of chars field and trim and nullify coercion" do
     before(:each) do
-      pg_helper.create_model :public, :users do
-        add_column :foo, :"varchar[]"
-      end
+      scaffold do
+        table_for "Users::User" do
+          add_column :foo, :"varchar[]"
+        end
 
-      # create a definition for a new User
-      create_class "Users::UserModel", TestBaseModel do
-        text_field :foo, array: true do
-          remove_null_array_values
+        model_for "Users::User" do
+          database :postgres, :primary
+          schema :users
+          text_field :foo, array: true do
+            remove_null_array_values
+            allow_null
+          end
         end
       end
-
-      # now that the UserModel has been created, we rerun the relevant composers
-      Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
-      Platformer::Composers::ActiveRecord::Coercions::Common::RemoveNullArrayValues.rerun
-    end
-
-    after(:each) do
-      destroy_class Users::User
     end
 
     it "automatically removes nil array values when creating" do

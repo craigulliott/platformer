@@ -7,7 +7,7 @@ module Platformer
         module Common
           # install validations to assert that the case coercion rules were followed
           class Case < Parsers::FinalModels::ForFields
-            for_string_fields except: :citext do |name:, table:, column:, array:, default:, comment_text:, allow_null:|
+            for_string_fields except: :citext_field do |name:, table:, column:, array:, default:, comment_text:, allow_null:|
               for_method [:uppercase, :lowercase] do |method_name:, comment:|
                 wanted_case = method_name
                 unwanted_case = (method_name == :uppercase) ? :lowercase : :uppercase

@@ -5,29 +5,29 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::Text do
   describe "for a new UserModel which defines a simple new model with a text field" do
     before(:each) do
-      create_class "Users::UserModel", Platformer::BaseModel do
-        text_field :my_text
-      end
-      create_class "Users::UserSchema", Platformer::BaseSchema do
-        fields [
-          :my_text
-        ]
+      scaffold do
+        model_for "Users::User" do
+          database :postgres, :primary
+          text_field :my_text
+        end
+        schema_for "Users::User" do
+          fields [
+            :my_text
+          ]
+        end
       end
     end
 
-    after(:each) do
-      destroy_class Types::Users::User
-    end
+    subject {
+      Types::Users::User.fields["myText"]
+    }
 
-    it "creates the expected GraphQL Type class" do
-      # now that the UserModel has been created, we rerun the composer
-      Platformer::Composers::GraphQL::Schema::CreateTypes.rerun
-      Platformer::Composers::GraphQL::Schema::Fields::Text.rerun
+    context "creates the expected GraphQL Type class" do
+      it { expect(subject).to be_a GraphQL::Schema::Field }
 
-      expect(Types::Users::User.fields["myText"]).to be_a GraphQL::Schema::Field
+      it { expect(subject.type).to be_a GraphQL::Schema::NonNull }
 
-      expect(Types::Users::User.fields["myText"].type).to be_a GraphQL::Schema::NonNull
-      expect(Types::Users::User.fields["myText"].type.of_type).to eq GraphQL::Types::String
+      it { expect(subject.type.of_type).to eq GraphQL::Types::String }
     end
   end
 end

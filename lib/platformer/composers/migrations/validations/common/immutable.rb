@@ -7,7 +7,7 @@ module Platformer
         module Common
           # Install immutable validations for the respective columns within DynamicMigrations
           class Immutable < Parsers::FinalModels::ForFields
-            for_all_fields except: :phone_number do |name:, database:, table:, column:, array:, default:, comment_text:, allow_null:|
+            for_all_fields except: :phone_number do |dsl_name:, name:, database:, table:, comment_text:, allow_null:|
               # if the validate_greater_than validation was used
               for_method [:immutable, :immutable_once_set] do |method_name:|
                 # "once set" is a slight variation on the immutable validation, where the
@@ -15,7 +15,7 @@ module Platformer
                 once_set = method_name == :immutable_once_set
 
                 add_documentation <<~DESCRIPTION
-                  Add a trigger to this table (`#{column.table.schema.name}'.'#{column.table.name}`)
+                  Add a trigger to this table (`#{table.schema.name}'.'#{table.name}`)
                   and call a function which prevents the value of `#{name}` from
                   #{once_set ? " being updated after it has been first set to a value (meaning,
                   if it was created with the value of null, then it can be updated in the future
@@ -28,14 +28,27 @@ module Platformer
 
                 trigger_name = once_set ? :immutable_once_set : :immutable
 
-                condition_sql = <<~SQL.strip
-                  NEW.#{column.name} IS DISTINCT FROM OLD.#{column.name}
-                SQL
-                if once_set
-                  condition_sql = <<~SQL.strip
-                    (#{condition_sql} AND OLD.#{column.name} IS NOT NULL)
-                  SQL
+                # todo, make this generic so it will work with fields similar to phone_number
+                column_names = []
+                if dsl_name == :phone_number_field
+                  column_names << :"#{name}_dialing_code"
+                  column_names << :"#{name}_phone_number"
+                else
+                  column_names << name
                 end
+
+                condition_sqls = column_names.map do |column_name|
+                  sql = <<~SQL.strip
+                    NEW.#{column_name} IS DISTINCT FROM OLD.#{column_name}
+                  SQL
+                  if once_set
+                    sql = <<~SQL.strip
+                      (#{sql} AND OLD.#{column_name} IS NOT NULL)
+                    SQL
+                  end
+                  sql
+                end
+                condition_sql = condition_sqls.join(" AND ")
 
                 # find and update, or create the immutable trigger for this table which will
                 # raise an error if the column (or any of the previousely configured columns)
@@ -44,14 +57,14 @@ module Platformer
                   # the trigger already exists, which means another column is already using this function
                   # update the triggers parameters and action condition to include this column
                   trigger = table.trigger trigger_name
-                  trigger.parameters = "#{trigger.parameters},'#{column.name}'"
+                  trigger.parameters = "#{trigger.parameters},'#{column_names.join("','")}'"
                   trigger.action_condition = "#{trigger.action_condition} OR #{condition_sql}"
                 else
                   table.add_trigger trigger_name,
                     action_timing: :before,
                     event_manipulation: :update,
                     action_orientation: :row,
-                    parameters: "'#{column.name}'",
+                    parameters: "'#{column_names.join("','")}'",
                     action_condition: condition_sql,
                     function: function,
                     description: <<~DESCRIPTION

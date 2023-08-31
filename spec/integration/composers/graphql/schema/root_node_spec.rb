@@ -5,53 +5,35 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::GraphQL::Schema::RootNode do
   let(:pg_helper) { RSpec.configuration.pg_spec_helper }
 
-  describe "for a new UserModel which defines a simple new model with an integer field" do
+  describe "for a User model with an integer_field that is exposed as a root node" do
     before(:each) do
-      recreate_graphql_schema
-
-      # create the postgres table
-      pg_helper.create_model :public, :users do
-        add_column :my_integer, :integer
-      end
-
-      # define the platform model for this user
-      create_class "Users::UserModel", Platformer::BaseModel do
-        database :postgres, :primary
-        integer_field :my_integer
-      end
-
-      # define the graphql schema for this user
-      create_class "Users::UserSchema", Platformer::BaseSchema do
-        # root node causes this to be added as a root level query in the schema
-        root_node do
-          by_id
+      scaffold do
+        table_for "User" do
+          add_column :my_integer, :integer
         end
 
-        # name this model `user` instead of `users_user`
-        suppress_namespace
+        model_for "User" do
+          database :postgres, :primary
+          integer_field :my_integer
+        end
 
-        # expose the my_integer field
-        fields [
-          :my_integer
-        ]
+        schema_for "User" do
+          # root node causes this to be added as a root level query in the schema
+          root_node do
+            by_id
+          end
+          # name this model `user` instead of `users_user`
+          suppress_namespace
+          # expose the my_integer field
+          fields [
+            :my_integer
+          ]
+        end
       end
-    end
-
-    after(:each) do
-      destroy_class Users::User
-      destroy_class Types::Users::User
     end
 
     it "executes an appropriate query successfully" do
-      # now that the UserModel has been created, we rerun the composers
-      Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
-      Platformer::Composers::GraphQL::Schema::CreateTypes.rerun
-      Platformer::Composers::GraphQL::Schema::Fields::Integer.rerun
-      Platformer::Composers::GraphQL::Schema::RootNode.rerun
-
-      Schema.initialize!
-
-      user = Users::User.create! my_integer: 123
+      user = User.create! my_integer: 123
 
       results = Schema.execute <<~QUERY
         {

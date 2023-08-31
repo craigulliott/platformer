@@ -3,74 +3,82 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::Migrations::Columns::DateTime do
-  describe "for a new UserModel which defines a simple new model in a postgres database" do
+  describe "for a User Model which has a date_time column named my_date_time" do
     before(:each) do
-      create_class "Users::UserModel", Platformer::BaseModel do
-        database :postgres, :primary
-      end
-    end
-
-    describe "with a date_time column named my_date_time" do
-      before(:each) do
-        Users::UserModel.date_time_field :my_date_time
-      end
-
-      it "creates the expected columns within the DynamicMigrations table" do
-        # now that the UserModel has been created, we rerun the composer
-        # and it's dependent composers
-        Platformer::Composers::Migrations::CreateStructure.rerun
-        Platformer::Composers::Migrations::Columns::DateTime.rerun
-
-        table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:my_date_time)).to be true
-        expect(table.column(:my_date_time).data_type).to be :timestamp
-        # check for the expected defaults
-        expect(table.column(:my_date_time).null).to be false
-        expect(table.column(:my_date_time).description).to be_nil
-        expect(table.column(:my_date_time).default).to be_nil
-      end
-    end
-
-    describe "with a date_time column named my_date_time that has a default, allows null and has a comment" do
-      before(:each) do
-        Users::UserModel.date_time_field :my_date_time do
-          allow_null
-          comment "This is a comment"
-          default "2023-07-14 12:00:00"
+      scaffold do
+        model_for "Users::User" do
+          database :postgres, :primary
+          date_time_field :my_date_time
         end
       end
+    end
 
-      it "creates the expected columns within the DynamicMigrations table" do
-        # now that the UserModel has been created, we rerun the composer
-        # and it's dependent composers
-        Platformer::Composers::Migrations::CreateStructure.rerun
-        Platformer::Composers::Migrations::Columns::DateTime.rerun
+    subject {
+      Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
+    }
 
-        table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:my_date_time)).to be true
-        expect(table.column(:my_date_time).data_type).to be :timestamp
-        # check for the expected values
-        expect(table.column(:my_date_time).null).to be true
-        expect(table.column(:my_date_time).description).to eq "This is a comment"
-        expect(table.column(:my_date_time).default).to eql "2023-07-14 12:00:00"
+    context "creates the expected columns within the DynamicMigrations table" do
+      it { expect(subject.has_column?(:my_date_time)).to be true }
+
+      it { expect(subject.column(:my_date_time).data_type).to be :timestamp }
+
+      it { expect(subject.column(:my_date_time).null).to be false }
+
+      it { expect(subject.column(:my_date_time).description).to be_nil }
+
+      it { expect(subject.column(:my_date_time).default).to be_nil }
+    end
+  end
+
+  describe "for a User Model which has a date_time column named my_date_time that has a default value, allows null and has a comment" do
+    before(:each) do
+      scaffold do
+        model_for "Users::User" do
+          database :postgres, :primary
+          date_time_field :my_date_time do
+            allow_null
+            comment "This is a comment"
+            default "1984-07-14 08:08:08"
+          end
+        end
       end
     end
 
-    describe "with an array of date_times column named my_date_time" do
-      before(:each) do
-        Users::UserModel.date_time_field :my_date_time, array: true
-      end
+    subject {
+      Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
+    }
 
-      it "creates the expected columns within the DynamicMigrations table" do
-        # now that the UserModel has been created, we rerun the composer
-        # and it's dependent composers
-        Platformer::Composers::Migrations::CreateStructure.rerun
-        Platformer::Composers::Migrations::Columns::DateTime.rerun
+    context "creates the expected columns within the DynamicMigrations table" do
+      it { expect(subject.has_column?(:my_date_time)).to be true }
 
-        table = Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
-        expect(table.has_column?(:my_date_time)).to be true
-        expect(table.column(:my_date_time).data_type).to be :"timestamp[]"
+      it { expect(subject.column(:my_date_time).data_type).to be :timestamp }
+
+      it { expect(subject.column(:my_date_time).null).to be true }
+
+      it { expect(subject.column(:my_date_time).description).to eq "This is a comment" }
+
+      it { expect(subject.column(:my_date_time).default).to eq "1984-07-14 08:08:08" }
+    end
+  end
+
+  describe "for a User Model with an array of date_times column named my_date_time" do
+    before(:each) do
+      scaffold do
+        model_for "Users::User" do
+          database :postgres, :primary
+          date_time_field :my_date_time, array: true
+        end
       end
+    end
+
+    subject {
+      Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
+    }
+
+    context "creates the expected columns within the DynamicMigrations table" do
+      it { expect(subject.has_column?(:my_date_time)).to be true }
+
+      it { expect(subject.column(:my_date_time).data_type).to be :"timestamp[]" }
     end
   end
 end

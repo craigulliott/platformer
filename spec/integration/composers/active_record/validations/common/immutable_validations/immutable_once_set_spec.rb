@@ -5,37 +5,23 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::Immutable do
   let(:pg_helper) { RSpec.configuration.pg_spec_helper }
 
-  before(:each) do
-    create_class :TestBaseModel, Platformer::BaseModel do
-      database :postgres, :primary
-    end
-  end
-
-  after(:each) do
-    destroy_class TestBase
-  end
-
   describe "for a new UserModel which defines a simple new model with an integer field and immutable validation" do
     before(:each) do
-      pg_helper.create_model :public, :users do
-        add_column :foo, :integer
-      end
+      scaffold do
+        table_for "Users::User" do
+          add_column :foo, :integer
+        end
 
-      # create a definition for a new User
-      create_class "Users::UserModel", TestBaseModel do
-        integer_field :foo do
-          allow_null
-          immutable_once_set
+        # create a definition for a new User
+        model_for "Users::User" do
+          database :postgres, :primary
+          schema :users
+          integer_field :foo do
+            allow_null
+            immutable_once_set
+          end
         end
       end
-
-      # now that the UserModel has been created, we rerun the relevant composers
-      Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
-      Platformer::Composers::ActiveRecord::Validations::Common::Immutable.rerun
-    end
-
-    after(:each) do
-      destroy_class Users::User
     end
 
     it "has the expected immutable_once_set_validator" do

@@ -10,6 +10,9 @@ module Platformer
         include ForFieldMacros
 
         def self.for_fields field_names, &block
+          # remember the parser name (class name), so we can present more useful errors
+          parser_name = name
+
           for_dsl field_names do |model_class:, dsl_name:, reader:, name:, dsl_arguments:|
             # only provide the arguments which the block is trying to use
             final_args = {}
@@ -44,9 +47,13 @@ module Platformer
                 if dsl_arguments.key? arg_name
                   final_args[arg_name] = dsl_arguments[arg_name]
                 else
-                  raise ArgumentNotAvailableError, "Can not find an equivilent argument for name `#{arg_name}`"
+                  raise ArgumentNotAvailableError, arg_name
                 end
               end
+            rescue ArgumentNotAvailableError => error
+              raise ArgumentNotAvailableError, "Can not find an equivilent argument for name `#{error.message}` while parsing DSL `#{dsl_name}` within composer `#{parser_name}`"
+            rescue
+              raise $!, "Error for DSL `#{dsl_name}` within composer `#{parser_name}`: Original Error Message: #{$!}", $!.backtrace
             end
             # yield the block with the expected arguments
             instance_exec(**final_args, &block)

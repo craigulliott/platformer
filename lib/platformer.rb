@@ -136,6 +136,7 @@ module Platformer
   # after the platformer environment has been configured and all of the app files have
   # been loaded.
   def self.compose!
+    require "platformer/composers/active_record/create_active_models"
     # composers, run in the required order
     recursive_require_relative "platformer/composers/active_record/**/*.rb"
     recursive_require_relative "platformer/composers/graphql/**/*.rb"

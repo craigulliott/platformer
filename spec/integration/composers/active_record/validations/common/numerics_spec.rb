@@ -5,57 +5,43 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::Numerics do
   let(:pg_helper) { RSpec.configuration.pg_spec_helper }
 
-  before(:each) do
-    create_class :TestBaseModel, Platformer::BaseModel do
-      database :postgres, :primary
-    end
-  end
-
-  after(:each) do
-    destroy_class TestBase
-  end
-
   describe "for a new UserModel which defines a simple new model with numeric fields and numeric validations" do
     before(:each) do
-      pg_helper.create_model :public, :users do
-        add_column :my_integer, :integer, null: true
-        add_column :my_float, :float, null: true
-        add_column :my_numeric, :"numeric(10,2)", null: true
-        add_column :my_double, :"double precision", null: true
-        add_column :my_other_double, :"double precision", null: true
+      scaffold do
+        table_for "Users::User" do
+          add_column :my_integer, :integer, null: true
+          add_column :my_float, :float, null: true
+          add_column :my_numeric, :"numeric(10,2)", null: true
+          add_column :my_double, :"double precision", null: true
+          add_column :my_other_double, :"double precision", null: true
+        end
+
+        model_for "Users::User" do
+          database :postgres, :primary
+          schema :users
+
+          integer_field :my_integer do
+            allow_null
+            validate_greater_than 0, message: "invalid my_integer"
+          end
+          float_field :my_float do
+            allow_null
+            validate_greater_than_or_equal_to 0, message: "invalid my_float"
+          end
+          numeric_field :my_numeric do
+            allow_null
+            validate_less_than 10, message: "invalid my_numeric"
+          end
+          numeric_field :my_double do
+            allow_null
+            validate_less_than_or_equal_to 10, message: "invalid my_double"
+          end
+          numeric_field :my_other_double do
+            allow_null
+            validate_equal_to 8, message: "invalid my_other_double"
+          end
+        end
       end
-
-      # create a definition for a new User
-      create_class "Users::UserModel", TestBaseModel do
-        integer_field :my_integer do
-          allow_null
-          validate_greater_than 0, message: "invalid my_integer"
-        end
-        float_field :my_float do
-          allow_null
-          validate_greater_than_or_equal_to 0, message: "invalid my_float"
-        end
-        numeric_field :my_numeric do
-          allow_null
-          validate_less_than 10, message: "invalid my_numeric"
-        end
-        numeric_field :my_double do
-          allow_null
-          validate_less_than_or_equal_to 10, message: "invalid my_double"
-        end
-        numeric_field :my_other_double do
-          allow_null
-          validate_equal_to 8, message: "invalid my_other_double"
-        end
-      end
-
-      # now that the UserModel has been created, we rerun the relevant composers
-      Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
-      Platformer::Composers::ActiveRecord::Validations::Common::Numerics.rerun
-    end
-
-    after(:each) do
-      destroy_class Users::User
     end
 
     let(:user) {

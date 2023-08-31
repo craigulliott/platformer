@@ -2,7 +2,13 @@ module Platformer
   module DSLReaders
     warn "not tested"
     class Schema
+      class BaseClassCanNotBeNilError < StandardError
+      end
+
       def initialize base_class
+        if base_class.nil?
+          raise BaseClassCanNotBeNilError, "base_class is required"
+        end
         @base_class = base_class
       end
 

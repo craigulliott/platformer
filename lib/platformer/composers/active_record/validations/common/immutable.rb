@@ -10,7 +10,7 @@ module Platformer
             class IncompatibleImmutableValidationError < StandardError
             end
 
-            for_all_fields except: :phone_number do |name:, active_record_class:, array:, allow_null:|
+            for_all_fields except: :phone_number do |name:, active_record_class:, allow_null:|
               for_method :immutable do |message:|
                 add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that

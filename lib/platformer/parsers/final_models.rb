@@ -23,6 +23,9 @@ module Platformer
       # yields the provided block for all final models which use the provided DSL
       # on the model class or one of it's ancestors
       def self.for_dsl dsl_names, &block
+        # remember the parser name (class name), so we can present more useful errors
+        parser_name = name
+
         # Processes every ancestor of the BaseModel class.
         for_final_models do |model_class:|
           # Yields the provided block and provides the requested values for
@@ -49,12 +52,12 @@ module Platformer
 
               when :schema_class
                 # get the equivilent Schema definition class (based on naming conventions)
-                # will raise an error if the desired Schema class does not exist
+                # will return nil if the desired Schema class does not exist
                 final_args[:schema_class] = model_class.schema_class
 
               when :graphql_type_class
                 # get the equivilent GraphQL Type class (based on naming conventions)
-                # will raise an error if the desired Type class does not exist
+                # will return nil if the desired Type class does not exist
                 final_args[:graphql_type_class] = model_class.graphql_type_class
 
               when :active_record_class
@@ -75,9 +78,13 @@ module Platformer
                 if dsl_arguments.key? arg_name
                   final_args[arg_name] = dsl_arguments[arg_name]
                 else
-                  raise ArgumentNotAvailableError, "Can not find an equivilent argument for name `#{arg_name}`"
+                  raise ArgumentNotAvailableError, arg_name
                 end
               end
+            rescue ArgumentNotAvailableError
+              raise ArgumentNotAvailableError, "Can not find an equivilent argument for name `#{error.message}` while parsing DSL `#{dsl_name}` within composer `#{parser_name}`"
+            rescue
+              raise $!, "Error for DSL `#{dsl_name}` within composer `#{parser_name}`: Original Error Message: #{$!}", $!.backtrace
             end
             # yield the block with the expected arguments
             instance_exec(**final_args, &block)

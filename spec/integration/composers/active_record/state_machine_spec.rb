@@ -5,35 +5,22 @@ require "spec_helper"
 RSpec.describe Platformer::Composers::ActiveRecord::StateMachines do
   let(:pg_helper) { RSpec.configuration.pg_spec_helper }
 
-  before(:each) do
-    create_class :TestBaseModel, Platformer::BaseModel do
-      database :postgres, :primary
-    end
-  end
-
-  after(:each) do
-    destroy_class TestBase
-  end
-
   describe "for a new PhotoModel which defines a simple new model with a state machine" do
     before(:each) do
-      pg_helper.create_model :public, :photos do
-        add_column :state, :text
-      end
+      scaffold do
+        table_for "Photo" do
+          add_column :state, :text
+        end
+        model_for "Photo" do
+          database :postgres, :primary
+          state_machine do
+            state :new
+            state :published
 
-      # create a definition for a new Photo
-      create_class "PhotoModel", TestBaseModel do
-        state_machine do
-          state :new
-          state :published
-
-          action :publish, from: :new, to: :published
+            action :publish, from: :new, to: :published
+          end
         end
       end
-
-      # now that the PhotoModel has been created, we rerun the relevant composers
-      Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
-      Platformer::Composers::ActiveRecord::StateMachines.rerun
     end
 
     it "creates the expected state machine on the active record model" do
@@ -51,10 +38,6 @@ RSpec.describe Platformer::Composers::ActiveRecord::StateMachines do
 
       photo.reload
       expect(photo.state).to eq "published"
-    end
-
-    after(:each) do
-      destroy_class Photo
     end
   end
 end
