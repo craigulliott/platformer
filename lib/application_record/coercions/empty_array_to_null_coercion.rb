@@ -5,7 +5,7 @@
 module Platformer
   module ActiveRecord
     module Coercions
-      module EmptyArrayToNullCoercions
+      module EmptyArrayToNullCoercion
         extend ActiveSupport::Concern
 
         included do

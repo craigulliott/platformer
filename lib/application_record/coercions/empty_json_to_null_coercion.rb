@@ -5,7 +5,7 @@
 module Platformer
   module ActiveRecord
     module Coercions
-      module EmptyJsonToNullCoercions
+      module EmptyJsonToNullCoercion
         extend ActiveSupport::Concern
 
         included do

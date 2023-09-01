@@ -5,7 +5,7 @@
 module Platformer
   module ActiveRecord
     module Coercions
-      module TrimAndNullifyCoercions
+      module TrimAndNullifyCoercion
         extend ActiveSupport::Concern
 
         included do

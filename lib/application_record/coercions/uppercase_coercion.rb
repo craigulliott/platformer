@@ -5,7 +5,7 @@
 module Platformer
   module ActiveRecord
     module Coercions
-      module UppercaseCoercions
+      module UppercaseCoercion
         extend ActiveSupport::Concern
 
         included do

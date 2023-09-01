@@ -5,7 +5,7 @@
 module Platformer
   module ActiveRecord
     module Coercions
-      module ZeroToNullCoercions
+      module ZeroToNullCoercion
         extend ActiveSupport::Concern
 
         included do
