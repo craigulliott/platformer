@@ -1,18 +1,6 @@
 module Platformer
   class Base
-    class NoTableStructureForModelError < StandardError
-    end
-
-    class NoDatabaseForModelError < StandardError
-    end
-
-    class NoActiveRecordClassForModelError < StandardError
-    end
-
     class UnexpectedBaseError < StandardError
-    end
-
-    class EquivilentClassDoesNotExistError < StandardError
     end
 
     include DSLCompose::Composer
@@ -41,17 +29,49 @@ module Platformer
         target_append = ""
         namespace = ""
 
+      elsif target_base_class == BaseCallback
+        target_append = "Callback"
+        namespace = ""
+
+      elsif target_base_class == BaseJob
+        target_append = "Job"
+        namespace = ""
+
       elsif target_base_class == BaseModel
         target_append = "Model"
+        namespace = ""
+
+      elsif target_base_class == BaseMutation
+        target_append = "Mutation"
+        namespace = ""
+
+      elsif target_base_class == BasePolicy
+        target_append = "Policy"
+        namespace = ""
+
+      elsif target_base_class == BasePresenter
+        target_append = "Presenter"
         namespace = ""
 
       elsif target_base_class == BaseSchema
         target_append = "Schema"
         namespace = ""
 
+      elsif target_base_class == BaseService
+        target_append = "Service"
+        namespace = ""
+
+      elsif target_base_class == BaseSubscription
+        target_append = "Subscription"
+        namespace = ""
+
       elsif target_base_class == Types::BaseObject
         target_append = ""
         namespace = "Types::"
+
+      elsif target_base_class == Presenters::Base
+        target_append = ""
+        namespace = "Presenters::"
 
       else
         raise UnexpectedBaseError, "Unexpected base class `#{target_base_class}`"
@@ -60,10 +80,36 @@ module Platformer
       # generate the expected class name based on the from_base and
       # setting the desired string at the end of the class name
       # unfortunately, we can not use a case statement to compare classes
-      class_name = if self < BaseModel
+      class_name = if self < BaseCallback
+        namespace + name.gsub(/Callback\Z/, target_append)
+
+      elsif self < BaseJob
+        namespace + name.gsub(/Job\Z/, target_append)
+
+      elsif self < BaseModel
         namespace + name.gsub(/Model\Z/, target_append)
+
+      elsif self < BaseMutation
+        namespace + name.gsub(/Mutation\Z/, target_append)
+
+      elsif self < BasePolicy
+        namespace + name.gsub(/Policy\Z/, target_append)
+
+      elsif self < BasePresenter
+        namespace + name.gsub(/Presenter\Z/, target_append)
+
       elsif self < BaseSchema
         namespace + name.gsub(/Schema\Z/, target_append)
+
+      elsif self < BaseService
+        namespace + name.gsub(/Service\Z/, target_append)
+
+      elsif self < BaseSubscription
+        namespace + name.gsub(/Subscription\Z/, target_append)
+
+      # Types::BaseObject and Presenters::Base are not listed here
+      # because those classes do not extend from this class
+
       else
         raise UnexpectedBaseError, "Unexpected base class `#{self}`"
       end
@@ -74,44 +120,64 @@ module Platformer
       end
     end
 
-    def self.callback_class
+    # callback_definition_classes
+    def self.callback_definition_class
       get_equivilent_class BaseCallback
     end
 
-    def self.job_class
+    # job_definition_classes
+    def self.job_definition_class
       get_equivilent_class BaseJob
     end
 
-    def self.model_class
+    # model_definition_classes
+    def self.model_definition_class
       get_equivilent_class BaseModel
     end
 
-    def self.mutation_class
+    # mutation_definition_classes
+    def self.mutation_definition_class
       get_equivilent_class BaseMutation
     end
 
-    def self.policy_class
+    # policy_definition_classes
+    def self.policy_definition_class
       get_equivilent_class BasePolicy
     end
 
-    def self.schema_class
+    # presenter_definition_classes
+    def self.presenter_definition_class
+      get_equivilent_class BasePresenter
+    end
+
+    # schema_definition_classes
+    def self.schema_definition_class
       get_equivilent_class BaseSchema
     end
 
-    def self.service_class
+    # service_definition_classes
+    def self.service_definition_class
       get_equivilent_class BaseService
     end
 
-    def self.subscription_class
+    # subscription_definition_classes
+    def self.subscription_definition_class
       get_equivilent_class BaseSubscription
     end
 
+    # active_record_classes
     def self.active_record_class
       get_equivilent_class ApplicationRecord
     end
 
+    # graphql_type_classes
     def self.graphql_type_class
       get_equivilent_class Types::BaseObject
+    end
+
+    # presenter_classes
+    def self.presenter_class
+      get_equivilent_class Presenters::Base
     end
   end
 end

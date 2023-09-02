@@ -7,7 +7,7 @@ module Platformer
     end
 
     describe_class <<~DESCRIPTION
-      Create query definitions in app/query to describe your queries
+      Create schema definitions in platform/schemas
     DESCRIPTION
 
     # Add descriptions to your classes
@@ -27,7 +27,7 @@ module Platformer
     include Platformer::DSLs::GraphQL::Queries::RootNode
     include Platformer::DSLs::GraphQL::Queries::RootCollection
 
-    # all query class names must end with "Schema"
+    # all schema class names must end with "Schema"
     def self.inherited subclass
       raise InvalidSchemaClassName unless subclass.name.end_with? "Schema"
     end

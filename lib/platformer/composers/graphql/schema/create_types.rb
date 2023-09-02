@@ -11,7 +11,7 @@ module Platformer
         # and a `Types::Organization` class which are extended from Types::BaseObject
         class CreateTypes < Parsers::Schemas
           # Process the parser for every final decendant of BaseSchema
-          for_final_schemas do |model_class:|
+          for_final_schemas do |model_definition_class:|
             # if one was provided, then extract the description
             class_description = nil
             for_dsl :description do |description:|
@@ -22,7 +22,8 @@ module Platformer
               Create a GraphQL Types class which corresponds to this model class.
             DESCRIPTION
 
-            graphql_type_class = ClassMap.create_graphql_type_class_from_model_class model_class
+            type_class_name = "Types::#{model_definition_class.name.gsub(/Model\z/, "")}"
+            graphql_type_class = ClassMap.create_class type_class_name, Types::BaseObject
 
             # if a description is available, then set it on the graphql type object
             if class_description

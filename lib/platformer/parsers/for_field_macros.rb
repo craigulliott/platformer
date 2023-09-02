@@ -17,7 +17,10 @@ module Platformer
         :json_field,
         :numeric_field,
         :phone_number_field,
-        :text_field
+        :text_field,
+        :country_field,
+        :language_field,
+        :currency_field
       ]
 
       NUMERIC_FIELDS = [
@@ -33,6 +36,16 @@ module Platformer
         :citext_field
       ]
 
+      MULTI_COLUMN_FIELDS = [
+        :phone_number_field
+      ]
+
+      PREFIX_COLUMN_FIELDS = [
+        :country_field,
+        :language_field,
+        :currency_field
+      ]
+
       def self.included(base)
         base.extend(ClassMethods)
       end
@@ -45,6 +58,11 @@ module Platformer
         def for_all_fields except: [], &block
           except = [except] unless except.is_a?(Array)
           for_fields ALL_FIELDS - except, &block
+        end
+
+        def for_all_single_column_fields except: [], &block
+          except = [except] unless except.is_a?(Array)
+          for_fields ALL_FIELDS - except - MULTI_COLUMN_FIELDS - PREFIX_COLUMN_FIELDS, &block
         end
 
         def for_numeric_fields except: [], &block

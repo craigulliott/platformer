@@ -10,7 +10,7 @@ module Helpers
     # any new types and queries which you want to test against in your spec.
     # Once you have created your schema, but before you execute your actual
     # spec, remember to call `Schema.initialize!`
-    def recreate_graphql_schema
+    def recreate
       @class_spec_helper.destroy_class ::Schema::Queries
       @class_spec_helper.destroy_class ::Schema::Mutations
       @class_spec_helper.destroy_class ::Schema::Subscriptions

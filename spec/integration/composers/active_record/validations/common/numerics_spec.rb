@@ -3,8 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::Numerics do
-  let(:pg_helper) { RSpec.configuration.pg_spec_helper }
-
   describe "for a new UserModel which defines a simple new model with numeric fields and numeric validations" do
     before(:each) do
       scaffold do

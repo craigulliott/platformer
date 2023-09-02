@@ -10,12 +10,12 @@ module Platformer
       # and an `Organization` class which are extended from ActiveRecord::Base
       class CreateActiveModels < Parsers::AllModels
         # Process the parser for every decendant of BaseModel
-        for_models do |model_class:|
+        for_models do |model_definition_class:|
           add_documentation <<~DESCRIPTION
             Create an ActiveRecord class which corresponds to this model class.
           DESCRIPTION
 
-          subclasses = ClassMap.subclasses(model_class)
+          subclasses = ClassMap.subclasses(model_definition_class)
           has_subclasses = subclasses.count > 0
 
           if has_subclasses
@@ -26,7 +26,29 @@ module Platformer
             DESCRIPTION
           end
 
-          active_record_class = ClassMap.create_active_record_class_from_model_class model_class do
+          # Get the ActiveRecord class which this new ActiveRecord cass should extend from
+          #
+          # For example...
+          #
+          # class UsersModel < BaseModel
+          # end
+          #
+          # class AdminModel < UsersModel
+          # end
+          #
+          # With the model class hieracy above, the expected base_classes are:
+          #   base_class for AdminModel is UsersModel
+          #   base_class for UsersModel is BaseModel
+          #   base_class for BaseModel is ApplicationRecord
+          base_class = if model_definition_class.ancestors[1] == BaseModel
+            ApplicationRecord
+          else
+            # return the active_record class which was already created for this
+            # models direct ancestor
+            model_definition_class.ancestors[1].active_record_class
+          end
+
+          active_record_class = ClassMap.create_class model_definition_class.name.gsub(/Model\z/, ""), base_class do
             # if the model has subclasses, then this is an abstract class
             if has_subclasses
               self.abstract_class = true

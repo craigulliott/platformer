@@ -16,7 +16,7 @@ module Platformer
         # Processes every ancestor of the BaseModel class.
         for_final_children_of BaseModel do |child_class:|
           # yield the block with the expected arguments
-          instance_exec(model_class: child_class, &block)
+          instance_exec(model_definition_class: child_class, &block)
         end
       end
 
@@ -27,13 +27,18 @@ module Platformer
         parser_name = name
 
         # Processes every ancestor of the BaseModel class.
-        for_final_models do |model_class:|
+        for_final_models do |model_definition_class:|
           # Yields the provided block and provides the requested values for
           # each use of the provided DSL
           for_dsl_or_inherited_dsl dsl_names do |dsl_name:, reader:, dsl_arguments:|
             # only provide the arguments which the block is trying to use
-            final_args = {}
             desired_arg_names = block.parameters.map(&:last)
+
+            # try and resolve the list of requested arguments via a helper which
+            # processess the most common arguments
+            final_args = ClassSwitchArgumentsHelper.resolve_arguments desired_arg_names, model_definition_class
+
+            # try and resolve the rest of the requested arguments
             desired_arg_names.each do |arg_name|
               # all the arguments which can be passed to the block
               case arg_name
@@ -43,46 +48,32 @@ module Platformer
               when :table
                 # the table structure object from DynamicMigrations, this was created and
                 # the result cached within the CreateStructure composer
-                final_args[:table] = model_class.table_structure
+                final_args[:table] = model_definition_class.table_structure
 
               when :schema
                 # the schema structure object from DynamicMigrations, this was created and
                 # the result cached within the CreateStructure composer (via the table)
-                final_args[:schema] = model_class.table_structure.schema
-
-              when :schema_class
-                # get the equivilent Schema definition class (based on naming conventions)
-                # will return nil if the desired Schema class does not exist
-                final_args[:schema_class] = model_class.schema_class
-
-              when :graphql_type_class
-                # get the equivilent GraphQL Type class (based on naming conventions)
-                # will return nil if the desired Type class does not exist
-                final_args[:graphql_type_class] = model_class.graphql_type_class
-
-              when :active_record_class
-                # get the equivilent ActiveRecord class (based on naming conventions)
-                # will raise an error if the ActiveRecord class does not exist
-                final_args[:active_record_class] = model_class.active_record_class
+                final_args[:schema] = model_definition_class.table_structure.schema
 
               when :reader
                 final_args[:reader] = reader
-
-              when :model_class
-                final_args[:model_class] = model_class
 
               when :dsl_arguments
                 final_args[:dsl_arguments] = dsl_arguments
 
               else
+                # if the argument exists within the dsl's arguments, then
+                # resolve it automatically to that value
                 if dsl_arguments.key? arg_name
                   final_args[arg_name] = dsl_arguments[arg_name]
-                else
+
+                # otherwise, if it wasnt already set by the common args helper, then raise an error
+                elsif !final_args.key? arg_name
                   raise ArgumentNotAvailableError, arg_name
                 end
               end
             rescue ArgumentNotAvailableError
-              raise ArgumentNotAvailableError, "Can not find an equivilent argument for name `#{error.message}` while parsing DSL `#{dsl_name}` within composer `#{parser_name}`"
+              raise ArgumentNotAvailableError, "Can not find an equivilent argument for name `#{$!}` while parsing DSL `#{dsl_name}` within composer `#{parser_name}`"
             rescue
               raise $!, "Error for DSL `#{dsl_name}` within composer `#{parser_name}`: Original Error Message: #{$!}", $!.backtrace
             end

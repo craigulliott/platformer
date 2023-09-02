@@ -8,7 +8,7 @@ module Platformer
         class WhereCanNotBeUsedWithDeferrableError < StandardError
         end
 
-        for_all_fields do |dsl_name:, name:, table:, comment_text:, allow_null:|
+        for_field :phone_number_field do |dsl_name:, prefix:, table:, comment_text:, allow_null:|
           # if the unique method was used within our field DSL
           for_method :unique do |scope:, comment:, where:, deferrable:, initially_deferred:|
             # If you provide a value for where, then it is not possible to
@@ -19,15 +19,9 @@ module Platformer
               raise WhereCanNotBeUsedWithDeferrableError, "If you provide a where clause to a unique constraint, then deferrable must be set to false"
             end
 
-            # todo, make this generic so it will work with fields similar to phone_number
-            column_names = []
-            if dsl_name == :phone_number_field
-              column_names << :"#{name}_dialing_code"
-              column_names << :"#{name}_phone_number"
-            else
-              column_names << name
-            end
-            column_names += scope
+            name_prepend = prefix.nil? ? "" : "#{prefix}_"
+
+            column_names = [:"#{name_prepend}dialing_code", :"#{name_prepend}phone_number"] + scope
 
             if where
               add_documentation <<~DESCRIPTION

@@ -9,62 +9,18 @@ require "byebug"
 
 Platformer.initialize!
 
-require "pg_spec_helper"
-require_relative "helpers/recreate_graphql_schema"
+require "helpers/postgres"
 require_relative "helpers/scaffold"
 
 # active record logging
 # ActiveRecord::Base.logger = Logger.new($stdout)
 
-CLASS_SPEC_HELPER = ClassSpecHelper.new
-
-RECREATE_GRAPHQL_SCHEMA = Helpers::RecreateGraphQLSchema.new
-
-def recreate_graphql_schema
-  RECREATE_GRAPHQL_SCHEMA.recreate_graphql_schema
-end
-
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
 
-  config.include Scaffold
-
-  # the configuration for our test database (loaded from config/database.yaml)
-  database_configuration = Platformer::Databases.server(:postgres, :primary).default_database
-
-  # default active record configuration
-  config.add_setting :default_database_configuration
-  config.default_database_configuration = database_configuration.active_record_configuration
-
-  # make pg_spec_helper conveniently accessible within our test suite
-  config.add_setting :pg_spec_helper
-  config.pg_spec_helper = PGSpecHelper.new(**database_configuration.pg_configuration)
-  # dont modify the postgis schema
-  config.pg_spec_helper.ignore_schema :postgis
-
-  # this library uses several materialized_views to cache the structure of
-  # the database, we need to refresh them whenever structure changes.
-  # Structure cache:
-  config.pg_spec_helper.track_materialized_view :public, :dynamic_migrations_structure_cache, [
-    :create_schema,
-    :create_table,
-    :create_column
-  ]
-  # Keys and unique constraints cache:
-  config.pg_spec_helper.track_materialized_view :public, :dynamic_migrations_keys_and_unique_constraints_cache, [
-    :delete_all_schemas,
-    :delete_tables,
-    :create_foreign_key,
-    :create_primary_key,
-    :create_unique_constraint
-  ]
-  # Validations cache
-  config.pg_spec_helper.track_materialized_view :public, :dynamic_migrations_validations_cache, [
-    :delete_all_schemas,
-    :delete_tables,
-    :create_validation
-  ]
+  config.include Helpers::Scaffold
+  config.include Helpers::Postgres
 
   # Disable RSpec exposing methods globally on `Module` and `main`
   config.disable_monkey_patching!
@@ -78,10 +34,10 @@ RSpec.configure do |config|
     # optionally provide DYNAMIC_MIGRATIONS_CLEAR_DB_ON_STARTUP=true to
     # force reset your database structure
     if ENV["DYNAMIC_MIGRATIONS_CLEAR_DB_ON_STARTUP"]
-      config.pg_spec_helper.reset! true
+      Helpers::Postgres.pg_spec_helper.reset! true
     else
       # raise an error unless the database structure is empty
-      config.pg_spec_helper.assert_database_empty!
+      Helpers::Postgres.pg_spec_helper.assert_database_empty!
     end
   end
 
@@ -111,6 +67,6 @@ RSpec.configure do |config|
   # reset our database structure after each test (this deletes all
   # schemas and tables and then recreates the `public` schema)
   config.after(:each) do
-    config.pg_spec_helper.reset!
+    pg_helper.reset!
   end
 end

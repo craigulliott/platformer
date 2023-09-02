@@ -37,6 +37,9 @@ require_relative "platformer/all"
 # GraphQL schema and base types
 require_relative "schema/all"
 
+# the base Presenter which all other presenters extend from
+require_relative "presenters/base"
+
 module Platformer
   include Environment
   include Root

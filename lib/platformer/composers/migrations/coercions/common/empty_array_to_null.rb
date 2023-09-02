@@ -10,11 +10,13 @@ module Platformer
             class UnsupportedEmptyArrayToNullError < StandardError
             end
 
-            for_all_fields except: [:json_field, :phone_number_field] do |name:, table:, column:, array:, default:, comment_text:, allow_null:|
+            for_all_single_column_fields except: :json_field do |column_name:, table:, array:, default:, comment_text:, allow_null:|
               for_method :empty_array_to_null do |method_name:, comment:|
                 unless array
                   raise UnsupportedEmptyArrayToNullError, "`empty_array_to_null` can only be used on array fields"
                 end
+
+                column = table.column column_name
 
                 add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)

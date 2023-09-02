@@ -14,7 +14,12 @@ end
 require_relative "active_record/create_active_models"
 recursive_require_relative "active_record"
 
+# Presenters
+require_relative "presenters/create_presenters"
+recursive_require_relative "presenters"
+
 # GraphQL
+require_relative "graphql/schema/create_types"
 recursive_require_relative "graphql"
 
 # Migrations

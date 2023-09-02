@@ -7,7 +7,7 @@ module Platformer
     end
 
     describe_class <<~DESCRIPTION
-      Create query definitions in app/query to describe your queries
+      Create mutation definitions in platform/mutations
     DESCRIPTION
 
     # Add descriptions to your classes
@@ -18,7 +18,7 @@ module Platformer
     include Platformer::DSLs::GraphQL::Mutations::Action
     include Platformer::DSLs::GraphQL::Mutations::StateMachineAction
 
-    # all query class names must end with "Mutation"
+    # all mutation class names must end with "Mutation"
     def self.inherited subclass
       raise InvalidMutationClassName unless subclass.name.end_with? "Mutation"
     end

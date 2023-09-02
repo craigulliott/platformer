@@ -11,7 +11,7 @@ module Platformer
         # it onto Schema::Queries.
         class RootCollection < Parsers::Schemas
           # Process the parser for every final decendant of BaseSchema
-          for_dsl :root_collection do |schema_reader:, reader:, model_class:, graphql_type_class:, active_record_class:|
+          for_dsl :root_collection do |schema_reader:, reader:, model_definition_class:, graphql_type_class:, active_record_class:|
             # the field name, such as `users` or `users_avatars`
             field_name = schema_reader.public_name.pluralize
 
@@ -27,7 +27,7 @@ module Platformer
             end
 
             # install the field into the Schema::Queries class
-            ::Schema::Queries.field field_name, [graphql_type_class], "Find a post by ID", resolver_method: :fetch_collection_of_records, active_record_model_class: active_record_class, arguments_metadata: arguments_metadata, extras: [:graphql_name, :parent, :active_record_model_class, :arguments_metadata] do
+            ::Schema::Queries.field field_name, [graphql_type_class], "Find a post by ID", resolver_method: :fetch_collection_of_records, active_record_class: active_record_class, arguments_metadata: arguments_metadata, extras: [:graphql_name, :parent, :active_record_class, :arguments_metadata] do
               arguments_metadata.each do |am|
                 argument am[:field_name], am[:type], required: am[:required]
               end

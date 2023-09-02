@@ -1,3 +1,4 @@
+require_relative "class_switch_arguments_helper"
 require_relative "for_field_macros"
 require_relative "all_models"
 require_relative "all_models/for_fields"

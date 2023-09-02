@@ -9,7 +9,7 @@ module Platformer
             class UnsupportedEmptyArrayToNullError < StandardError
             end
 
-            for_all_fields except: [:json_field, :phone_number_field] do |name:, active_record_class:, array:, allow_null:|
+            for_all_single_column_fields except: :json_field do |column_name:, active_record_class:, array:, allow_null:|
               for_method :empty_array_to_null do
                 unless array
                   raise UnsupportedEmptyArrayToNullError, "`empty_array_to_null` can only be used on array fields"
@@ -17,21 +17,21 @@ module Platformer
 
                 add_documentation <<~DESCRIPTION
                   Create a before_validation callback on this active_record class which
-                  will convert `#{name}` into null if it is an empty array. This logic
+                  will convert `#{column_name}` into null if it is an empty array. This logic
                   is also injected into ActiveRecord and overrides the write_attribute method,
                   this will ensure that the coercion happens even if callbacks are skipped.
                 DESCRIPTION
 
                 # add the before_validation callback to the active record class
                 active_record_class.before_validation do
-                  value = send(name)
+                  value = send(column_name)
                   if value.is_a?(Array) && value.empty?
-                    send "#{name}=", nil
+                    send "#{column_name}=", nil
                   end
                 end
 
                 # inject this into the class and override the write_attribute system
-                active_record_class.attr_empty_array_to_null_coercion name
+                active_record_class.attr_empty_array_to_null_coercion column_name
               end
             end
           end

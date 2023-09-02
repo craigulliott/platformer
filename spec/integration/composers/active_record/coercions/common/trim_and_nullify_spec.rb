@@ -3,8 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::ActiveRecord::Coercions::Common::TrimAndNullify do
-  let(:pg_helper) { RSpec.configuration.pg_spec_helper }
-
   describe "for a new UserModel which defines a simple new model with an char field and trim and nullify coercion" do
     before(:each) do
       scaffold do

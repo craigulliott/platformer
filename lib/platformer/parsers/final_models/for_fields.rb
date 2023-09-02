@@ -7,16 +7,24 @@ module Platformer
         class ArgumentNotAvailableError < StandardError
         end
 
+        class ColumnNameError < StandardError
+        end
+
         include ForFieldMacros
 
         def self.for_fields field_names, &block
           # remember the parser name (class name), so we can present more useful errors
           parser_name = name
 
-          for_dsl field_names do |model_class:, dsl_name:, reader:, name:, dsl_arguments:|
+          for_dsl field_names do |model_definition_class:, dsl_name:, reader:, dsl_arguments:|
             # only provide the arguments which the block is trying to use
-            final_args = {}
             desired_arg_names = block.parameters.map(&:last)
+
+            # try and resolve the list of requested arguments via a helper which
+            # processess the most common arguments
+            final_args = ClassSwitchArgumentsHelper.resolve_arguments desired_arg_names, model_definition_class
+
+            # try and resolve the rest of the requested arguments
             desired_arg_names.each do |arg_name|
               # all the arguments which can be passed to the block
               case arg_name
@@ -32,39 +40,16 @@ module Platformer
               when :table
                 # the table structure object from DynamicMigrations, this was created and
                 # the result cached within the CreateStructure composer
-                final_args[:table] = model_class.table_structure
+                final_args[:table] = model_definition_class.table_structure
 
               when :schema
                 # the schema structure object from DynamicMigrations, this was created and
                 # the result cached within the CreateStructure composer (via the table)
-                final_args[:schema] = model_class.table_structure.schema
+                final_args[:schema] = model_definition_class.table_structure.schema
 
               when :database
                 # the database configuratiom object
-                final_args[:database] = model_class.configured_database
-
-              when :model_class
-                final_args[:model_class] = model_class
-
-              when :schema_class
-                # get the equivilent Schema definition class (based on naming conventions)
-                # will return nil if the desired Schema class does not exist
-                final_args[:schema_class] = model_class.schema_class
-
-              when :graphql_type_class
-                # get the equivilent GraphQL Type class (based on naming conventions)
-                # will return nil if the desired Type class does not exist
-                final_args[:graphql_type_class] = model_class.graphql_type_class
-
-              when :active_record_class
-                # get the equivilent ActiveRecord class (based on naming conventions)
-                # will raise an error if the ActiveRecord class does not exist
-                final_args[:active_record_class] = model_class.active_record_class
-
-              when :column
-                # Get the coresponding column object from DynamicMigrations for this field
-                # column is not available until the first field composer runs, and builds it
-                final_args[:column] = model_class.table_structure.column(name)
+                final_args[:database] = model_definition_class.configured_database
 
               when :reader
                 final_args[:reader] = reader
@@ -72,15 +57,63 @@ module Platformer
               when :default
                 final_args[:default] = reader.default&.default
 
+              when :column_name
+                if reader.arguments.has_argument? :name
+                  final_args[:column_name] = reader.arguments.name
+                elsif reader.arguments.has_argument? :prefix
+                  prefix = reader.arguments.prefix
+                  name_prepend = prefix.nil? ? "" : "#{prefix}_"
+                  case dsl_name
+                  when :country_field
+                    final_args[:column_name] = :"#{name_prepend}country"
+                  when :language_field
+                    final_args[:column_name] = :"#{name_prepend}language"
+                  when :currency_field
+                    final_args[:column_name] = :"#{name_prepend}currency"
+                  else
+                    raise ColumnNameError, "Unexpected DSL name #{dsl_name}. Cannot build column name."
+                  end
+                else
+                  raise ColumnNameError, "No name or prefix argument is available. Cannot build column name."
+                end
+
+              when :column_names
+                final_args[:column_names] = []
+                if reader.arguments.has_argument? :name
+                  final_args[:column_names] << reader.arguments.name
+                elsif reader.arguments.has_argument? :prefix
+                  prefix = reader.arguments.prefix
+                  name_prepend = prefix.nil? ? "" : "#{prefix}_"
+                  case dsl_name
+                  when :country_field
+                    final_args[:column_names] << :"#{name_prepend}country"
+                  when :language_field
+                    final_args[:column_names] << :"#{name_prepend}language"
+                  when :currency_field
+                    final_args[:column_names] << :"#{name_prepend}currency"
+                  when :phone_number_field
+                    final_args[:column_names] << :"#{name_prepend}phone_number"
+                    final_args[:column_names] << :"#{name_prepend}dialing_code"
+                  else
+                    raise ColumnNameError, "Unexpected DSL name #{dsl_name}. Cannot build column name."
+                  end
+                else
+                  raise ColumnNameError, "No name or prefix argument is available. Cannot build column name."
+                end
+
               else
+                # if the argument exists within the dsl's arguments, then
+                # resolve it automatically to that value
                 if dsl_arguments.key? arg_name
                   final_args[arg_name] = dsl_arguments[arg_name]
-                else
+
+                # otherwise, if it wasnt already set by the common args helper, then raise an error
+                elsif !final_args.key? arg_name
                   raise ArgumentNotAvailableError, arg_name
                 end
               end
             rescue ArgumentNotAvailableError => error
-              raise ArgumentNotAvailableError, "Can not find an equivilent argument for name `#{error.message}` while parsing DSL `#{dsl_name}` within composer `#{parser_name}`"
+              raise ArgumentNotAvailableError, "Can not find an equivilent argument for name `#{$!}` while parsing DSL `#{dsl_name}` within composer `#{parser_name}`"
             rescue
               raise $!, "Error for DSL `#{dsl_name}` within composer `#{parser_name}`: Original Error Message: #{$!}", $!.backtrace
             end

@@ -7,7 +7,7 @@ module Platformer
         module Common
           # Install immutable validations for the respective columns within DynamicMigrations
           class Immutable < Parsers::FinalModels::ForFields
-            for_all_fields except: :phone_number do |dsl_name:, name:, database:, table:, comment_text:, allow_null:|
+            for_all_fields do |column_names:, database:, table:, comment_text:, allow_null:|
               # if the validate_greater_than validation was used
               for_method [:immutable, :immutable_once_set] do |method_name:|
                 # "once set" is a slight variation on the immutable validation, where the
@@ -16,7 +16,7 @@ module Platformer
 
                 add_documentation <<~DESCRIPTION
                   Add a trigger to this table (`#{table.schema.name}'.'#{table.name}`)
-                  and call a function which prevents the value of `#{name}` from
+                  and call a function which prevents the value of `#{column_names.to_sentence}` from
                   #{once_set ? " being updated after it has been first set to a value (meaning,
                   if it was created with the value of null, then it can be updated in the future
                   to a non value, but at that point the value can never be updated again)." : "ever being updated"}.
@@ -27,15 +27,6 @@ module Platformer
                 function = database.find_or_create_shared_function function_definition
 
                 trigger_name = once_set ? :immutable_once_set : :immutable
-
-                # todo, make this generic so it will work with fields similar to phone_number
-                column_names = []
-                if dsl_name == :phone_number_field
-                  column_names << :"#{name}_dialing_code"
-                  column_names << :"#{name}_phone_number"
-                else
-                  column_names << name
-                end
 
                 condition_sqls = column_names.map do |column_name|
                   sql = <<~SQL.strip

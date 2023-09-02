@@ -8,18 +8,18 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::Language do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          language_field :my_language
+          language_field
         end
         schema_for "Users::User" do
           fields [
-            :my_language
+            :language_name
           ]
         end
       end
     end
 
     subject {
-      Types::Users::User.fields["myLanguage"]
+      Types::Users::User.fields["languageName"]
     }
 
     context "creates the expected GraphQL Type class" do

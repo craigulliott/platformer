@@ -10,11 +10,11 @@ module Platformer
             class IncompatibleImmutableValidationError < StandardError
             end
 
-            for_all_fields except: :phone_number do |name:, active_record_class:, allow_null:|
+            for_all_single_column_fields except: :json_field do |column_name:, active_record_class:, allow_null:|
               for_method :immutable do |message:|
                 add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
-                  the value of `#{name}` can not be changed after the record is created.
+                  the value of `#{column_name}` can not be changed after the record is created.
                 DESCRIPTION
 
                 # add the validation to the active record class (using splat for passing the
@@ -23,7 +23,7 @@ module Platformer
                 args[:allow_nil] = allow_null
                 args[:immutable] = true
                 args[:message] = message unless message.nil?
-                active_record_class.validates name, **args
+                active_record_class.validates column_name, **args
               end
 
               for_method :immutable_once_set do |message:|
@@ -33,7 +33,7 @@ module Platformer
 
                 add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that
-                  the value of `#{name}` can not be changed after the value has been set.
+                  the value of `#{column_name}` can not be changed after the value has been set.
                   If a record exists, and the value is null, then it can be set at any
                   time. As soon as the value is updated to a non null value, it is locked
                   and can not be changed.
@@ -45,7 +45,7 @@ module Platformer
                 args[:allow_nil] = allow_null
                 args[:immutable_once_set] = true
                 args[:message] = message unless message.nil?
-                active_record_class.validates name, **args
+                active_record_class.validates column_name, **args
               end
             end
           end

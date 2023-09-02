@@ -3,7 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::ActiveRecord::Associations::HasOne do
-  let(:pg_helper) { RSpec.configuration.pg_spec_helper }
 
   describe "for a new BadgeModel which belongs to a UserModel" do
     before(:each) do

@@ -8,18 +8,18 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::Currency do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          currency_field :my_currency
+          currency_field
         end
         schema_for "Users::User" do
           fields [
-            :my_currency
+            :currency_name
           ]
         end
       end
     end
 
     subject {
-      Types::Users::User.fields["myCurrency"]
+      Types::Users::User.fields["currencyName"]
     }
 
     context "creates the expected GraphQL Type class" do

@@ -7,13 +7,13 @@ module Platformer
     end
 
     describe_class <<~DESCRIPTION
-      Create query definitions in app/query to describe your queries
+      Create job definitions in platform/jobs
     DESCRIPTION
 
     # Add descriptions to your classes
     include Platformer::DSLs::Description
 
-    # all query class names must end with "Job"
+    # all job class names must end with "Job"
     def self.inherited subclass
       raise InvalidJobClassName unless subclass.name.end_with? "Job"
     end

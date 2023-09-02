@@ -3,8 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::GraphQL::Schema::RootCollection do
-  let(:pg_helper) { RSpec.configuration.pg_spec_helper }
-
   describe "for a User model with a char_field that is exposed as a root collection" do
     before(:each) do
       scaffold do

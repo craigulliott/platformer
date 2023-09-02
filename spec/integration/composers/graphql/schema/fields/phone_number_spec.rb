@@ -8,18 +8,19 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::PhoneNumber do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          phone_number_field :my_phone_number
+          phone_number_field
         end
         schema_for "Users::User" do
           fields [
-            :my_phone_number
+            :phone_number,
+            :dialing_code
           ]
         end
       end
     end
 
     subject {
-      Types::Users::User.fields["myPhoneNumber"]
+      Types::Users::User.fields["phoneNumber"]
     }
 
     context "creates the expected GraphQL Type class" do

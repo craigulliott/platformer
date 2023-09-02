@@ -3,7 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::ActiveRecord::Coercions::Common::Case do
-  let(:pg_helper) { RSpec.configuration.pg_spec_helper }
 
   describe "for a new UserModel which defines a simple new model with an char field and immutable validation" do
     before(:each) do

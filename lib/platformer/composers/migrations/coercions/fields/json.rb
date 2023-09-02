@@ -7,7 +7,9 @@ module Platformer
         module Fields
           # install validations to assert that the empty_json_to_null coercion rules were followed
           class Json < Parsers::FinalModels::ForFields
-            for_fields :json_field do |name:, table:, column:|
+            for_fields :json_field do |name:, table:|
+              column = table.column name
+
               for_method :empty_json_to_null do |method_name:, comment:|
                 add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)

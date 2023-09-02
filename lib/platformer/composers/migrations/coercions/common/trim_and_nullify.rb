@@ -7,7 +7,9 @@ module Platformer
         module Common
           # install validations to assert that the trim_and_nullify coercion rules were followed
           class TrimAndNullify < Parsers::FinalModels::ForFields
-            for_string_fields do |name:, database:, table:, column:, array:, default:, comment_text:, allow_null:|
+            for_string_fields do |name:, database:, table:, array:, default:, comment_text:, allow_null:|
+              column = table.column name
+
               for_method :trim_and_nullify do |method_name:, comment:|
                 add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)

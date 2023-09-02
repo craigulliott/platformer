@@ -7,7 +7,11 @@ module Platformer
         # Add all country columns to their respective tables within DynamicMigrations
         class Country < Parsers::FinalModels::ForFields
           # for each time the :country_field DSL was used on this Model
-          for_field :country_field do |name:, database:, table:, array:, default:, comment_text:, allow_null:|
+          for_field :country_field do |prefix:, database:, table:, array:, default:, comment_text:, allow_null:|
+            name_prepend = prefix.nil? ? "" : "#{prefix}_"
+
+            name = :"#{name_prepend}country"
+
             enum_type_name = database.find_or_create_shared_enum Constants::ISO::CountryCode
 
             # update the dynamic documentation

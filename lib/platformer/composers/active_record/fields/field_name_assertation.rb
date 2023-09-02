@@ -9,9 +9,9 @@ module Platformer
           class ReservedAttributeNameError < StandardError
           end
 
-          for_all_fields do |name:, active_record_class:|
-            if active_record_class.instance_methods.include? name
-              raise ReservedAttributeNameError, "The field name `#{name}` is reserved. An instance method of the same name already exists on this #{active_record_class.name}"
+          for_all_single_column_fields do |column_name:, active_record_class:|
+            if active_record_class.instance_methods.include? column_name
+              raise ReservedAttributeNameError, "The field name `#{column_name}` is reserved. An instance method of the same name already exists on this #{active_record_class.name}"
             end
           end
         end

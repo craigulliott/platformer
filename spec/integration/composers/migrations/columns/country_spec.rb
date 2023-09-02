@@ -3,12 +3,12 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::Migrations::Columns::Country do
-  describe "for a User Model which has a country column named my_country" do
+  describe "for a User Model which has a country field" do
     before(:each) do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          country_field :my_country
+          country_field
         end
       end
     end
@@ -18,24 +18,24 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Country do
     }
 
     context "creates the expected columns within the DynamicMigrations table" do
-      it { expect(subject.has_column?(:my_country)).to be true }
+      it { expect(subject.has_column?(:country)).to be true }
 
-      it { expect(subject.column(:my_country).data_type).to be :"platformer.iso_country_code" }
+      it { expect(subject.column(:country).data_type).to be :"platformer.iso_country_code" }
 
-      it { expect(subject.column(:my_country).null).to be false }
+      it { expect(subject.column(:country).null).to be false }
 
-      it { expect(subject.column(:my_country).description).to be_nil }
+      it { expect(subject.column(:country).description).to be_nil }
 
-      it { expect(subject.column(:my_country).default).to be_nil }
+      it { expect(subject.column(:country).default).to be_nil }
     end
   end
 
-  describe "for a User Model which has a country column named my_country that has a default value, allows null and has a comment" do
+  describe "for a User Model which has a country field that has a default value, allows null and has a comment" do
     before(:each) do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          country_field :my_country do
+          country_field do
             allow_null
             comment "This is a comment"
             default "UK"
@@ -49,24 +49,24 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Country do
     }
 
     context "creates the expected columns within the DynamicMigrations table" do
-      it { expect(subject.has_column?(:my_country)).to be true }
+      it { expect(subject.has_column?(:country)).to be true }
 
-      it { expect(subject.column(:my_country).data_type).to be :"platformer.iso_country_code" }
+      it { expect(subject.column(:country).data_type).to be :"platformer.iso_country_code" }
 
-      it { expect(subject.column(:my_country).null).to be true }
+      it { expect(subject.column(:country).null).to be true }
 
-      it { expect(subject.column(:my_country).description).to eq "This is a comment" }
+      it { expect(subject.column(:country).description).to eq "This is a comment" }
 
-      it { expect(subject.column(:my_country).default).to eq "UK" }
+      it { expect(subject.column(:country).default).to eq "UK" }
     end
   end
 
-  describe "for a User Model with an array of countrys column named my_country" do
+  describe "for a User Model with an array of countrys" do
     before(:each) do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          country_field :my_country, array: true
+          country_field array: true
         end
       end
     end
@@ -76,9 +76,9 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Country do
     }
 
     context "creates the expected columns within the DynamicMigrations table" do
-      it { expect(subject.has_column?(:my_country)).to be true }
+      it { expect(subject.has_column?(:country)).to be true }
 
-      it { expect(subject.column(:my_country).data_type).to be :"platformer.iso_country_code[]" }
+      it { expect(subject.column(:country).data_type).to be :"platformer.iso_country_code[]" }
     end
   end
 end

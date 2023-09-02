@@ -3,8 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::ActiveRecord::StateMachines do
-  let(:pg_helper) { RSpec.configuration.pg_spec_helper }
-
   describe "for a new PhotoModel which defines a simple new model with a state machine" do
     before(:each) do
       scaffold do

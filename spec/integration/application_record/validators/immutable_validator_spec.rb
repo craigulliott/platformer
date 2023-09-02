@@ -3,9 +3,6 @@
 require "spec_helper"
 
 RSpec.describe ImmutableValidator do
-  let(:pg_helper) { RSpec.configuration.pg_spec_helper }
-  let(:default_database_configuration) { RSpec.configuration.default_database_configuration }
-
   describe "for a new active record model" do
     before(:each) do
       pg_helper.create_model :public, :users do

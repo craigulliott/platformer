@@ -1,3 +1,4 @@
+require_relative "documentation"
 require_relative "markdown"
 require_relative "composer_documentation"
 require_relative "dsl_documentation"

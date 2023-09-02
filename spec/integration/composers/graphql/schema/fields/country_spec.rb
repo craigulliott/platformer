@@ -8,18 +8,18 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::Country do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          country_field :my_country
+          country_field
         end
         schema_for "Users::User" do
           fields [
-            :my_country
+            :country_name
           ]
         end
       end
     end
 
     subject {
-      Types::Users::User.fields["myCountry"]
+      Types::Users::User.fields["countryName"]
     }
 
     context "creates the expected GraphQL Type class" do

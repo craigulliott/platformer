@@ -7,13 +7,13 @@ module Platformer
     end
 
     describe_class <<~DESCRIPTION
-      Create query definitions in app/query to describe your queries
+      Create subscription definitions in platform/subscriptions
     DESCRIPTION
 
     # Add descriptions to your classes
     include Platformer::DSLs::Description
 
-    # all query class names must end with "Subscription"
+    # all subscription class names must end with "Subscription"
     def self.inherited subclass
       raise InvalidSubscriptionClassName unless subclass.name.end_with? "Subscription"
     end

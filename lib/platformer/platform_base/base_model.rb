@@ -7,7 +7,7 @@ module Platformer
     end
 
     describe_class <<~DESCRIPTION
-      Create model definitions in app/model to describe your records
+      Create model definitions in platform/models
     DESCRIPTION
 
     # Add descriptions to your classes

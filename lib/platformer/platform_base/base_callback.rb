@@ -7,7 +7,7 @@ module Platformer
     end
 
     describe_class <<~DESCRIPTION
-      Create query definitions in app/query to describe your queries
+      Create callback definitions in platform/callbacks
     DESCRIPTION
 
     # Add descriptions to your classes
@@ -15,7 +15,7 @@ module Platformer
 
     include Platformer::DSLs::Callbacks::AfterStageChange
 
-    # all query class names must end with "Callback"
+    # all callback class names must end with "Callback"
     def self.inherited subclass
       raise InvalidCallbackClassName unless subclass.name.end_with? "Callback"
     end
