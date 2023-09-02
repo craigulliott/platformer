@@ -16,7 +16,7 @@ module Helpers
       @class_spec_helper.destroy_class ::Schema::Subscriptions
       @class_spec_helper.destroy_class ::Schema
 
-      eval <<~RUBY
+      eval <<~RUBY, binding, __FILE__, __LINE__ + 1
         class ::Schema < SchemaBase
           class Queries < QueriesBase
           end
