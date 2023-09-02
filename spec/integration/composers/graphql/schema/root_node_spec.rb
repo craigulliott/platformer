@@ -3,7 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::GraphQL::Schema::RootNode do
-
   describe "for a User model with an integer_field that is exposed as a root node" do
     before(:each) do
       scaffold do

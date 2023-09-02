@@ -3,7 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::ActiveRecord::Validations::Fields::Enum do
-
   describe "for a new UserModel which defines a simple new model with a enum field" do
     before(:each) do
       pg_helper.create_enum :public, :enum_values, ["foo", "bar"]

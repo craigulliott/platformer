@@ -3,7 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::Strings do
-
   describe "for a new UserModel which defines a simple new model with string fields and string validations" do
     before(:each) do
       scaffold do

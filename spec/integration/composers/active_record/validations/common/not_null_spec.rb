@@ -3,7 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::NotNull do
-
   describe "for a new UserModel which defines a simple new model with char fields, one of which is nullable" do
     before(:each) do
       scaffold do

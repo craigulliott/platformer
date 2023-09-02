@@ -99,7 +99,7 @@ module Platformer
           when :class
             "\"#{argument.name.to_s.titleize}\""
           else
-            "#{argument.name}"
+            argument.name.to_s
           end
         end
         # add any optional arguments
@@ -111,7 +111,7 @@ module Platformer
             when :class
               "\"#{argument.name.to_s.titleize}\""
             else
-              "#{argument.name}"
+              argument.name.to_s
             end
 
             string_parts << if argument.array

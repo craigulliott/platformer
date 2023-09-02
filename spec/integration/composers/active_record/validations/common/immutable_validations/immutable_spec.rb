@@ -3,7 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::Immutable do
-
   describe "for a new UserModel which defines a simple new model with an integer field and immutable validation" do
     before(:each) do
       scaffold do

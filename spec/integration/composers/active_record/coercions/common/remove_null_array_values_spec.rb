@@ -3,7 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::ActiveRecord::Coercions::Common::RemoveNullArrayValues do
-
   describe "for a new UserModel which defines a simple new model with an array of chars field and trim and nullify coercion" do
     before(:each) do
       scaffold do

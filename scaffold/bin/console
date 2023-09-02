@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative '../config/application'
+require_relative "../config/application"
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your platform easier.

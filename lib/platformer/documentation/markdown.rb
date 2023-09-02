@@ -99,7 +99,7 @@ module Platformer
         definitions = [definitions] unless definitions.is_a? Array
 
         lines = []
-        lines << "#{escape_underscores item_name.to_s.strip}"
+        lines << escape_underscores(item_name.to_s.strip).to_s
         definitions.each do |definition|
           lines << ":   #{escape_underscores definition.to_s.tr("\n", " ").strip}"
         end

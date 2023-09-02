@@ -74,7 +74,7 @@ module Platformer
                   raise ArgumentNotAvailableError, arg_name
                 end
               end
-            rescue ArgumentNotAvailableError => error
+            rescue ArgumentNotAvailableError
               raise ArgumentNotAvailableError, "Can not find an equivilent argument for name `#{$!}` while parsing DSL `#{dsl_name}` within composer `#{parser_name}`"
             rescue
               raise $!, "Error for DSL `#{dsl_name}` within composer `#{parser_name}`: Original Error Message: #{$!}", $!.backtrace
