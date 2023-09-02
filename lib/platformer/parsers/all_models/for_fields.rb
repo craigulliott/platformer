@@ -7,16 +7,13 @@ module Platformer
         class ArgumentNotAvailableError < StandardError
         end
 
-        class ColumnNameError < StandardError
-        end
-
         include ForFieldMacros
 
         def self.for_fields field_names, &block
           # remember the parser name (class name), so we can present more useful errors
           parser_name = name
 
-          for_dsl field_names do |model_definition_class:, dsl_name:, reader:, dsl_arguments:|
+          for_dsl field_names do |model_definition_class:, dsl_execution:, dsl_name:, reader:, dsl_arguments:|
             # only provide the arguments which the block is trying to use
             desired_arg_names = block.parameters.map(&:last)
 
@@ -44,48 +41,10 @@ module Platformer
                 final_args[:default] = reader.default&.default
 
               when :column_name
-                if reader.arguments.has_argument? :name
-                  final_args[:column_name] = reader.arguments.name
-                elsif reader.arguments.has_argument? :prefix
-                  prefix = reader.arguments.prefix
-                  name_prepend = prefix.nil? ? "" : "#{prefix}_"
-                  case dsl_name
-                  when :country_field
-                    final_args[:column_name] = :"#{name_prepend}country"
-                  when :language_field
-                    final_args[:column_name] = :"#{name_prepend}language"
-                  when :currency_field
-                    final_args[:column_name] = :"#{name_prepend}currency"
-                  else
-                    raise ColumnNameError, "Unexpected DSL name #{dsl_name}. Cannot build column name."
-                  end
-                else
-                  raise ColumnNameError, "No name or prefix argument is available. Cannot build column name."
-                end
+                DSLReaders::Models::Field.new(dsl_execution).column_name
 
               when :column_names
-                final_args[:column_names] = []
-                if reader.arguments.has_argument? :name
-                  final_args[:column_names] << reader.arguments.name
-                elsif reader.arguments.has_argument? :prefix
-                  prefix = reader.arguments.prefix
-                  name_prepend = prefix.nil? ? "" : "#{prefix}_"
-                  case dsl_name
-                  when :country_field
-                    final_args[:column_names] << :"#{name_prepend}country"
-                  when :language_field
-                    final_args[:column_names] << :"#{name_prepend}language"
-                  when :currency_field
-                    final_args[:column_names] << :"#{name_prepend}currency"
-                  when :phone_number_field
-                    final_args[:column_names] << :"#{name_prepend}phone_number"
-                    final_args[:column_names] << :"#{name_prepend}dialing_code"
-                  else
-                    raise ColumnNameError, "Unexpected DSL name #{dsl_name}. Cannot build column name."
-                  end
-                else
-                  raise ColumnNameError, "No name or prefix argument is available. Cannot build column name."
-                end
+                DSLReaders::Models::Field.new(dsl_execution).column_names
 
               else
                 # if the argument exists within the dsl's arguments, then

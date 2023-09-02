@@ -15,7 +15,8 @@ class SchemaBase < GraphQL::Schema
       arguments_metadata.each do |am|
         if am[:method] == :by_id
           id = arguments[am[:field_name]]
-          return active_record_class.find id
+          model = active_record_class.find id
+          "Presenters::#{model.name}".constantize.new model
         end
       end
       raise "Could not find a method to load a record"
