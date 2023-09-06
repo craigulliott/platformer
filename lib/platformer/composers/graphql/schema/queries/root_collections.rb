@@ -28,7 +28,7 @@ module Platformer
               end
 
               # install the field into the Schema::Queries class
-              ::Schema::Queries.field field_name, [graphql_type_class], "Find a post by ID", resolver_method: :fetch_collection_of_records, active_record_class: active_record_class, arguments_metadata: arguments_metadata, extras: [:graphql_name, :parent, :active_record_class, :arguments_metadata] do
+              ::Schema::Queries.field field_name, graphql_type_class.connection_type, "Find a post by ID", resolver_method: :fetch_collection_of_records, active_record_class: active_record_class, arguments_metadata: arguments_metadata, extras: [:graphql_name, :parent, :active_record_class, :arguments_metadata] do
                 arguments_metadata.each do |am|
                   argument am[:field_name], am[:type], required: am[:required]
                 end

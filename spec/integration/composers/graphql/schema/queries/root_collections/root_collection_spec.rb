@@ -39,12 +39,34 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::Queries::RootCollection d
       results = Schema.execute <<~QUERY
         {
           users(myChar: "a") {
-            myChar
+            nodes {
+              myChar
+            }
           }
         }
       QUERY
 
-      expect(results["data"]["users"].map { |u| u["myChar"] }).to eql ["a"]
+      expect(results["data"]["users"]["nodes"].map { |u| u["myChar"] }).to eql ["a"]
+    end
+
+    it "executes an appropriate query with edges successfully" do
+      Users::User.create! my_char: "a"
+      Users::User.create! my_char: "b"
+      Users::User.create! my_char: "c"
+
+      results = Schema.execute <<~QUERY
+        {
+          users(myChar: "a") {
+            edges {
+              node {
+                myChar
+              }
+            }
+          }
+        }
+      QUERY
+
+      expect(results["data"]["users"]["edges"].map { |u| u["node"]["myChar"] }).to eql ["a"]
     end
   end
 end

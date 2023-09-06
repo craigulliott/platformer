@@ -106,14 +106,15 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::Queries::RootNode do
           end
           fields [:name, :date_of_birth]
           node_field "Hobbies::HobbyModel", association_name: :favorite_hobby
+          connection "Hobbies::UserHobbyModel"
         end
         schema_for "Hobbies::UserHobby" do
-          # node_field "Users::UserModel"
-          # node_field "Hobbies::HobbyModel"
+          node_field "Users::UserModel"
+          node_field "Hobbies::HobbyModel"
         end
         schema_for "Hobbies::Hobby" do
           fields [:name]
-          # node_field "Hobbies::CategoryModel"
+          node_field "Hobbies::CategoryModel"
         end
         schema_for "Hobbies::Category" do
           fields [:name]
@@ -178,6 +179,29 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::Queries::RootNode do
       it { expect(subject["data"]["user"]["name"]).to eq "Katy" }
 
       it { expect(subject["data"]["user"]["favoriteHobby"]["name"]).to eq "Freediving" }
+    end
+
+    context "a query on the user root node which includes the user_hobbies collection" do
+      subject {
+        Schema.execute <<~QUERY
+          {
+            user(id: "#{user.id}") {
+              name
+              userHobbies {
+                nodes {
+                  hobby {
+                    name
+                  }
+                }
+              }
+            }
+          }
+        QUERY
+      }
+
+      it { expect(subject["data"]["user"]["name"]).to eq "Katy" }
+
+      it { expect(subject["data"]["user"]["userHobbies"]["nodes"].map { |u| u["hobby"]["name"] }).to eql ["Sailing", "Freediving", "Hiking", "Gaming"] }
     end
   end
 end

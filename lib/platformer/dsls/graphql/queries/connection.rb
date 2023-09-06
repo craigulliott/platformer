@@ -19,6 +19,8 @@ module Platformer
               DESCRIPTION
 
               requires :foreign_model, :class do
+                validate_end_with :Model
+
                 description <<~DESCRIPTION
                   The model which is associated to this model via the `has_many` association.
                 DESCRIPTION
