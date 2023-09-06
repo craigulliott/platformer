@@ -58,7 +58,7 @@ module Platformer
     private
 
     def composer_base_path
-      File.expand_path @base_path + "/#{@name}"
+      File.expand_path @name.to_s, @base_path
     end
 
     def create_composer_base_folder

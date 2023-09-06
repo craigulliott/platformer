@@ -17,6 +17,8 @@ module Platformer
 
     # install all our Field DSLs
     #
+    include Platformer::DSLs::Models::PrimaryKey
+    include Platformer::DSLs::Models::CoreTimestamps
     # uuid
     include Platformer::DSLs::Models::Fields::UuidField
     # numeric fields
@@ -53,11 +55,14 @@ module Platformer
     include Platformer::DSLs::Models::Associations::HasMany
     include Platformer::DSLs::Models::Associations::HasOne
 
-    # install our modul utilities
+    # special fields and utilities
     include Platformer::DSLs::Models::StateMachine
+    include Platformer::DSLs::Models::ActionField
+    include Platformer::DSLs::Models::Positionable
 
-    # install our GraphQL DSLs
-    include Platformer::DSLs::Models::GraphQL::RootNode
+    # optionally suppress the namespace when generating the query name
+    # i.e. `user` instead of the default `users_user`
+    include Platformer::DSLs::Models::SuppressNamespace
 
     # all model class names must end with "Model"
     def self.inherited subclass

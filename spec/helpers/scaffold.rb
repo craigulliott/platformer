@@ -16,6 +16,8 @@ module Helpers
     #   model_for "Users::User" do
     #     database :postgres, :primary
     #     schema :users
+    #     # name this model `user` instead of `users_user`
+    #     suppress_namespace
     #     char_field :my_char
     #   end
     #
@@ -24,8 +26,6 @@ module Helpers
     #     root_collection do
     #       by_exact_string :my_char
     #     end
-    #     # name this model `user` instead of `users_user`
-    #     suppress_namespace
     #     # expose the my_char field
     #     fields [
     #       :my_char
@@ -58,6 +58,7 @@ module Helpers
       @to_destroy&.each do |name|
         destroy_active_record_class name
         destroy_graphql_type_class name
+        destroy_graphql_mutation_classes name
         destroy_presenter_class name
       end
       class_spec_helper.remove_all_dynamically_created_classes
@@ -86,6 +87,21 @@ module Helpers
       graphql_type_class_name = "Types::#{name}"
       if Object.const_defined? graphql_type_class_name
         class_spec_helper.destroy_class graphql_type_class_name.constantize
+      end
+    end
+
+    # check for, and destroy the GraphQL Type class
+    def destroy_graphql_mutation_classes name
+      # dynamically build a regex similar to /Mutations::Users::[\w]+User/
+      regex = Regexp.new name.sub(/([\w]+::)?(\w+)\z/, 'Mutations::\1[\w]+\2')
+      # Destroy any descendents which match this regex.
+      # We need to do it this way because the class names `UpdateUser`, `PublishUser`
+      # et.al. are not easily predictable
+      ::Mutations::BaseMutation.descendants.filter { |d| d.name =~ regex }.each do |descendant|
+        # this is needed in case the class hasn't been garbage collected yet
+        if Object.const_defined? descendant.name
+          class_spec_helper.destroy_class descendant
+        end
       end
     end
 

@@ -1,7 +1,7 @@
 Makes a collection of these models available via a root query.
 
 ```ruby
-class MySchema < PlatformSchema
+class Myer::BaseSchema < Platformer::BaseSchema
   root_collection 
 end
 
@@ -14,7 +14,7 @@ end
 Allows for a string search against one of the models fields.
 
 ```ruby
-class MySchema < PlatformSchema
+class Myer::BaseSchema < Platformer::BaseSchema
   root_collection  do
     ...
     by_exact_string 

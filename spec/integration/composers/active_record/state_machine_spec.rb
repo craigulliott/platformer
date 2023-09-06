@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Platformer::Composers::ActiveRecord::StateMachines do
+RSpec.describe Platformer::Composers::ActiveRecord::StateMachine do
   describe "for a new PhotoModel which defines a simple new model with a state machine" do
     before(:each) do
       scaffold do

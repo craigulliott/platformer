@@ -3,12 +3,26 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Documentation::Markdown do
-  let(:markdown) { Platformer::Documentation::Markdown.new }
+  # create a dedicated tmp folder for this spec
+  let(:base_path) { Platformer.root "tmp/spec/unit/platformer/documentation/markdown_spec" }
+
+  let(:markdown) { Platformer::Documentation::Markdown.new base_path, "index.md" }
+
+  before(:each) do
+    # if the dedicated tmp folder exists, make sure its empty
+    if File.directory?(base_path)
+      FileUtils.rm_rf(base_path)
+
+    # if it doesn't exist, then create it
+    else
+      FileUtils.mkdir_p(base_path)
+    end
+  end
 
   describe :initialize do
     it "initializes without error" do
       expect {
-        Platformer::Documentation::Markdown.new "./tmp", "docs.md"
+        Platformer::Documentation::Markdown.new base_path, "docs.md"
       }.to_not raise_error
     end
   end

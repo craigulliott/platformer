@@ -8,7 +8,7 @@ for ubiquitous nodes that are unlikely to conflict with other types
   unexpected. Exercise caution when using this feature, however, since even highly specific models may clash with new additions in the long-term development of the system.
 
 ```ruby
-class MySchema < PlatformSchema
+class Myer::BaseSchema < Platformer::BaseSchema
   suppress_namespace 
 end
 

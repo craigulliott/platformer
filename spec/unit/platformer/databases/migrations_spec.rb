@@ -5,14 +5,14 @@ require "fileutils"
 
 RSpec.describe Platformer::Databases::Migrations do
   # create a dedicated tmp folder for this spec
-  let(:base_path) { File.expand_path("./tmp/spec/unit/platformer/databases/migrations") }
+  let(:base_path) { Platformer.root "tmp/spec/unit/platformer/databases/migrations_spec" }
   # we use the Loader class to check the results within the specs below
   let(:loader) { Platformer::Databases::Migrations::Current::Loader.new base_path }
 
   before(:each) do
     # if the dedicated tmp folder exists, make sure its empty
     if File.directory?(base_path)
-      FileUtils.rm_rf("tmp/spec/unit/platformer/databases/migrations")
+      FileUtils.rm_rf(base_path)
 
     # if it doesn't exist, then create it
     else

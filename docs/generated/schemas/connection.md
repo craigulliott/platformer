@@ -10,7 +10,7 @@ This makes it a more flexible and extensible choice for managing lists
 and relationships within a GraphQL schema.
 
 ```ruby
-class MySchema < PlatformSchema
+class Myer::BaseSchema < Platformer::BaseSchema
   connection "Foreign Model"
 end
 
@@ -40,7 +40,7 @@ GraphQL query. This approach enriches the data available, offering a
 more comprehensive and nuanced view of the relationship between entities.
 
 ```ruby
-class MySchema < PlatformSchema
+class Myer::BaseSchema < Platformer::BaseSchema
   connection "Foreign Model" do
     ...
     edge "Foreign Model", association_name: :association_name

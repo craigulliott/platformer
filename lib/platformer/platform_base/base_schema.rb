@@ -19,9 +19,6 @@ module Platformer
     include Platformer::DSLs::GraphQL::Queries::Fields
     include Platformer::DSLs::GraphQL::Queries::NodeField
     include Platformer::DSLs::GraphQL::Queries::Connection
-    # optionally suppress the namespace when generating the query name
-    # i.e. `user` instead of the default `users_user`
-    include Platformer::DSLs::GraphQL::Queries::SuppressNamespace
     # make these objects available (either one, or a collection of them) at
     # the root of the GraphQL schema
     include Platformer::DSLs::GraphQL::Queries::RootNode

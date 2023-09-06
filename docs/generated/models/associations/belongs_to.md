@@ -4,7 +4,7 @@ model, build the appropriate foreign key constraint and setup
 the ActiveRecord associations.
 
 ```ruby
-class MyModel < PlatformModel
+class Myer::BaseModel < Platformer::BaseModel
   belongs_to "Foreign Model"
 end
 
@@ -45,7 +45,7 @@ automatically generated column which is added to the local
 table can be `null`, which makes the `belongs_to` association optional.
 
 ```ruby
-class MyModel < PlatformModel
+class Myer::BaseModel < Platformer::BaseModel
   belongs_to "Foreign Model" do
     ...
     allow_null "Foreign Model", local_column_names: [:local_column_names], foreign_column_names: [:foreign_column_names], comment: comment, deferrable: deferrable, initially_deferred: initially_deferred, on_update: :on_update, on_delete: :on_delete

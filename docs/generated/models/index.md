@@ -1,4 +1,4 @@
-Create model definitions in app/model to describe your records
+Create model definitions in platform/models
 
 ## Description
 
@@ -28,6 +28,16 @@ Create model definitions in app/model to describe your records
 ## State Machine
 
 [State Machine](state_machine.md)
+
+
+## Action Field
+
+[Action Field](action_field.md)
+
+
+## Positionable
+
+[Positionable](positionable.md)
 
 
 ## Root Node

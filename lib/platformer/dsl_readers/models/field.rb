@@ -2,23 +2,23 @@ module Platformer
   module DSLReaders
     module Models
       warn "not tested"
-      class Field < DSLCompose::ReaderBase
+      class Field < DSLCompose::Reader::ExecutionReader
         class ColumnNameError < StandardError
         end
 
         def column_name
           if arguments.has_argument? :name
-            final_args[:column_name] = arguments.name
+            arguments.name
           elsif arguments.has_argument? :prefix
             prefix = arguments.prefix
             name_prepend = prefix.nil? ? "" : "#{prefix}_"
             case dsl_name
             when :country_field
-              final_args[:column_name] = :"#{name_prepend}country"
+              :"#{name_prepend}country"
             when :language_field
-              final_args[:column_name] = :"#{name_prepend}language"
+              :"#{name_prepend}language"
             when :currency_field
-              final_args[:column_name] = :"#{name_prepend}currency"
+              :"#{name_prepend}currency"
             else
               raise ColumnNameError, "Unexpected DSL name #{dsl_name}. Cannot build column name."
             end
@@ -28,28 +28,29 @@ module Platformer
         end
 
         def column_names
-          final_args[:column_names] = []
+          column_names = []
           if arguments.has_argument? :name
-            final_args[:column_names] << arguments.name
+            column_names << arguments.name
           elsif arguments.has_argument? :prefix
             prefix = arguments.prefix
             name_prepend = prefix.nil? ? "" : "#{prefix}_"
             case dsl_name
             when :country_field
-              final_args[:column_names] << :"#{name_prepend}country"
+              column_names << :"#{name_prepend}country"
             when :language_field
-              final_args[:column_names] << :"#{name_prepend}language"
+              column_names << :"#{name_prepend}language"
             when :currency_field
-              final_args[:column_names] << :"#{name_prepend}currency"
+              column_names << :"#{name_prepend}currency"
             when :phone_number_field
-              final_args[:column_names] << :"#{name_prepend}phone_number"
-              final_args[:column_names] << :"#{name_prepend}dialing_code"
+              column_names << :"#{name_prepend}phone_number"
+              column_names << :"#{name_prepend}dialing_code"
             else
               raise ColumnNameError, "Unexpected DSL name #{dsl_name}. Cannot build column name."
             end
           else
             raise ColumnNameError, "No name or prefix argument is available. Cannot build column name."
           end
+          column_names
         end
       end
     end

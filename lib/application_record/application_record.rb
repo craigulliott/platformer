@@ -14,6 +14,12 @@ class ApplicationRecord < ActiveRecord::Base
   # ApplicationRecord is always an abstract class
   self.abstract_class = true
 
+  # rails GlobalID provides a unique ID for every object, and ability to easily load
+  # objects based on these IDs. We use it in conjunction with GraphQL to make our server
+  # relay compatible
+  include GlobalID::Identification
+
+  # coercions to fix and sanitize data automtically
   include Platformer::ActiveRecord::Coercions::UppercaseCoercion
   include Platformer::ActiveRecord::Coercions::LowercaseCoercion
   include Platformer::ActiveRecord::Coercions::TrimAndNullifyCoercion

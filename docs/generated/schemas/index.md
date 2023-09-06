@@ -1,4 +1,4 @@
-Create query definitions in app/query to describe your queries
+Create schema definitions in platform/schemas
 
 ## Description
 

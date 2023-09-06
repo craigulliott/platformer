@@ -15,6 +15,8 @@ require_relative "types/base_union"
 # standards compliant server, it uses global ids for fetching
 # any available object
 require_relative "types/node_type"
+# our other shared/common types
+require_relative "types/validation_error"
 # base classes for mutations and subscriptions
 require_relative "mutations/base_mutation"
 require_relative "subscriptions/base_subscription"

@@ -15,6 +15,7 @@ when :new
   end
 
   puts "Creating new platform #{name}"
+  # get the current directory (from the current execution context)
   target_path = File.expand_path(name)
 
   puts "Creating directory `#{target_path}`"

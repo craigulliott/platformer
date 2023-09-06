@@ -4,7 +4,7 @@ module Platformer
       attr_reader :file_path
 
       def initialize base_path, filename
-        @base_path = File.expand_path base_path
+        @base_path = base_path
         @file_path = @base_path + "/#{filename}"
       end
 
@@ -120,16 +120,17 @@ module Platformer
 
       def write_to_file
         ensure_folder_exists
+        puts "Creating documentation file: #{@file_path}"
         File.write(@file_path, to_markdown)
       end
-
-      private
 
       # Clears the database configuration object, this is primarily used from witin
       # the test suite
       def to_markdown
         sections.join "\n\n"
       end
+
+      private
 
       def ensure_folder_exists
         FileUtils.mkdir_p @base_path

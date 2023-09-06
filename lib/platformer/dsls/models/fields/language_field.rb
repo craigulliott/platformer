@@ -13,12 +13,13 @@ module Platformer
               #
               # an optional prefix for this fields name
               optional :prefix, :symbol do
+                import_shared :snake_case_name_validator
+
                 description <<~DESCRIPTION
                   An optional prefix to use for the name of this field. This prefix
                   will be prepended to the column names which back this model, and
                   to the presenter methods, graphql queries and mutations.
                 DESCRIPTION
-                validate_format(/\A[a-z]+(_[a-z]+)*\Z/)
               end
 
               # add an optional attribute which can be used to

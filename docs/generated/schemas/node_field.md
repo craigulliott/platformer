@@ -9,7 +9,7 @@ later on, then you should use a join model, and then provide access
 to the other model through that join model.
 
 ```ruby
-class MySchema < PlatformSchema
+class Myer::BaseSchema < Platformer::BaseSchema
   node_field "Foreign Model"
 end
 

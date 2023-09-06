@@ -5,7 +5,7 @@ require "fileutils"
 
 RSpec.describe Platformer::Databases::Migrations::MigrationFile do
   # create a dedicated tmp folder for this spec
-  let(:base_path) { File.expand_path("./tmp/spec/unit/platformer/databases/migrations/migration_file") }
+  let(:base_path) { Platformer.root "tmp/spec/unit/platformer/databases/migrations/migration_file" }
 
   before(:each) do
     # if the dedicated tmp folder exists, make sure its empty

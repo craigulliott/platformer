@@ -1,7 +1,7 @@
 Add descriptions to your classes.
 
 ```ruby
-class MyModel < PlatformModel
+class Myer::BaseModel < Platformer::BaseModel
   description description
 end
 

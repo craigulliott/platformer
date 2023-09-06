@@ -2,8 +2,8 @@
 
 require "spec_helper"
 
-RSpec.describe Platformer::Composers::Migrations::StateMachines do
-  describe "for a new PhotoModel which defines a simple new model numeric columns and each type of numeric validation" do
+RSpec.describe Platformer::Composers::Migrations::StateMachine do
+  describe "for a new PhotoModel which defines a simple new model with a state machine" do
     before(:each) do
       scaffold do
         model_for "Photo" do

@@ -1,16 +1,16 @@
 Add a language field to this model.
 
 ```ruby
-class MyModel < PlatformModel
-  language_field :name
+class Myer::BaseModel < Platformer::BaseModel
+  language_field 
 end
 
 ```
 
 **Arguments**
 
-name (required Symbol)
-:   The name of your field.
+prefix (optional Symbol)
+:   An optional prefix to use for the name of this field. This prefix will be prepended to the column names which back this model, and to the presenter methods, graphql queries and mutations.
 
 array (optional Boolean)
 :   If true, then this field will be an array of languages, and will be backed by a `platformer.language\_codes[]` type in PostgreSQL.
@@ -20,10 +20,10 @@ array (optional Boolean)
 **Default**
 
 ```ruby
-class MyModel < PlatformModel
-  language_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  language_field  do
     ...
-    default :name, array: array
+    default prefix: :prefix, array: array
     ...
   end
 end
@@ -43,10 +43,10 @@ The underlying postgres column will also be configured to allow
 NULL values
 
 ```ruby
-class MyModel < PlatformModel
-  language_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  language_field  do
     ...
-    allow_null :name, array: array
+    allow_null prefix: :prefix, array: array
     ...
   end
 end
@@ -65,10 +65,10 @@ make an array with at least one item a requirement. This can only be
 used on fields which have been set to `array: true`.
 
 ```ruby
-class MyModel < PlatformModel
-  language_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  language_field  do
     ...
-    empty_array_to_null :name, array: array
+    empty_array_to_null prefix: :prefix, array: array
     ...
   end
 end
@@ -86,10 +86,10 @@ If used within a field dsl then this will enforce uniqueness for this
 field.
 
 ```ruby
-class MyModel < PlatformModel
-  language_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  language_field  do
     ...
-    unique :name, array: array
+    unique prefix: :prefix, array: array
     ...
   end
 end
@@ -124,10 +124,10 @@ the database column as a comment, and will be used to
 generate API documentation.
 
 ```ruby
-class MyModel < PlatformModel
-  language_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  language_field  do
     ...
-    comment :name, array: array
+    comment prefix: :prefix, array: array
     ...
   end
 end
@@ -147,10 +147,10 @@ constraint and will be used in API validation and generated
 documentation.
 
 ```ruby
-class MyModel < PlatformModel
-  language_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  language_field  do
     ...
-    validate_in :name, array: array
+    validate_in prefix: :prefix, array: array
     ...
   end
 end
@@ -183,10 +183,10 @@ constraint and will be used in API validation and generated
 documentation.
 
 ```ruby
-class MyModel < PlatformModel
-  language_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  language_field  do
     ...
-    validate_not_in :name, array: array
+    validate_not_in prefix: :prefix, array: array
     ...
   end
 end
@@ -218,10 +218,10 @@ constraint and will be used in API validation and generated
 documentation.
 
 ```ruby
-class MyModel < PlatformModel
-  language_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  language_field  do
     ...
-    validate_is_value :name, array: array
+    validate_is_value prefix: :prefix, array: array
     ...
   end
 end
@@ -253,10 +253,10 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class MyModel < PlatformModel
-  language_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  language_field  do
     ...
-    immutable :name, array: array
+    immutable prefix: :prefix, array: array
     ...
   end
 end
@@ -279,10 +279,10 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class MyModel < PlatformModel
-  language_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  language_field  do
     ...
-    immutable_once_set :name, array: array
+    immutable_once_set prefix: :prefix, array: array
     ...
   end
 end
@@ -303,10 +303,10 @@ will also be added to the database to assert that the column has no
 null values. This is only compatibile with array fields.
 
 ```ruby
-class MyModel < PlatformModel
-  language_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  language_field  do
     ...
-    remove_null_array_values :name, array: array
+    remove_null_array_values prefix: :prefix, array: array
     ...
   end
 end

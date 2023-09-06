@@ -24,6 +24,7 @@ recursive_require_relative "graphql"
 
 # Migrations
 require_relative "migrations/create_structure"
+require_relative "migrations/primary_key"
 recursive_require_relative "migrations/columns"
 recursive_require_relative "migrations/indexes"
 recursive_require_relative "migrations/associations"

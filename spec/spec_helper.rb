@@ -2,12 +2,10 @@
 
 ENV["PLATFORMER_ENV"] = "test"
 
-ENV["PLATFORMER_ROOT"] ||= File.expand_path("../", __dir__)
+require_relative "../config/application"
 
-require "platformer"
 require "byebug"
-
-Platformer.initialize!
+require "timecop"
 
 require "helpers/postgres"
 require_relative "helpers/scaffold"
@@ -48,6 +46,12 @@ RSpec.configure do |config|
     ObjectSpace.garbage_collect
   end
 
+  # use timecop to set the date and time to a known Friday July 14th 2023
+  config.before(:each) do
+    set_time_to = Time.local(2023, 7, 14, 12, 0, 0)
+    Timecop.travel(set_time_to)
+  end
+
   # remove all classes which were created for specs
   config.after(:each) do
     destroy_dynamically_created_classes
@@ -62,6 +66,11 @@ RSpec.configure do |config|
   # after each spec, clear all the dynamic DSL executions
   config.after(:each) do
     Platformer::BaseModel.dsls.clear
+  end
+
+  # put time back to where it was
+  config.after(:each) do
+    Timecop.return
   end
 
   # reset our database structure after each test (this deletes all

@@ -25,7 +25,7 @@ RSpec.describe Platformer::Composers::Presenters::Fields::Date do
     context "creates the expected Presenter class" do
       it { expect(subject).to be_a Presenters::Base }
 
-      it { expect(subject.my_date).to eq "1984-07-14" }
+      it { expect(subject.my_date.to_s).to eq "1984-07-14" }
     end
   end
 end

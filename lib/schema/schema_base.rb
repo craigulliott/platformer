@@ -28,11 +28,10 @@ class SchemaBase < GraphQL::Schema
     super
   end
 
-  # Union and Interface Resolution
+  # Union and Interface Resolution, this tells the schema
+  # what type Relay `Node` objects are
   def self.resolve_type(abstract_type, obj, ctx)
-    # TODO: Implement this method
-    # to return the correct GraphQL object type for `obj`
-    raise(GraphQL::RequiredImplementationMissingError)
+    abstract_type
   end
 
   # Stop validating when it encounters this many errors:

@@ -6,7 +6,7 @@ module Platformer
           module Validators
             module FieldNameValidators
               DSLCompose::SharedConfiguration.add :field_name_validators do
-                validate_format(/\A[a-z]+(_[a-z]+)*\Z/)
+                import_shared :snake_case_name_validator
                 validate_length minimum: 1, maximum: 63
 
                 validate_not_in [
@@ -23,7 +23,9 @@ module Platformer
                   # Reserved for Single Table Inheritance.
                   :type,
                   # Reserved for ActiveRecords optimistic locking mechanism
-                  :lock_version
+                  :lock_version,
+                  # Reserved for Positionable models (manual sorting of records)
+                  :position
                 ]
 
                 validate_not_end_with [

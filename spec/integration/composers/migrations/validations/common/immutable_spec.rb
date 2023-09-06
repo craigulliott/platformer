@@ -37,7 +37,13 @@ RSpec.describe Platformer::Composers::Migrations::Validations::Common::Immutable
 
       it {
         expect(subject.trigger(:immutable_once_set).action_condition).to eql <<~SQL.strip
-          (NEW.my_text IS DISTINCT FROM OLD.my_text AND OLD.my_text IS NOT NULL) OR (NEW.my_other_text IS DISTINCT FROM OLD.my_other_text AND OLD.my_other_text IS NOT NULL)
+          (
+            NEW.my_text IS DISTINCT FROM OLD.my_text
+            AND OLD.my_text IS NOT NULL
+          ) OR (
+            NEW.my_other_text IS DISTINCT FROM OLD.my_other_text
+            AND OLD.my_other_text IS NOT NULL
+          )
         SQL
       }
     end

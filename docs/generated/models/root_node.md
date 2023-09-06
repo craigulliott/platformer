@@ -1,5 +1,5 @@
 ```ruby
-class MyModel < PlatformModel
+class Myer::BaseModel < Platformer::BaseModel
   root_node 
 end
 

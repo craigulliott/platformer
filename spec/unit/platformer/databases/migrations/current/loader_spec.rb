@@ -4,7 +4,7 @@ require "spec_helper"
 
 RSpec.describe Platformer::Databases::Migrations::Current::Loader do
   # fixtures for this spec exist in this folder
-  let(:base_path) { File.expand_path("./spec/data/db/migrations") }
+  let(:base_path) { Platformer.root "spec/data/db/migrations" }
 
   let(:loader) { Platformer::Databases::Migrations::Current::Loader.new base_path }
 

@@ -3,6 +3,10 @@
 require "dsl_compose"
 require "dynamic_migrations"
 
+# require "bcrypt"
+# # the default is 10, but 12 is fast enough and much more secure
+# BCrypt::Engine.cost = 12
+
 # for generating uuids
 require "securerandom"
 
@@ -17,6 +21,11 @@ require "money"
 
 # orm (ActiveRecord)
 require "active_record"
+
+# rails GlobalID provides a unique ID for every object, and ability to easily load
+# objects based on these IDs. We use it in conjunction with GraphQL to make our server
+# relay compatible
+require "globalid"
 
 # graphql
 require "graphql"

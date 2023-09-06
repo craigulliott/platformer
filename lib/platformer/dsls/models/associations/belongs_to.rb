@@ -15,12 +15,25 @@ module Platformer
               DESCRIPTION
 
               requires :foreign_model, :class do
+                validate_end_with :Model
+
                 description <<~DESCRIPTION
                   The Model class which this Model belongs to.
                 DESCRIPTION
               end
 
+              optional :as, :symbol do
+                import_shared :snake_case_name_validator
+
+                description <<~DESCRIPTION
+                  An optional name for this association, if a name is not provided then
+                  a default will be used based off the name of the foreign model.
+                DESCRIPTION
+              end
+
               optional :local_column_names, :symbol, array: true do
+                import_shared :snake_case_name_validator
+
                 description <<~DESCRIPTION
                   Override the default behaviour of generating a new column on this
                   model, and specify the name of one or more existing columns to use
@@ -29,6 +42,8 @@ module Platformer
               end
 
               optional :foreign_column_names, :symbol, array: true do
+                import_shared :snake_case_name_validator
+
                 description <<~DESCRIPTION
                   The name of one or more existing columns on the other (foreign) model
                   which make up the other side of this relationnship.

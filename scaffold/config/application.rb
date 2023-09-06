@@ -11,4 +11,8 @@ require "platformer"
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Platformer.env)
 
+# used when generating globally unique ids for your objects, these ids are
+# used within our graphql schema (global ids are required to be relay compatible)
+GlobalID.app = :name_of_your_app
+
 Platformer.initialize!

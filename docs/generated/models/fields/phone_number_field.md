@@ -4,26 +4,26 @@ automatically handles validation and provides a variety of formatting
 options for displaying numbers.
 
 ```ruby
-class MyModel < PlatformModel
-  phone_number_field :name
+class Myer::BaseModel < Platformer::BaseModel
+  phone_number_field 
 end
 
 ```
 
 **Arguments**
 
-name (required Symbol)
-:   The name of your field.
+prefix (optional Symbol)
+:   An optional prefix to use for the name of this field. This prefix will be prepended to the column names which back this model, and to the presenter methods, graphql queries and mutations.
 
 **Additional Configuration Options**
 
 **Default**
 
 ```ruby
-class MyModel < PlatformModel
-  phone_number_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  phone_number_field  do
     ...
-    default :name
+    default prefix: :prefix
     ...
   end
 end
@@ -46,10 +46,10 @@ The underlying postgres column will also be configured to allow
 NULL values
 
 ```ruby
-class MyModel < PlatformModel
-  phone_number_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  phone_number_field  do
     ...
-    allow_null :name
+    allow_null prefix: :prefix
     ...
   end
 end
@@ -62,10 +62,10 @@ If used within a field dsl then this will enforce uniqueness for this
 field.
 
 ```ruby
-class MyModel < PlatformModel
-  phone_number_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  phone_number_field  do
     ...
-    unique :name
+    unique prefix: :prefix
     ...
   end
 end
@@ -100,10 +100,10 @@ the database column as a comment, and will be used to
 generate API documentation.
 
 ```ruby
-class MyModel < PlatformModel
-  phone_number_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  phone_number_field  do
     ...
-    comment :name
+    comment prefix: :prefix
     ...
   end
 end
@@ -123,10 +123,10 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class MyModel < PlatformModel
-  phone_number_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  phone_number_field  do
     ...
-    immutable :name
+    immutable prefix: :prefix
     ...
   end
 end
@@ -149,10 +149,10 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class MyModel < PlatformModel
-  phone_number_field :name do
+class Myer::BaseModel < Platformer::BaseModel
+  phone_number_field  do
     ...
-    immutable_once_set :name
+    immutable_once_set prefix: :prefix
     ...
   end
 end

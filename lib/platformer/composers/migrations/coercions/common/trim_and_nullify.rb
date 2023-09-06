@@ -22,7 +22,7 @@ module Platformer
                 # if the column is an array, then we use a trigger and function to make the assertation
                 if array
                   # install the required function (unless it has already been installed)
-                  function = database.find_or_create_shared_function Functions::Validations::AssertArrayValuesTrimmedAndNullified
+                  function = database.find_or_create_shared_function Databases::Postgres::Functions::Validations::AssertArrayValuesTrimmedAndNullified
 
                   condition_sql = <<~SQL.strip
                     NEW.#{column.name} IS DISTINCT FROM OLD.#{column.name}

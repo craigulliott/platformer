@@ -16,7 +16,7 @@ class SchemaBase < GraphQL::Schema
         if am[:method] == :by_id
           id = arguments[am[:field_name]]
           model = active_record_class.find id
-          "Presenters::#{model.name}".constantize.new model
+          return "Presenters::#{active_record_class.name}".constantize.new model
         end
       end
       raise "Could not find a method to load a record"
@@ -24,14 +24,15 @@ class SchemaBase < GraphQL::Schema
 
     def fetch_collection_of_records(active_record_class:, arguments_metadata:, graphql_name:, parent:, **arguments)
       # todo - lots of work to do here
+      presenter_class = "Presenters::#{active_record_class.name}".constantize
       arguments_metadata.each do |am|
         if am[:method] == :by_exact_string
           value = arguments[am[:field_name]]
-          return active_record_class.where am[:field_name] => value
+          return active_record_class.where(am[:field_name] => value).map { |model| presenter_class.new model }
         end
         if am[:method] == :by_id
           value = arguments[am[:field_name]]
-          return active_record_class.where am[:field_name] => value
+          return active_record_class.where(am[:field_name] => value).map { |model| presenter_class.new model }
         end
       end
       raise "Could not find a method to load a record"

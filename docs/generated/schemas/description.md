@@ -1,7 +1,7 @@
 Add descriptions to your classes.
 
 ```ruby
-class MySchema < PlatformSchema
+class Myer::BaseSchema < Platformer::BaseSchema
   description description
 end
 

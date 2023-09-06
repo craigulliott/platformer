@@ -8,7 +8,7 @@ on a decendent class and it will set the database configuration
 for only that class and any decendents of it.
 
 ```ruby
-class MyModel < PlatformModel
+class Myer::BaseModel < Platformer::BaseModel
   database :server_type, :server_name
 end
 

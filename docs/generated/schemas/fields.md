@@ -1,7 +1,7 @@
 A list of the all this models scalar and enum fields which will be exposed via graphql.
 
 ```ruby
-class MySchema < PlatformSchema
+class Myer::BaseSchema < Platformer::BaseSchema
   fields :fields
 end
 

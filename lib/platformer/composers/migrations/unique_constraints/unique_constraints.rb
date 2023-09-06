@@ -46,11 +46,11 @@ module Platformer
             # if a where was provided, then we must use a unique index rather than a unique constraint
             if where
               # add the unique index to the table
-              unique_index_name = "#{table.schema.name}_#{table.name}_#{all_column_names.join("_")}_uniq".to_sym
+              unique_index_name = "#{all_column_names.join("_")}_uniq".to_sym
               table.add_index unique_index_name, all_column_names, unique: true, where: where, description: comment
             else
               # add the unique constraint to the table
-              unique_constraint_name = "#{table.schema.name}_#{table.name}_#{all_column_names.join("_")}_uniq".to_sym
+              unique_constraint_name = "#{all_column_names.join("_")}_uniq".to_sym
               table.add_unique_constraint unique_constraint_name, all_column_names, deferrable: deferrable, initially_deferred: initially_deferred, description: comment
             end
           end

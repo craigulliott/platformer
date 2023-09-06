@@ -10,7 +10,7 @@ invaluable when integrated with callbacks, background jobs, webhooks, and
 external services.
 
 ```ruby
-class MyModel < PlatformModel
+class Myer::BaseModel < Platformer::BaseModel
   state_machine 
 end
 
@@ -36,7 +36,7 @@ multiple states. The first state you define will serve as the default
 state for the machine.
 
 ```ruby
-class MyModel < PlatformModel
+class Myer::BaseModel < Platformer::BaseModel
   state_machine  do
     ...
     state name: :name, comment: :comment, log_transitions: log_transitions
@@ -72,7 +72,7 @@ either due to a mismatch with the configured `from: [:state, :other_state]`
 or because any provided guards return false, then an error will be raised.
 
 ```ruby
-class MyModel < PlatformModel
+class Myer::BaseModel < Platformer::BaseModel
   state_machine  do
     ...
     action name: :name, comment: :comment, log_transitions: log_transitions
@@ -87,14 +87,14 @@ end
 name (required Symbol)
 :   Choose a verb for your action name that clearly describes the action required to transition between states. For instance, if your model has `:reviewing` and `:published` states, a suitable action name for transitioning would be `:publish`. If multiple actions share the same name, they will be attempted in sequence and execution will halt at the first successful transition.
 
+to (required Symbol)
+:   Upon successful execution of this action, your model will transition to this state.
+
 comment (optional Symbol)
 :   A description of this action. This description will be used when generating documentation for your model.
 
 from (optional [Symbol])
 :   Specify an optional state name, or multiple state names, from which this action is allowed to transition. If set, the action will only be permitted if the model's current state matches one of the provided states.
-
-to (optional Symbol)
-:   Upon successful execution of this action, your model will transition to this state.
 
 guards (optional [Symbol])
 :   Define a method name or multiple methods that must each return true for the transition to be allowed. If any of the specified guards do not return true, the system will attempt the next action with the same name as the current one.

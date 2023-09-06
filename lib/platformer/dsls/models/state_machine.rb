@@ -18,6 +18,8 @@ module Platformer
             DESCRIPTION
 
             optional :name, :symbol do
+              import_shared :snake_case_name_validator
+
               description <<~DESCRIPTION
                 A name for this state machine. If you omit this option then the default
                 name `:state` will be assumed. This option is typically only required if
@@ -48,6 +50,8 @@ module Platformer
               DESCRIPTION
 
               requires :name, :symbol do
+                import_shared :snake_case_name_validator
+
                 description <<~DESCRIPTION
                   Choose a name for the state that is preferably a past or present
                   participle. For example, use `:activated` or `:published` for stable
@@ -66,6 +70,8 @@ module Platformer
               end
 
               optional :requires_presence_of, :symbol, array: true do
+                import_shared :snake_case_name_validator
+
                 description <<~DESCRIPTION
                   Specify an optional array of field names for the model, each of which
                   must contain a value when the model is in, or transitioning to, this
@@ -77,6 +83,8 @@ module Platformer
               end
 
               optional :requires_absence_of, :symbol, array: true do
+                import_shared :snake_case_name_validator
+
                 description <<~DESCRIPTION
                   Specify an optional array of field names for this model. When the model
                   is in or transitioning to this state, these fields must be empty. For
@@ -99,6 +107,8 @@ module Platformer
               DESCRIPTION
 
               requires :name, :symbol do
+                import_shared :snake_case_name_validator
+
                 description <<~DESCRIPTION
                   Choose a verb for your action name that clearly describes the action
                   required to transition between states. For instance, if your model
@@ -106,6 +116,14 @@ module Platformer
                   transitioning would be `:publish`. If multiple actions share the same
                   name, they will be attempted in sequence and execution will halt at
                   the first successful transition.
+                DESCRIPTION
+              end
+
+              requires :to, :symbol, kwarg: true do
+                import_shared :snake_case_name_validator
+
+                description <<~DESCRIPTION
+                  Upon successful execution of this action, your model will transition to this state.
                 DESCRIPTION
               end
 
@@ -117,6 +135,8 @@ module Platformer
               end
 
               optional :from, :symbol, array: true do
+                import_shared :snake_case_name_validator
+
                 description <<~DESCRIPTION
                   Specify an optional state name, or multiple state names, from which
                   this action is allowed to transition. If set, the action will only
@@ -125,13 +145,9 @@ module Platformer
                 DESCRIPTION
               end
 
-              optional :to, :symbol do
-                description <<~DESCRIPTION
-                  Upon successful execution of this action, your model will transition to this state.
-                DESCRIPTION
-              end
-
               optional :guards, :symbol, array: true do
+                import_shared :method_name_validator
+
                 description <<~DESCRIPTION
                   Define a method name or multiple methods that must each return true
                   for the transition to be allowed. If any of the specified guards do

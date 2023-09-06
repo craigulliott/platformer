@@ -4,84 +4,30 @@ module Platformer
     # parsing field DSLs
     class FinalModels
       class ForFields < FinalModels
-        class ArgumentNotAvailableError < StandardError
-        end
-
-        class ColumnNameError < StandardError
-        end
-
         include ForFieldMacros
 
-        def self.for_fields field_names, &block
-          # remember the parser name (class name), so we can present more useful errors
-          parser_name = name
+        class << self
+          alias_method :for_fields, :for_dsl
+        end
 
-          for_dsl field_names do |model_definition_class:, dsl_execution:, dsl_name:, reader:, dsl_arguments:|
-            # only provide the arguments which the block is trying to use
-            desired_arg_names = block.parameters.map(&:last)
+        resolve_argument :allow_null do |reader:|
+          reader.method_called?(:allow_null)
+        end
 
-            # try and resolve the list of requested arguments via a helper which
-            # processess the most common arguments
-            final_args = ClassSwitchArgumentsHelper.resolve_arguments desired_arg_names, model_definition_class
+        resolve_argument :comment_text do |reader:|
+          reader.comment&.comment
+        end
 
-            # try and resolve the rest of the requested arguments
-            desired_arg_names.each do |arg_name|
-              # all the arguments which can be passed to the block
-              case arg_name
-              when :dsl_name
-                final_args[:dsl_name] = dsl_name
+        resolve_argument :default do |reader:|
+          reader.default&.default
+        end
 
-              when :allow_null
-                final_args[:allow_null] = method_called?(:allow_null)
+        resolve_argument :column_name do |dsl_execution:|
+          DSLReaders::Models::Field.new(dsl_execution).column_name
+        end
 
-              when :comment_text
-                final_args[:comment_text] = reader.comment&.comment
-
-              when :table
-                # the table structure object from DynamicMigrations, this was created and
-                # the result cached within the CreateStructure composer
-                final_args[:table] = model_definition_class.table_structure
-
-              when :schema
-                # the schema structure object from DynamicMigrations, this was created and
-                # the result cached within the CreateStructure composer (via the table)
-                final_args[:schema] = model_definition_class.table_structure.schema
-
-              when :database
-                # the database configuratiom object
-                final_args[:database] = model_definition_class.configured_database
-
-              when :reader
-                final_args[:reader] = reader
-
-              when :default
-                final_args[:default] = reader.default&.default
-
-              when :column_name
-                DSLReaders::Models::Field.new(dsl_execution).column_name
-
-              when :column_names
-                DSLReaders::Models::Field.new(dsl_execution).column_names
-
-              else
-                # if the argument exists within the dsl's arguments, then
-                # resolve it automatically to that value
-                if dsl_arguments.key? arg_name
-                  final_args[arg_name] = dsl_arguments[arg_name]
-
-                # otherwise, if it wasnt already set by the common args helper, then raise an error
-                elsif !final_args.key? arg_name
-                  raise ArgumentNotAvailableError, arg_name
-                end
-              end
-            rescue ArgumentNotAvailableError
-              raise ArgumentNotAvailableError, "Can not find an equivilent argument for name `#{$!}` while parsing DSL `#{dsl_name}` within composer `#{parser_name}`"
-            rescue
-              raise $!, "Error for DSL `#{dsl_name}` within composer `#{parser_name}`: Original Error Message: #{$!}", $!.backtrace
-            end
-            # yield the block with the expected arguments
-            instance_exec(**final_args, &block)
-          end
+        resolve_argument :column_names do |dsl_execution:|
+          DSLReaders::Models::Field.new(dsl_execution).column_names
         end
       end
     end

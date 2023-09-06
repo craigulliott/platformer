@@ -5,9 +5,6 @@ module Platformer
     module Postgres
       class Server
         class Database
-          attr_reader :name
-          attr_reader :server
-
           class MissingDatabaseNameError < StandardError
           end
 
@@ -16,6 +13,12 @@ module Platformer
 
           class UnexpectedConstantError < StandardError
           end
+
+          include Composers::MakeColumnImmutable
+          include Composers::MakeColumnImmutableOnceSet
+
+          attr_reader :name
+          attr_reader :server
 
           def initialize server, name
             raise MissingDatabaseNameError if name.nil?
@@ -28,6 +31,7 @@ module Platformer
 
             # ensure we have the default extensions installed
             structure.add_configured_extension :plpgsql
+            structure.add_configured_extension :citext
             structure.add_configured_extension :"uuid-ossp"
           end
 
@@ -39,7 +43,7 @@ module Platformer
           # the function is referenced it will be created
           warn "not tested"
           def find_or_create_shared_function function_class
-            unless function_class < Composers::Migrations::Functions::Function
+            unless function_class < Functions::Function
               raise UnexpectedFunctionError, function_class
             end
 

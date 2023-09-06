@@ -73,8 +73,13 @@ Gem::Specification.new do |spec|
   spec.add_dependency "activesupport", "~> 7.0"
   spec.add_dependency "activemodel", "~> 7.0"
   spec.add_dependency "activerecord", "~> 7.0"
+  # rails GlobalID provides a unique ID for every object, and ability to easily load
+  # objects based on these IDs. We use it in conjunction with GraphQL to make our server
+  # relay compatible
+  spec.add_dependency "globalid", "~> 1.2"
 
   # spec helpers (development only)
   spec.add_development_dependency "pg_spec_helper", "~> 1.4"
   spec.add_development_dependency "class_spec_helper", "~> 1.0"
+  spec.add_development_dependency "timecop", "~> 0.9"
 end
