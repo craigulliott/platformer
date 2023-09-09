@@ -3,8 +3,10 @@
 module Platformer
   module Composers
     module Presenters
-      class ActionField < Parsers::FinalModels::ForFields
-        for_field :action_field do |name:, action_name:, presenter_class:|
+      class ActionField < Parsers::FinalModels
+        warn "not tested"
+
+        for_dsl :action_field do |name:, action_name:, presenter_class:|
           state_name = name
           inverse_state_name = :"un#{name}"
           timestamp_column_name = :"#{name}_at"

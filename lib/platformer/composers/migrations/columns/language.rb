@@ -16,7 +16,7 @@ module Platformer
 
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION
-              Update DynamicMigrations and add an #{array ? "array of languages" : "language"}
+              Add an #{array ? "array of languages" : "language"}
               column named `#{name}` to the `#{table.schema.name}'.'#{table.name}` table.
               #{allow_null ? "This column can be null." : ""}. The column type is
               `#{enum_type_name}`. #{Constants::ISO::LanguageCode.description}

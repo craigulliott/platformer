@@ -19,14 +19,12 @@ RSpec.describe Platformer::Composers::GraphQL::Mutations::Updaters do
         end
 
         mutation_for "User" do
-          # a mutation to update this model
           update do
             fields [:my_integer]
           end
         end
 
         schema_for "User" do
-          # a schema to update this model
           fields [:my_integer]
         end
       end

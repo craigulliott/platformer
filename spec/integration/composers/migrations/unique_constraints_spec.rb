@@ -46,9 +46,9 @@ RSpec.describe Platformer::Composers::Migrations::UniqueConstraints do
 
       it { expect(subject.unique_constraint(:my_double_uniq).description).to eq "Test description" }
 
-      it { expect(subject.index(:my_text_my_float_my_integer_uniq).column_names).to eql [:my_text, :my_float, :my_integer] }
+      it { expect(subject.index(:users_my_text_my_float_my_integer_uniq).column_names).to eql [:my_text, :my_float, :my_integer] }
 
-      it { expect(subject.index(:my_text_my_float_my_integer_uniq).where).to eq "my_integer > 0" }
+      it { expect(subject.index(:users_my_text_my_float_my_integer_uniq).where).to eq "my_integer > 0" }
     end
   end
 end

@@ -26,6 +26,10 @@ module Platformer
         suppress_namespace? ? public_name_without_namespace : public_name_with_namespace
       end
 
+      def action_field_action action_field_name
+        action_field_executions.first&.arguments&.action_name
+      end
+
       private
 
       def public_name_with_namespace
@@ -38,6 +42,10 @@ module Platformer
 
       def last_execution_of_suppress_namespace
         @suppress_namespace_reader ||= DSLCompose::Reader.new(@base_class, :suppress_namespace).last_execution
+      end
+
+      def action_field_executions
+        @action_field_executions ||= DSLCompose::Reader.new(@base_class, :action_field).executions
       end
     end
   end

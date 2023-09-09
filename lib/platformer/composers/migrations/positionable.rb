@@ -7,11 +7,11 @@ module Platformer
         class MissingStatesError < StandardError
         end
 
-        for_dsl :positionable do |schema:, table:, scope:, comment:|
+        for_dsl :positionable do |schema:, table:, database:, scope:, comment:|
           # update the dynamic documentation
           add_documentation <<~DESCRIPTION
-            Update DynamicMigrations and add an integer column named `:position` to
-            the `#{table.schema.name}'.'#{table.name}` table. This column is used to
+            And add an integer column named `:position` to the
+            `#{table.schema.name}'.'#{table.name}` table. This column is used to
             allow manual sorting of records within this table. The column
             can never be NULL.
           DESCRIPTION
@@ -56,19 +56,8 @@ module Platformer
           # add a deferrable unique constraint for the position of this model and its provided scope
           add_documentation <<~DESCRIPTION
             Add an initially deferred unique constraint to the (`#{table.schema.name}'.'#{table.name}`) table
-            to enforce that the manually set position of this models is unique.
+            to enforce that the manually set position of this models is unique when scoped to #{scope.any? ? scope.to_sentence : "no other columnns"}.
           DESCRIPTION
-
-          if scope.any?
-            add_documentation <<~DESCRIPTION
-              The position of this record is scoped to the columns #{scope.to_sentence}.
-            DESCRIPTION
-          else
-            add_documentation <<~DESCRIPTION
-              No scope was provided, so the position of this record is unique across
-              all other records in this table.
-            DESCRIPTION
-          end
 
           # add the unique constraint to the table
           unique_constraint_name = :positionable_uniq

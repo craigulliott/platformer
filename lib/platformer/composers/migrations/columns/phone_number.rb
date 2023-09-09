@@ -11,7 +11,7 @@ module Platformer
 
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION
-              Update DynamicMigrations and add columns named `#{name_prepend}dialing_code`
+              Add columns named `#{name_prepend}dialing_code`
               and `#{name_prepend}phone_number` to the `#{table.schema.name}'.'#{table.name}`
               table. #{allow_null ? "This column can be null." : ""}
             DESCRIPTION

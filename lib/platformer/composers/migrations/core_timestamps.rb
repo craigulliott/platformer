@@ -4,6 +4,7 @@ module Platformer
   module Composers
     module Migrations
       class CoreTimestamps < Parsers::FinalModels
+        warn "not tested"
         for_dsl :core_timestamps do |created_at:, updated_at:, database:, table:|
           #
           # the created_at timestamp
@@ -11,12 +12,14 @@ module Platformer
           unless created_at == false
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION
-              Update DynamicMigrations and add a timestamp column named `created_at` with type `uuid` to
-              the `#{table.schema.name}'.'#{table.name}` table. This column is can not be NULL.
+              And add a timestamp column named `created_at` with type `uuid` to the
+              `#{table.schema.name}'.'#{table.name}` table. This column is can not be NULL.
             DESCRIPTION
 
             # add the column to the DynamicMigrations table
-            column = table.add_column :created_at, :timestamp, null: false, description: "Should be set to the current time automatically when creating this record."
+            column = table.add_column :created_at, :timestamp, null: false, description: <<~DESCRIPTION
+              Should be set to the current time automatically when creating this record.
+            DESCRIPTION
 
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION
@@ -33,12 +36,14 @@ module Platformer
           unless updated_at == false
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION
-              Update DynamicMigrations and add a timestamp column named `updated_at` with type `uuid` to
-              the `#{table.schema.name}'.'#{table.name}` table. This column is can not be NULL.
+              And add a timestamp column named `updated_at` with type `uuid` to the
+              `#{table.schema.name}'.'#{table.name}` table. This column can not be NULL.
             DESCRIPTION
 
             # add the column to the DynamicMigrations table
-            table.add_column :updated_at, :timestamp, null: false, description: "Should be set to the current time automatically when creating this record."
+            table.add_column :updated_at, :timestamp, null: false, description: <<~DESCRIPTION
+              Should be set to the current time automatically when creating this record.
+            DESCRIPTION
           end
         end
       end

@@ -7,16 +7,17 @@ module Platformer
         class MissingStatesError < StandardError
         end
 
-        for_dsl :action_field do |name:, action_name:, schema:, table:, comment:|
+        for_dsl :action_field do |name:, action_name:, schema:, table:, reader:|
           boolean_column_name = :"un#{name}"
           timestamp_column_name = :"#{name}_at"
 
+          comment = reader.comment&.comment
+
           # update the dynamic documentation
           add_documentation <<~DESCRIPTION
-            Update DynamicMigrations and add a boolean column named `#{boolean_column_name}`
-            and a timestamp column named `#{timestamp_column_name}` to the
-            `#{table.schema.name}'.'#{table.name}` table. These columns are used to represent
-            an action_field for this model.
+            Add a boolean column named `#{boolean_column_name}` and a timestamp column named
+            `#{timestamp_column_name}` to the `#{table.schema.name}'.'#{table.name}` table.
+            These columns are represent an action_field for this model.
           DESCRIPTION
 
           # add the boolean to the DynamicMigrations table

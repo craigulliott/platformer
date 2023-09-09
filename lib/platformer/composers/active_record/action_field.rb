@@ -10,18 +10,18 @@ module Platformer
         class ImpossibleActionError < StandardError
         end
 
-        for_field :action_field do |name:, action_name:, active_record_class:, comment:|
+        for_field :action_field do |name:, action_name:, active_record_class:|
           state_name = name
           inverse_state_name = :"un#{name}"
           boolean_column_name = :"un#{name}"
           timestamp_column_name = :"#{name}_at"
           inverse_action_name = :"un#{action_name}"
-          action_method_name = :"#{action_name}!"
-          inverse_action_method_name = :"#{inverse_action_name}!"
+          action_method_name = action_name
+          inverse_action_method_name = inverse_action_name
 
           # unless the state has already been switched, then default the boolean column
           # to TRUE, as this signifies that the action has not been performed yet
-          active_record_class.before_create do
+          active_record_class.before_validation on: :create do
             current_timestamp = send(timestamp_column_name)
             if current_timestamp.nil?
               send "#{boolean_column_name}=", true
@@ -42,7 +42,7 @@ module Platformer
             send "#{timestamp_column_name}=", Time.now
 
             # save the record
-            save!
+            save
           end
 
           if active_record_class.respond_to? inverse_action_method_name
@@ -59,7 +59,7 @@ module Platformer
             send "#{timestamp_column_name}=", nil
 
             # save the record
-            save!
+            save
           end
         end
       end

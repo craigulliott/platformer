@@ -34,6 +34,7 @@ module Platformer
 
             requires :name, :symbol do
               import_shared :snake_case_name_validator
+
               description <<~DESCRIPTION
                 A name for this action_field, the name should be a past participle. This name is used to
                 generate the column names. For example, an action field named `:published` would have a
@@ -43,6 +44,7 @@ module Platformer
 
             requires :action_name, :symbol, kwarg: true do
               import_shared :snake_case_name_validator
+
               description <<~DESCRIPTION
                 Choose a verb for your action name that clearly describes the action
                 required to transition to the final state. For instance, if your action_field
@@ -56,12 +58,7 @@ module Platformer
               DESCRIPTION
             end
 
-            optional :comment, :symbol do
-              description <<~DESCRIPTION
-                A description of this action_field. This description will be added to the database columns
-                and used when generating documentation for your model.
-              DESCRIPTION
-            end
+            import_shared :field_comment
 
             add_method :requires_presence_of do
               requires :attribute_name, :symbol, array: true do

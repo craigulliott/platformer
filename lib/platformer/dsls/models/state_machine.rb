@@ -27,13 +27,6 @@ module Platformer
               DESCRIPTION
             end
 
-            optional :comment, :symbol do
-              description <<~DESCRIPTION
-                A description of this state machine. This description will be used when
-                generating documentation for your model.
-              DESCRIPTION
-            end
-
             optional :log_transitions, :boolean do
               description <<~DESCRIPTION
                 If set to true, a dedicated table will be created to automatically
@@ -41,6 +34,8 @@ module Platformer
                 the automatically generated table will be called `:project_transitions`.
               DESCRIPTION
             end
+
+            import_shared :field_comment
 
             add_method :state do
               description <<~DESCRIPTION

@@ -7,9 +7,11 @@ module Platformer
         class MissingStatesError < StandardError
         end
 
-        for_dsl :state_machine do |name:, schema:, table:, log_transitions:, comment:|
+        for_dsl :state_machine do |name:, schema:, table:, log_transitions:, reader:|
           state_machine_name = name || :state
           enum_type_name = name.nil? ? :"#{table.name}__states" : :"#{table.name}__#{name}_states"
+
+          comment = reader.comment&.comment
 
           # process each state and build an array of the state names
           state_names = []
@@ -23,10 +25,9 @@ module Platformer
 
           # update the dynamic documentation
           add_documentation <<~DESCRIPTION
-            Update DynamicMigrations and add an enum column named `#{name}` to
-            the `#{table.schema.name}'.'#{table.name}` table. This column is used to
-            track the current state of the state machine named `#{name}`. The column
-            can never be NULL, and has to be one of '#{state_names.join("', '")}'.
+            Add an enum column named `#{name}` to the `#{table.schema.name}'.'#{table.name}`
+            table. This column is used to track the current state of the state machine
+            named `#{name}`. The column can never be NULL, and has to be one of '#{state_names.join("', '")}'.
           DESCRIPTION
 
           schema.add_enum enum_type_name, state_names, description: <<~COMMENT

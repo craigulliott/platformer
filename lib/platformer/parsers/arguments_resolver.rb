@@ -126,6 +126,9 @@ module Platformer
           when :model_reader
             final_base_args[:model_reader] = DSLReaders::Model.new(@child_class.model_definition_class)
 
+          when :public_name
+            final_base_args[:public_name] = DSLReaders::Model.new(@child_class.model_definition_class).public_name
+
           # if the argument exists within the dsl's arguments, then
           # resolve it automatically to that value
           else

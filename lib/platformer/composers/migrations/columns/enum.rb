@@ -12,7 +12,7 @@ module Platformer
 
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION
-              Update DynamicMigrations and add an #{array ? "array of enums" : "enum"}
+              Add an #{array ? "array of enums" : "enum"}
               column named `#{name}` to the `#{table.schema.name}'.'#{table.name}` table.
               #{allow_null ? "This column can be null." : ""}. The enum type is called
               `#{enum_type_name}` and it has the values '#{values.join("', '")}'.

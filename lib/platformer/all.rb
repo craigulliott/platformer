@@ -26,3 +26,5 @@ require_relative "dsl_readers/all"
 require_relative "platform_base/all"
 
 require_relative "parsers/all"
+
+require_relative "services/all"

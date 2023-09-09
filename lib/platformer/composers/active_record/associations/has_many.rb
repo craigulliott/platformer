@@ -11,6 +11,11 @@ module Platformer
             end
 
             association_name = as&.to_s&.pluralize&.to_sym || foreign_model.active_record_class.name.split("::").last.underscore.pluralize.to_sym
+
+            add_documentation <<~DESCRIPTION
+              Add a has many association between this model and #{foreign_model.active_record_class.name}.
+            DESCRIPTION
+
             active_record_class.has_many association_name, class_name: foreign_model.active_record_class.name
           end
         end

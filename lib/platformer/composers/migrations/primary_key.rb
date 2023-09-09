@@ -11,9 +11,9 @@ module Platformer
 
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION
-              Update DynamicMigrations and add a column called `#{default_column_name}` with type `uuid` to
-              the `#{table.schema.name}'.'#{table.name}` table. This column can not be null, and defaults
-              to uuid_generate_v4().
+              And add a column called `#{default_column_name}` with type `uuid` to
+              the `#{table.schema.name}'.'#{table.name}` table. This column can not
+              be null, and defaults to uuid_generate_v4().
             DESCRIPTION
 
             # add the column to the DynamicMigrations table
@@ -29,9 +29,8 @@ module Platformer
 
           # update the dynamic documentation
           add_documentation <<~DESCRIPTION
-            Update DynamicMigrations and add a primary key to the
-            `#{table.schema.name}'.'#{table.name}` table which covers the columns
-            '#{column_names.join("', '")}'.
+            And add a primary key to the `#{table.schema.name}'.'#{table.name}`
+            table which covers the columns '#{column_names.join("', '")}'.
           DESCRIPTION
 
           # add the column to the DynamicMigrations table

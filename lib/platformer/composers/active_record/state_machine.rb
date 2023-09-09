@@ -10,9 +10,11 @@ module Platformer
         class ReservedAttributeNameError < StandardError
         end
 
-        for_dsl :state_machine do |name:, active_record_class:, log_transitions:, comment:|
+        for_dsl :state_machine do |name:, active_record_class:, log_transitions:, reader:|
           state_machine_name = name || :state
           namespace = (state_machine_name == :state) ? :state_machine : :"#{state_machine_name}_state_machine"
+
+          comment = reader.comment&.comment
 
           add_documentation <<~DESCRIPTION
             Create a state machine with the name `#{state_machine_name}` on this active record model.
@@ -82,7 +84,7 @@ module Platformer
           initial_state_name = state_configurations.keys.first
 
           # add the desired state machine
-          active_record_class.aasm state_machine_name, column: state_machine_name, timestamps: true, create_scopes: false, namespace: namespace do
+          active_record_class.aasm state_machine_name, column: state_machine_name, timestamps: true, create_scopes: false, whiny_persistence: false, namespace: namespace do
             # install the states
             state_configurations.keys.each do |state_name|
               state state_name, initial: state_name == initial_state_name

@@ -9,7 +9,7 @@ module Platformer
           for_field :cidr_field do |name:, table:, array:, default:, comment_text:, allow_null:|
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION
-              Update DynamicMigrations and add an #{array ? "array of cidrs" : "cidr"}
+              Add an #{array ? "array of cidrs" : "cidr"}
               column named `#{name}` to the `#{table.schema.name}'.'#{table.name}` table.
               #{allow_null ? "This column can be null." : ""}
             DESCRIPTION

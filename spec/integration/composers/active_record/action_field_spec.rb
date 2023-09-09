@@ -22,7 +22,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::ActionField do
       expect(photo.unpublished).to be true
       expect(photo.published_at).to be_nil
 
-      photo.publish!
+      photo.publish
       expect(photo.unpublished).to be nil
       expect(photo.published_at).to_not be_nil
     end

@@ -16,6 +16,7 @@ module Platformer
 
           include Composers::MakeColumnImmutable
           include Composers::MakeColumnImmutableOnceSet
+          include Composers::AddUniqueConstraint
 
           attr_reader :name
           attr_reader :server

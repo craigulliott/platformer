@@ -19,6 +19,8 @@ require_relative "types/node_type"
 require_relative "types/validation_error"
 # base classes for mutations and subscriptions
 require_relative "mutations/base_mutation"
+require_relative "mutations/create_mutation"
+require_relative "mutations/update_mutation"
 require_relative "subscriptions/base_subscription"
 # the base schema and root types, the main business logic is
 # contained within these classes, so that we can easily recreate

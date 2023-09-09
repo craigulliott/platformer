@@ -20,7 +20,8 @@ recursive_require_relative "presenters"
 
 # GraphQL
 require_relative "graphql/schema/create_types"
-recursive_require_relative "graphql"
+recursive_require_relative "graphql/schema"
+recursive_require_relative "graphql/mutations"
 
 # Migrations
 require_relative "migrations/create_structure"

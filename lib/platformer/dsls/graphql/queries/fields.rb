@@ -10,6 +10,8 @@ module Platformer
               DESCRIPTION
 
               requires :fields, :symbol, array: true do
+                import_shared :snake_case_name_validator
+
                 description <<~DESCRIPTION
                   The names of this models fields to expose.
                 DESCRIPTION

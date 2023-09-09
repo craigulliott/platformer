@@ -27,6 +27,8 @@ module Platformer
               end
 
               optional :association_name, :symbol do
+                import_shared :snake_case_name_validator
+
                 description <<~DESCRIPTION
                   If a custom name was used when creating the association between this model
                   and the foreign model, then this name should be provided here.
@@ -48,6 +50,8 @@ module Platformer
                 DESCRIPTION
 
                 requires :field_name, :symbol do
+                  import_shared :snake_case_name_validator
+
                   description <<~DESCRIPTION
                     The name of the field on the join model to expose via an edge.
                   DESCRIPTION

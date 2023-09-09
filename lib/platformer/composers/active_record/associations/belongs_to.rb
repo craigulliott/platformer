@@ -11,6 +11,11 @@ module Platformer
             end
 
             association_name = as || foreign_model.active_record_class.name.split("::").last.underscore.to_sym
+
+            add_documentation <<~DESCRIPTION
+              Add a belongs to association between this model and #{foreign_model.active_record_class.name}.
+            DESCRIPTION
+
             active_record_class.belongs_to association_name, class_name: foreign_model.active_record_class.name
           end
         end

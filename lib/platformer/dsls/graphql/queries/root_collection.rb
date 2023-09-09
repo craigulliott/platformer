@@ -15,6 +15,8 @@ module Platformer
                 DESCRIPTION
 
                 requires :field_name, :symbol do
+                  import_shared :snake_case_name_validator
+
                   description <<~DESCRIPTION
                     The name of the field we are searching against.
                   DESCRIPTION
