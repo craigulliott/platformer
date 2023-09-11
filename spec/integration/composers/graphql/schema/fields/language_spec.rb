@@ -12,22 +12,39 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::Language do
         end
         schema_for "Users::User" do
           fields [
-            :language_name
+            :language_name,
+            :language_code
           ]
         end
       end
     end
 
-    subject {
-      Types::Users::User.fields["languageName"]
-    }
+    context "the language name" do
+      subject {
+        Types::Users::User.fields["languageName"]
+      }
 
-    context "creates the expected GraphQL Type class" do
-      it { expect(subject).to be_a GraphQL::Schema::Field }
+      context "creates the expected GraphQL Type class" do
+        it { expect(subject).to be_a GraphQL::Schema::Field }
 
-      it { expect(subject.type).to be_a GraphQL::Schema::NonNull }
+        it { expect(subject.type).to be_a GraphQL::Schema::NonNull }
 
-      it { expect(subject.type.of_type).to eq GraphQL::Types::String }
+        it { expect(subject.type.of_type).to eq GraphQL::Types::String }
+      end
+    end
+
+    context "the language code" do
+      subject {
+        Types::Users::User.fields["languageCode"]
+      }
+
+      context "creates the expected GraphQL Type class" do
+        it { expect(subject).to be_a GraphQL::Schema::Field }
+
+        it { expect(subject.type).to be_a GraphQL::Schema::NonNull }
+
+        it { expect(subject.type.of_type).to eq Types::LanguageCodeEnum }
+      end
     end
   end
 end

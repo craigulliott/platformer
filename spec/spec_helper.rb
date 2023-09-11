@@ -48,7 +48,7 @@ RSpec.configure do |config|
 
   # use timecop to set the date and time to a known Friday July 14th 2023
   config.before(:each) do
-    set_time_to = Time.local(2023, 7, 14, 12, 0, 0)
+    set_time_to = Time.utc(2023, 7, 14, 17, 0, 0)
     Timecop.travel(set_time_to)
   end
 

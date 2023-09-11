@@ -20,7 +20,7 @@ RSpec.describe Platformer::Composers::Presenters::ActionField do
 
     subject {
       photo = Users::Photo.create!
-      photo.publish!
+      photo.publish
       Presenters::Users::Photo.new photo
     }
 

@@ -31,7 +31,7 @@ RSpec.describe Platformer::Composers::GraphQL::Mutations::ActionFields do
         end
 
         schema_for "Project" do
-          fields [:published, :bar]
+          fields [:published, :foo, :bar]
         end
       end
     end

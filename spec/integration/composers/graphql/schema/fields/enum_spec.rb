@@ -27,7 +27,7 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::Enum do
 
       it { expect(subject.type).to be_a GraphQL::Schema::NonNull }
 
-      it { expect(subject.type.of_type).to eq GraphQL::Types::String }
+      it { expect(subject.type.of_type).to eq Types::UsersUserMyEnumEnum }
     end
   end
 end

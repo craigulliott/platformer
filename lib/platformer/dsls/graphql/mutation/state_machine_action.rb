@@ -24,6 +24,20 @@ module Platformer
                   If the state machine was given a custom name, then provide the name here.
                 DESCRIPTION
               end
+
+              add_method :fields do
+                description <<~DESCRIPTION
+                  A list of this models fields which can be changed via this mutation.
+                DESCRIPTION
+
+                requires :fields, :symbol, array: true do
+                  import_shared :snake_case_name_validator
+
+                  description <<~DESCRIPTION
+                    The list of field names.
+                  DESCRIPTION
+                end
+              end
             end
           end
         end

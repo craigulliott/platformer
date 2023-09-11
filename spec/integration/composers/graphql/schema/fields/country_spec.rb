@@ -12,22 +12,39 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::Country do
         end
         schema_for "Users::User" do
           fields [
-            :country_name
+            :country_name,
+            :country_code
           ]
         end
       end
     end
 
-    subject {
-      Types::Users::User.fields["countryName"]
-    }
+    context "country name" do
+      subject {
+        Types::Users::User.fields["countryName"]
+      }
 
-    context "creates the expected GraphQL Type class" do
-      it { expect(subject).to be_a GraphQL::Schema::Field }
+      context "creates the expected GraphQL Type class" do
+        it { expect(subject).to be_a GraphQL::Schema::Field }
 
-      it { expect(subject.type).to be_a GraphQL::Schema::NonNull }
+        it { expect(subject.type).to be_a GraphQL::Schema::NonNull }
 
-      it { expect(subject.type.of_type).to eq GraphQL::Types::String }
+        it { expect(subject.type.of_type).to eq GraphQL::Types::String }
+      end
+    end
+
+    context "country code" do
+      subject {
+        Types::Users::User.fields["countryCode"]
+      }
+
+      context "creates the expected GraphQL Type class" do
+        it { expect(subject).to be_a GraphQL::Schema::Field }
+
+        it { expect(subject.type).to be_a GraphQL::Schema::NonNull }
+
+        it { expect(subject.type.of_type).to eq Types::CountryCodeEnum }
+      end
     end
   end
 end

@@ -14,6 +14,7 @@ module Platformer
 
                 [
                   :"#{name_prepend}phone_number",
+                  # note, dialing code can not be an ENUM because the values are numbers
                   :"#{name_prepend}dialing_code",
                   :"#{name_prepend}phone_number_formatted",
                   :"#{name_prepend}phone_number_international_formatted"
@@ -22,6 +23,7 @@ module Platformer
                     graphql_type_class.field name, String, comment_text, null: allow_null
                   end
                 end
+
               end
             end
           end

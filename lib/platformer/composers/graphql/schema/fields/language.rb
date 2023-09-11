@@ -12,13 +12,18 @@ module Platformer
 
                 name_prepend = prefix.nil? ? "" : "#{prefix}_"
 
-                [
-                  :"#{name_prepend}language_name",
-                  :"#{name_prepend}language_code"
-                ].each do |name|
-                  if schema_reader.has_field? name
-                    graphql_type_class.field name, String, comment_text, null: allow_null
-                  end
+                language_name_field_name = :"#{name_prepend}language_name"
+                if schema_reader.has_field? language_name_field_name
+                  graphql_type_class.field language_name_field_name, String, comment_text, null: allow_null
+                end
+
+                language_code_field_name = :"#{name_prepend}language_code"
+                if schema_reader.has_field? language_code_field_name
+                  # find or create the shared grahql enum class
+                  ecs = Services::GraphQL::EnumCreator.new(:language_code)
+                  enum_class = ecs.find_or_create Constants::ISO::LanguageCode.values
+                  # add the field
+                  graphql_type_class.field language_code_field_name, enum_class, comment_text, null: allow_null
                 end
 
               end

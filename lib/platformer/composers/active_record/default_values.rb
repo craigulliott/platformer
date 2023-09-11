@@ -5,7 +5,7 @@ module Platformer
     module ActiveRecord
       # set all the default values (this is done within active record, they are not set as defaults in postgres)
       class DefaultValues < Parsers::AllModels::ForFields
-        for_all_fields do |column_names:, default:, active_record_class:|
+        for_all_fields except: :phone_number_field do |column_names:, default:, active_record_class:|
           column_names.each do |column_name|
             default_value = default
             # set the default value within a before create callback
