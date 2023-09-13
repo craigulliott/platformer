@@ -20,12 +20,7 @@ module Platformer
               DESCRIPTION
             end
 
-            optional :comment, :symbol do
-              description <<~DESCRIPTION
-                A description of this action_field. This description will be added to the database columns
-                and used when generating documentation for your model.
-              DESCRIPTION
-            end
+            import_shared :field_comment
           end
         end
       end

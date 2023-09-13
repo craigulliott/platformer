@@ -50,8 +50,7 @@ module Platformer
                   module #{server_name.to_s.camelize}
                     module #{database_name.to_s.camelize}
                       class #{name.to_s.camelize} < ActiveRecord::Migration[7.0]
-                        # include the enhahnced migration methods
-                        include DynamicMigrations::ActiveRecord::Migrators
+                        include Platformer::Databases::Migrations::Helpers::All
 
                         def change
                           #{contents.gsub("\n", "\n              ")}
@@ -70,8 +69,7 @@ module Platformer
                     module #{database_name.to_s.camelize}
                       module #{schema_name.to_s.camelize}
                         class #{name.to_s.camelize} < ActiveRecord::Migration[7.0]
-                          # include the enhahnced migration methods
-                          include DynamicMigrations::ActiveRecord::Migrators
+                          include Platformer::Databases::Migrations::Helpers::All
 
                           def change
                             #{contents.gsub("\n", "\n              ")}

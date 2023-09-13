@@ -1,0 +1,1 @@
+after adding new templates here, remember to add them to the initializer in `lib/platformer/initializers/install_templates`

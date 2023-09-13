@@ -28,3 +28,7 @@ require_relative "platform_base/all"
 require_relative "parsers/all"
 
 require_relative "services/all"
+
+Dir[File.expand_path("initializers/**/*.rb", __dir__)].each do |f|
+  require_relative f
+end

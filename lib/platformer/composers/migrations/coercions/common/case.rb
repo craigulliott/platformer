@@ -36,7 +36,7 @@ module Platformer
                     #{column.name} IS NOT DISTINCT FROM #{pg_case_method_name}(#{column.name})
                   SQL
                 end
-                table.add_validation validation_name, [column.name], check_clause, description: <<~COMMENT
+                table.add_validation validation_name, [column.name], check_clause, template: wanted_case, description: <<~COMMENT
                   #{comment}
                   This validation asserts that the #{wanted_case} coercion has been applied to this field
                 COMMENT

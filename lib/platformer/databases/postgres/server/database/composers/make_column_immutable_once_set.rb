@@ -33,6 +33,7 @@ module Platformer
                   function = find_or_create_shared_function Functions::Validations::ImmutableValidation
 
                   table.add_trigger trigger_name,
+                    template: :immutable_once_set,
                     action_timing: :before,
                     event_manipulation: :update,
                     action_orientation: :row,

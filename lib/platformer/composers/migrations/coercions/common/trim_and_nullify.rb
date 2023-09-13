@@ -34,6 +34,7 @@ module Platformer
                   DESCRIPTION
                   [:insert, :update].each do |event_manipulation|
                     table.add_trigger :"#{column.name}_trim_null_on_#{event_manipulation}",
+                      template: :trimmed_and_nullified_array,
                       action_timing: :before,
                       event_manipulation: event_manipulation,
                       action_orientation: :row,
@@ -52,7 +53,7 @@ module Platformer
                   check_clause = <<~SQL
                     #{column.name} IS DISTINCT FROM '' AND REGEXP_REPLACE(REGEXP_REPLACE(#{column.name}, '^\s+', ''), '\s+$', '') IS NOT DISTINCT FROM #{column.name}
                   SQL
-                  table.add_validation validation_name, [column.name], check_clause, description: <<~COMMENT
+                  table.add_validation validation_name, [column.name], check_clause, template: :trimmed_and_nullified, description: <<~COMMENT
                     #{comment}
                     This validation asserts that the trim_and_nullify coercion has been applied to this field
                   COMMENT

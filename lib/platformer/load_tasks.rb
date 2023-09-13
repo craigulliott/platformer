@@ -7,7 +7,7 @@ module Platformer
     warn "not tested"
     module ClassMethods
       def load_tasks
-        Dir[File.expand_path("tasks/**/*.rake", __DIR__)].each do |f|
+        Dir[File.expand_path("tasks/**/*.rake", __dir__)].each do |f|
           load f
         end
       end

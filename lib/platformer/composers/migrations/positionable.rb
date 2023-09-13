@@ -7,7 +7,9 @@ module Platformer
         class MissingStatesError < StandardError
         end
 
-        for_dsl :positionable do |schema:, table:, database:, scope:, comment:|
+        for_dsl :positionable do |schema:, table:, database:, scope:, reader:|
+          comment = reader.comment&.comment
+
           # update the dynamic documentation
           add_documentation <<~DESCRIPTION
             And add an integer column named `:position` to the

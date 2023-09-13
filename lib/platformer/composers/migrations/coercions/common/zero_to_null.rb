@@ -25,7 +25,7 @@ module Platformer
                 # number 0, (which asserts that the zero_to_null coercion was properly
                 # applied before it was saved).
                 check_clause = array ? "0 = ANY(#{column.name})" : "#{column.name} IS DISTINCT FROM 0"
-                table.add_validation validation_name, [column.name], check_clause, description: <<~COMMENT
+                table.add_validation validation_name, [column.name], check_clause, template: :zero_nulled, description: <<~COMMENT
                   #{comment}
                   This validation asserts that the zero_to_null coercion has been applied to this field
                 COMMENT

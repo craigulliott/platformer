@@ -18,3 +18,9 @@ require_relative "migrations"
 require_relative "migrations/migration_file"
 require_relative "migrations/current"
 require_relative "migrations/current/loader"
+
+recursive_require_relative "migrations/helpers/triggers"
+recursive_require_relative "migrations/helpers/validations"
+require_relative "migrations/helpers/all"
+
+recursive_require_relative "migrations/templates"

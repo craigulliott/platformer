@@ -10,7 +10,7 @@ module Platformer
         # Process the parser for every decendant of BaseModel which does not have
         # it's own decendents. These represent Models which will have a coresponding
         # ActiveRecord class created for them, and thus a table within the database
-        for_final_models do |model_definition_class:|
+        for_final_models do |model_definition_class:, model_reader:|
           # Create a dsl reader for the Database DSLs.
           dsl_reader = DSLReaders::Models::Database.new model_definition_class
 
@@ -62,7 +62,7 @@ module Platformer
             database_structure.add_configured_schema schema_name
           end
 
-          table_structure = schema.add_table table_name
+          table_structure = schema.add_table table_name, description: model_reader.description
 
           # add this table_strcuture to the model class so that we can use it
           # in the other migration composers

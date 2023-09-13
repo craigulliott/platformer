@@ -4,7 +4,9 @@ module Platformer
   module Composers
     module Migrations
       class PrimaryKey < Parsers::FinalModels
-        for_dsl :primary_key do |column_names:, table:, database:, comment:|
+        for_dsl :primary_key do |column_names:, table:, database:, reader:|
+          comment = reader.comment&.comment
+
           # if no column names were provided, then create a new one called `id`
           if column_names.empty?
             default_column_name = :id
@@ -24,7 +26,9 @@ module Platformer
 
             # add id to the column names, as this will be used to create
             # the primary key below
-            column_names << default_column_name
+            final_column_names = [default_column_name]
+          else
+            final_column_names = column_names
           end
 
           # update the dynamic documentation
@@ -35,7 +39,7 @@ module Platformer
 
           # add the column to the DynamicMigrations table
           primary_key_name = :"#{table.name}_pk"
-          table.add_primary_key primary_key_name, column_names, description: comment
+          table.add_primary_key primary_key_name, final_column_names, description: comment
         end
       end
     end

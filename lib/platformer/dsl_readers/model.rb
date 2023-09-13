@@ -30,6 +30,10 @@ module Platformer
         action_field_executions.first&.arguments&.action_name
       end
 
+      def description
+        last_execution_of_description&.arguments&.description
+      end
+
       private
 
       def public_name_with_namespace
@@ -38,6 +42,10 @@ module Platformer
 
       def public_name_without_namespace
         @base_class.name.split("::", 2).last.underscore.gsub("/", "__").gsub(/_model\Z/, "")
+      end
+
+      def last_execution_of_description
+        @description_reader ||= DSLCompose::Reader.new(@base_class, :description).last_execution
       end
 
       def last_execution_of_suppress_namespace

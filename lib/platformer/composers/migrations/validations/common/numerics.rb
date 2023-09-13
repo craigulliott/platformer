@@ -30,7 +30,7 @@ module Platformer
                 check_clause = <<~SQL
                   #{column.name} > #{value}
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, deferrable: deferrable, initially_deferred: initially_deferred, description: comment
+                table.add_validation validation_name, [column.name], check_clause, template: :greater_than, deferrable: deferrable, initially_deferred: initially_deferred, description: comment
               end
 
               # if the validate_greater_than_or_equal_to validation was used
@@ -53,7 +53,7 @@ module Platformer
                 check_clause = <<~SQL
                   #{column.name} >= #{value}
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, deferrable: deferrable, initially_deferred: initially_deferred, description: comment
+                table.add_validation validation_name, [column.name], check_clause, template: :greater_than_or_equal_to, deferrable: deferrable, initially_deferred: initially_deferred, description: comment
               end
 
               # if the validate_less_than validation was used
@@ -76,7 +76,7 @@ module Platformer
                 check_clause = <<~SQL
                   #{column.name} < #{value}
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, deferrable: deferrable, initially_deferred: initially_deferred, description: comment
+                table.add_validation validation_name, [column.name], check_clause, template: :less_than, deferrable: deferrable, initially_deferred: initially_deferred, description: comment
               end
 
               # if the validate_less_than_or_equal_to validation was used
@@ -99,7 +99,7 @@ module Platformer
                 check_clause = <<~SQL
                   #{column.name} <= #{value}
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, deferrable: deferrable, initially_deferred: initially_deferred, description: comment
+                table.add_validation validation_name, [column.name], check_clause, template: :less_than_or_equal_to, deferrable: deferrable, initially_deferred: initially_deferred, description: comment
               end
 
               # if the validate_equal_to validation was used
