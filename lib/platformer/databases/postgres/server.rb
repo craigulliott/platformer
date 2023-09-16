@@ -67,9 +67,7 @@ module Platformer
           )
           # perform work with the connection
           # todo: `yield connection` would have been preferred, but rbs/steep doesnt understand that syntax
-          if block.is_a? Proc
-            block.call connection
-          end
+          yield connection
 
           # close the connection
           connection.close

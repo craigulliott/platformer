@@ -46,7 +46,7 @@ RSpec.describe Platformer::Composers::Migrations::Validations::Common::Strings d
 
       it {
         expect(subject.validation(:my_char_not_in).check_clause).to eq <<~SQL.strip
-          my_char NOT IN ('foo'::text,'bar'::text)
+          my_char NOT IN ('foo','bar')
         SQL
       }
 
@@ -64,7 +64,7 @@ RSpec.describe Platformer::Composers::Migrations::Validations::Common::Strings d
 
       it {
         expect(subject.validation(:my_text_in).check_clause).to eq <<~SQL.strip
-          my_text IN ('foo'::text,'bar'::text)
+          my_text IN ('foo','bar')
         SQL
       }
 

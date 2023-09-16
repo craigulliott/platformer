@@ -20,7 +20,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::DateTime do
     context "creates the expected columns within the DynamicMigrations table" do
       it { expect(subject.has_column?(:my_date_time)).to be true }
 
-      it { expect(subject.column(:my_date_time).data_type).to be :timestamp }
+      it { expect(subject.column(:my_date_time).data_type).to be :"timestamp without time zone" }
 
       it { expect(subject.column(:my_date_time).null).to be false }
 
@@ -51,7 +51,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::DateTime do
     context "creates the expected columns within the DynamicMigrations table" do
       it { expect(subject.has_column?(:my_date_time)).to be true }
 
-      it { expect(subject.column(:my_date_time).data_type).to be :timestamp }
+      it { expect(subject.column(:my_date_time).data_type).to be :"timestamp without time zone" }
 
       it { expect(subject.column(:my_date_time).null).to be true }
 
@@ -78,7 +78,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::DateTime do
     context "creates the expected columns within the DynamicMigrations table" do
       it { expect(subject.has_column?(:my_date_time)).to be true }
 
-      it { expect(subject.column(:my_date_time).data_type).to be :"timestamp[]" }
+      it { expect(subject.column(:my_date_time).data_type).to be :"timestamp without time zone[]" }
     end
   end
 end

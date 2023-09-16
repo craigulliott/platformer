@@ -15,7 +15,7 @@ module Platformer
             DESCRIPTION
 
             # The data type of the column.
-            data_type = array ? :"timestamp[]" : :timestamp
+            data_type = array ? :"timestamp without time zone[]" : :"timestamp without time zone"
 
             # add the column to the DynamicMigrations table
             table.add_column name, data_type, null: allow_null, default: default, description: comment_text

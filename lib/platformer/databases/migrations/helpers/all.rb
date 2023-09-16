@@ -11,6 +11,9 @@ module Platformer
           include Validations::TrimmedAndNullified
           include Validations::ZeroNulled
           include Validations::Case
+          include Validations::Format
+          include Validations::Inclusion
+          include Validations::Exclusion
           include Validations::StringLength
 
           # for our additional trigger templates

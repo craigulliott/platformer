@@ -12,11 +12,11 @@ module Platformer
           MIGRATION_PATH_REGEX = /
             \A # start of string
             \/(?<type>[a-z_]+)
-            \/(?<server_name>[a-z_]+)
-            \/(?<database_name>[a-z_]+)
-            (?<optional_schema>\/(?<schema_name>[a-z_]+))? # schema is optional
+            \/(?<server_name>[a-z][a-z0-9]*(?:_[a-z0-9]+)*)
+            \/(?<database_name>[a-z][a-z0-9]*(?:_[a-z0-9]+)*)
+            (?:\/(?<schema_name>[a-z][a-z0-9]*(?:_[a-z0-9]+)*))? # schema is optional
             \/(?<timestamp>\d{14})
-            _(?<name>[a-z_]+)
+            _(?<name>[a-z][a-z0-9]*(?:_[a-z0-9]+)*)
             \.rb
             \z # end of string
           /x

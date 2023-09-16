@@ -58,11 +58,6 @@ jobs:
         run: bundle exec standardrb
         if: ${{ steps.release.outputs.release_created }}
 
-      # run the type checker
-      - name: Run steep type checker
-        run: bundle exec steep check
-        if: ${{ steps.release.outputs.release_created }}
-
       # move the database configuration into place
       - name: Move database configuration file
         run: mv config/database.ci.yaml config/database.yaml

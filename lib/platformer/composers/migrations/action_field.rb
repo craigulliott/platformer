@@ -28,7 +28,7 @@ module Platformer
           COMMENT
 
           # add the timestamp to the DynamicMigrations table
-          timestamp_column = table.add_column timestamp_column_name, :timestamp, null: true, description: <<~COMMENT
+          timestamp_column = table.add_column timestamp_column_name, :"timestamp without time zone", null: true, description: <<~COMMENT
             #{comment}
             This column is NULL before the action `#{action_name}` has occured on this model, and will
             be set to the current time when the action occurs.

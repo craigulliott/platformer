@@ -38,14 +38,24 @@ namespace :db do
 
   desc "Delete any migration files which have not been commited to git"
   task :delete_uncommited_migrations do
-    Dir.chdir(Platformer.root) do
-      `git checkout db/migrate`
-      `git clean -f db/migrate`
+    Dir.chdir(Platformer.root(".")) do
+      `git checkout db/migrations`
+      `git clean -f db/migrations`
     end
   end
 
   desc "Execute any outstanding migrations files"
   task :migrate do
+    Platformer::Databases::Migrations::Current.new(Platformer.root("db/migrations")).migrations.each do |migration|
+      migration.migrate
+    end
+    Platformer::Databases.servers(:postgres).each do |server|
+      server.databases.each do |database|
+        database.structure.connect
+        database.structure.refresh_caches
+        database.structure.disconnect
+      end
+    end
   end
 
   desc <<~DESC.strip
@@ -58,7 +68,15 @@ namespace :db do
         configured database structure and the actual database structure
       * Migrate again to execute these newly generated migratons
   DESC
-  task dynamic_migrate: [:delete_uncommited_migrations, :drop_databases, :create_databases, :migrate, :generate_migrations, :migrate] do
+  task :dynamic_migrate do
+    Rake::Task["db:delete_uncommited_migrations"].invoke
+    Rake::Task["db:drop_databases"].invoke
+    Rake::Task["db:create_databases"].invoke
+    Rake::Task["db:migrate"].invoke
+    Rake::Task["db:generate_migrations"].invoke
+    # because rake tasks can't usually be run twice, we reenable it here so the dynamic_migrate task can run this twice
+    Rake::Task["db:migrate"].reenable
+    Rake::Task["db:migrate"].invoke
     puts "Dynamic Migrations Complete"
   end
 end

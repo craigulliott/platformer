@@ -17,7 +17,7 @@ module Platformer
             DESCRIPTION
 
             # add the column to the DynamicMigrations table
-            column = table.add_column :created_at, :timestamp, null: false, description: <<~DESCRIPTION
+            column = table.add_column :created_at, :"timestamp without time zone", null: false, description: <<~DESCRIPTION
               Should be set to the current time automatically when creating this record.
             DESCRIPTION
 
@@ -41,7 +41,7 @@ module Platformer
             DESCRIPTION
 
             # add the column to the DynamicMigrations table
-            table.add_column :updated_at, :timestamp, null: false, description: <<~DESCRIPTION
+            table.add_column :updated_at, :"timestamp without time zone", null: false, description: <<~DESCRIPTION
               Should be set to the current time automatically when creating this record.
             DESCRIPTION
           end

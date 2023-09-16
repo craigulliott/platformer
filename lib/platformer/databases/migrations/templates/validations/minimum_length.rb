@@ -4,6 +4,10 @@ module Platformer
       module Templates
         module Validations
           class MinimumLength < DynamicMigrations::Postgres::Generator::ValidationTemplateBase
+            DEFAULT_COMMENT = <<~COMMENT.strip
+              This validation asserts that the string length is at least the given value
+            COMMENT
+
             warn "not tested"
             def fragment_arguments
               assert_not_deferred!
@@ -11,7 +15,7 @@ module Platformer
 
               column_name = first_column.name
               value = value_from_check_clause(/\ALENGTH\(\w+\) >= (?<value>-?\d+)\z/)
-              options_string = name_and_description_options_string :"#{column_name}_min_len"
+              options_string = name_and_description_options_string :"#{column_name}_min_len", DEFAULT_COMMENT
               {
                 schema: validation.table.schema,
                 table: validation.table,

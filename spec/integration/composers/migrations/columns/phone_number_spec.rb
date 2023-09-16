@@ -38,7 +38,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::PhoneNumber do
       context "a column dedicated to the phone number" do
         it { expect(subject.has_column?(:phone_number)).to be true }
 
-        it { expect(subject.column(:phone_number).data_type).to be :"varchar(15)" }
+        it { expect(subject.column(:phone_number).data_type).to be :"character varying(15)" }
 
         it { expect(subject.column(:phone_number).null).to be false }
 
@@ -94,7 +94,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::PhoneNumber do
       context "a column dedicated to the phone number" do
         it { expect(subject.has_column?(:phone_number)).to be true }
 
-        it { expect(subject.column(:phone_number).data_type).to be :"varchar(15)" }
+        it { expect(subject.column(:phone_number).data_type).to be :"character varying(15)" }
 
         it { expect(subject.column(:phone_number).null).to be true }
 

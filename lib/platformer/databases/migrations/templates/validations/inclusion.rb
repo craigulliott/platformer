@@ -3,9 +3,9 @@ module Platformer
     class Migrations
       module Templates
         module Validations
-          class Lowercase < DynamicMigrations::Postgres::Generator::ValidationTemplateBase
+          class Inclusion < DynamicMigrations::Postgres::Generator::ValidationTemplateBase
             DEFAULT_COMMENT = <<~COMMENT.strip
-              This validation asserts that the lowercase coercion has been applied to this field
+              This validation asserts that the column value is one of the provided values
             COMMENT
 
             warn "not tested"
@@ -14,11 +14,8 @@ module Platformer
               assert_column_count! 1
 
               column_name = first_column.name
-              options_string = name_and_description_options_string :"#{column_name}_lowercase_only", DEFAULT_COMMENT
-              if first_column.array?
-                options_string = ", array: true#{options_string}"
-              end
-
+              value = value_from_check_clause(/\A\w+ IN \((?<value>.+)\)\z/)
+              options_string = name_and_description_options_string :"#{column_name}_in", DEFAULT_COMMENT
               {
                 schema: validation.table.schema,
                 table: validation.table,
@@ -26,7 +23,7 @@ module Platformer
                 object: validation,
                 code_comment: code_comment,
                 migration: <<~RUBY
-                  validate_lowercase :#{validation.table.name}, :#{column_name}#{options_string}
+                  validate_in :#{validation.table.name}, :#{column_name}, [#{value}]#{options_string}
                 RUBY
               }
             end

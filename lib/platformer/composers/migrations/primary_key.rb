@@ -15,11 +15,11 @@ module Platformer
             add_documentation <<~DESCRIPTION
               And add a column called `#{default_column_name}` with type `uuid` to
               the `#{table.schema.name}'.'#{table.name}` table. This column can not
-              be null, and defaults to uuid_generate_v4().
+              be null, and defaults to gen_random_uuid().
             DESCRIPTION
 
             # add the column to the DynamicMigrations table
-            column = table.add_column default_column_name, :uuid, null: false, default: "uuid_generate_v4()", description: comment
+            column = table.add_column default_column_name, :uuid, null: false, default: "gen_random_uuid()", description: comment
 
             # make the ID immutable
             database.make_column_immutable column
@@ -38,7 +38,7 @@ module Platformer
           DESCRIPTION
 
           # add the column to the DynamicMigrations table
-          primary_key_name = :"#{table.name}_pk"
+          primary_key_name = :"#{table.name}_pkey"
           table.add_primary_key primary_key_name, final_column_names, description: comment
         end
       end

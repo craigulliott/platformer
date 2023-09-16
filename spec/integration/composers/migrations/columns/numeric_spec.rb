@@ -57,7 +57,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Numeric do
 
       it { expect(subject.column(:my_numeric).description).to eq "This is a comment" }
 
-      it { expect(subject.column(:my_numeric).default).to eq 8.80 }
+      it { expect(subject.column(:my_numeric).default).to eq "8.8" }
     end
   end
 

@@ -18,15 +18,15 @@ module Platformer
               `#{enum_type_name}` and it has the values '#{values.join("', '")}'.
             DESCRIPTION
 
-            schema.add_enum enum_type_name, values, description: <<~COMMENT
+            enum = schema.add_enum enum_type_name, values, description: <<~COMMENT
               This type is for the enum column `#{name}` on the `#{table.schema.name}'.'#{table.name}` table.
             COMMENT
 
             # The data type of the column.
-            data_type = array ? :"#{enum_type_name}[]" : enum_type_name
+            data_type = array ? :"#{enum.full_name}[]" : enum.full_name
 
             # add the column to the DynamicMigrations table
-            table.add_column name, data_type.to_sym, null: allow_null, default: default, description: comment_text
+            table.add_column name, data_type.to_sym, enum: enum, null: allow_null, default: default, description: comment_text
           end
         end
       end

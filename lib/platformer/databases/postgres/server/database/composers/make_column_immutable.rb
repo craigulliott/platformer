@@ -22,22 +22,21 @@ module Platformer
                   # the trigger already exists, which means another column is already using this function
                   # update the triggers parameters and action condition to include this column
                   trigger = table.trigger trigger_name
-                  trigger.parameters = "#{trigger.parameters},'#{column_name}'"
+                  trigger.add_parameter column_name.to_s
                   trigger.action_condition = "#{trigger.action_condition} OR #{condition_sql}"
                 else
-                  function = find_or_create_shared_function Functions::Validations::ImmutableValidation
+                  function = find_or_create_shared_function Functions::Validations::Immutable
 
                   table.add_trigger trigger_name,
                     template: :immutable,
                     action_timing: :before,
                     event_manipulation: :update,
                     action_orientation: :row,
-                    parameters: "'#{column_name}'",
+                    parameters: [column_name.to_s],
                     action_condition: condition_sql,
                     function: function,
                     description: <<~DESCRIPTION
-                      Will call the function and raise an exception if any of the columns in
-                      the action_condition have been illegally updated.
+                      Will call the function and raise an exception if any of the immutable columns have been updated.
                     DESCRIPTION
                 end
               end

@@ -97,9 +97,7 @@ RSpec.describe Platformer::Databases::Migrations::MigrationFile do
             module MyServer
               module MyDatabase
                 module MySchema
-                  class MyMigration < ActiveRecord::Migration[7.0]
-                    include Platformer::Databases::Migrations::Helpers::All
-
+                  class MyMigration < ::Platformer::Databases::Migration
                     def change
                       # my migration content
                     end

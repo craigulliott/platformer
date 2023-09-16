@@ -20,17 +20,17 @@ module Platformer
             default_dialing_code = reader.default&.dialing_code
             default_phone_number = reader.default&.phone_number
 
-            enum_type_name = database.find_or_create_shared_enum Constants::ISO::DialingCode
+            enum = database.find_or_create_shared_enum Constants::ISO::DialingCode
 
             # add the dialing_code column to the DynamicMigrations table
-            table.add_column :"#{name_prepend}dialing_code", enum_type_name, null: allow_null, default: default_dialing_code, description: <<~DESCRIPTION
+            table.add_column :"#{name_prepend}dialing_code", enum.full_name, enum: enum, null: allow_null, default: default_dialing_code, description: <<~DESCRIPTION
               #{comment_text}
               This is the international dialing code, which is a + followed by a
               number (e.g. "+1" for the USA and "+44" for the UK).
             DESCRIPTION
 
             # add the phone_number column to the DynamicMigrations table
-            table.add_column :"#{name_prepend}phone_number", :"varchar(15)", null: allow_null, default: default_phone_number, description: <<~DESCRIPTION
+            table.add_column :"#{name_prepend}phone_number", :"character varying(15)", null: allow_null, default: default_phone_number, description: <<~DESCRIPTION
               #{comment_text}
               This is the unformatted phone number without the international dialing
               code. For example, in the US this is a 10 digit number.

@@ -18,7 +18,7 @@ RSpec.describe Platformer::Composers::Migrations::ActionField do
     }
 
     it "creates the expected column DynamicMigrations" do
-      expect(subject.column(:published_at).data_type).to eq :timestamp
+      expect(subject.column(:published_at).data_type).to eq :"timestamp without time zone"
       expect(subject.column(:unpublished).data_type).to eq :boolean
     end
 

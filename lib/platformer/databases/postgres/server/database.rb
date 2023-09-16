@@ -30,10 +30,12 @@ module Platformer
             # add the default database to the structure
             @server.structure.add_database @name
 
+            # ensure we have the default schema
+            structure.add_configured_schema :public
+
             # ensure we have the default extensions installed
             structure.add_configured_extension :plpgsql
             structure.add_configured_extension :citext
-            structure.add_configured_extension :"uuid-ossp"
           end
 
           def structure
@@ -69,13 +71,14 @@ module Platformer
 
             enum_name = constant_class.constant_name
 
+            # return the enum object
+            if platformer_schema.has_enum?(enum_name)
+              platformer_schema.enum enum_name
+
             # if the enum has not already been installed, then install it now
-            unless platformer_schema.has_enum?(enum_name)
+            else
               platformer_schema.add_enum enum_name, constant_class.values, description: constant_class.description
             end
-
-            # return the fully qualified enum name
-            :"platformer.#{enum_name}"
           end
 
           # ensure we have a provided extensions installed into the provided database

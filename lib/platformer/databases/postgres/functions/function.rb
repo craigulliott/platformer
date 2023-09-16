@@ -22,7 +22,7 @@ module Platformer
           end
 
           def self.function_name
-            name.split("Platformer::Composers::Migrations::Functions::").last.gsub("::", "_").underscore.to_sym
+            name.split("Platformer::Databases::Postgres::Functions::").last.gsub("::", "_").underscore.to_sym
           end
         end
       end

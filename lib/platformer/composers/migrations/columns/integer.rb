@@ -18,7 +18,7 @@ module Platformer
             data_type = array ? :"integer[]" : :integer
 
             # add the column to the DynamicMigrations table
-            table.add_column name, data_type, null: allow_null, default: default, description: comment_text
+            table.add_column name, data_type, null: allow_null, default: default&.to_s, description: comment_text
           end
         end
       end

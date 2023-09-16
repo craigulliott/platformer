@@ -61,9 +61,7 @@ RSpec.describe Platformer::Databases::Migrations do
                 module Primary
                   module PlatformerTest
                     module Public
-                      class CreateMyTable < ActiveRecord::Migration[7.0]
-                        include Platformer::Databases::Migrations::Helpers::All
-
+                      class CreateMyTable < ::Platformer::Databases::Migration
                         def change
                           #
                           # Create Table

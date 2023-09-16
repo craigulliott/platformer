@@ -57,7 +57,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Boolean do
 
       it { expect(subject.column(:my_boolean).description).to eq "This is a comment" }
 
-      it { expect(subject.column(:my_boolean).default).to be true }
+      it { expect(subject.column(:my_boolean).default).to eq "true" }
     end
   end
 

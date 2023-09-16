@@ -49,9 +49,7 @@ module Platformer
                 module #{type.to_s.camelize}
                   module #{server_name.to_s.camelize}
                     module #{database_name.to_s.camelize}
-                      class #{name.to_s.camelize} < ActiveRecord::Migration[7.0]
-                        include Platformer::Databases::Migrations::Helpers::All
-
+                      class #{name.to_s.camelize} < ::Platformer::Databases::Migration
                         def change
                           #{contents.gsub("\n", "\n              ")}
                         end
@@ -68,9 +66,7 @@ module Platformer
                   module #{server_name.to_s.camelize}
                     module #{database_name.to_s.camelize}
                       module #{schema_name.to_s.camelize}
-                        class #{name.to_s.camelize} < ActiveRecord::Migration[7.0]
-                          include Platformer::Databases::Migrations::Helpers::All
-
+                        class #{name.to_s.camelize} < ::Platformer::Databases::Migration
                           def change
                             #{contents.gsub("\n", "\n              ")}
                           end
@@ -94,7 +90,34 @@ module Platformer
           File.read(full_path)
         end
 
+        def migrate
+          migration_class = get_class
+
+          # set the current schema name so that migrations are run in the correct context
+          unless schema_name.nil?
+            migration_class.set_schema_name schema_name
+            migration_class.schema_search_path = "#{schema_name},public"
+          end
+
+          # run the migrations
+          migration_class.migrate(:up)
+        end
+
         private
+
+        def get_class
+          require_file
+
+          if schema_name.nil?
+            "Migrations::#{type.to_s.camelize}::#{server_name.to_s.camelize}::#{database_name.to_s.camelize}::#{name.to_s.camelize}".constantize
+          else
+            "Migrations::#{type.to_s.camelize}::#{server_name.to_s.camelize}::#{database_name.to_s.camelize}::#{schema_name.to_s.camelize}::#{name.to_s.camelize}".constantize
+          end
+        end
+
+        def require_file
+          require_relative full_path
+        end
 
         def exists_on_disk?
           File.exist? full_path

@@ -57,7 +57,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Double do
 
       it { expect(subject.column(:my_double).description).to eq "This is a comment" }
 
-      it { expect(subject.column(:my_double).default).to eq 8.88 }
+      it { expect(subject.column(:my_double).default).to eq "8.88" }
     end
   end
 

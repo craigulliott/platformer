@@ -57,7 +57,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Float do
 
       it { expect(subject.column(:my_float).description).to eq "This is a comment" }
 
-      it { expect(subject.column(:my_float).default).to eq 8.88 }
+      it { expect(subject.column(:my_float).default).to eq "8.88" }
     end
   end
 

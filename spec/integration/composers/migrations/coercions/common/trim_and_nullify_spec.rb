@@ -31,7 +31,7 @@ RSpec.describe Platformer::Composers::Migrations::Coercions::Common::TrimAndNull
 
       it {
         expect(subject.trigger(:array_of_chars_field_trim_null_on_update).action_condition).to eq <<~SQL.strip
-          NEW.array_of_chars_field IS DISTINCT FROM OLD.array_of_chars_field
+          NEW.array_of_chars_field IS DISTINCT FROM OLD.array_of_chars_field AND NEW.array_of_chars_field IS NOT NULL
         SQL
       }
     end

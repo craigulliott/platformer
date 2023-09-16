@@ -20,7 +20,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Email do
     context "creates the expected columns within the DynamicMigrations table" do
       it { expect(subject.has_column?(:my_email)).to be true }
 
-      it { expect(subject.column(:my_email).data_type).to be :email }
+      it { expect(subject.column(:my_email).data_type).to be :citext }
 
       it { expect(subject.column(:my_email).null).to be false }
 
@@ -51,7 +51,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Email do
     context "creates the expected columns within the DynamicMigrations table" do
       it { expect(subject.has_column?(:my_email)).to be true }
 
-      it { expect(subject.column(:my_email).data_type).to be :email }
+      it { expect(subject.column(:my_email).data_type).to be :citext }
 
       it { expect(subject.column(:my_email).null).to be true }
 
@@ -78,7 +78,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Email do
     context "creates the expected columns within the DynamicMigrations table" do
       it { expect(subject.has_column?(:my_email)).to be true }
 
-      it { expect(subject.column(:my_email).data_type).to be :"email[]" }
+      it { expect(subject.column(:my_email).data_type).to be :"citext[]" }
     end
   end
 end

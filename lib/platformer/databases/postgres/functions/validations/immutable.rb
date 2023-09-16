@@ -5,7 +5,7 @@ module Platformer
     module Postgres
       module Functions
         module Validations
-          class ImmutableValidation < Function
+          class Immutable < Function
             set_description <<~DESCRIPTION
               A function which will be called from a table trigger when changes are attempted to
               be made to columns which have been marked as immutable. This function takes all the

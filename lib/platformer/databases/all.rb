@@ -24,3 +24,5 @@ recursive_require_relative "migrations/helpers/validations"
 require_relative "migrations/helpers/all"
 
 recursive_require_relative "migrations/templates"
+
+require_relative "migration"

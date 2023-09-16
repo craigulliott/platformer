@@ -23,7 +23,7 @@ RSpec.describe Platformer::Composers::Migrations::StateMachine do
     }
 
     it "creates the expected column and enum in DynamicMigrations" do
-      expect(subject.column(:state).data_type).to eq :photos__states
+      expect(subject.column(:state).data_type).to eq :"public.photos__states"
     end
   end
 end

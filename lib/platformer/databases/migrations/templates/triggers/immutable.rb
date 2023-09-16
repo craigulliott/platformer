@@ -6,7 +6,7 @@ module Platformer
           class Immutable < DynamicMigrations::Postgres::Generator::TriggerTemplateBase
             warn "not tested"
             def fragment_arguments
-              column_names = trigger.parameters.split(",")
+              column_names = trigger.parameters
               {
                 schema: trigger.table.schema,
                 table: trigger.table,
@@ -14,7 +14,7 @@ module Platformer
                 object: trigger,
                 code_comment: code_comment,
                 migration: <<~RUBY
-                  immutable :#{trigger.table.name}, [#{column_names.join(", ")}]
+                  immutable :#{trigger.table.name}, [:#{column_names.join(", :")}]
                 RUBY
               }
             end

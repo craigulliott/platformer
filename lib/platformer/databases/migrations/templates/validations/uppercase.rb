@@ -4,13 +4,17 @@ module Platformer
       module Templates
         module Validations
           class Uppercase < DynamicMigrations::Postgres::Generator::ValidationTemplateBase
+            DEFAULT_COMMENT = <<~COMMENT.strip
+              This validation asserts that the uppercase coercion has been applied to this field
+            COMMENT
+
             warn "not tested"
             def fragment_arguments
               assert_not_deferred!
               assert_column_count! 1
 
               column_name = first_column.name
-              options_string = name_and_description_options_string :"#{column_name}_uppercase_only"
+              options_string = name_and_description_options_string :"#{column_name}_uppercase_only", DEFAULT_COMMENT
               if first_column.array?
                 options_string = ", array: true#{options_string}"
               end

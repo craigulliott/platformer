@@ -13,6 +13,7 @@ module Platformer
               for_method [:uppercase, :lowercase] do |method_name:, comment:|
                 wanted_case = method_name
                 unwanted_case = (method_name == :uppercase) ? :lowercase : :uppercase
+                template_class = (method_name == :uppercase) ? Databases::Migrations::Templates::Validations::Uppercase : Databases::Migrations::Templates::Validations::Lowercase
 
                 add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
@@ -21,6 +22,8 @@ module Platformer
                 DESCRIPTION
 
                 validation_name = :"#{column.name}_#{wanted_case}_only"
+
+                final_comment = comment || template_class::DEFAULT_COMMENT
 
                 # Add the validation to the table, assert that forcing everything to
                 # the desired case did not result in any differences. Note, it is safe to
@@ -36,10 +39,7 @@ module Platformer
                     #{column.name} IS NOT DISTINCT FROM #{pg_case_method_name}(#{column.name})
                   SQL
                 end
-                table.add_validation validation_name, [column.name], check_clause, template: wanted_case, description: <<~COMMENT
-                  #{comment}
-                  This validation asserts that the #{wanted_case} coercion has been applied to this field
-                COMMENT
+                table.add_validation validation_name, [column.name], check_clause, template: wanted_case, description: final_comment
               end
             end
           end

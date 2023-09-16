@@ -12,7 +12,8 @@ module Platformer
 
             name = :"#{name_prepend}language"
 
-            enum_type_name = database.find_or_create_shared_enum Constants::ISO::LanguageCode
+            enum = database.find_or_create_shared_enum Constants::ISO::LanguageCode
+            enum_type_name = enum.full_name
 
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION
@@ -23,10 +24,10 @@ module Platformer
             DESCRIPTION
 
             # The data type of the column.
-            data_type = array ? :"#{enum_type_name}[]" : enum_type_name
+            data_type = array ? :"#{enum.full_name}[]" : enum.full_name
 
             # add the column to the DynamicMigrations table
-            table.add_column name, data_type.to_sym, null: allow_null, default: default, description: comment_text
+            table.add_column name, data_type.to_sym, enum: enum, null: allow_null, default: default, description: comment_text
           end
         end
       end

@@ -30,13 +30,13 @@ module Platformer
             named `#{name}`. The column can never be NULL, and has to be one of '#{state_names.join("', '")}'.
           DESCRIPTION
 
-          schema.add_enum enum_type_name, state_names, description: <<~COMMENT
+          enum = schema.add_enum enum_type_name, state_names, description: <<~COMMENT
             This type is for the `#{state_machine_name}` state machine on the
             `#{table.schema.name}'.'#{table.name}` table.
           COMMENT
 
           # add the column to the DynamicMigrations table
-          table.add_column state_machine_name, enum_type_name, null: false, description: <<~COMMENT
+          table.add_column state_machine_name, enum.full_name, enum: enum, null: false, description: <<~COMMENT
             #{comment}
             This column represents the current state machine state. Possible values are #{state_names.to_sentence}.
           COMMENT

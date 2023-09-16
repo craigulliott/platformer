@@ -24,21 +24,22 @@ module Platformer
                   # install the required function (unless it has already been installed)
                   function = database.find_or_create_shared_function Databases::Postgres::Functions::Validations::AssertArrayValuesTrimmedAndNullified
 
-                  condition_sql = <<~SQL.strip
-                    NEW.#{column.name} IS DISTINCT FROM OLD.#{column.name}
-                  SQL
                   trigger_description = <<~DESCRIPTION
                     Will call the function and raise an exception if the column
                     contains any empty strings, or strings which have not had white
                     space trimmed from the start or end.
                   DESCRIPTION
                   [:insert, :update].each do |event_manipulation|
+                    condition_sql = (event_manipulation == :insert) ? nil : <<~SQL.strip
+                      NEW.#{column.name} IS DISTINCT FROM OLD.#{column.name} AND NEW.#{column.name} IS NOT NULL
+                    SQL
+
                     table.add_trigger :"#{column.name}_trim_null_on_#{event_manipulation}",
                       template: :trimmed_and_nullified_array,
                       action_timing: :before,
                       event_manipulation: event_manipulation,
                       action_orientation: :row,
-                      parameters: "'#{column.name}'",
+                      parameters: [column.name.to_s],
                       action_condition: condition_sql,
                       function: function,
                       description: trigger_description
@@ -53,10 +54,8 @@ module Platformer
                   check_clause = <<~SQL
                     #{column.name} IS DISTINCT FROM '' AND REGEXP_REPLACE(REGEXP_REPLACE(#{column.name}, '^\s+', ''), '\s+$', '') IS NOT DISTINCT FROM #{column.name}
                   SQL
-                  table.add_validation validation_name, [column.name], check_clause, template: :trimmed_and_nullified, description: <<~COMMENT
-                    #{comment}
-                    This validation asserts that the trim_and_nullify coercion has been applied to this field
-                  COMMENT
+                  final_comment = comment || Databases::Migrations::Templates::Validations::TrimmedAndNullified::DEFAULT_COMMENT
+                  table.add_validation validation_name, [column.name], check_clause, template: :trimmed_and_nullified, description: final_comment
                 end
               end
             end

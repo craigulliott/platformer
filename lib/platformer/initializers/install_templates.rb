@@ -16,7 +16,11 @@ module Platformer
             lowercase: Lowercase,
             minimum_length: MinimumLength,
             maximum_length: MaximumLength,
-            length_is: LengthIs
+            length_is: LengthIs,
+            exclusion: Exclusion,
+            inclusion: Inclusion,
+            is_value: IsValue,
+            format: Format
           }.each do |name, subclass|
             DynamicMigrations::Postgres::Generator::Validation.add_template name, subclass
           end

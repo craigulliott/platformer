@@ -21,14 +21,13 @@ module Platformer
 
                 validation_name = :"#{column.name}_zero_nulled"
 
+                final_comment = comment || Databases::Migrations::Templates::Validations::ZeroNulled::DEFAULT_COMMENT
+
                 # Add the validation to the table, assert that the value is not the
                 # number 0, (which asserts that the zero_to_null coercion was properly
                 # applied before it was saved).
                 check_clause = array ? "0 = ANY(#{column.name})" : "#{column.name} IS DISTINCT FROM 0"
-                table.add_validation validation_name, [column.name], check_clause, template: :zero_nulled, description: <<~COMMENT
-                  #{comment}
-                  This validation asserts that the zero_to_null coercion has been applied to this field
-                COMMENT
+                table.add_validation validation_name, [column.name], check_clause, template: :zero_nulled, description: final_comment
               end
             end
           end

@@ -21,16 +21,22 @@ module Platformer
                 when :validate_minimum_length
                   desc = "be at least #{value} characters long"
                   validation_name = :"#{column.name}_min_len"
+                  template = :minimum_length
+                  template_class = Databases::Migrations::Templates::Validations::MinimumLength
                   operator = ">="
 
                 when :validate_maximum_length
                   desc = "be no longer than #{value} characters"
                   validation_name = :"#{column.name}_max_len"
+                  template = :maximum_length
+                  template_class = Databases::Migrations::Templates::Validations::MaximumLength
                   operator = "<="
 
                 when :validate_length_is
                   desc = "have exactly #{value} characters"
                   validation_name = :"#{column.name}_length"
+                  template = :length_is
+                  template_class = Databases::Migrations::Templates::Validations::LengthIs
                   operator = "="
                 end
 
@@ -46,11 +52,13 @@ module Platformer
                   DESCRIPTION
                 end
 
+                final_comment = comment || template_class::DEFAULT_COMMENT
+
                 # add the validation to the table
                 check_clause = <<~SQL
                   LENGTH(#{column.name}) #{operator} #{value}
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, deferrable: deferrable, initially_deferred: initially_deferred, description: comment
+                table.add_validation validation_name, [column.name], check_clause, template: template, deferrable: deferrable, initially_deferred: initially_deferred, description: final_comment
               end
 
               # if the validate_format validation was used
@@ -68,13 +76,15 @@ module Platformer
                 end
 
                 validation_name = :"#{column.name}_format"
+                template = :format
+                final_comment = comment || Databases::Migrations::Templates::Validations::Format::DEFAULT_COMMENT
 
                 # add the validation to the table
                 # null values are automatically permitted with the sql below
                 check_clause = <<~SQL
                   #{column.name} ~ '#{value}'
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, deferrable: deferrable, initially_deferred: initially_deferred, description: comment
+                table.add_validation validation_name, [column.name], check_clause, template: template, deferrable: deferrable, initially_deferred: initially_deferred, description: final_comment
               end
 
               # if the validate_in validation was used
@@ -98,14 +108,17 @@ module Platformer
                 end
 
                 validation_name = :"#{column.name}_#{not_in ? "not_in" : "in"}"
+                template = not_in ? :exclusion : :inclusion
+                template_class = not_in ? Databases::Migrations::Templates::Validations::Exclusion : Databases::Migrations::Templates::Validations::Inclusion
+                final_comment = comment || template_class::DEFAULT_COMMENT
 
                 # add the validation to the table
                 # null values are automatically permitted with the sql below
                 quoted_values = values.map { |v| v.gsub("'", "''") }
                 check_clause = <<~SQL
-                  #{column.name} #{not_in ? "NOT IN" : "IN"} ('#{quoted_values.join("'::text,'")}'::text)
+                  #{column.name} #{not_in ? "NOT IN" : "IN"} ('#{quoted_values.join("','")}')
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, deferrable: deferrable, initially_deferred: initially_deferred, description: comment
+                table.add_validation validation_name, [column.name], check_clause, template: template, deferrable: deferrable, initially_deferred: initially_deferred, description: final_comment
               end
 
               # if the validate_in validation was used
@@ -123,13 +136,15 @@ module Platformer
                 end
 
                 validation_name = :"#{column.name}_is"
+                template = :is_value
+                final_comment = comment || Databases::Migrations::Templates::Validations::IsValue::DEFAULT_COMMENT
 
                 # add the validation to the table
                 # null values are automatically permitted with the sql below
                 check_clause = <<~SQL
                   #{column.name} = '#{value}'
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, deferrable: deferrable, initially_deferred: initially_deferred, description: comment
+                table.add_validation validation_name, [column.name], check_clause, template: template, deferrable: deferrable, initially_deferred: initially_deferred, description: final_comment
               end
             end
           end

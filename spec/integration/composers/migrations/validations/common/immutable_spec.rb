@@ -30,10 +30,10 @@ RSpec.describe Platformer::Composers::Migrations::Validations::Common::Immutable
     context "creates the triggers for the DynamicMigrations table" do
       it { expect(subject.triggers.count).to eql 2 }
 
-      it { expect(subject.trigger(:immutable).parameters).to eql "'my_integer'" }
+      it { expect(subject.trigger(:immutable).parameters).to eql ["my_integer"] }
       it { expect(subject.trigger(:immutable).action_condition).to eql "NEW.my_integer IS DISTINCT FROM OLD.my_integer" }
 
-      it { expect(subject.trigger(:immutable_once_set).parameters).to eql "'my_text','my_other_text'" }
+      it { expect(subject.trigger(:immutable_once_set).parameters).to eql ["my_text", "my_other_text"] }
 
       it {
         expect(subject.trigger(:immutable_once_set).action_condition).to eql <<~SQL.strip
