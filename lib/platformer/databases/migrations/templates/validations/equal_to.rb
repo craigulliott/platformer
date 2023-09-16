@@ -4,6 +4,10 @@ module Platformer
       module Templates
         module Validations
           class EqualTo < DynamicMigrations::Postgres::Generator::ValidationTemplateBase
+            DEFAULT_COMMENT = <<~COMMENT.strip
+              This validation asserts that the column value is equal to the provided value
+            COMMENT
+
             warn "not tested"
             def fragment_arguments
               assert_not_deferred!
@@ -11,7 +15,7 @@ module Platformer
 
               column_name = first_column.name
               value = value_from_check_clause(/\A\w+ = (?<value>-?\d+(?:\.\d+)?)\z/)
-              options_string = name_and_description_options_string :"#{column_name}_eq"
+              options_string = name_and_description_options_string :"#{column_name}_eq", DEFAULT_COMMENT
               {
                 schema: validation.table.schema,
                 table: validation.table,

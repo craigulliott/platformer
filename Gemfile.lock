@@ -49,7 +49,7 @@ GEM
       unaccent (~> 0.3)
     diff-lcs (1.5.0)
     dsl_compose (2.14.2)
-    dynamic_migrations (3.6.15)
+    dynamic_migrations (3.6.16)
       pg (~> 1.5)
     globalid (1.2.1)
       activesupport (>= 6.1)
