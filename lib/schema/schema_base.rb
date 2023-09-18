@@ -11,9 +11,23 @@ class SchemaBase < GraphQL::Schema
   # This is wrapped in a singleton method so we can easily recreate the server
   # from within our specs and initialize it with the new fields.
   def self.initialize!
-    query(Schema::Queries)
-    mutation(Schema::Mutations)
-    subscription(Schema::Subscriptions)
+    if Schema::Queries.fields.reject { |name, field| name == "node" || name == "nodes" }.any?
+      query(Schema::Queries)
+    else
+      warn "No queries defined, skipping GraphQL query root type."
+    end
+
+    if Schema::Mutations.fields.any?
+      mutation(Schema::Mutations)
+    else
+      warn "No mutations defined, skipping GraphQL migration root type."
+    end
+
+    if Schema::Subscriptions.fields.any?
+      subscription(Schema::Subscriptions)
+    else
+      warn "No subscriptions defined, skipping GraphQL subscription root type."
+    end
   end
 
   # For batch-loading (see https://graphql-ruby.org/dataloader/overview.html)

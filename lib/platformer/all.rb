@@ -4,7 +4,7 @@ require_relative "environment"
 require_relative "root"
 require_relative "load_tasks"
 
-require_relative "server/server"
+require_relative "server/all"
 
 require_relative "databases/all"
 
