@@ -1,8 +1,16 @@
+---
+layout: default
+title: Email Field
+parent: Fields
+grand_parent: Models
+has_children: false
+---
+
 Add an email field to this model. Email fields are case
 insensitive, and have their format automatically validated.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platformer::BaseModel
   email_field :name
 end
 
@@ -21,7 +29,7 @@ array (optional Boolean)
 **Default**
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   email_field :name do
     ...
     default :name, array: array
@@ -44,7 +52,7 @@ The underlying postgres column will also be configured to allow
 NULL values
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   email_field :name do
     ...
     allow_null :name, array: array
@@ -66,7 +74,7 @@ make an array with at least one item a requirement. This can only be
 used on fields which have been set to `array: true`.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   email_field :name do
     ...
     empty_array_to_null :name, array: array
@@ -87,7 +95,7 @@ If used within a field dsl then this will enforce uniqueness for this
 field.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   email_field :name do
     ...
     unique :name, array: array
@@ -125,7 +133,7 @@ the database column as a comment, and will be used to
 generate API documentation.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   email_field :name do
     ...
     comment :name, array: array
@@ -148,7 +156,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   email_field :name do
     ...
     immutable :name, array: array
@@ -174,7 +182,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   email_field :name do
     ...
     immutable_once_set :name, array: array
@@ -198,7 +206,7 @@ will also be added to the database to assert that the column has no
 null values. This is only compatibile with array fields.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   email_field :name do
     ...
     remove_null_array_values :name, array: array

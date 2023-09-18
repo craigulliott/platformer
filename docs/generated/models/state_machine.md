@@ -1,3 +1,10 @@
+---
+layout: default
+title: State Machine
+parent: Models
+has_children: false
+---
+
 A state machine simplifies the expression of business logic for a model
 by organizing it into distinct states and permitted transitions between
 those states. This is particularly useful for managing workflows, multi-step
@@ -10,7 +17,7 @@ invaluable when integrated with callbacks, background jobs, webhooks, and
 external services.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platformer::BaseModel
   state_machine 
 end
 
@@ -21,13 +28,33 @@ end
 name (optional Symbol)
 :   A name for this state machine. If you omit this option then the default name `:state` will be assumed. This option is typically only required if you need to have multiple state machines on the same model.
 
-comment (optional Symbol)
-:   A description of this state machine. This description will be used when generating documentation for your model.
-
 log\_transitions (optional Boolean)
 :   If set to true, a dedicated table will be created to automatically record transitions for this model. If the model is named `:projects`, the automatically generated table will be called `:project\_transitions`.
 
 **Additional Configuration Options**
+
+**Comment**
+
+This method is used to describe a specific use of this
+field within a model, this description will be added to
+the database column as a comment, and will be used to
+generate API documentation.
+
+```ruby
+class My::BaseModel < Platform::BaseModel
+  state_machine  do
+    ...
+    comment name: :name, log_transitions: log_transitions
+    ...
+  end
+end
+
+```
+
+**Arguments**
+
+comment (required String)
+:   The description of this field
 
 **State**
 
@@ -36,10 +63,10 @@ multiple states. The first state you define will serve as the default
 state for the machine.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   state_machine  do
     ...
-    state name: :name, comment: :comment, log_transitions: log_transitions
+    state name: :name, log_transitions: log_transitions
     ...
   end
 end
@@ -72,10 +99,10 @@ either due to a mismatch with the configured `from: [:state, :other_state]`
 or because any provided guards return false, then an error will be raised.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   state_machine  do
     ...
-    action name: :name, comment: :comment, log_transitions: log_transitions
+    action name: :name, log_transitions: log_transitions
     ...
   end
 end

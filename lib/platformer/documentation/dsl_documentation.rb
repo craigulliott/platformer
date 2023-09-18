@@ -1,13 +1,16 @@
 module Platformer
   class Documentation
     class DSLDocumentation < Markdown
-      def initialize base_path, name, composer_class, dsl, namespace = nil
+      def initialize base_path, name, composer_class, composer_name, dsl, namespace = nil
         dsl_base_path = base_path
         unless namespace.nil?
           dsl_base_path += "/#{namespace}"
         end
         super dsl_base_path, "#{name}.md"
 
+        @name = name
+        @namespace = namespace
+        @composer_name = composer_name
         @composer_class = composer_class
         @dsl = dsl
 
@@ -16,6 +19,13 @@ module Platformer
 
       # document a specific DSL
       def build_markdown
+        # the jekyll header
+        if @namespace
+          jekyll_header @name, parent: @namespace, grand_parent: @composer_name
+        else
+          jekyll_header @name, parent: @composer_name
+        end
+
         # the description of this DSL
         text @dsl.description
 
@@ -23,7 +33,7 @@ module Platformer
 
         # a ruby preview of this method with all possible arguments
         code <<~CODE
-          class My#{composer_base_type} < Platform#{composer_base_type}
+          class My#{composer_base_type} < Platformer#{composer_base_type}
             #{@dsl.name} #{arguments_summary}
           end
         CODE
@@ -46,7 +56,7 @@ module Platformer
       private
 
       def composer_base_type
-        @composer_base_type ||= @composer_class.name.sub(/\APlatform/, "")
+        @composer_base_type ||= @composer_class.name.sub(/\APlatformer/, "")
       end
 
       def dsl_method_markdown dsl_method

@@ -1,3 +1,10 @@
+---
+layout: default
+title: Node Field
+parent: Schemas
+has_children: false
+---
+
 Adds a new node directly to the current node's list of fields. This
 approach is recommended for singular associations between models, as
 established through `belongs_to` or `has_one` methods in the model's
@@ -9,7 +16,7 @@ later on, then you should use a join model, and then provide access
 to the other model through that join model.
 
 ```ruby
-class Myer::BaseSchema < Platformer::BaseSchema
+class My::BaseSchema < Platformer::BaseSchema
   node_field "Foreign Model"
 end
 

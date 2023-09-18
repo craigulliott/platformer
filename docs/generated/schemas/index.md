@@ -1,3 +1,9 @@
+---
+layout: default
+title: Schemas
+has_children: true
+---
+
 Create schema definitions in platform/schemas
 
 ## Description
@@ -18,11 +24,6 @@ Create schema definitions in platform/schemas
 ## Connection
 
 [Connection](connection.md)
-
-
-## Suppress Namespace
-
-[Suppress Namespace](suppress_namespace.md)
 
 
 ## Root Node

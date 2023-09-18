@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "byebug"
+
 require "dsl_compose"
 require "dynamic_migrations"
 

@@ -1,7 +1,15 @@
+---
+layout: default
+title: Currency Field
+parent: Fields
+grand_parent: Models
+has_children: false
+---
+
 Add a currency field to this model.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platformer::BaseModel
   currency_field 
 end
 
@@ -20,7 +28,7 @@ array (optional Boolean)
 **Default**
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   currency_field  do
     ...
     default prefix: :prefix, array: array
@@ -43,7 +51,7 @@ The underlying postgres column will also be configured to allow
 NULL values
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   currency_field  do
     ...
     allow_null prefix: :prefix, array: array
@@ -65,7 +73,7 @@ make an array with at least one item a requirement. This can only be
 used on fields which have been set to `array: true`.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   currency_field  do
     ...
     empty_array_to_null prefix: :prefix, array: array
@@ -86,7 +94,7 @@ If used within a field dsl then this will enforce uniqueness for this
 field.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   currency_field  do
     ...
     unique prefix: :prefix, array: array
@@ -124,7 +132,7 @@ the database column as a comment, and will be used to
 generate API documentation.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   currency_field  do
     ...
     comment prefix: :prefix, array: array
@@ -147,7 +155,7 @@ constraint and will be used in API validation and generated
 documentation.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   currency_field  do
     ...
     validate_in prefix: :prefix, array: array
@@ -183,7 +191,7 @@ constraint and will be used in API validation and generated
 documentation.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   currency_field  do
     ...
     validate_not_in prefix: :prefix, array: array
@@ -218,7 +226,7 @@ constraint and will be used in API validation and generated
 documentation.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   currency_field  do
     ...
     validate_is_value prefix: :prefix, array: array
@@ -253,7 +261,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   currency_field  do
     ...
     immutable prefix: :prefix, array: array
@@ -279,7 +287,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   currency_field  do
     ...
     immutable_once_set prefix: :prefix, array: array
@@ -303,7 +311,7 @@ will also be added to the database to assert that the column has no
 null values. This is only compatibile with array fields.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   currency_field  do
     ...
     remove_null_array_values prefix: :prefix, array: array

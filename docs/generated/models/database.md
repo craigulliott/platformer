@@ -1,3 +1,10 @@
+---
+layout: default
+title: Database
+parent: Models
+has_children: false
+---
+
 Selects the server, database and schema which will be
 used to store data for this model and all models which
 extend this one.
@@ -8,7 +15,7 @@ on a decendent class and it will set the database configuration
 for only that class and any decendents of it.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platformer::BaseModel
   database :server_type, :server_name
 end
 

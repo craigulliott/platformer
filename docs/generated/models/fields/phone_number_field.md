@@ -1,10 +1,18 @@
+---
+layout: default
+title: Phone Number Field
+parent: Fields
+grand_parent: Models
+has_children: false
+---
+
 Add an phone_number field to this model. The phone_number is backed
 a seperate columns for the dialing_code and the phone_number, and
 automatically handles validation and provides a variety of formatting
 options for displaying numbers.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platformer::BaseModel
   phone_number_field 
 end
 
@@ -20,7 +28,7 @@ prefix (optional Symbol)
 **Default**
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   phone_number_field  do
     ...
     default prefix: :prefix
@@ -46,7 +54,7 @@ The underlying postgres column will also be configured to allow
 NULL values
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   phone_number_field  do
     ...
     allow_null prefix: :prefix
@@ -62,7 +70,7 @@ If used within a field dsl then this will enforce uniqueness for this
 field.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   phone_number_field  do
     ...
     unique prefix: :prefix
@@ -100,7 +108,7 @@ the database column as a comment, and will be used to
 generate API documentation.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   phone_number_field  do
     ...
     comment prefix: :prefix
@@ -123,7 +131,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   phone_number_field  do
     ...
     immutable prefix: :prefix
@@ -149,7 +157,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   phone_number_field  do
     ...
     immutable_once_set prefix: :prefix

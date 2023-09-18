@@ -1,7 +1,14 @@
+---
+layout: default
+title: Description
+parent: Schemas
+has_children: false
+---
+
 Add descriptions to your classes.
 
 ```ruby
-class Myer::BaseSchema < Platformer::BaseSchema
+class My::BaseSchema < Platformer::BaseSchema
   description description
 end
 

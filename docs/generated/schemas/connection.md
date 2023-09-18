@@ -1,3 +1,10 @@
+---
+layout: default
+title: Connection
+parent: Schemas
+has_children: false
+---
+
 In GraphQL, a "connection" serves as a specialized abstraction layer
 that facilitates the relationship between a node and a list of other
 nodes. Unlike a simple list, a connection wraps this relationship in
@@ -10,7 +17,7 @@ This makes it a more flexible and extensible choice for managing lists
 and relationships within a GraphQL schema.
 
 ```ruby
-class Myer::BaseSchema < Platformer::BaseSchema
+class My::BaseSchema < Platformer::BaseSchema
   connection "Foreign Model"
 end
 
@@ -40,7 +47,7 @@ GraphQL query. This approach enriches the data available, offering a
 more comprehensive and nuanced view of the relationship between entities.
 
 ```ruby
-class Myer::BaseSchema < Platformer::BaseSchema
+class My::BaseSchema < Platform::BaseSchema
   connection "Foreign Model" do
     ...
     edge "Foreign Model", association_name: :association_name

@@ -1,28 +1,23 @@
 ---
 layout: default
-title: Positionable
+title: Primary Key
 parent: Models
 has_children: false
 ---
 
-Adds functionality to your model which allows manual sorting of records.
-
-A required integer column named 'position' will be added to your model, and
-constraints and stored procedures will be used to ensure ensures that the
-`position` values remain consistent and sequentially ordered, starting from the
-number 1.
+Add a primary key to this table.
 
 ```ruby
 class My::BaseModel < Platformer::BaseModel
-  positionable 
+  primary_key 
 end
 
 ```
 
 **Arguments**
 
-scope (optional [Symbol])
-:   The name of fields which this models unique position should be scoped to.
+column\_names (optional [Symbol])
+:   If provided, then these existing columns will be used to build the primary key. If ommited, then a default column named `id` with a datatype of `uuid` will be added automatically and used for the primary key.
 
 **Additional Configuration Options**
 
@@ -35,9 +30,9 @@ generate API documentation.
 
 ```ruby
 class My::BaseModel < Platform::BaseModel
-  positionable  do
+  primary_key  do
     ...
-    comment scope: [:scope]
+    comment column_names: [:column_names]
     ...
   end
 end

@@ -1,7 +1,14 @@
+---
+layout: default
+title: Description
+parent: Models
+has_children: false
+---
+
 Add descriptions to your classes.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platformer::BaseModel
   description description
 end
 

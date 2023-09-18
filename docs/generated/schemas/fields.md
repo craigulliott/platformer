@@ -1,7 +1,14 @@
+---
+layout: default
+title: Fields
+parent: Schemas
+has_children: false
+---
+
 A list of the all this models scalar and enum fields which will be exposed via graphql.
 
 ```ruby
-class Myer::BaseSchema < Platformer::BaseSchema
+class My::BaseSchema < Platformer::BaseSchema
   fields :fields
 end
 

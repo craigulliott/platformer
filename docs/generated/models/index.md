@@ -1,3 +1,9 @@
+---
+layout: default
+title: Models
+has_children: true
+---
+
 Create model definitions in platform/models
 
 ## Description
@@ -13,6 +19,16 @@ Create model definitions in platform/models
 ## Schema
 
 [Schema](schema.md)
+
+
+## Primary Key
+
+[Primary Key](primary_key.md)
+
+
+## Core Timestamps
+
+[Core Timestamps](core_timestamps.md)
 
 
 ## Fields
@@ -40,6 +56,6 @@ Create model definitions in platform/models
 [Positionable](positionable.md)
 
 
-## Root Node
+## Suppress Namespace
 
-[Root Node](root_node.md)
+[Suppress Namespace](suppress_namespace.md)

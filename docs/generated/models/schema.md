@@ -1,3 +1,10 @@
+---
+layout: default
+title: Schema
+parent: Models
+has_children: false
+---
+
 For databases which support it (such as `postgres`), this is the
 name of the postgres servers database schema where the data for
 this model will be persisted. If you do not provide a schema name,
@@ -38,7 +45,7 @@ end
 ```
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platformer::BaseModel
   schema :schema_name
 end
 

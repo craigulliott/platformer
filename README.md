@@ -29,10 +29,7 @@ Create your new platform:
 
 ## Documentation
 
-    $ npm install -g spec-md
-
     $ rake documentation:generate
-    $ spec-md ./docs/index.md > ./docs.html
 
 Todo
 

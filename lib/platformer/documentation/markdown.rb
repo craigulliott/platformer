@@ -8,6 +8,20 @@ module Platformer
         @file_path = @base_path + "/#{filename}"
       end
 
+      def jekyll_header title, parent: nil, grand_parent: nil, has_children: false, nav_order: nil
+        lines = []
+        lines << "---"
+        lines << "layout: default"
+        lines << "title: #{title.to_s.titleize}"
+        lines << "parent: #{parent.to_s.titleize}" unless parent.nil?
+        lines << "grand_parent: #{grand_parent.to_s.titleize}" unless grand_parent.nil?
+        lines << "has_children: #{has_children}"
+        lines << "nav_order: #{nav_order}" unless nav_order.nil?
+        lines << "---"
+
+        sections << lines.join("\n")
+      end
+
       # given a string, creates a markdown h1
       def h1 header
         unless header.nil? || header == ""

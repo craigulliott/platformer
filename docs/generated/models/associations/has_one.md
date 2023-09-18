@@ -1,10 +1,18 @@
+---
+layout: default
+title: Has One
+parent: Associations
+grand_parent: Models
+has_children: false
+---
+
 Specifies a one-to-one association with another class. This will
 automatically create the appropriate foreign key column on the other
 model, build the appropriate foreign key constraint and setup
 the ActiveRecord associations.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platformer::BaseModel
   has_one "Foreign Model"
 end
 
@@ -14,6 +22,9 @@ end
 
 foreign\_model (required Class)
 :   The Model class which this Model has one of.
+
+as (optional Symbol)
+:   An optional name for this association, if a name is not provided then a default will be used based off the name of the foreign model.
 
 local\_column\_names (optional [Symbol])
 :   The name of one or more existing columns on the this model which make up this side of association. If this is ommited then the default column name `id` is assumed.
@@ -46,10 +57,10 @@ table can be `null`, which makes it's association back to this local
 model optional.
 
 ```ruby
-class Myer::BaseModel < Platformer::BaseModel
+class My::BaseModel < Platform::BaseModel
   has_one "Foreign Model" do
     ...
-    allow_null "Foreign Model", local_column_names: [:local_column_names], foreign_column_names: [:foreign_column_names], comment: comment, deferrable: deferrable, initially_deferred: initially_deferred, on_update: :on_update, on_delete: :on_delete
+    allow_null "Foreign Model", as: :as, local_column_names: [:local_column_names], foreign_column_names: [:foreign_column_names], comment: comment, deferrable: deferrable, initially_deferred: initially_deferred, on_update: :on_update, on_delete: :on_delete
     ...
   end
 end

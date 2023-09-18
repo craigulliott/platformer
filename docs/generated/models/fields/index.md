@@ -1,3 +1,10 @@
+---
+layout: default
+title: Fields
+parent: Models
+has_children: true
+---
+
 ## Add a UUID field to your Model
 
 [Add a UUID field to your Model](uuid_field.md)

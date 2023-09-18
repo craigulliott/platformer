@@ -1,3 +1,10 @@
+---
+layout: default
+title: Associations
+parent: Models
+has_children: true
+---
+
 ## Belongs To
 
 [Belongs To](belongs_to.md)
