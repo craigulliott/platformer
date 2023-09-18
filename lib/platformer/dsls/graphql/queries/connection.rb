@@ -37,7 +37,7 @@ module Platformer
 
               add_method :edge do
                 description <<~DESCRIPTION
-                  When a has\\_many association between a model and its foreign models
+                  When a has_many association between a model and its foreign models
                   employs a join table—specified by the through: option—you can use this
                   method to surface additional data from the intermediary model. For
                   instance, if a user is connected to multiple organizations via a

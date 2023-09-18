@@ -28,8 +28,8 @@ end
 name (optional Symbol)
 :   A name for this state machine. If you omit this option then the default name `:state` will be assumed. This option is typically only required if you need to have multiple state machines on the same model.
 
-log\_transitions (optional Boolean)
-:   If set to true, a dedicated table will be created to automatically record transitions for this model. If the model is named `:projects`, the automatically generated table will be called `:project\_transitions`.
+log_transitions (optional Boolean)
+:   If set to true, a dedicated table will be created to automatically record transitions for this model. If the model is named `:projects`, the automatically generated table will be called `:project_transitions`.
 
 **Additional Configuration Options**
 
@@ -81,11 +81,11 @@ name (required Symbol)
 comment (optional Symbol)
 :   A description of this state. This description will be used when generating documentation for your model.
 
-requires\_presence\_of (optional [Symbol])
-:   Specify an optional array of field names for the model, each of which must contain a value when the model is in, or transitioning to, this state. This requirement is common in state machines, as models often accumulate data while advancing through different states. For instance, transitioning to the `:published` state may necessitate that the `:published\_by` field includes a user.
+requires_presence_of (optional [Symbol])
+:   Specify an optional array of field names for the model, each of which must contain a value when the model is in, or transitioning to, this state. This requirement is common in state machines, as models often accumulate data while advancing through different states. For instance, transitioning to the `:published` state may necessitate that the `:published_by` field includes a user.
 
-requires\_absence\_of (optional [Symbol])
-:   Specify an optional array of field names for this model. When the model is in or transitioning to this state, these fields must be empty. For instance, if the state machine is in the `:unpublished` state, the `:published\_by` field should have no user value.
+requires_absence_of (optional [Symbol])
+:   Specify an optional array of field names for this model. When the model is in or transitioning to this state, these fields must be empty. For instance, if the state machine is in the `:unpublished` state, the `:published_by` field should have no user value.
 
 **Action**
 

@@ -17,8 +17,8 @@ end
 
 **Arguments**
 
-created\_at (optional Boolean)
-:   Set to false to ommit the created\_at timestamp
+created_at (optional Boolean)
+:   Set to false to ommit the created_at timestamp
 
-updated\_at (optional Boolean)
-:   Set to false to ommit the updated\_at timestamp
+updated_at (optional Boolean)
+:   Set to false to ommit the updated_at timestamp

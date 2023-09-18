@@ -8,7 +8,7 @@ module Platformer
               namespace :fields
               title "Add a DateTime field to your Model"
               description <<~DESCRIPTION
-                Add a date\\_time (timestamp) field to this model.
+                Add a date_time (timestamp) field to this model.
               DESCRIPTION
 
               # Arguments

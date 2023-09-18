@@ -53,5 +53,5 @@ end
 
 **Arguments**
 
-schema\_name (required Symbol)
+schema_name (required Symbol)
 :   The name of the schema to use.

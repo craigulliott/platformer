@@ -16,7 +16,7 @@ end
 
 **Arguments**
 
-column\_names (optional [Symbol])
+column_names (optional [Symbol])
 :   If provided, then these existing columns will be used to build the primary key. If ommited, then a default column named `id` with a datatype of `uuid` will be added automatically and used for the primary key.
 
 **Additional Configuration Options**

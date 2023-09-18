@@ -24,8 +24,8 @@ end
 
 **Arguments**
 
-foreign\_model (required Class)
-:   The model which is associated to this model via the `has\_one` or `belongs\_to` association.
+foreign_model (required Class)
+:   The model which is associated to this model via the `has_one` or `belongs_to` association.
 
-association\_name (optional Symbol)
+association_name (optional Symbol)
 :   If a custom name was used when creating the association between this model and the foreign model, then this name should be provided here.

@@ -117,11 +117,11 @@ end
 deferrable (optional Boolean)
 :   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
 
-initially\_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially\_deferred: true` requires that this constraint is also marked as `deferrable: true`.
+initially_deferred (optional Boolean)
+:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
 
 where (optional String)
-:   An optional SQL condition which can be used to limit this uniqueness to a subset of records. If you provide a value for where, then it is not possible to set 'deferrable: true', this is because the underlying constraint will be enforced by a unique index rather than a unique\_contraint, and indexes can not be deferred in postgres.
+:   An optional SQL condition which can be used to limit this uniqueness to a subset of records. If you provide a value for where, then it is not possible to set 'deferrable: true', this is because the underlying constraint will be enforced by a unique index rather than a unique_contraint, and indexes can not be deferred in postgres.
 
 scope (optional [Symbol])
 :   An optional list of fields which will be used to scope the uniqueness constraint for this field.
@@ -230,8 +230,8 @@ value (required Float)
 deferrable (optional Boolean)
 :   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
 
-initially\_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially\_deferred: true` requires that this constraint is also marked as `deferrable: true`.
+initially_deferred (optional Boolean)
+:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
 
 message (optional String)
 :   The message which will be displayed if the validation fails.
@@ -265,8 +265,8 @@ value (required Float)
 deferrable (optional Boolean)
 :   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
 
-initially\_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially\_deferred: true` requires that this constraint is also marked as `deferrable: true`.
+initially_deferred (optional Boolean)
+:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
 
 message (optional String)
 :   The message which will be displayed if the validation fails.
@@ -300,8 +300,8 @@ value (required Float)
 deferrable (optional Boolean)
 :   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
 
-initially\_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially\_deferred: true` requires that this constraint is also marked as `deferrable: true`.
+initially_deferred (optional Boolean)
+:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
 
 message (optional String)
 :   The message which will be displayed if the validation fails.
@@ -335,8 +335,8 @@ value (required Float)
 deferrable (optional Boolean)
 :   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
 
-initially\_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially\_deferred: true` requires that this constraint is also marked as `deferrable: true`.
+initially_deferred (optional Boolean)
+:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
 
 message (optional String)
 :   The message which will be displayed if the validation fails.
@@ -370,8 +370,8 @@ value (required Float)
 deferrable (optional Boolean)
 :   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
 
-initially\_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially\_deferred: true` requires that this constraint is also marked as `deferrable: true`.
+initially_deferred (optional Boolean)
+:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
 
 message (optional String)
 :   The message which will be displayed if the validation fails.
@@ -405,8 +405,8 @@ value (required [Float])
 deferrable (optional Boolean)
 :   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
 
-initially\_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially\_deferred: true` requires that this constraint is also marked as `deferrable: true`.
+initially_deferred (optional Boolean)
+:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
 
 message (optional String)
 :   The message which will be displayed if the validation fails.
@@ -440,8 +440,8 @@ value (required [Float])
 deferrable (optional Boolean)
 :   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
 
-initially\_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially\_deferred: true` requires that this constraint is also marked as `deferrable: true`.
+initially_deferred (optional Boolean)
+:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
 
 message (optional String)
 :   The message which will be displayed if the validation fails.

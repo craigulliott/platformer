@@ -25,17 +25,17 @@ end
 
 **Arguments**
 
-foreign\_model (required Class)
-:   The model which is associated to this model via the `has\_many` association.
+foreign_model (required Class)
+:   The model which is associated to this model via the `has_many` association.
 
-association\_name (optional Symbol)
+association_name (optional Symbol)
 :   If a custom name was used when creating the association between this model and the foreign model, then this name should be provided here.
 
 **Additional Configuration Options**
 
 **Edge**
 
-When a has\_many association between a model and its foreign models
+When a has_many association between a model and its foreign models
 employs a join table—specified by the through: option—you can use this
 method to surface additional data from the intermediary model. For
 instance, if a user is connected to multiple organizations via a
@@ -59,5 +59,5 @@ end
 
 **Arguments**
 
-field\_name (required Symbol)
+field_name (required Symbol)
 :   The name of the field on the join model to expose via an edge.

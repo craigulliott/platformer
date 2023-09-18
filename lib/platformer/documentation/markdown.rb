@@ -113,9 +113,9 @@ module Platformer
         definitions = [definitions] unless definitions.is_a? Array
 
         lines = []
-        lines << escape_underscores(item_name.to_s.strip).to_s
+        lines << item_name.to_s.strip
         definitions.each do |definition|
-          lines << ":   #{escape_underscores definition.to_s.tr("\n", " ").strip}"
+          lines << ":   #{definition.to_s.tr("\n", " ").strip}"
         end
 
         markdown = lines.join("\n")
@@ -148,10 +148,6 @@ module Platformer
 
       def ensure_folder_exists
         FileUtils.mkdir_p @base_path
-      end
-
-      def escape_underscores string
-        string.gsub("_", "\\_")
       end
 
       def sections

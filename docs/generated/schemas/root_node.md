@@ -49,7 +49,7 @@ end
 
 **Arguments**
 
-field\_name (required Symbol)
+field_name (required Symbol)
 :   The name of the field we are searching against.
 
 required (optional Boolean)

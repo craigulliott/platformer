@@ -20,16 +20,16 @@ end
 
 **Arguments**
 
-foreign\_model (required Class)
+foreign_model (required Class)
 :   The Model class which this Model has many of.
 
 as (optional Symbol)
 :   An optional name for this association, if a name is not provided then a default will be used based off the name of the foreign model.
 
-local\_column\_names (optional [Symbol])
+local_column_names (optional [Symbol])
 :   The name of one or more existing columns on the this model which make up this side of association. If this is ommited then the default column name `id` is assumed.
 
-foreign\_column\_names (optional [Symbol])
+foreign_column_names (optional [Symbol])
 :   Override the default behaviour of generating a new column on the foreign model, and specify the name of one or more existing columns to use instead.
 
 comment (optional String)
@@ -38,14 +38,14 @@ comment (optional String)
 deferrable (optional Boolean)
 :   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
 
-initially\_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially\_deferred: true` requires that this constraint is also marked as `deferrable: true`.
+initially_deferred (optional Boolean)
+:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
 
-on\_update (optional Symbol)
-:   Configure how to handle the record in the remote table when the local row is updated. The default is `:restrict` but the possible values are:  `:no\_action`  produce an error indicating that the deletion or update would create a foreign key constraint violation. If the constraint is deferred, this error will be produced at constraint check time if there still exist any referencing rows. This is the default action.  `:restrict`  Produce an error indicating that the deletion or update would create a foreign key constraint violation. This is the same as NO ACTION except that the check is not deferrable.  `:cascade`  Delete any rows referencing the deleted row, or update the values of the referencing column(s) to the new values of the referenced columns, respectively.  `:set\_null`  Set all of the referencing columns, or a specified subset of the referencing columns, to null.  `:set\_default`  Set all of the referencing columns, or a specified subset of the referencing columns, to their default values.
+on_update (optional Symbol)
+:   Configure how to handle the record in the remote table when the local row is updated. The default is `:restrict` but the possible values are:  `:no_action`  produce an error indicating that the deletion or update would create a foreign key constraint violation. If the constraint is deferred, this error will be produced at constraint check time if there still exist any referencing rows. This is the default action.  `:restrict`  Produce an error indicating that the deletion or update would create a foreign key constraint violation. This is the same as NO ACTION except that the check is not deferrable.  `:cascade`  Delete any rows referencing the deleted row, or update the values of the referencing column(s) to the new values of the referenced columns, respectively.  `:set_null`  Set all of the referencing columns, or a specified subset of the referencing columns, to null.  `:set_default`  Set all of the referencing columns, or a specified subset of the referencing columns, to their default values.
 
-on\_delete (optional Symbol)
-:   Configure how to handle the record in the remote table when the local is deleted. The default is `:restrict` but the possible values are:  `:no\_action`  produce an error indicating that the deletion or update would create a foreign key constraint violation. If the constraint is deferred, this error will be produced at constraint check time if there still exist any referencing rows. This is the default action.  `:restrict`  Produce an error indicating that the deletion or update would create a foreign key constraint violation. This is the same as NO ACTION except that the check is not deferrable.  `:cascade`  Delete any rows referencing the deleted row, or update the values of the referencing column(s) to the new values of the referenced columns, respectively.  `:set\_null`  Set all of the referencing columns, or a specified subset of the referencing columns, to null.  `:set\_default`  Set all of the referencing columns, or a specified subset of the referencing columns, to their default values.
+on_delete (optional Symbol)
+:   Configure how to handle the record in the remote table when the local is deleted. The default is `:restrict` but the possible values are:  `:no_action`  produce an error indicating that the deletion or update would create a foreign key constraint violation. If the constraint is deferred, this error will be produced at constraint check time if there still exist any referencing rows. This is the default action.  `:restrict`  Produce an error indicating that the deletion or update would create a foreign key constraint violation. This is the same as NO ACTION except that the check is not deferrable.  `:cascade`  Delete any rows referencing the deleted row, or update the values of the referencing column(s) to the new values of the referenced columns, respectively.  `:set_null`  Set all of the referencing columns, or a specified subset of the referencing columns, to null.  `:set_default`  Set all of the referencing columns, or a specified subset of the referencing columns, to their default values.
 
 **Additional Configuration Options**
 
