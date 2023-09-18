@@ -14,7 +14,3 @@ gem "rspec", "~> 3.0"
 gem "byebug", "~> 11.0"
 
 gem "standard", "~> 1.0"
-
-# for the documentation site
-gem "jekyll", "~> 4.3.2"
-gem "just-the-docs", "0.6.1"
