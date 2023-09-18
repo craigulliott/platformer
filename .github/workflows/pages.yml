@@ -10,8 +10,8 @@ on:
   push:
     branches:
       - "*"
-    paths:
-      - "*"
+    # paths:
+    #   - "*"
       #- "docs/**"
 
   # Allows you to run this workflow manually from the Actions tab
