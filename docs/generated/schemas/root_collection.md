@@ -8,7 +8,7 @@ has_children: false
 Makes a collection of these models available via a root query.
 
 ```ruby
-class My::BaseSchema < Platformer::BaseSchema
+class MySchema < PlatformerSchema
   root_collection 
 end
 
@@ -21,7 +21,7 @@ end
 Allows for a string search against one of the models fields.
 
 ```ruby
-class My::BaseSchema < Platform::BaseSchema
+class MySchema < PlatformSchema
   root_collection  do
     ...
     by_exact_string 

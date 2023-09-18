@@ -8,7 +8,7 @@ has_children: false
 A list of the all this models scalar and enum fields which will be exposed via graphql.
 
 ```ruby
-class My::BaseSchema < Platformer::BaseSchema
+class MySchema < PlatformerSchema
   fields :fields
 end
 

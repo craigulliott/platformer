@@ -9,7 +9,7 @@ has_children: false
 Add a json field to this model.
 
 ```ruby
-class My::BaseModel < Platformer::BaseModel
+class MyModel < PlatformerModel
   json_field :name
 end
 
@@ -30,7 +30,7 @@ to null. This coercion logic will be installed into active record,
 the API and the database as a stored procedure.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   json_field :name do
     ...
     empty_json_to_null :name
@@ -48,7 +48,7 @@ comment (optional String)
 **Default**
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   json_field :name do
     ...
     default :name
@@ -71,7 +71,7 @@ The underlying postgres column will also be configured to allow
 NULL values
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   json_field :name do
     ...
     allow_null :name
@@ -89,7 +89,7 @@ the database column as a comment, and will be used to
 generate API documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   json_field :name do
     ...
     comment :name
@@ -112,7 +112,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   json_field :name do
     ...
     immutable :name
@@ -138,7 +138,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   json_field :name do
     ...
     immutable_once_set :name
@@ -159,7 +159,7 @@ If used within a field dsl then this will enforce uniqueness for this
 field.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   json_field :name do
     ...
     unique :name

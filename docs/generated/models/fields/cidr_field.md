@@ -11,7 +11,7 @@ specifications, such as `192.168.0.0/24` or
 '2001:4f8:3:ba::/64'.
 
 ```ruby
-class My::BaseModel < Platformer::BaseModel
+class MyModel < PlatformerModel
   cidr_field :name
 end
 
@@ -30,7 +30,7 @@ array (optional Boolean)
 **Default**
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   cidr_field :name do
     ...
     default :name, array: array
@@ -53,7 +53,7 @@ The underlying postgres column will also be configured to allow
 NULL values
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   cidr_field :name do
     ...
     allow_null :name, array: array
@@ -75,7 +75,7 @@ make an array with at least one item a requirement. This can only be
 used on fields which have been set to `array: true`.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   cidr_field :name do
     ...
     empty_array_to_null :name, array: array
@@ -96,7 +96,7 @@ If used within a field dsl then this will enforce uniqueness for this
 field.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   cidr_field :name do
     ...
     unique :name, array: array
@@ -134,7 +134,7 @@ the database column as a comment, and will be used to
 generate API documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   cidr_field :name do
     ...
     comment :name, array: array
@@ -157,7 +157,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   cidr_field :name do
     ...
     immutable :name, array: array
@@ -183,7 +183,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   cidr_field :name do
     ...
     immutable_once_set :name, array: array
@@ -207,7 +207,7 @@ will also be added to the database to assert that the column has no
 null values. This is only compatibile with array fields.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   cidr_field :name do
     ...
     remove_null_array_values :name, array: array

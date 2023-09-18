@@ -9,7 +9,7 @@ Add the automatically managed `updated_at` and `created_at` timestamps
 to this model. By default, both will be added.
 
 ```ruby
-class My::BaseModel < Platformer::BaseModel
+class MyModel < PlatformerModel
   core_timestamps 
 end
 

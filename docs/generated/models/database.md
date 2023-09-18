@@ -15,7 +15,7 @@ on a decendent class and it will set the database configuration
 for only that class and any decendents of it.
 
 ```ruby
-class My::BaseModel < Platformer::BaseModel
+class MyModel < PlatformerModel
   database :server_type, :server_name
 end
 

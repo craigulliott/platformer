@@ -32,7 +32,7 @@ You can optionally expose an action fields transition methods via a GraphQL muta
 providing a simple and consistent way to trigger the action from a client application.
 
 ```ruby
-class My::BaseModel < Platformer::BaseModel
+class MyModel < PlatformerModel
   action_field :name, :action_name
 end
 
@@ -56,7 +56,7 @@ the database column as a comment, and will be used to
 generate API documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   action_field :name, :action_name do
     ...
     comment :name, :action_name
@@ -74,7 +74,7 @@ comment (required String)
 **Requires Presence Of**
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   action_field :name, :action_name do
     ...
     requires_presence_of :name, :action_name
@@ -92,7 +92,7 @@ attribute\_name (required [Symbol])
 **Requires Absence Of**
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   action_field :name, :action_name do
     ...
     requires_absence_of :name, :action_name

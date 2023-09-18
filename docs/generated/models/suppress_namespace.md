@@ -15,7 +15,7 @@ for ubiquitous nodes that are unlikely to conflict with other types
   unexpected. Exercise caution when using this feature, however, since even highly specific models may clash with new additions in the long-term development of the system.
 
 ```ruby
-class My::BaseModel < Platformer::BaseModel
+class MyModel < PlatformerModel
   suppress_namespace 
 end
 

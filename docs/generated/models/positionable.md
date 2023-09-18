@@ -13,7 +13,7 @@ constraints and stored procedures will be used to ensure ensures that the
 number 1.
 
 ```ruby
-class My::BaseModel < Platformer::BaseModel
+class MyModel < PlatformerModel
   positionable 
 end
 
@@ -34,7 +34,7 @@ the database column as a comment, and will be used to
 generate API documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   positionable  do
     ...
     comment scope: [:scope]

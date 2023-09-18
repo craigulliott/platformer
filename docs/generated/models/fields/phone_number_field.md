@@ -12,7 +12,7 @@ automatically handles validation and provides a variety of formatting
 options for displaying numbers.
 
 ```ruby
-class My::BaseModel < Platformer::BaseModel
+class MyModel < PlatformerModel
   phone_number_field 
 end
 
@@ -28,7 +28,7 @@ prefix (optional Symbol)
 **Default**
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   phone_number_field  do
     ...
     default prefix: :prefix
@@ -54,7 +54,7 @@ The underlying postgres column will also be configured to allow
 NULL values
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   phone_number_field  do
     ...
     allow_null prefix: :prefix
@@ -70,7 +70,7 @@ If used within a field dsl then this will enforce uniqueness for this
 field.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   phone_number_field  do
     ...
     unique prefix: :prefix
@@ -108,7 +108,7 @@ the database column as a comment, and will be used to
 generate API documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   phone_number_field  do
     ...
     comment prefix: :prefix
@@ -131,7 +131,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   phone_number_field  do
     ...
     immutable prefix: :prefix
@@ -157,7 +157,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   phone_number_field  do
     ...
     immutable_once_set prefix: :prefix

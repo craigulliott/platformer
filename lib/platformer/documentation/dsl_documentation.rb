@@ -56,7 +56,7 @@ module Platformer
       private
 
       def composer_base_type
-        @composer_base_type ||= @composer_class.name.sub(/\APlatformer/, "")
+        @composer_base_type ||= @composer_class.name.sub(/\APlatformer::Base/, "")
       end
 
       def dsl_method_markdown dsl_method

@@ -8,7 +8,7 @@ has_children: false
 Add descriptions to your classes.
 
 ```ruby
-class My::BaseSchema < Platformer::BaseSchema
+class MySchema < PlatformerSchema
   description description
 end
 

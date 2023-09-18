@@ -17,7 +17,7 @@ invaluable when integrated with callbacks, background jobs, webhooks, and
 external services.
 
 ```ruby
-class My::BaseModel < Platformer::BaseModel
+class MyModel < PlatformerModel
   state_machine 
 end
 
@@ -41,7 +41,7 @@ the database column as a comment, and will be used to
 generate API documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   state_machine  do
     ...
     comment name: :name, log_transitions: log_transitions
@@ -63,7 +63,7 @@ multiple states. The first state you define will serve as the default
 state for the machine.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   state_machine  do
     ...
     state name: :name, log_transitions: log_transitions
@@ -99,7 +99,7 @@ either due to a mismatch with the configured `from: [:state, :other_state]`
 or because any provided guards return false, then an error will be raised.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   state_machine  do
     ...
     action name: :name, log_transitions: log_transitions

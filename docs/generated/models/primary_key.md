@@ -8,7 +8,7 @@ has_children: false
 Add a primary key to this table.
 
 ```ruby
-class My::BaseModel < Platformer::BaseModel
+class MyModel < PlatformerModel
   primary_key 
 end
 
@@ -29,7 +29,7 @@ the database column as a comment, and will be used to
 generate API documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   primary_key  do
     ...
     comment column_names: [:column_names]

@@ -8,7 +8,7 @@ has_children: false
 Makes this model available via a root node query.
 
 ```ruby
-class My::BaseSchema < Platformer::BaseSchema
+class MySchema < PlatformerSchema
   root_node 
 end
 
@@ -22,7 +22,7 @@ Provides an argument and installs functionality
 to allow this model to be queried by it's ID.
 
 ```ruby
-class My::BaseSchema < Platform::BaseSchema
+class MySchema < PlatformSchema
   root_node  do
     ...
     by_id 
@@ -37,7 +37,7 @@ end
 Allows for a string search against one of the models fields.
 
 ```ruby
-class My::BaseSchema < Platform::BaseSchema
+class MySchema < PlatformSchema
   root_node  do
     ...
     by_exact_string 

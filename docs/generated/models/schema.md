@@ -45,7 +45,7 @@ end
 ```
 
 ```ruby
-class My::BaseModel < Platformer::BaseModel
+class MyModel < PlatformerModel
   schema :schema_name
 end
 

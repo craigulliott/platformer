@@ -16,7 +16,7 @@ later on, then you should use a join model, and then provide access
 to the other model through that join model.
 
 ```ruby
-class My::BaseSchema < Platformer::BaseSchema
+class MySchema < PlatformerSchema
   node_field "Foreign Model"
 end
 

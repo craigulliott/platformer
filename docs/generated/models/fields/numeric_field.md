@@ -11,7 +11,7 @@ with a lot of digits. Typically, you use the numeric type for numbers
 that require exactness such as monetary amounts or quantities.
 
 ```ruby
-class My::BaseModel < Platformer::BaseModel
+class MyModel < PlatformerModel
   numeric_field :name
 end
 
@@ -36,7 +36,7 @@ scale (optional Integer)
 **Default**
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     default :name, array: array, precision: precision, scale: scale
@@ -59,7 +59,7 @@ The underlying postgres column will also be configured to allow
 NULL values
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     allow_null :name, array: array, precision: precision, scale: scale
@@ -81,7 +81,7 @@ make an array with at least one item a requirement. This can only be
 used on fields which have been set to `array: true`.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     empty_array_to_null :name, array: array, precision: precision, scale: scale
@@ -102,7 +102,7 @@ If used within a field dsl then this will enforce uniqueness for this
 field.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     unique :name, array: array, precision: precision, scale: scale
@@ -140,7 +140,7 @@ the database column as a comment, and will be used to
 generate API documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     comment :name, array: array, precision: precision, scale: scale
@@ -163,7 +163,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     immutable :name, array: array, precision: precision, scale: scale
@@ -189,7 +189,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     immutable_once_set :name, array: array, precision: precision, scale: scale
@@ -212,7 +212,7 @@ a database constraint and will be used in API validation and
 generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     validate_greater_than :name, array: array, precision: precision, scale: scale
@@ -247,7 +247,7 @@ validation, a database constraint and will be used in API
 validation and generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     validate_greater_than_or_equal_to :name, array: array, precision: precision, scale: scale
@@ -282,7 +282,7 @@ a database constraint and will be used in API validation and
 generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     validate_less_than :name, array: array, precision: precision, scale: scale
@@ -317,7 +317,7 @@ validation, a database constraint and will be used in API
 validation and generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     validate_less_than_or_equal_to :name, array: array, precision: precision, scale: scale
@@ -352,7 +352,7 @@ a database constraint and will be used in API validation and
 generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     validate_equal_to :name, array: array, precision: precision, scale: scale
@@ -387,7 +387,7 @@ a database constraint and will be used in API validation and
 generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     validate_in :name, array: array, precision: precision, scale: scale
@@ -422,7 +422,7 @@ a database constraint and will be used in API validation and
 generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     validate_not_in :name, array: array, precision: precision, scale: scale
@@ -460,7 +460,7 @@ automatically removed from the array and the database constraint will
 forbid any arrays with a value of 0.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     zero_to_null :name, array: array, precision: precision, scale: scale
@@ -484,7 +484,7 @@ will also be added to the database to assert that the column has no
 null values. This is only compatibile with array fields.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   numeric_field :name do
     ...
     remove_null_array_values :name, array: array, precision: precision, scale: scale

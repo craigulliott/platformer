@@ -10,7 +10,7 @@ Add a citext field to this model. The citext type can store citext of
 a specific length.
 
 ```ruby
-class My::BaseModel < Platformer::BaseModel
+class MyModel < PlatformerModel
   citext_field :name
 end
 
@@ -29,7 +29,7 @@ array (optional Boolean)
 **Default**
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     default :name, array: array
@@ -52,7 +52,7 @@ The underlying postgres column will also be configured to allow
 NULL values
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     allow_null :name, array: array
@@ -74,7 +74,7 @@ make an array with at least one item a requirement. This can only be
 used on fields which have been set to `array: true`.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     empty_array_to_null :name, array: array
@@ -95,7 +95,7 @@ If used within a field dsl then this will enforce uniqueness for this
 field.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     unique :name, array: array
@@ -133,7 +133,7 @@ the database column as a comment, and will be used to
 generate API documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     comment :name, array: array
@@ -156,7 +156,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     immutable :name, array: array
@@ -182,7 +182,7 @@ record validation, a database constraint and will be used
 in API validation and generated documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     immutable_once_set :name, array: array
@@ -209,7 +209,7 @@ coercion was applied to any records before they are attempted to be
 saved.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     trim_and_nullify :name, array: array
@@ -233,7 +233,7 @@ will also be added to the database to assert that the column has no
 null values. This is only compatibile with array fields.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     remove_null_array_values :name, array: array
@@ -257,7 +257,7 @@ constraint and will be used in API validation and generated
 documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     validate_minimum_length :name, array: array
@@ -293,7 +293,7 @@ constraint and will be used in API validation and generated
 documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     validate_maximum_length :name, array: array
@@ -329,7 +329,7 @@ constraint and will be used in API validation and generated
 documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     validate_length_is :name, array: array
@@ -364,7 +364,7 @@ constraint and will be used in API validation and generated
 documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     validate_format :name, array: array
@@ -399,7 +399,7 @@ constraint and will be used in API validation and generated
 documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     validate_in :name, array: array
@@ -435,7 +435,7 @@ constraint and will be used in API validation and generated
 documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     validate_not_in :name, array: array
@@ -470,7 +470,7 @@ constraint and will be used in API validation and generated
 documentation.
 
 ```ruby
-class My::BaseModel < Platform::BaseModel
+class MyModel < PlatformModel
   citext_field :name do
     ...
     validate_is_value :name, array: array
