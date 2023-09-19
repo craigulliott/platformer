@@ -8,3 +8,4 @@ permalink: /models/associations
 ---
 
 # Associations
+{: .no_toc }

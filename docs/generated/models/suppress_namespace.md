@@ -7,6 +7,9 @@ has_toc: false
 permalink: /models/suppress_namespace
 ---
 
+# Suppress Namespace
+{: .no_toc }
+
 Altering the default behavior to exclude a model's namespace from
 its GraphQL type name can be beneficial. This is particularly useful
 for ubiquitous nodes that are unlikely to conflict with other types
@@ -17,7 +20,7 @@ for ubiquitous nodes that are unlikely to conflict with other types
   unexpected. Exercise caution when using this feature, however, since even highly specific models may clash with new additions in the long-term development of the system.
 
 ```ruby
-class MyModel < PlatformerModel
+class MyModel < PlatformModel
   suppress_namespace 
 end
 ```

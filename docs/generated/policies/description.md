@@ -7,15 +7,19 @@ has_toc: false
 permalink: /policies/description
 ---
 
+# Description
+{: .no_toc }
+
 Add descriptions to your classes.
 
 ```ruby
-class MyPolicy < PlatformerPolicy
-  description description
+class MyPolicy < PlatformPolicy
+  description "description"
 end
 ```
 
-**Arguments**
+#### Description Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

@@ -7,16 +7,23 @@ has_toc: false
 permalink: /models/core_timestamps
 ---
 
+# Core Timestamps
+{: .no_toc }
+
 Add the automatically managed `updated_at` and `created_at` timestamps
 to this model. By default, both will be added.
 
 ```ruby
-class MyModel < PlatformerModel
+class MyModel < PlatformModel
+  # required arguments only
   core_timestamps 
+  # all possible arguments
+  core_timestamps created_at: false, updated_at: false
 end
 ```
 
-**Arguments**
+#### Core Timestamps Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

@@ -7,17 +7,23 @@ has_toc: false
 permalink: /mutators/create
 ---
 
+# Create
+{: .no_toc }
+
 Adds a mutation to create a new record of this model.
 
 ```ruby
-class MyMutation < PlatformerMutation
+class MyMutation < PlatformMutation
   create 
 end
 ```
 
-**Additional Configuration Options**
+## Additional Configuration
+{: .no_toc }
 
-**Fields**
+You can further configure the Create by using the following methods:
+
+### Fields
 
 A list of this models fields which can be set via this create mutation.
 
@@ -25,13 +31,14 @@ A list of this models fields which can be set via this create mutation.
 class MyMutation < PlatformMutation
   create  do
     ...
-    fields 
+    fields [:value]
     ...
   end
 end
 ```
 
-**Arguments**
+#### Fields Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

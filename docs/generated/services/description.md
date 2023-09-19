@@ -7,15 +7,19 @@ has_toc: false
 permalink: /services/description
 ---
 
+# Description
+{: .no_toc }
+
 Add descriptions to your classes.
 
 ```ruby
-class MyService < PlatformerService
-  description description
+class MyService < PlatformService
+  description "description"
 end
 ```
 
-**Arguments**
+#### Description Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

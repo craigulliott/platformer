@@ -7,15 +7,19 @@ has_toc: false
 permalink: /models/description
 ---
 
+# Description
+{: .no_toc }
+
 Add descriptions to your classes.
 
 ```ruby
-class MyModel < PlatformerModel
-  description description
+class MyModel < PlatformModel
+  description "description"
 end
 ```
 
-**Arguments**
+#### Description Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

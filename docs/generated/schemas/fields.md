@@ -7,15 +7,19 @@ has_toc: false
 permalink: /schemas/fields
 ---
 
+# Fields
+{: .no_toc }
+
 A list of the all this models scalar and enum fields which will be exposed via graphql.
 
 ```ruby
-class MySchema < PlatformerSchema
-  fields :fields
+class MySchema < PlatformSchema
+  fields [:value]
 end
 ```
 
-**Arguments**
+#### Fields Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

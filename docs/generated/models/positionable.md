@@ -7,6 +7,9 @@ has_toc: false
 permalink: /models/positionable
 ---
 
+# Positionable
+{: .no_toc }
+
 Adds functionality to your model which allows manual sorting of records.
 
 A required integer column named 'position' will be added to your model, and
@@ -15,20 +18,27 @@ constraints and stored procedures will be used to ensure ensures that the
 number 1.
 
 ```ruby
-class MyModel < PlatformerModel
+class MyModel < PlatformModel
+  # required arguments only
   positionable 
+  # all possible arguments
+  positionable scope: [:value]
 end
 ```
 
-**Arguments**
+#### Positionable Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | scope | optional | Array[Symbol] | The name of fields which this models unique position should be scoped to. |
 
-**Additional Configuration Options**
+## Additional Configuration
+{: .no_toc }
 
-**Comment**
+You can further configure the Positionable by using the following methods:
+
+### Comment
 
 This method is used to describe a specific use of this
 field within a model, this description will be added to
@@ -39,13 +49,14 @@ generate API documentation.
 class MyModel < PlatformModel
   positionable  do
     ...
-    comment scope: [:scope]
+    comment "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Comment Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

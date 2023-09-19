@@ -97,7 +97,7 @@ module Platformer
               # A base class within the Users namespace for all Users models
               # to extend from.
               class Users::UsersModel
-                # all models within the Usrs namespace should be stored
+                # all models within the Users namespace should be stored
                 # in the "users" schema within our database
                 schema :users
 

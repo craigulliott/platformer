@@ -7,17 +7,23 @@ has_toc: false
 permalink: /schemas/root_node
 ---
 
+# Root Node
+{: .no_toc }
+
 Makes this model available via a root node query.
 
 ```ruby
-class MySchema < PlatformerSchema
+class MySchema < PlatformSchema
   root_node 
 end
 ```
 
-**Additional Configuration Options**
+## Additional Configuration
+{: .no_toc }
 
-**By**
+You can further configure the Root Node by using the following methods:
+
+### By
 
 Provides an argument and installs functionality
 to allow this model to be queried by it's ID.
@@ -32,7 +38,7 @@ class MySchema < PlatformSchema
 end
 ```
 
-**By Exact String**
+### By Exact String
 
 Allows for a string search against one of the models fields.
 
@@ -40,13 +46,17 @@ Allows for a string search against one of the models fields.
 class MySchema < PlatformSchema
   root_node  do
     ...
-    by_exact_string 
+    # required arguments only
+    by_exact_string :value
+    # all possible arguments
+    by_exact_string :value, required: false
     ...
   end
 end
 ```
 
-**Arguments**
+#### By Exact String Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

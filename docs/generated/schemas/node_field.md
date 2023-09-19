@@ -7,6 +7,9 @@ has_toc: false
 permalink: /schemas/node_field
 ---
 
+# Node Field
+{: .no_toc }
+
 Adds a new node directly to the current node's list of fields. This
 approach is recommended for singular associations between models, as
 established through `belongs_to` or `has_one` methods in the model's
@@ -18,12 +21,16 @@ later on, then you should use a join model, and then provide access
 to the other model through that join model.
 
 ```ruby
-class MySchema < PlatformerSchema
-  node_field "Foreign Model"
+class MySchema < PlatformSchema
+  # required arguments only
+  node_field "ForeignModel"
+  # all possible arguments
+  node_field "ForeignModel", association_name: :value
 end
 ```
 
-**Arguments**
+#### Node Field Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

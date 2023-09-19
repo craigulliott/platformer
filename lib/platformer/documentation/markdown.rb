@@ -33,55 +33,81 @@ module Platformer
         sections << lines.join("\n")
       end
 
+      def table_of_contents collapsible = false
+        sections << if collapsible
+          <<~MARKDOWN
+            <details open markdown="block">
+              <summary>
+                Table of contents
+              </summary>
+              {: .text-delta }
+            TOC
+            {:toc}
+            </details>
+          MARKDOWN
+        else
+          <<~MARKDOWN
+            - TOC
+            {:toc}
+          MARKDOWN
+        end
+      end
+
       # given a string, creates a markdown h1
-      def h1 header
+      def h1 header, include_in_toc = false
         unless header.nil? || header == ""
-          markdown = "# #{header.to_s.strip}"
+          toc = include_in_toc ? "" : "\n{: .no_toc }"
+          markdown = "# #{header.to_s.strip}#{toc}"
           sections << markdown
           markdown
         end
       end
 
       # given a string, creates a markdown h2
-      def h2 header
+      def h2 header, include_in_toc = true
         unless header.nil? || header == ""
-          markdown = "## #{header.to_s.strip}"
+          toc = include_in_toc ? "" : "\n{: .no_toc }"
+          markdown = "## #{header.to_s.strip}#{toc}"
           sections << markdown
           markdown
         end
       end
 
       # given a string, creates a markdown h3
-      def h3 header
+      def h3 header, include_in_toc = true
         unless header.nil? || header == ""
-          markdown = "### #{header.to_s.strip}"
+          toc = include_in_toc ? "" : "\n{: .no_toc }"
+          markdown = "### #{header.to_s.strip}#{toc}"
           sections << markdown
           markdown
         end
       end
 
       # given a string, creates a markdown h4
-      def h4 header
+      def h4 header, include_in_toc = true
         unless header.nil? || header == ""
-          markdown = "#### #{header.to_s.strip}"
+          toc = include_in_toc ? "" : "\n{: .no_toc }"
+          markdown = "#### #{header.to_s.strip}#{toc}"
           sections << markdown
           markdown
         end
       end
 
       # given a string, creates a markdown h4
-      def h5 header
+      def h5 header, include_in_toc = true
         unless header.nil? || header == ""
-          markdown = "##### #{header.to_s.strip}"
+          toc = include_in_toc ? "" : "\n{: .no_toc }"
+          markdown = "##### #{header.to_s.strip}#{toc}"
           sections << markdown
           markdown
         end
       end
 
       # given a string, creates a markdown h4
-      def h6 header
+      def h6 header, include_in_toc = true
         unless header.nil? || header == ""
-          markdown = "###### #{header.to_s.strip}"
+          toc = include_in_toc ? "" : "\n{: .no_toc }"
+          markdown = "###### #{header.to_s.strip}#{toc}"
           sections << markdown
           markdown
         end

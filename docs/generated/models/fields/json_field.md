@@ -8,23 +8,34 @@ has_toc: false
 permalink: /models/fields/json_field
 ---
 
+# Json Field
+{: .no_toc }
+
 Add a json field to this model.
 
 ```ruby
-class MyModel < PlatformerModel
-  json_field :name
+class MyModel < PlatformModel
+  json_field :value
 end
 ```
 
-**Arguments**
+#### Json Field Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | name | required | Symbol | The name of your field. |
 
-**Additional Configuration Options**
+## Additional Configuration
+{: .no_toc }
 
-**Empty Json To Null**
+You can further configure the Json Field by using the following methods:
+
+- TOC
+{:toc}
+
+
+### Empty Json To Null
 
 Ensures that the value of this field can not be an empty json object.
 If it is an empty json object, then it will be converted automatically
@@ -33,39 +44,44 @@ the API and the database as a stored procedure.
 
 ```ruby
 class MyModel < PlatformModel
-  json_field :name do
+  json_field :value do
     ...
-    empty_json_to_null :name
+    # required arguments only
+    empty_json_to_null 
+    # all possible arguments
+    empty_json_to_null comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Empty Json To Null Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | comment | optional | String | A comment which explains the reason for adding coercing empty arrays to null on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
-**Default**
+### Default
 
 ```ruby
 class MyModel < PlatformModel
-  json_field :name do
+  json_field :value do
     ...
-    default :name
+    default "default"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Default Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | default | required | String |  |
 
-**Allow Null**
+### Allow Null
 
 If true, then a null value is permitted for this field. This
 is validated at the API level and with active record validations.
@@ -74,15 +90,15 @@ NULL values
 
 ```ruby
 class MyModel < PlatformModel
-  json_field :name do
+  json_field :value do
     ...
-    allow_null :name
+    allow_null 
     ...
   end
 end
 ```
 
-**Comment**
+### Comment
 
 This method is used to describe a specific use of this
 field within a model, this description will be added to
@@ -91,21 +107,22 @@ generate API documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  json_field :name do
+  json_field :value do
     ...
-    comment :name
+    comment "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Comment Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | comment | required | String | The description of this field |
 
-**Immutable**
+### Immutable
 
 Ensures that the value of this field can not be changed
 after it is initially created. This will create an active
@@ -114,21 +131,25 @@ in API validation and generated documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  json_field :name do
+  json_field :value do
     ...
-    immutable :name
+    # required arguments only
+    immutable 
+    # all possible arguments
+    immutable message: "message"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Immutable Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | message | optional | String | The message which will be raised if the validation fails. |
 
-**Immutable Once Set**
+### Immutable Once Set
 
 Ensures that the value of this field can not be changed
 after it is has been set. This means that the value can
@@ -140,36 +161,44 @@ in API validation and generated documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  json_field :name do
+  json_field :value do
     ...
-    immutable_once_set :name
+    # required arguments only
+    immutable_once_set 
+    # all possible arguments
+    immutable_once_set message: "message"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Immutable Once Set Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | message | optional | String | The message which will be raised if the validation fails. |
 
-**Unique**
+### Unique
 
 If used within a field dsl then this will enforce uniqueness for this
 field.
 
 ```ruby
 class MyModel < PlatformModel
-  json_field :name do
+  json_field :value do
     ...
-    unique :name
+    # required arguments only
+    unique 
+    # all possible arguments
+    unique deferrable: false, initially_deferred: false, where: "where", scope: [:value], message: "message", comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Unique Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

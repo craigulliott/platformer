@@ -7,6 +7,9 @@ has_toc: false
 permalink: /schemas/connection
 ---
 
+# Connection
+{: .no_toc }
+
 In GraphQL, a "connection" serves as a specialized abstraction layer
 that facilitates the relationship between a node and a list of other
 nodes. Unlike a simple list, a connection wraps this relationship in
@@ -19,21 +22,28 @@ This makes it a more flexible and extensible choice for managing lists
 and relationships within a GraphQL schema.
 
 ```ruby
-class MySchema < PlatformerSchema
-  connection "Foreign Model"
+class MySchema < PlatformSchema
+  # required arguments only
+  connection "ForeignModel"
+  # all possible arguments
+  connection "ForeignModel", association_name: :value
 end
 ```
 
-**Arguments**
+#### Connection Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | foreign_model | required | Class | The model which is associated to this model via the `has_many` association. |
 | association_name | optional | Symbol | If a custom name was used when creating the association between this model and the foreign model, then this name should be provided here. |
 
-**Additional Configuration Options**
+## Additional Configuration
+{: .no_toc }
 
-**Edge**
+You can further configure the Connection by using the following methods:
+
+### Edge
 
 When a has_many association between a model and its foreign models
 employs a join table—specified by the through: option—you can use this
@@ -48,15 +58,16 @@ more comprehensive and nuanced view of the relationship between entities.
 
 ```ruby
 class MySchema < PlatformSchema
-  connection "Foreign Model" do
+  connection "ForeignModel" do
     ...
-    edge "Foreign Model", association_name: :association_name
+    edge :value
     ...
   end
 end
 ```
 
-**Arguments**
+#### Edge Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

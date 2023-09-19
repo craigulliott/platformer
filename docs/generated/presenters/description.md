@@ -7,15 +7,19 @@ has_toc: false
 permalink: /presenters/description
 ---
 
+# Description
+{: .no_toc }
+
 Add descriptions to your classes.
 
 ```ruby
-class MyPresenter < PlatformerPresenter
-  description description
+class MyPresenter < PlatformPresenter
+  description "description"
 end
 ```
 
-**Arguments**
+#### Description Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

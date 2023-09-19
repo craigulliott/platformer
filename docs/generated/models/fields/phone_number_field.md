@@ -8,45 +8,60 @@ has_toc: false
 permalink: /models/fields/phone_number_field
 ---
 
+# Phone Number Field
+{: .no_toc }
+
 Add an phone_number field to this model. The phone_number is backed
 a seperate columns for the dialing_code and the phone_number, and
 automatically handles validation and provides a variety of formatting
 options for displaying numbers.
 
 ```ruby
-class MyModel < PlatformerModel
+class MyModel < PlatformModel
+  # required arguments only
   phone_number_field 
+  # all possible arguments
+  phone_number_field prefix: :value
 end
 ```
 
-**Arguments**
+#### Phone Number Field Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | prefix | optional | Symbol | An optional prefix to use for the name of this field. This prefix will be prepended to the column names which back this model, and to the presenter methods, graphql queries and mutations. |
 
-**Additional Configuration Options**
+## Additional Configuration
+{: .no_toc }
 
-**Default**
+You can further configure the Phone Number Field by using the following methods:
+
+- TOC
+{:toc}
+
+
+### Default
 
 ```ruby
 class MyModel < PlatformModel
   phone_number_field  do
     ...
-    default prefix: :prefix
+    default "dialing code", "phone number"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Default Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | dialing_code | required | String |  |
 | phone_number | required | String |  |
 
-**Allow Null**
+### Allow Null
 
 If true, then a null value is permitted for this field. This
 is validated at the API level and with active record validations.
@@ -57,13 +72,13 @@ NULL values
 class MyModel < PlatformModel
   phone_number_field  do
     ...
-    allow_null prefix: :prefix
+    allow_null 
     ...
   end
 end
 ```
 
-**Unique**
+### Unique
 
 If used within a field dsl then this will enforce uniqueness for this
 field.
@@ -72,13 +87,17 @@ field.
 class MyModel < PlatformModel
   phone_number_field  do
     ...
-    unique prefix: :prefix
+    # required arguments only
+    unique 
+    # all possible arguments
+    unique deferrable: false, initially_deferred: false, where: "where", scope: [:value], message: "message", comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Unique Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
@@ -89,7 +108,7 @@ end
 | message | optional | String | The message which will be displayed if the validation fails. |
 | comment | optional | String | A comment which explains the reason for uniqueness on this field. This will be used to generate documentation, and error messages |
 
-**Comment**
+### Comment
 
 This method is used to describe a specific use of this
 field within a model, this description will be added to
@@ -100,19 +119,20 @@ generate API documentation.
 class MyModel < PlatformModel
   phone_number_field  do
     ...
-    comment prefix: :prefix
+    comment "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Comment Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | comment | required | String | The description of this field |
 
-**Immutable**
+### Immutable
 
 Ensures that the value of this field can not be changed
 after it is initially created. This will create an active
@@ -123,19 +143,23 @@ in API validation and generated documentation.
 class MyModel < PlatformModel
   phone_number_field  do
     ...
-    immutable prefix: :prefix
+    # required arguments only
+    immutable 
+    # all possible arguments
+    immutable message: "message"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Immutable Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | message | optional | String | The message which will be raised if the validation fails. |
 
-**Immutable Once Set**
+### Immutable Once Set
 
 Ensures that the value of this field can not be changed
 after it is has been set. This means that the value can
@@ -149,13 +173,17 @@ in API validation and generated documentation.
 class MyModel < PlatformModel
   phone_number_field  do
     ...
-    immutable_once_set prefix: :prefix
+    # required arguments only
+    immutable_once_set 
+    # all possible arguments
+    immutable_once_set message: "message"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Immutable Once Set Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

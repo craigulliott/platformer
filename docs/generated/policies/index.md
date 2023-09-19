@@ -8,5 +8,6 @@ permalink: /policies
 ---
 
 # Policies
+{: .no_toc }
 
 Create policy definitions in platform/policies

@@ -8,5 +8,6 @@ permalink: /jobs
 ---
 
 # Jobs
+{: .no_toc }
 
 Create job definitions in platform/jobs

@@ -8,5 +8,6 @@ permalink: /models
 ---
 
 # Models
+{: .no_toc }
 
 Create model definitions in platform/models

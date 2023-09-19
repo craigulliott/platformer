@@ -7,15 +7,19 @@ has_toc: false
 permalink: /schemas/description
 ---
 
+# Description
+{: .no_toc }
+
 Add descriptions to your classes.
 
 ```ruby
-class MySchema < PlatformerSchema
-  description description
+class MySchema < PlatformSchema
+  description "description"
 end
 ```
 
-**Arguments**
+#### Description Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

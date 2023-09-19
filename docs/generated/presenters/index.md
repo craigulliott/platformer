@@ -8,5 +8,6 @@ permalink: /presenters
 ---
 
 # Presenters
+{: .no_toc }
 
 Create presenters definitions in platform/presenters

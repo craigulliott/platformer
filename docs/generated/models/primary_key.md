@@ -7,23 +7,33 @@ has_toc: false
 permalink: /models/primary_key
 ---
 
+# Primary Key
+{: .no_toc }
+
 Add a primary key to this table.
 
 ```ruby
-class MyModel < PlatformerModel
+class MyModel < PlatformModel
+  # required arguments only
   primary_key 
+  # all possible arguments
+  primary_key column_names: [:value]
 end
 ```
 
-**Arguments**
+#### Primary Key Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | column_names | optional | Array[Symbol] | If provided, then these existing columns will be used to build the primary key. If ommited, then a default column named `id` with a datatype of `uuid` will be added automatically and used for the primary key. |
 
-**Additional Configuration Options**
+## Additional Configuration
+{: .no_toc }
 
-**Comment**
+You can further configure the Primary Key by using the following methods:
+
+### Comment
 
 This method is used to describe a specific use of this
 field within a model, this description will be added to
@@ -34,13 +44,14 @@ generate API documentation.
 class MyModel < PlatformModel
   primary_key  do
     ...
-    comment column_names: [:column_names]
+    comment "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Comment Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

@@ -8,44 +8,59 @@ has_toc: false
 permalink: /models/fields/cidr_field
 ---
 
+# Cidr Field
+{: .no_toc }
+
 Add a field to this model for storing IPv4 or IPv6 network
 specifications, such as `192.168.0.0/24` or
 '2001:4f8:3:ba::/64'.
 
 ```ruby
-class MyModel < PlatformerModel
-  cidr_field :name
+class MyModel < PlatformModel
+  # required arguments only
+  cidr_field :value
+  # all possible arguments
+  cidr_field :value, array: false
 end
 ```
 
-**Arguments**
+#### Cidr Field Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | name | required | Symbol | The name of your field. |
 | array | optional | Boolean | If true, then this field will be an array of cidrs, and will be backed by a `cidr[]` type in PostgreSQL. |
 
-**Additional Configuration Options**
+## Additional Configuration
+{: .no_toc }
 
-**Default**
+You can further configure the Cidr Field by using the following methods:
+
+- TOC
+{:toc}
+
+
+### Default
 
 ```ruby
 class MyModel < PlatformModel
-  cidr_field :name do
+  cidr_field :value do
     ...
-    default :name, array: array
+    default "default"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Default Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | default | required | String |  |
 
-**Allow Null**
+### Allow Null
 
 If true, then a null value is permitted for this field. This
 is validated at the API level and with active record validations.
@@ -54,15 +69,15 @@ NULL values
 
 ```ruby
 class MyModel < PlatformModel
-  cidr_field :name do
+  cidr_field :value do
     ...
-    allow_null :name, array: array
+    allow_null 
     ...
   end
 end
 ```
 
-**Empty Array To Null**
+### Empty Array To Null
 
 Ensures that the value of this field can not be an empty Array. If
 at empty object is provided then it will automatically be converted
@@ -75,36 +90,44 @@ used on fields which have been set to `array: true`.
 
 ```ruby
 class MyModel < PlatformModel
-  cidr_field :name do
+  cidr_field :value do
     ...
-    empty_array_to_null :name, array: array
+    # required arguments only
+    empty_array_to_null 
+    # all possible arguments
+    empty_array_to_null comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Empty Array To Null Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | comment | optional | String | A comment which explains the reason for adding coercing empty arrays to null on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
-**Unique**
+### Unique
 
 If used within a field dsl then this will enforce uniqueness for this
 field.
 
 ```ruby
 class MyModel < PlatformModel
-  cidr_field :name do
+  cidr_field :value do
     ...
-    unique :name, array: array
+    # required arguments only
+    unique 
+    # all possible arguments
+    unique deferrable: false, initially_deferred: false, where: "where", scope: [:value], message: "message", comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Unique Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
@@ -115,7 +138,7 @@ end
 | message | optional | String | The message which will be displayed if the validation fails. |
 | comment | optional | String | A comment which explains the reason for uniqueness on this field. This will be used to generate documentation, and error messages |
 
-**Comment**
+### Comment
 
 This method is used to describe a specific use of this
 field within a model, this description will be added to
@@ -124,21 +147,22 @@ generate API documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  cidr_field :name do
+  cidr_field :value do
     ...
-    comment :name, array: array
+    comment "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Comment Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | comment | required | String | The description of this field |
 
-**Immutable**
+### Immutable
 
 Ensures that the value of this field can not be changed
 after it is initially created. This will create an active
@@ -147,21 +171,25 @@ in API validation and generated documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  cidr_field :name do
+  cidr_field :value do
     ...
-    immutable :name, array: array
+    # required arguments only
+    immutable 
+    # all possible arguments
+    immutable message: "message"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Immutable Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | message | optional | String | The message which will be raised if the validation fails. |
 
-**Immutable Once Set**
+### Immutable Once Set
 
 Ensures that the value of this field can not be changed
 after it is has been set. This means that the value can
@@ -173,21 +201,25 @@ in API validation and generated documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  cidr_field :name do
+  cidr_field :value do
     ...
-    immutable_once_set :name, array: array
+    # required arguments only
+    immutable_once_set 
+    # all possible arguments
+    immutable_once_set message: "message"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Immutable Once Set Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | message | optional | String | The message which will be raised if the validation fails. |
 
-**Remove Null Array Values**
+### Remove Null Array Values
 
 Ensures that the value of this field does not contain any null values.
 Any null values will automatically be removed before saving the record.
@@ -197,15 +229,19 @@ null values. This is only compatibile with array fields.
 
 ```ruby
 class MyModel < PlatformModel
-  cidr_field :name do
+  cidr_field :value do
     ...
-    remove_null_array_values :name, array: array
+    # required arguments only
+    remove_null_array_values 
+    # all possible arguments
+    remove_null_array_values comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Remove Null Array Values Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

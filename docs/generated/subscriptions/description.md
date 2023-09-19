@@ -7,15 +7,19 @@ has_toc: false
 permalink: /subscriptions/description
 ---
 
+# Description
+{: .no_toc }
+
 Add descriptions to your classes.
 
 ```ruby
-class MySubscription < PlatformerSubscription
-  description description
+class MySubscription < PlatformSubscription
+  description "description"
 end
 ```
 
-**Arguments**
+#### Description Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

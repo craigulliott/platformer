@@ -7,13 +7,20 @@ has_toc: false
 permalink: /callbacks/after_stage_change
 ---
 
+# After Stage Change
+{: .no_toc }
+
 ```ruby
-class MyCallback < PlatformerCallback
-  after_stage_change :to
+class MyCallback < PlatformCallback
+  # required arguments only
+  after_stage_change :value
+  # all possible arguments
+  after_stage_change :value, from: :value
 end
 ```
 
-**Arguments**
+#### After Stage Change Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

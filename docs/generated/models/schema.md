@@ -7,6 +7,9 @@ has_toc: false
 permalink: /models/schema
 ---
 
+# Schema
+{: .no_toc }
+
 For databases which support it (such as `postgres`), this is the
 name of the postgres servers database schema where the data for
 this model will be persisted. If you do not provide a schema name,
@@ -27,7 +30,7 @@ end
 # A base class within the Users namespace for all Users models
 # to extend from.
 class Users::UsersModel
-  # all models within the Usrs namespace should be stored
+  # all models within the Users namespace should be stored
   # in the "users" schema within our database
   schema :users
 
@@ -47,12 +50,13 @@ end
 ```
 
 ```ruby
-class MyModel < PlatformerModel
-  schema :schema_name
+class MyModel < PlatformModel
+  schema :value
 end
 ```
 
-**Arguments**
+#### Schema Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

@@ -8,5 +8,6 @@ permalink: /mutators
 ---
 
 # Mutators
+{: .no_toc }
 
 Create mutation definitions in platform/mutations

@@ -7,17 +7,23 @@ has_toc: false
 permalink: /schemas/root_collection
 ---
 
+# Root Collection
+{: .no_toc }
+
 Makes a collection of these models available via a root query.
 
 ```ruby
-class MySchema < PlatformerSchema
+class MySchema < PlatformSchema
   root_collection 
 end
 ```
 
-**Additional Configuration Options**
+## Additional Configuration
+{: .no_toc }
 
-**By Exact String**
+You can further configure the Root Collection by using the following methods:
+
+### By Exact String
 
 Allows for a string search against one of the models fields.
 
@@ -25,13 +31,17 @@ Allows for a string search against one of the models fields.
 class MySchema < PlatformSchema
   root_collection  do
     ...
-    by_exact_string 
+    # required arguments only
+    by_exact_string :value
+    # all possible arguments
+    by_exact_string :value, required: false
     ...
   end
 end
 ```
 
-**Arguments**
+#### By Exact String Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

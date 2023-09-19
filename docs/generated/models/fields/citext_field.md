@@ -8,43 +8,58 @@ has_toc: false
 permalink: /models/fields/citext_field
 ---
 
+# Citext Field
+{: .no_toc }
+
 Add a citext field to this model. The citext type can store citext of
 a specific length.
 
 ```ruby
-class MyModel < PlatformerModel
-  citext_field :name
+class MyModel < PlatformModel
+  # required arguments only
+  citext_field :value
+  # all possible arguments
+  citext_field :value, array: false
 end
 ```
 
-**Arguments**
+#### Citext Field Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | name | required | Symbol | The name of your field. |
 | array | optional | Boolean | If true, then this field will be an array of citexts, and will be backed by a `citext[]` type in PostgreSQL. |
 
-**Additional Configuration Options**
+## Additional Configuration
+{: .no_toc }
 
-**Default**
+You can further configure the Citext Field by using the following methods:
+
+- TOC
+{:toc}
+
+
+### Default
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    default :name, array: array
+    default "default"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Default Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | default | required | String |  |
 
-**Allow Null**
+### Allow Null
 
 If true, then a null value is permitted for this field. This
 is validated at the API level and with active record validations.
@@ -53,15 +68,15 @@ NULL values
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    allow_null :name, array: array
+    allow_null 
     ...
   end
 end
 ```
 
-**Empty Array To Null**
+### Empty Array To Null
 
 Ensures that the value of this field can not be an empty Array. If
 at empty object is provided then it will automatically be converted
@@ -74,36 +89,44 @@ used on fields which have been set to `array: true`.
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    empty_array_to_null :name, array: array
+    # required arguments only
+    empty_array_to_null 
+    # all possible arguments
+    empty_array_to_null comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Empty Array To Null Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | comment | optional | String | A comment which explains the reason for adding coercing empty arrays to null on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
-**Unique**
+### Unique
 
 If used within a field dsl then this will enforce uniqueness for this
 field.
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    unique :name, array: array
+    # required arguments only
+    unique 
+    # all possible arguments
+    unique deferrable: false, initially_deferred: false, where: "where", scope: [:value], message: "message", comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Unique Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
@@ -114,7 +137,7 @@ end
 | message | optional | String | The message which will be displayed if the validation fails. |
 | comment | optional | String | A comment which explains the reason for uniqueness on this field. This will be used to generate documentation, and error messages |
 
-**Comment**
+### Comment
 
 This method is used to describe a specific use of this
 field within a model, this description will be added to
@@ -123,21 +146,22 @@ generate API documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    comment :name, array: array
+    comment "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Comment Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | comment | required | String | The description of this field |
 
-**Immutable**
+### Immutable
 
 Ensures that the value of this field can not be changed
 after it is initially created. This will create an active
@@ -146,21 +170,25 @@ in API validation and generated documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    immutable :name, array: array
+    # required arguments only
+    immutable 
+    # all possible arguments
+    immutable message: "message"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Immutable Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | message | optional | String | The message which will be raised if the validation fails. |
 
-**Immutable Once Set**
+### Immutable Once Set
 
 Ensures that the value of this field can not be changed
 after it is has been set. This means that the value can
@@ -172,21 +200,25 @@ in API validation and generated documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    immutable_once_set :name, array: array
+    # required arguments only
+    immutable_once_set 
+    # all possible arguments
+    immutable_once_set message: "message"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Immutable Once Set Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | message | optional | String | The message which will be raised if the validation fails. |
 
-**Trim And Nullify**
+### Trim And Nullify
 
 Ensures that the value of this field can not be an empty string
 or have white space at the beginning or end of the value. Any
@@ -199,21 +231,25 @@ saved.
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    trim_and_nullify :name, array: array
+    # required arguments only
+    trim_and_nullify 
+    # all possible arguments
+    trim_and_nullify comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Trim And Nullify Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | comment | optional | String | A comment which explains the reason for adding trim and nullify on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
-**Remove Null Array Values**
+### Remove Null Array Values
 
 Ensures that the value of this field does not contain any null values.
 Any null values will automatically be removed before saving the record.
@@ -223,21 +259,25 @@ null values. This is only compatibile with array fields.
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    remove_null_array_values :name, array: array
+    # required arguments only
+    remove_null_array_values 
+    # all possible arguments
+    remove_null_array_values comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Remove Null Array Values Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | comment | optional | String | A comment which explains the reason for automatically removing any null values from this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
-**Validate Minimum Length**
+### Validate Minimum Length
 
 Ensures that the string length of the value of this field
 is at least as long as the provided number of characters.
@@ -247,15 +287,19 @@ documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    validate_minimum_length :name, array: array
+    # required arguments only
+    validate_minimum_length 123
+    # all possible arguments
+    validate_minimum_length 123, deferrable: false, initially_deferred: false, message: "message", comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Validate Minimum Length Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
@@ -265,7 +309,7 @@ end
 | message | optional | String | The message which will be raised if the validation fails. |
 | comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
-**Validate Maximum Length**
+### Validate Maximum Length
 
 Ensures that the string length of the value of this field
 is not longer than the provided number of characters. This
@@ -275,15 +319,19 @@ documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    validate_maximum_length :name, array: array
+    # required arguments only
+    validate_maximum_length 123
+    # all possible arguments
+    validate_maximum_length 123, deferrable: false, initially_deferred: false, message: "message", comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Validate Maximum Length Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
@@ -293,7 +341,7 @@ end
 | message | optional | String | The message which will be raised if the validation fails. |
 | comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
-**Validate Length Is**
+### Validate Length Is
 
 Ensures that the string length of the value of this field
 is exactly as long as the provided number of characters. This
@@ -303,15 +351,19 @@ documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    validate_length_is :name, array: array
+    # required arguments only
+    validate_length_is 123
+    # all possible arguments
+    validate_length_is 123, deferrable: false, initially_deferred: false, message: "message", comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Validate Length Is Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
@@ -321,7 +373,7 @@ end
 | message | optional | String | The message which will be raised if the validation fails. |
 | comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
-**Validate Format**
+### Validate Format
 
 Ensures that the value of this field matches the provided regex.
 This will create an active record validation, a database
@@ -330,15 +382,19 @@ documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    validate_format :name, array: array
+    # required arguments only
+    validate_format value
+    # all possible arguments
+    validate_format value, deferrable: false, initially_deferred: false, message: "message", comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Validate Format Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
@@ -348,7 +404,7 @@ end
 | message | optional | String | The message which will be raised if the validation fails. |
 | comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
-**Validate In**
+### Validate In
 
 Ensures that the value of this field matches one of the provided values.
 This will create an active record validation, a database
@@ -357,15 +413,19 @@ documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    validate_in :name, array: array
+    # required arguments only
+    validate_in ["values"]
+    # all possible arguments
+    validate_in ["values"], deferrable: false, initially_deferred: false, message: "message", comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Validate In Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
@@ -375,7 +435,7 @@ end
 | message | optional | String | The message which will be raised if the validation fails. |
 | comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
-**Validate Not In**
+### Validate Not In
 
 Ensures that the value of this field is not equal to any
 of the provided values.
@@ -385,15 +445,19 @@ documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    validate_not_in :name, array: array
+    # required arguments only
+    validate_not_in ["values"]
+    # all possible arguments
+    validate_not_in ["values"], deferrable: false, initially_deferred: false, message: "message", comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Validate Not In Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
@@ -403,7 +467,7 @@ end
 | message | optional | String | The message which will be raised if the validation fails. |
 | comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
-**Validate Is Value**
+### Validate Is Value
 
 Ensures that the value of this field is equal to the provided value
 This will create an active record validation, a database
@@ -412,15 +476,19 @@ documentation.
 
 ```ruby
 class MyModel < PlatformModel
-  citext_field :name do
+  citext_field :value do
     ...
-    validate_is_value :name, array: array
+    # required arguments only
+    validate_is_value "value"
+    # all possible arguments
+    validate_is_value "value", deferrable: false, initially_deferred: false, message: "message", comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Validate Is Value Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

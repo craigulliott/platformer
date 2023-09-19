@@ -8,5 +8,6 @@ permalink: /schemas
 ---
 
 # Schemas
+{: .no_toc }
 
 Create schema definitions in platform/schemas

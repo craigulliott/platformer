@@ -8,5 +8,6 @@ permalink: /services
 ---
 
 # Services
+{: .no_toc }
 
 Create service definitions in platform/services

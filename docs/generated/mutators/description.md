@@ -7,15 +7,19 @@ has_toc: false
 permalink: /mutators/description
 ---
 
+# Description
+{: .no_toc }
+
 Add descriptions to your classes.
 
 ```ruby
-class MyMutation < PlatformerMutation
-  description description
+class MyMutation < PlatformMutation
+  description "description"
 end
 ```
 
-**Arguments**
+#### Description Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

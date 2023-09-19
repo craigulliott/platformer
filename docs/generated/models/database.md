@@ -7,6 +7,9 @@ has_toc: false
 permalink: /models/database
 ---
 
+# Database
+{: .no_toc }
+
 Selects the server, database and schema which will be
 used to store data for this model and all models which
 extend this one.
@@ -17,12 +20,16 @@ on a decendent class and it will set the database configuration
 for only that class and any decendents of it.
 
 ```ruby
-class MyModel < PlatformerModel
-  database :server_type, :server_name
+class MyModel < PlatformModel
+  # required arguments only
+  database :value, :value
+  # all possible arguments
+  database :value, :value, database_name: :value
 end
 ```
 
-**Arguments**
+#### Database Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

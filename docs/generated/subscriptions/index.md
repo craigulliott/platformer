@@ -8,5 +8,6 @@ permalink: /subscriptions
 ---
 
 # Subscriptions
+{: .no_toc }
 
 Create subscription definitions in platform/subscriptions

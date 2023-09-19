@@ -8,5 +8,6 @@ permalink: /callbacks
 ---
 
 # Callbacks
+{: .no_toc }
 
 Create callback definitions in platform/callbacks

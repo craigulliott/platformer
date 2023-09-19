@@ -7,37 +7,45 @@ has_toc: false
 permalink: /mutators/action
 ---
 
+# Action
+{: .no_toc }
+
 Adds a mutation based on one of this models action fields.
 
 ```ruby
-class MyMutation < PlatformerMutation
-  action :action_field_name
+class MyMutation < PlatformMutation
+  action :value
 end
 ```
 
-**Arguments**
+#### Action Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | action_field_name | required | Symbol | The name of the action field which this action is for |
 
-**Additional Configuration Options**
+## Additional Configuration
+{: .no_toc }
 
-**Fields**
+You can further configure the Action by using the following methods:
+
+### Fields
 
 A list of this models fields which can be changed via this mutation.
 
 ```ruby
 class MyMutation < PlatformMutation
-  action :action_field_name do
+  action :value do
     ...
-    fields :action_field_name
+    fields [:value]
     ...
   end
 end
 ```
 
-**Arguments**
+#### Fields Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

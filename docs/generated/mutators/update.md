@@ -7,17 +7,23 @@ has_toc: false
 permalink: /mutators/update
 ---
 
+# Update
+{: .no_toc }
+
 Adds a mutation to update a new record of this model.
 
 ```ruby
-class MyMutation < PlatformerMutation
+class MyMutation < PlatformMutation
   update 
 end
 ```
 
-**Additional Configuration Options**
+## Additional Configuration
+{: .no_toc }
 
-**Fields**
+You can further configure the Update by using the following methods:
+
+### Fields
 
 A list of this models fields which can be set via this update mutation.
 
@@ -25,13 +31,14 @@ A list of this models fields which can be set via this update mutation.
 class MyMutation < PlatformMutation
   update  do
     ...
-    fields 
+    fields [:value]
     ...
   end
 end
 ```
 
-**Arguments**
+#### Fields Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

@@ -8,42 +8,57 @@ has_toc: false
 permalink: /models/fields/currency_field
 ---
 
+# Currency Field
+{: .no_toc }
+
 Add a currency field to this model.
 
 ```ruby
-class MyModel < PlatformerModel
+class MyModel < PlatformModel
+  # required arguments only
   currency_field 
+  # all possible arguments
+  currency_field prefix: :value, array: false
 end
 ```
 
-**Arguments**
+#### Currency Field Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | prefix | optional | Symbol | An optional prefix to use for the name of this field. This prefix will be prepended to the column names which back this model, and to the presenter methods, graphql queries and mutations. |
 | array | optional | Boolean | If true, then this field will be an array of currencys, and will be backed by a `platformer.currency_codes[]` type in PostgreSQL. |
 
-**Additional Configuration Options**
+## Additional Configuration
+{: .no_toc }
 
-**Default**
+You can further configure the Currency Field by using the following methods:
+
+- TOC
+{:toc}
+
+
+### Default
 
 ```ruby
 class MyModel < PlatformModel
   currency_field  do
     ...
-    default prefix: :prefix, array: array
+    default "default"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Default Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | default | required | String |  |
 
-**Allow Null**
+### Allow Null
 
 If true, then a null value is permitted for this field. This
 is validated at the API level and with active record validations.
@@ -54,13 +69,13 @@ NULL values
 class MyModel < PlatformModel
   currency_field  do
     ...
-    allow_null prefix: :prefix, array: array
+    allow_null 
     ...
   end
 end
 ```
 
-**Empty Array To Null**
+### Empty Array To Null
 
 Ensures that the value of this field can not be an empty Array. If
 at empty object is provided then it will automatically be converted
@@ -75,19 +90,23 @@ used on fields which have been set to `array: true`.
 class MyModel < PlatformModel
   currency_field  do
     ...
-    empty_array_to_null prefix: :prefix, array: array
+    # required arguments only
+    empty_array_to_null 
+    # all possible arguments
+    empty_array_to_null comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Empty Array To Null Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | comment | optional | String | A comment which explains the reason for adding coercing empty arrays to null on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
-**Unique**
+### Unique
 
 If used within a field dsl then this will enforce uniqueness for this
 field.
@@ -96,13 +115,17 @@ field.
 class MyModel < PlatformModel
   currency_field  do
     ...
-    unique prefix: :prefix, array: array
+    # required arguments only
+    unique 
+    # all possible arguments
+    unique deferrable: false, initially_deferred: false, where: "where", scope: [:value], message: "message", comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Unique Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
@@ -113,7 +136,7 @@ end
 | message | optional | String | The message which will be displayed if the validation fails. |
 | comment | optional | String | A comment which explains the reason for uniqueness on this field. This will be used to generate documentation, and error messages |
 
-**Comment**
+### Comment
 
 This method is used to describe a specific use of this
 field within a model, this description will be added to
@@ -124,19 +147,20 @@ generate API documentation.
 class MyModel < PlatformModel
   currency_field  do
     ...
-    comment prefix: :prefix, array: array
+    comment "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Comment Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | comment | required | String | The description of this field |
 
-**Validate In**
+### Validate In
 
 Ensures that the value of this field matches one of the provided values.
 This will create an active record validation, a database
@@ -147,13 +171,17 @@ documentation.
 class MyModel < PlatformModel
   currency_field  do
     ...
-    validate_in prefix: :prefix, array: array
+    # required arguments only
+    validate_in ["values"]
+    # all possible arguments
+    validate_in ["values"], deferrable: false, initially_deferred: false, message: "message", comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Validate In Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
@@ -163,7 +191,7 @@ end
 | message | optional | String | The message which will be raised if the validation fails. |
 | comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
-**Validate Not In**
+### Validate Not In
 
 Ensures that the value of this field is not equal to any
 of the provided values.
@@ -175,13 +203,17 @@ documentation.
 class MyModel < PlatformModel
   currency_field  do
     ...
-    validate_not_in prefix: :prefix, array: array
+    # required arguments only
+    validate_not_in ["values"]
+    # all possible arguments
+    validate_not_in ["values"], deferrable: false, initially_deferred: false, message: "message", comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Validate Not In Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
@@ -191,7 +223,7 @@ end
 | message | optional | String | The message which will be raised if the validation fails. |
 | comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
-**Validate Is Value**
+### Validate Is Value
 
 Ensures that the value of this field is equal to the provided value
 This will create an active record validation, a database
@@ -202,13 +234,17 @@ documentation.
 class MyModel < PlatformModel
   currency_field  do
     ...
-    validate_is_value prefix: :prefix, array: array
+    # required arguments only
+    validate_is_value "value"
+    # all possible arguments
+    validate_is_value "value", deferrable: false, initially_deferred: false, message: "message", comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Validate Is Value Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
@@ -218,7 +254,7 @@ end
 | message | optional | String | The message which will be raised if the validation fails. |
 | comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
-**Immutable**
+### Immutable
 
 Ensures that the value of this field can not be changed
 after it is initially created. This will create an active
@@ -229,19 +265,23 @@ in API validation and generated documentation.
 class MyModel < PlatformModel
   currency_field  do
     ...
-    immutable prefix: :prefix, array: array
+    # required arguments only
+    immutable 
+    # all possible arguments
+    immutable message: "message"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Immutable Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | message | optional | String | The message which will be raised if the validation fails. |
 
-**Immutable Once Set**
+### Immutable Once Set
 
 Ensures that the value of this field can not be changed
 after it is has been set. This means that the value can
@@ -255,19 +295,23 @@ in API validation and generated documentation.
 class MyModel < PlatformModel
   currency_field  do
     ...
-    immutable_once_set prefix: :prefix, array: array
+    # required arguments only
+    immutable_once_set 
+    # all possible arguments
+    immutable_once_set message: "message"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Immutable Once Set Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | message | optional | String | The message which will be raised if the validation fails. |
 
-**Remove Null Array Values**
+### Remove Null Array Values
 
 Ensures that the value of this field does not contain any null values.
 Any null values will automatically be removed before saving the record.
@@ -279,13 +323,17 @@ null values. This is only compatibile with array fields.
 class MyModel < PlatformModel
   currency_field  do
     ...
-    remove_null_array_values prefix: :prefix, array: array
+    # required arguments only
+    remove_null_array_values 
+    # all possible arguments
+    remove_null_array_values comment: "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Remove Null Array Values Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

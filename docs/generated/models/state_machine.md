@@ -7,6 +7,9 @@ has_toc: false
 permalink: /models/state_machine
 ---
 
+# State Machine
+{: .no_toc }
+
 A state machine simplifies the expression of business logic for a model
 by organizing it into distinct states and permitted transitions between
 those states. This is particularly useful for managing workflows, multi-step
@@ -19,21 +22,28 @@ invaluable when integrated with callbacks, background jobs, webhooks, and
 external services.
 
 ```ruby
-class MyModel < PlatformerModel
+class MyModel < PlatformModel
+  # required arguments only
   state_machine 
+  # all possible arguments
+  state_machine name: :value, log_transitions: false
 end
 ```
 
-**Arguments**
+#### State Machine Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | name | optional | Symbol | A name for this state machine. If you omit this option then the default name `:state` will be assumed. This option is typically only required if you need to have multiple state machines on the same model. |
 | log_transitions | optional | Boolean | If set to true, a dedicated table will be created to automatically record transitions for this model. If the model is named `:projects`, the automatically generated table will be called `:project_transitions`. |
 
-**Additional Configuration Options**
+## Additional Configuration
+{: .no_toc }
 
-**Comment**
+You can further configure the State Machine by using the following methods:
+
+### Comment
 
 This method is used to describe a specific use of this
 field within a model, this description will be added to
@@ -44,19 +54,20 @@ generate API documentation.
 class MyModel < PlatformModel
   state_machine  do
     ...
-    comment name: :name, log_transitions: log_transitions
+    comment "comment"
     ...
   end
 end
 ```
 
-**Arguments**
+#### Comment Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | comment | required | String | The description of this field |
 
-**State**
+### State
 
 Add a state to your state machine. A state machine should comprise
 multiple states. The first state you define will serve as the default
@@ -66,13 +77,17 @@ state for the machine.
 class MyModel < PlatformModel
   state_machine  do
     ...
-    state name: :name, log_transitions: log_transitions
+    # required arguments only
+    state :value
+    # all possible arguments
+    state :value, comment: :value, requires_presence_of: [:value], requires_absence_of: [:value]
     ...
   end
 end
 ```
 
-**Arguments**
+#### State Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
@@ -81,7 +96,7 @@ end
 | requires_presence_of | optional | Array[Symbol] | Specify an optional array of field names for the model, each of which must contain a value when the model is in, or transitioning to, this state. This requirement is common in state machines, as models often accumulate data while advancing through different states. For instance, transitioning to the `:published` state may necessitate that the `:published_by` field includes a user. |
 | requires_absence_of | optional | Array[Symbol] | Specify an optional array of field names for this model. When the model is in or transitioning to this state, these fields must be empty. For instance, if the state machine is in the `:unpublished` state, the `:published_by` field should have no user value. |
 
-**Action**
+### Action
 
 Create an action to outline permitted transitions between your model's
 states. Upon triggering, the action will sequentially evaluate and execute
@@ -96,13 +111,17 @@ or because any provided guards return false, then an error will be raised.
 class MyModel < PlatformModel
   state_machine  do
     ...
-    action name: :name, log_transitions: log_transitions
+    # required arguments only
+    action :value, :value
+    # all possible arguments
+    action :value, :value, comment: :value, from: [:value], guards: [:value]
     ...
   end
 end
 ```
 
-**Arguments**
+#### Action Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

@@ -7,15 +7,19 @@ has_toc: false
 permalink: /jobs/description
 ---
 
+# Description
+{: .no_toc }
+
 Add descriptions to your classes.
 
 ```ruby
-class MyJob < PlatformerJob
-  description description
+class MyJob < PlatformJob
+  description "description"
 end
 ```
 
-**Arguments**
+#### Description Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|

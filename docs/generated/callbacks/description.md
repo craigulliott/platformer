@@ -7,15 +7,19 @@ has_toc: false
 permalink: /callbacks/description
 ---
 
+# Description
+{: .no_toc }
+
 Add descriptions to your classes.
 
 ```ruby
-class MyCallback < PlatformerCallback
-  description description
+class MyCallback < PlatformCallback
+  description "description"
 end
 ```
 
-**Arguments**
+#### Description Arguments
+{: .no_toc }
 
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
