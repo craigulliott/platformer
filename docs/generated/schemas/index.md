@@ -2,35 +2,11 @@
 layout: default
 title: Schemas
 has_children: true
+has_toc: true
+nav_order: 7
+permalink: /schemas
 ---
 
+# Schemas
+
 Create schema definitions in platform/schemas
-
-## Description
-
-[Description](description.md)
-
-
-## Fields
-
-[Fields](fields.md)
-
-
-## Node Field
-
-[Node Field](node_field.md)
-
-
-## Connection
-
-[Connection](connection.md)
-
-
-## Root Node
-
-[Root Node](root_node.md)
-
-
-## Root Collection
-
-[Root Collection](root_collection.md)

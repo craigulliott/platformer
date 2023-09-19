@@ -3,6 +3,8 @@ layout: default
 title: Fields
 parent: Schemas
 has_children: false
+has_toc: false
+permalink: /schemas/fields
 ---
 
 A list of the all this models scalar and enum fields which will be exposed via graphql.
@@ -11,10 +13,10 @@ A list of the all this models scalar and enum fields which will be exposed via g
 class MySchema < PlatformerSchema
   fields :fields
 end
-
 ```
 
 **Arguments**
 
-fields (required [Symbol])
-:   The names of this models fields to expose.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| fields | required | Array[Symbol] | The names of this models fields to expose. |

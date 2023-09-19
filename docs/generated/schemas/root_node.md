@@ -3,6 +3,8 @@ layout: default
 title: Root Node
 parent: Schemas
 has_children: false
+has_toc: false
+permalink: /schemas/root_node
 ---
 
 Makes this model available via a root node query.
@@ -11,7 +13,6 @@ Makes this model available via a root node query.
 class MySchema < PlatformerSchema
   root_node 
 end
-
 ```
 
 **Additional Configuration Options**
@@ -29,7 +30,6 @@ class MySchema < PlatformSchema
     ...
   end
 end
-
 ```
 
 **By Exact String**
@@ -44,13 +44,11 @@ class MySchema < PlatformSchema
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-field_name (required Symbol)
-:   The name of the field we are searching against.
-
-required (optional Boolean)
-:   If true. then using this argument is required when querying this collection.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| field_name | required | Symbol | The name of the field we are searching against. |
+| required | optional | Boolean | If true. then using this argument is required when querying this collection. |

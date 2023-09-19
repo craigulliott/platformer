@@ -67,3 +67,10 @@ kramdown:
   syntax_highlighter_opts:
     block:
       line_numbers: false
+
+color_scheme: dark
+
+callouts:
+  warning:
+    title: Warning
+    color: red

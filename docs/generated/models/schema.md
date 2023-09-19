@@ -3,6 +3,8 @@ layout: default
 title: Schema
 parent: Models
 has_children: false
+has_toc: false
+permalink: /models/schema
 ---
 
 For databases which support it (such as `postgres`), this is the
@@ -48,10 +50,10 @@ end
 class MyModel < PlatformerModel
   schema :schema_name
 end
-
 ```
 
 **Arguments**
 
-schema_name (required Symbol)
-:   The name of the schema to use.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| schema_name | required | Symbol | The name of the schema to use. |

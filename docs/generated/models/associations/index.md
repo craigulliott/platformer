@@ -3,18 +3,8 @@ layout: default
 title: Associations
 parent: Models
 has_children: true
+has_toc: true
+permalink: /models/associations
 ---
 
-## Belongs To
-
-[Belongs To](belongs_to.md)
-
-
-## Has Many
-
-[Has Many](has_many.md)
-
-
-## Has One
-
-[Has One](has_one.md)
+# Associations

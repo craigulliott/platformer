@@ -3,6 +3,8 @@ layout: default
 title: Root Collection
 parent: Schemas
 has_children: false
+has_toc: false
+permalink: /schemas/root_collection
 ---
 
 Makes a collection of these models available via a root query.
@@ -11,7 +13,6 @@ Makes a collection of these models available via a root query.
 class MySchema < PlatformerSchema
   root_collection 
 end
-
 ```
 
 **Additional Configuration Options**
@@ -28,13 +29,11 @@ class MySchema < PlatformSchema
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-field_name (required Symbol)
-:   The name of the field we are searching against.
-
-required (optional Boolean)
-:   If true. then using this argument is required when querying this collection.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| field_name | required | Symbol | The name of the field we are searching against. |
+| required | optional | Boolean | If true. then using this argument is required when querying this collection. |

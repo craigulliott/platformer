@@ -3,6 +3,8 @@ layout: default
 title: Node Field
 parent: Schemas
 has_children: false
+has_toc: false
+permalink: /schemas/node_field
 ---
 
 Adds a new node directly to the current node's list of fields. This
@@ -19,13 +21,11 @@ to the other model through that join model.
 class MySchema < PlatformerSchema
   node_field "Foreign Model"
 end
-
 ```
 
 **Arguments**
 
-foreign_model (required Class)
-:   The model which is associated to this model via the `has_one` or `belongs_to` association.
-
-association_name (optional Symbol)
-:   If a custom name was used when creating the association between this model and the foreign model, then this name should be provided here.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| foreign_model | required | Class | The model which is associated to this model via the `has_one` or `belongs_to` association. |
+| association_name | optional | Symbol | If a custom name was used when creating the association between this model and the foreign model, then this name should be provided here. |

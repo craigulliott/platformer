@@ -3,6 +3,8 @@ layout: default
 title: Connection
 parent: Schemas
 has_children: false
+has_toc: false
+permalink: /schemas/connection
 ---
 
 In GraphQL, a "connection" serves as a specialized abstraction layer
@@ -20,16 +22,14 @@ and relationships within a GraphQL schema.
 class MySchema < PlatformerSchema
   connection "Foreign Model"
 end
-
 ```
 
 **Arguments**
 
-foreign_model (required Class)
-:   The model which is associated to this model via the `has_many` association.
-
-association_name (optional Symbol)
-:   If a custom name was used when creating the association between this model and the foreign model, then this name should be provided here.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| foreign_model | required | Class | The model which is associated to this model via the `has_many` association. |
+| association_name | optional | Symbol | If a custom name was used when creating the association between this model and the foreign model, then this name should be provided here. |
 
 **Additional Configuration Options**
 
@@ -54,10 +54,10 @@ class MySchema < PlatformSchema
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-field_name (required Symbol)
-:   The name of the field on the join model to expose via an edge.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| field_name | required | Symbol | The name of the field on the join model to expose via an edge. |

@@ -4,6 +4,8 @@ title: Char Field
 parent: Fields
 grand_parent: Models
 has_children: false
+has_toc: false
+permalink: /models/fields/char_field
 ---
 
 Add a char field to this model. The char type can store text of
@@ -13,19 +15,15 @@ a specific length.
 class MyModel < PlatformerModel
   char_field :name
 end
-
 ```
 
 **Arguments**
 
-name (required Symbol)
-:   The name of your field.
-
-array (optional Boolean)
-:   If true, then this field will be an array of chars, and will be backed by a `char(length)[]` type in PostgreSQL.
-
-length (optional Integer)
-:   If provided, then length is the total number of characters which can be held in this field.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| name | required | Symbol | The name of your field. |
+| array | optional | Boolean | If true, then this field will be an array of chars, and will be backed by a `char(length)[]` type in PostgreSQL. |
+| length | optional | Integer | If provided, then length is the total number of characters which can be held in this field. |
 
 **Additional Configuration Options**
 
@@ -39,13 +37,13 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-default (required String)
-:   
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| default | required | String |  |
 
 **Allow Null**
 
@@ -62,7 +60,6 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Empty Array To Null**
@@ -84,13 +81,13 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-comment (optional String)
-:   A comment which explains the reason for adding coercing empty arrays to null on this field. This will be used to generate documentation, and will be added as a comment to the database constraint.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| comment | optional | String | A comment which explains the reason for adding coercing empty arrays to null on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
 **Unique**
 
@@ -105,28 +102,18 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-deferrable (optional Boolean)
-:   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
-
-initially_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
-
-where (optional String)
-:   An optional SQL condition which can be used to limit this uniqueness to a subset of records. If you provide a value for where, then it is not possible to set 'deferrable: true', this is because the underlying constraint will be enforced by a unique index rather than a unique_contraint, and indexes can not be deferred in postgres.
-
-scope (optional [Symbol])
-:   An optional list of fields which will be used to scope the uniqueness constraint for this field.
-
-message (optional String)
-:   The message which will be displayed if the validation fails.
-
-comment (optional String)
-:   A comment which explains the reason for uniqueness on this field. This will be used to generate documentation, and error messages
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| deferrable | optional | Boolean | The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement. |
+| initially_deferred | optional | Boolean | If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`. |
+| where | optional | String | An optional SQL condition which can be used to limit this uniqueness to a subset of records. If you provide a value for where, then it is not possible to set 'deferrable: true', this is because the underlying constraint will be enforced by a unique index rather than a unique_contraint, and indexes can not be deferred in postgres. |
+| scope | optional | Array[Symbol] | An optional list of fields which will be used to scope the uniqueness constraint for this field. |
+| message | optional | String | The message which will be displayed if the validation fails. |
+| comment | optional | String | A comment which explains the reason for uniqueness on this field. This will be used to generate documentation, and error messages |
 
 **Comment**
 
@@ -143,13 +130,13 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-comment (required String)
-:   The description of this field
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| comment | required | String | The description of this field |
 
 **Immutable**
 
@@ -166,13 +153,13 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-message (optional String)
-:   The message which will be raised if the validation fails.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| message | optional | String | The message which will be raised if the validation fails. |
 
 **Immutable Once Set**
 
@@ -192,13 +179,13 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-message (optional String)
-:   The message which will be raised if the validation fails.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| message | optional | String | The message which will be raised if the validation fails. |
 
 **Lowercase**
 
@@ -216,13 +203,13 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-comment (optional String)
-:   A comment which explains the reason for enforcing lowercase on this field. This will be used to generate documentation, and will be added as a comment to the database constraint.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| comment | optional | String | A comment which explains the reason for enforcing lowercase on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
 **Uppercase**
 
@@ -240,13 +227,13 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-comment (optional String)
-:   A comment which explains the reason for enforcing uppercase on this field. This will be used to generate documentation, and will be added as a comment to the database constraint.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| comment | optional | String | A comment which explains the reason for enforcing uppercase on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
 **Trim And Nullify**
 
@@ -267,13 +254,13 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-comment (optional String)
-:   A comment which explains the reason for adding trim and nullify on this field. This will be used to generate documentation, and will be added as a comment to the database constraint.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| comment | optional | String | A comment which explains the reason for adding trim and nullify on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
 **Remove Null Array Values**
 
@@ -291,13 +278,13 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-comment (optional String)
-:   A comment which explains the reason for automatically removing any null values from this field. This will be used to generate documentation, and will be added as a comment to the database constraint.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| comment | optional | String | A comment which explains the reason for automatically removing any null values from this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
 **Validate Minimum Length**
 
@@ -315,25 +302,17 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-value (required Integer)
-:   The value to validate against. The provided value must have a number of characters greater than or equal to this value
-
-deferrable (optional Boolean)
-:   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
-
-initially_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
-
-message (optional String)
-:   The message which will be raised if the validation fails.
-
-comment (optional String)
-:   A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| value | required | Integer | The value to validate against. The provided value must have a number of characters greater than or equal to this value |
+| deferrable | optional | Boolean | The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement. |
+| initially_deferred | optional | Boolean | If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`. |
+| message | optional | String | The message which will be raised if the validation fails. |
+| comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
 **Validate Maximum Length**
 
@@ -351,25 +330,17 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-value (required Integer)
-:   The value to validate against. The provided value must have a number of characters less than or equal to this value
-
-deferrable (optional Boolean)
-:   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
-
-initially_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
-
-message (optional String)
-:   The message which will be raised if the validation fails.
-
-comment (optional String)
-:   A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| value | required | Integer | The value to validate against. The provided value must have a number of characters less than or equal to this value |
+| deferrable | optional | Boolean | The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement. |
+| initially_deferred | optional | Boolean | If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`. |
+| message | optional | String | The message which will be raised if the validation fails. |
+| comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
 **Validate Length Is**
 
@@ -387,25 +358,17 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-value (required Integer)
-:   The value to validate against. The provided value must have a number of characters equal to this value
-
-deferrable (optional Boolean)
-:   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
-
-initially_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
-
-message (optional String)
-:   The message which will be raised if the validation fails.
-
-comment (optional String)
-:   A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| value | required | Integer | The value to validate against. The provided value must have a number of characters equal to this value |
+| deferrable | optional | Boolean | The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement. |
+| initially_deferred | optional | Boolean | If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`. |
+| message | optional | String | The message which will be raised if the validation fails. |
+| comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
 **Validate Format**
 
@@ -422,25 +385,17 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-value (required Object)
-:   The regex to compare the value against. The provided value must match successfully against this regex.
-
-deferrable (optional Boolean)
-:   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
-
-initially_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
-
-message (optional String)
-:   The message which will be raised if the validation fails.
-
-comment (optional String)
-:   A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| value | required | Object | The regex to compare the value against. The provided value must match successfully against this regex. |
+| deferrable | optional | Boolean | The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement. |
+| initially_deferred | optional | Boolean | If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`. |
+| message | optional | String | The message which will be raised if the validation fails. |
+| comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
 **Validate In**
 
@@ -457,25 +412,17 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-values (required [String])
-:   The array of strings to compare the value against.
-
-deferrable (optional Boolean)
-:   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
-
-initially_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
-
-message (optional String)
-:   The message which will be raised if the validation fails.
-
-comment (optional String)
-:   A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| values | required | Array[String] | The array of strings to compare the value against. |
+| deferrable | optional | Boolean | The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement. |
+| initially_deferred | optional | Boolean | If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`. |
+| message | optional | String | The message which will be raised if the validation fails. |
+| comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
 **Validate Not In**
 
@@ -493,25 +440,17 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-values (required [String])
-:   The array of strings to compare the value against.
-
-deferrable (optional Boolean)
-:   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
-
-initially_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
-
-message (optional String)
-:   The message which will be raised if the validation fails.
-
-comment (optional String)
-:   A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| values | required | Array[String] | The array of strings to compare the value against. |
+| deferrable | optional | Boolean | The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement. |
+| initially_deferred | optional | Boolean | If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`. |
+| message | optional | String | The message which will be raised if the validation fails. |
+| comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
 **Validate Is Value**
 
@@ -528,22 +467,14 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-value (required String)
-:   The value to compare against.
-
-deferrable (optional Boolean)
-:   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
-
-initially_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
-
-message (optional String)
-:   The message which will be raised if the validation fails.
-
-comment (optional String)
-:   A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| value | required | String | The value to compare against. |
+| deferrable | optional | Boolean | The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement. |
+| initially_deferred | optional | Boolean | If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`. |
+| message | optional | String | The message which will be raised if the validation fails. |
+| comment | optional | String | A comment which explains the reason for this validation on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |

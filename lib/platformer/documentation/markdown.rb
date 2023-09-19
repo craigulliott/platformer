@@ -8,7 +8,8 @@ module Platformer
         @file_path = @base_path + "/#{filename}"
       end
 
-      def jekyll_header title, parent: nil, grand_parent: nil, has_children: false, nav_order: nil
+      warn "not tested"
+      def jekyll_header title, parent: nil, grand_parent: nil, has_children: false, nav_order: nil, has_toc: false
         lines = []
         lines << "---"
         lines << "layout: default"
@@ -16,7 +17,17 @@ module Platformer
         lines << "parent: #{parent.to_s.titleize}" unless parent.nil?
         lines << "grand_parent: #{grand_parent.to_s.titleize}" unless grand_parent.nil?
         lines << "has_children: #{has_children}"
+        lines << "has_toc: #{has_toc}"
         lines << "nav_order: #{nav_order}" unless nav_order.nil?
+
+        lines << if grand_parent
+          "permalink: /#{grand_parent}/#{parent}/#{title}"
+        elsif parent
+          "permalink: /#{parent}/#{title}"
+        else
+          "permalink: /#{title}"
+        end
+
         lines << "---"
 
         sections << lines.join("\n")
@@ -99,7 +110,7 @@ module Platformer
         unless syntax.nil? || syntax == ""
           markdown = <<~CODEBLOCK.strip
             ```#{language}
-            #{syntax}
+            #{syntax.strip}
             ```
           CODEBLOCK
           sections << markdown
@@ -121,6 +132,18 @@ module Platformer
         markdown = lines.join("\n")
         sections << markdown
         markdown
+      end
+
+      warn "not tested"
+      def table header, rows
+        lines = []
+        lines << "| #{header.join(" | ")} |"
+        lines << "|#{header.map { |header| ":---" }.join("|")}|"
+        rows.each do |row|
+          lines << "| #{row.map { |h| h.to_s.tr("\n", " ") }.join(" | ")} |"
+        end
+
+        sections << lines.join("\n")
       end
 
       def link_document name, other_markdown_document

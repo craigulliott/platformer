@@ -4,6 +4,8 @@ title: Json Field
 parent: Fields
 grand_parent: Models
 has_children: false
+has_toc: false
+permalink: /models/fields/json_field
 ---
 
 Add a json field to this model.
@@ -12,13 +14,13 @@ Add a json field to this model.
 class MyModel < PlatformerModel
   json_field :name
 end
-
 ```
 
 **Arguments**
 
-name (required Symbol)
-:   The name of your field.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| name | required | Symbol | The name of your field. |
 
 **Additional Configuration Options**
 
@@ -37,13 +39,13 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-comment (optional String)
-:   A comment which explains the reason for adding coercing empty arrays to null on this field. This will be used to generate documentation, and will be added as a comment to the database constraint.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| comment | optional | String | A comment which explains the reason for adding coercing empty arrays to null on this field. This will be used to generate documentation, and will be added as a comment to the database constraint. |
 
 **Default**
 
@@ -55,13 +57,13 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-default (required String)
-:   
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| default | required | String |  |
 
 **Allow Null**
 
@@ -78,7 +80,6 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Comment**
@@ -96,13 +97,13 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-comment (required String)
-:   The description of this field
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| comment | required | String | The description of this field |
 
 **Immutable**
 
@@ -119,13 +120,13 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-message (optional String)
-:   The message which will be raised if the validation fails.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| message | optional | String | The message which will be raised if the validation fails. |
 
 **Immutable Once Set**
 
@@ -145,13 +146,13 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-message (optional String)
-:   The message which will be raised if the validation fails.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| message | optional | String | The message which will be raised if the validation fails. |
 
 **Unique**
 
@@ -166,25 +167,15 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-deferrable (optional Boolean)
-:   The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement.
-
-initially_deferred (optional Boolean)
-:   If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`.
-
-where (optional String)
-:   An optional SQL condition which can be used to limit this uniqueness to a subset of records. If you provide a value for where, then it is not possible to set 'deferrable: true', this is because the underlying constraint will be enforced by a unique index rather than a unique_contraint, and indexes can not be deferred in postgres.
-
-scope (optional [Symbol])
-:   An optional list of fields which will be used to scope the uniqueness constraint for this field.
-
-message (optional String)
-:   The message which will be displayed if the validation fails.
-
-comment (optional String)
-:   A comment which explains the reason for uniqueness on this field. This will be used to generate documentation, and error messages
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| deferrable | optional | Boolean | The enforcement of constraints occurs by default at the end of each SQL statement. Setting `deferrable: true` allows you to customize this behaviour and optionally enforce the unique constraint at the end of a transaction instead of after each statement. |
+| initially_deferred | optional | Boolean | If true, then the default time to check the constraint will be at the end of the transaction rather than at the end of each statement.  Setting `initially_deferred: true` requires that this constraint is also marked as `deferrable: true`. |
+| where | optional | String | An optional SQL condition which can be used to limit this uniqueness to a subset of records. If you provide a value for where, then it is not possible to set 'deferrable: true', this is because the underlying constraint will be enforced by a unique index rather than a unique_contraint, and indexes can not be deferred in postgres. |
+| scope | optional | Array[Symbol] | An optional list of fields which will be used to scope the uniqueness constraint for this field. |
+| message | optional | String | The message which will be displayed if the validation fails. |
+| comment | optional | String | A comment which explains the reason for uniqueness on this field. This will be used to generate documentation, and error messages |

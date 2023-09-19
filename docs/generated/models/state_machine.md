@@ -3,6 +3,8 @@ layout: default
 title: State Machine
 parent: Models
 has_children: false
+has_toc: false
+permalink: /models/state_machine
 ---
 
 A state machine simplifies the expression of business logic for a model
@@ -20,16 +22,14 @@ external services.
 class MyModel < PlatformerModel
   state_machine 
 end
-
 ```
 
 **Arguments**
 
-name (optional Symbol)
-:   A name for this state machine. If you omit this option then the default name `:state` will be assumed. This option is typically only required if you need to have multiple state machines on the same model.
-
-log_transitions (optional Boolean)
-:   If set to true, a dedicated table will be created to automatically record transitions for this model. If the model is named `:projects`, the automatically generated table will be called `:project_transitions`.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| name | optional | Symbol | A name for this state machine. If you omit this option then the default name `:state` will be assumed. This option is typically only required if you need to have multiple state machines on the same model. |
+| log_transitions | optional | Boolean | If set to true, a dedicated table will be created to automatically record transitions for this model. If the model is named `:projects`, the automatically generated table will be called `:project_transitions`. |
 
 **Additional Configuration Options**
 
@@ -48,13 +48,13 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-comment (required String)
-:   The description of this field
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| comment | required | String | The description of this field |
 
 **State**
 
@@ -70,22 +70,16 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-name (required Symbol)
-:   Choose a name for the state that is preferably a past or present participle. For example, use `:activated` or `:published` for stable states and `:publishing` or `:activating` for transient, short-lived states that are automatically transitioned away from. Crucially, avoid using verbs like `:activate` or `:publish` for state names, as they can conflict with your event names.
-
-comment (optional Symbol)
-:   A description of this state. This description will be used when generating documentation for your model.
-
-requires_presence_of (optional [Symbol])
-:   Specify an optional array of field names for the model, each of which must contain a value when the model is in, or transitioning to, this state. This requirement is common in state machines, as models often accumulate data while advancing through different states. For instance, transitioning to the `:published` state may necessitate that the `:published_by` field includes a user.
-
-requires_absence_of (optional [Symbol])
-:   Specify an optional array of field names for this model. When the model is in or transitioning to this state, these fields must be empty. For instance, if the state machine is in the `:unpublished` state, the `:published_by` field should have no user value.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| name | required | Symbol | Choose a name for the state that is preferably a past or present participle. For example, use `:activated` or `:published` for stable states and `:publishing` or `:activating` for transient, short-lived states that are automatically transitioned away from. Crucially, avoid using verbs like `:activate` or `:publish` for state names, as they can conflict with your event names. |
+| comment | optional | Symbol | A description of this state. This description will be used when generating documentation for your model. |
+| requires_presence_of | optional | Array[Symbol] | Specify an optional array of field names for the model, each of which must contain a value when the model is in, or transitioning to, this state. This requirement is common in state machines, as models often accumulate data while advancing through different states. For instance, transitioning to the `:published` state may necessitate that the `:published_by` field includes a user. |
+| requires_absence_of | optional | Array[Symbol] | Specify an optional array of field names for this model. When the model is in or transitioning to this state, these fields must be empty. For instance, if the state machine is in the `:unpublished` state, the `:published_by` field should have no user value. |
 
 **Action**
 
@@ -106,22 +100,14 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-name (required Symbol)
-:   Choose a verb for your action name that clearly describes the action required to transition between states. For instance, if your model has `:reviewing` and `:published` states, a suitable action name for transitioning would be `:publish`. If multiple actions share the same name, they will be attempted in sequence and execution will halt at the first successful transition.
-
-to (required Symbol)
-:   Upon successful execution of this action, your model will transition to this state.
-
-comment (optional Symbol)
-:   A description of this action. This description will be used when generating documentation for your model.
-
-from (optional [Symbol])
-:   Specify an optional state name, or multiple state names, from which this action is allowed to transition. If set, the action will only be permitted if the model's current state matches one of the provided states.
-
-guards (optional [Symbol])
-:   Define a method name or multiple methods that must each return true for the transition to be allowed. If any of the specified guards do not return true, the system will attempt the next action with the same name as the current one.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| name | required | Symbol | Choose a verb for your action name that clearly describes the action required to transition between states. For instance, if your model has `:reviewing` and `:published` states, a suitable action name for transitioning would be `:publish`. If multiple actions share the same name, they will be attempted in sequence and execution will halt at the first successful transition. |
+| to | required | Symbol | Upon successful execution of this action, your model will transition to this state. |
+| comment | optional | Symbol | A description of this action. This description will be used when generating documentation for your model. |
+| from | optional | Array[Symbol] | Specify an optional state name, or multiple state names, from which this action is allowed to transition. If set, the action will only be permitted if the model's current state matches one of the provided states. |
+| guards | optional | Array[Symbol] | Define a method name or multiple methods that must each return true for the transition to be allowed. If any of the specified guards do not return true, the system will attempt the next action with the same name as the current one. |

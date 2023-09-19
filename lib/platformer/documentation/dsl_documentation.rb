@@ -92,10 +92,15 @@ module Platformer
         # documentation for each argument
         subsection_header "Arguments"
 
+        header = ["Name", "Required", "Type", "Description"]
+        rows = []
         # for each required and optional argument
         (arguments.required_arguments + arguments.optional_arguments).each do |argument|
-          definition_list "#{argument.name} (#{arg_type_str argument})", argument.description
+          required_string = argument.required ? "required" : "optional"
+          rows << [argument.name, required_string, arg_type_str(argument), argument.description]
         end
+
+        table header, rows
       end
 
       # example argument use string
@@ -148,10 +153,9 @@ module Platformer
       def arg_type_str argument
         argument_type = argument.type.to_s.titleize
         if argument.array
-          argument_type = "[#{argument_type}]"
+          argument_type = "Array[#{argument_type}]"
         end
-        optional_or_required = argument.required ? "required" : "optional"
-        "#{optional_or_required} #{argument_type}"
+        argument_type
       end
     end
   end

@@ -3,6 +3,8 @@ layout: default
 title: Suppress Namespace
 parent: Models
 has_children: false
+has_toc: false
+permalink: /models/suppress_namespace
 ---
 
 Altering the default behavior to exclude a model's namespace from
@@ -18,5 +20,4 @@ for ubiquitous nodes that are unlikely to conflict with other types
 class MyModel < PlatformerModel
   suppress_namespace 
 end
-
 ```

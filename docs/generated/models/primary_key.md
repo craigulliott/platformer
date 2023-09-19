@@ -3,6 +3,8 @@ layout: default
 title: Primary Key
 parent: Models
 has_children: false
+has_toc: false
+permalink: /models/primary_key
 ---
 
 Add a primary key to this table.
@@ -11,13 +13,13 @@ Add a primary key to this table.
 class MyModel < PlatformerModel
   primary_key 
 end
-
 ```
 
 **Arguments**
 
-column_names (optional [Symbol])
-:   If provided, then these existing columns will be used to build the primary key. If ommited, then a default column named `id` with a datatype of `uuid` will be added automatically and used for the primary key.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| column_names | optional | Array[Symbol] | If provided, then these existing columns will be used to build the primary key. If ommited, then a default column named `id` with a datatype of `uuid` will be added automatically and used for the primary key. |
 
 **Additional Configuration Options**
 
@@ -36,10 +38,10 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-comment (required String)
-:   The description of this field
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| comment | required | String | The description of this field |

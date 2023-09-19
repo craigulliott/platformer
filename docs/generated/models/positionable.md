@@ -3,6 +3,8 @@ layout: default
 title: Positionable
 parent: Models
 has_children: false
+has_toc: false
+permalink: /models/positionable
 ---
 
 Adds functionality to your model which allows manual sorting of records.
@@ -16,13 +18,13 @@ number 1.
 class MyModel < PlatformerModel
   positionable 
 end
-
 ```
 
 **Arguments**
 
-scope (optional [Symbol])
-:   The name of fields which this models unique position should be scoped to.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| scope | optional | Array[Symbol] | The name of fields which this models unique position should be scoped to. |
 
 **Additional Configuration Options**
 
@@ -41,10 +43,10 @@ class MyModel < PlatformModel
     ...
   end
 end
-
 ```
 
 **Arguments**
 
-comment (required String)
-:   The description of this field
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| comment | required | String | The description of this field |

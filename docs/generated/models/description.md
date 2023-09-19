@@ -3,6 +3,8 @@ layout: default
 title: Description
 parent: Models
 has_children: false
+has_toc: false
+permalink: /models/description
 ---
 
 Add descriptions to your classes.
@@ -11,10 +13,10 @@ Add descriptions to your classes.
 class MyModel < PlatformerModel
   description description
 end
-
 ```
 
 **Arguments**
 
-description (required String)
-:   The description to add. This accepts markdown.
+| Name | Required | Type | Description |
+|:---|:---|:---|:---|
+| description | required | String | The description to add. This accepts markdown. |
