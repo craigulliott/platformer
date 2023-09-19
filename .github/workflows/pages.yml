@@ -26,24 +26,40 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+
+      # Checkout code
       - name: Checkout
         uses: actions/checkout@v3
+
+      # Setup Ruby
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1' # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
           cache-version: 0 # Increment this number if you need to re-download cached gems
+
+      # Setup pages
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3
+
+      # Move the database configuration into place (else rake wont work)
+      - name: Move database configuration file
+        run: mv config/database.ci.yaml config/database.yaml
+
+      # Generate Documentation
       - name: Generate Docs
         run: bundle exec rake documentation:generate
+
+      # Generate the website from the documentation
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
         run: cd docs && bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+
+      # Upload the site to the artifact store so it can be deployed to gihub pages
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v1
@@ -58,6 +74,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+
+      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
