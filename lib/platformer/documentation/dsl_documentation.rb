@@ -150,10 +150,10 @@ module Platformer
         table header, rows
       end
 
-      def argument_example_value argument
+      def argument_example_value argument, argument_name_for_symbol = false
         type = case argument.type
         when :symbol
-          ":value"
+          argument_name_for_symbol ? ":#{argument.name}" : ":value"
         when :class
           "\"#{argument.name.to_s.titleize.delete(" ")}\""
         when :string
@@ -176,7 +176,7 @@ module Platformer
         string_parts = []
         # add any required arguments
         arguments.required_arguments.each do |argument|
-          string_parts << argument_example_value(argument)
+          string_parts << argument_example_value(argument, true)
         end
         # add any optional arguments
         if include_optional_arguments

@@ -8,13 +8,33 @@ module Platformer
               This validation asserts that the column value matches the provided regexp
             COMMENT
 
+            VALUE_FROM_CHECK_CLAUSE = /
+              \A # start of string
+              \(? # optional opening parenthesis around the whole check clause
+              "? # optional opening quote around the column name
+              \w+ # the column name
+              "? # optional opening quote around the column name
+              \s # whitespace
+              ~ # regex comparitor part of the check clause
+              \* # optional case insensitive part of the regex comparitor
+              \s # whitespace
+              ' # opening single quote around the regex
+              (?<value> # named capture group
+              .+ # the regex
+              ) # close capture group
+              ' # closing single quote around the regex
+              (?:::citext)? # optional cast to citext after the regex
+              \)? # optional closing parenthesis around the whole check clause
+              \z # end of string
+            /x
+
             warn "not tested"
             def fragment_arguments
               assert_not_deferred!
               assert_column_count! 1
 
               column_name = first_column.name
-              value = value_from_check_clause(/\A\w+ ~ '(?<value>.+)'\z/)
+              value = value_from_check_clause(VALUE_FROM_CHECK_CLAUSE)
               options_string = name_and_description_options_string :"#{column_name}_format", DEFAULT_COMMENT
               {
                 schema: validation.table.schema,

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "version"
 
 require_relative "environment"
@@ -29,6 +31,6 @@ require_relative "parsers/all"
 
 require_relative "services/all"
 
-Dir[File.expand_path("initializers/**/*.rb", __dir__)].each do |f|
-  require_relative f
-end
+Platformer.recursive_require_relative "utilities", __dir__
+
+Platformer.recursive_require_relative "initializers", __dir__

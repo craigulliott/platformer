@@ -1,5 +1,15 @@
 # frozen_string_literal: true
 
+module Platformer
+  # recursively require all the files in the specified path, base should be set
+  # to __dir__ in the file that calls this method
+  def self.recursive_require_relative path, base
+    Dir[File.expand_path("#{path}/**/*.rb", base)].each do |f|
+      require_relative f
+    end
+  end
+end
+
 require "byebug"
 
 require "dsl_compose"
@@ -55,6 +65,18 @@ module Platformer
   include Environment
   include Root
   include LoadTasks
+
+  BASE_TYPES = [
+    :model,
+    :schema,
+    :mutator,
+    :subscription,
+    :presenter,
+    :policy,
+    :callback,
+    :job,
+    :service
+  ]
 
   # The composers parse the DSL's and dynamically create the platform. This must occur
   # after the platformer environment has been configured and all of the app files have

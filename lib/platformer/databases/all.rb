@@ -1,16 +1,10 @@
-def recursive_require_relative path
-  Dir[File.expand_path("#{path}/**/*.rb", __dir__)].each do |f|
-    require_relative f
-  end
-end
-
 require_relative "databases"
 
 require_relative "postgres/functions/function"
-recursive_require_relative "postgres/functions"
+Platformer.recursive_require_relative "postgres/functions", __dir__
 
 require_relative "postgres/server"
-recursive_require_relative "postgres/server/database/composers"
+Platformer.recursive_require_relative "postgres/server/database/composers", __dir__
 require_relative "postgres/server/database"
 
 require_relative "configuration"
@@ -19,10 +13,10 @@ require_relative "migrations/migration_file"
 require_relative "migrations/current"
 require_relative "migrations/current/loader"
 
-recursive_require_relative "migrations/helpers/triggers"
-recursive_require_relative "migrations/helpers/validations"
+Platformer.recursive_require_relative "migrations/helpers/triggers", __dir__
+Platformer.recursive_require_relative "migrations/helpers/validations", __dir__
 require_relative "migrations/helpers/all"
 
-recursive_require_relative "migrations/templates"
+Platformer.recursive_require_relative "migrations/templates", __dir__
 
 require_relative "migration"
