@@ -2,6 +2,8 @@
 # and fields in the system. The schema executes queries and publishes an
 # introspection system.
 class SchemaBase < GraphQL::Schema
+  include Platformer::Logger
+
   # Root types (query, mutation, and subscription) are the entry points
   # for queries to the system. We dynamically compose the schema by calling
   # the `field` method on each of these root these methods to add queries,
@@ -14,19 +16,19 @@ class SchemaBase < GraphQL::Schema
     if Schema::Queries.fields.reject { |name, field| name == "node" || name == "nodes" }.any?
       query(Schema::Queries)
     else
-      warn "No queries defined, skipping GraphQL query root type."
+      log.warn "No queries defined, skipping GraphQL query root type."
     end
 
     if Schema::Mutations.fields.any?
       mutation(Schema::Mutations)
     else
-      warn "No mutations defined, skipping GraphQL migration root type."
+      log.warn "No mutations defined, skipping GraphQL migration root type."
     end
 
     if Schema::Subscriptions.fields.any?
       subscription(Schema::Subscriptions)
     else
-      warn "No subscriptions defined, skipping GraphQL subscription root type."
+      log.warn "No subscriptions defined, skipping GraphQL subscription root type."
     end
   end
 

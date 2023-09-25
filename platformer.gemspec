@@ -52,6 +52,9 @@ Gem::Specification.new do |spec|
   # graphql
   spec.add_dependency "graphql", "~> 2.0"
 
+  # logging
+  spec.add_dependency "logging", "~> 2.3"
+
   # sinatra is a thin webserver built on top of rack
   spec.add_dependency "sinatra", "~> 3.1"
   # common extensions for sinatra

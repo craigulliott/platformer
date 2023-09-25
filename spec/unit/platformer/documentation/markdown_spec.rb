@@ -62,7 +62,7 @@ RSpec.describe Platformer::Documentation::Markdown do
 
   describe :h1 do
     it "adds and returns markdown h1" do
-      expect(markdown.h1("Foo")).to eq("# Foo")
+      expect(markdown.h1("Foo")).to eq("# Foo\n{: .no_toc }")
     end
 
     it "returns nil for an empty string" do
@@ -159,7 +159,14 @@ RSpec.describe Platformer::Documentation::Markdown do
           end
 
           it "combines the two sections and returns the expected markdown" do
-            expect(markdown.to_markdown).to eq("Foo bar\n\nFoz baz\n\n# Header")
+            expect(markdown.to_markdown).to eq <<~MARKDOWN.strip
+              Foo bar
+
+              Foz baz
+
+              # Header
+              {: .no_toc }
+            MARKDOWN
           end
         end
       end

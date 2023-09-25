@@ -4,6 +4,7 @@ require_relative "version"
 
 require_relative "environment"
 require_relative "root"
+require_relative "logger"
 require_relative "load_tasks"
 
 require_relative "server/all"

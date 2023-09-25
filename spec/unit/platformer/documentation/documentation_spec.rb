@@ -6,7 +6,7 @@ RSpec.describe Platformer::Documentation do
   # create a dedicated tmp folder for this spec
   let(:base_path) { Platformer.root "tmp/spec/unit/platformer/documentation_spec" }
 
-  let(:documentation) { Platformer::Documentation.new :models, Platformer::BaseModel, base_path }
+  let(:documentation) { Platformer::Documentation.new :models, Platformer::BaseModel, base_path, 0 }
 
   before(:each) do
     # if the dedicated tmp folder exists, make sure its empty
@@ -29,7 +29,7 @@ RSpec.describe Platformer::Documentation do
   describe :initialize do
     it "initializes without error" do
       expect {
-        Platformer::Documentation.new :models, Platformer::BaseModel, base_path
+        Platformer::Documentation.new :models, Platformer::BaseModel, base_path, 0
       }.to_not raise_error
     end
   end

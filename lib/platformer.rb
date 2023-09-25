@@ -12,6 +12,9 @@ end
 
 require "byebug"
 
+# flexible logging library based on design of log4j
+require "logging"
+
 require "dsl_compose"
 require "dynamic_migrations"
 
@@ -62,6 +65,7 @@ require_relative "schema/all"
 require_relative "presenters/base"
 
 module Platformer
+  include Logger
   include Environment
   include Root
   include LoadTasks
