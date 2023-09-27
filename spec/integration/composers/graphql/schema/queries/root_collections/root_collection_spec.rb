@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::GraphQL::Schema::Queries::RootCollection do
-  describe "for a User model with a char_field that is exposed as a root collection" do
+  describe "for a User model with a text_field that is exposed as a root collection" do
     before(:each) do
       scaffold do
         table_for "Users::User" do
@@ -13,7 +13,7 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::Queries::RootCollection d
         model_for "Users::User" do
           database :postgres, :primary
           schema :users
-          char_field :my_char
+          text_field :my_char
           # name this model `user` instead of `users_user`
           suppress_namespace
         end

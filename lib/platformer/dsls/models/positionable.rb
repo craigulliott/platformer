@@ -20,7 +20,7 @@ module Platformer
               DESCRIPTION
             end
 
-            import_shared :field_comment
+            import_shared :field_description
           end
         end
       end

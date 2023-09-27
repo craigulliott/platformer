@@ -33,7 +33,6 @@ module Platformer
     include Platformer::DSLs::Models::Fields::DateTimeField
     # text
     include Platformer::DSLs::Models::Fields::TextField
-    include Platformer::DSLs::Models::Fields::CharField
     include Platformer::DSLs::Models::Fields::CitextField
     # enums / constants
     include Platformer::DSLs::Models::Fields::EnumField
@@ -54,6 +53,9 @@ module Platformer
     include Platformer::DSLs::Models::Associations::BelongsTo
     include Platformer::DSLs::Models::Associations::HasMany
     include Platformer::DSLs::Models::Associations::HasOne
+
+    # soft deletable models (marks them as deleted instead of actually destroying the data)
+    include Platformer::DSLs::Models::SoftDeletable
 
     # special fields and utilities
     include Platformer::DSLs::Models::StateMachine

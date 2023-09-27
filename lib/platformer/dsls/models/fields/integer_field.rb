@@ -28,6 +28,16 @@ module Platformer
                 DESCRIPTION
               end
 
+              # use bigint instead of integer (only affects postgres, as ruby handles this automatically)
+              optional :bigint, :boolean do
+                description <<~DESCRIPTION
+                  If true, then this field will be backed with a bigint column type
+                  in PostgreSQL instead of integer, integer supports values from
+                  -2,147,483,648 to +2,147,483,647, but bigint supports values from
+                  -9,223,372,036,854,775,808 to +9,223,372,036,854,775,807.
+                DESCRIPTION
+              end
+
               # Methods
               #
               add_unique_method :default do
@@ -38,7 +48,7 @@ module Platformer
               import_shared :allow_null
               import_shared :empty_array_to_null_coercion
               import_shared :unique_field
-              import_shared :field_comment
+              import_shared :field_description
               import_shared :immutable_validators
               import_shared :numeric_validators
               import_shared :zero_to_null_coercion

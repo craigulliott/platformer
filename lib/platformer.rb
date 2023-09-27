@@ -1,10 +1,35 @@
 # frozen_string_literal: true
 
 module Platformer
-  # recursively require all the files in the specified path, base should be set
-  # to __dir__ in the file that calls this method
+  # Recursively require all the files in the specified path, base should be set
+  # to __dir__ in the file that calls this method.
+  # The files are required alphabetically, and by depth. The shallowest depth first.
+  #
+  # For example, in the folder structure below, the files would be required in the same
+  # order as they are written.
+  #
+  # platform/
+  # ├─ file_a.rb
+  # ├─ file_b.rb
+  # ├─ folder_a/
+  # │  ├─ file_a.rb
+  # │  ├─ file_b.rb
+  # ├─ folder_b/
+  # │  ├─ file_a.rb
+  # │  ├─ file_b.rb
+  #
   def self.recursive_require_relative path, base
-    Dir[File.expand_path("#{path}/**/*.rb", base)].each do |f|
+    # get all ruby files within the provided path
+    files = Dir[File.expand_path("#{path}/**/*.rb", base)]
+
+    # sort the paths by name
+    files.sort!
+
+    # now that they are guaranteed to be sorted alphabetically, we resort them by depth (shallowest first)
+    files.sort_by! { |path| path.scan("/").length }
+
+    # require each file
+    files.each do |f|
       require_relative f
     end
   end
@@ -91,11 +116,11 @@ module Platformer
 
   # compose and initialize the platform
   def self.initialize!
-    # run all the composers
-    compose!
-
     # Connect to the default postgres database
     ApplicationRecord.establish_connection(Platformer::Databases.server(:postgres, :primary).default_database.active_record_configuration)
+
+    # run all the composers
+    compose!
 
     # initialize the GraphQL server last, because it requires all the queries, mutations
     # and subscriptions to been composed first

@@ -35,7 +35,7 @@ module Platformer
               DESCRIPTION
             end
 
-            import_shared :field_comment
+            import_shared :field_description
 
             add_method :state do
               description <<~DESCRIPTION

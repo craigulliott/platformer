@@ -21,7 +21,7 @@ module Platformer
               column named `:published_at`. Initially `:unpublished` is TRUE and `:published_at` is NULL.
               When the`publish` action occurs, `:unpublished` is set to NULL and `:published_at` is
               set to the current time. This schema ensures that one of the columns is always NULL and
-              the other always has a value, which alows for the most flexibility when adding database
+              the other always has a value, which allows for the most flexibility when adding database
               constraints and indexes. For example, you can add a unique index on the boolean column
               to ensure that a user has only one published model at a time.
 
@@ -58,7 +58,7 @@ module Platformer
               DESCRIPTION
             end
 
-            import_shared :field_comment
+            import_shared :field_description
 
             add_method :requires_presence_of do
               requires :attribute_name, :symbol, array: true do

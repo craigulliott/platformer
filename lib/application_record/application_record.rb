@@ -1,3 +1,5 @@
+require_relative "install_method"
+
 require_relative "validators/immutable_once_set_validator"
 require_relative "validators/immutable_validator"
 require_relative "validators/not_nil_validator"
@@ -14,6 +16,9 @@ class ApplicationRecord < ActiveRecord::Base
   # ApplicationRecord is always an abstract class
   self.abstract_class = true
 
+  # functionality to dynamically install methods onto activerecord classes
+  include Platformer::ActiveRecord::InstallMethod
+
   # rails GlobalID provides a unique ID for every object, and ability to easily load
   # objects based on these IDs. We use it in conjunction with GraphQL to make our server
   # relay compatible
@@ -29,4 +34,12 @@ class ApplicationRecord < ActiveRecord::Base
   include Platformer::ActiveRecord::Coercions::RemoveNullArrayValuesCoercion
   # this coercion should come last, because other coercions may remove items
   include Platformer::ActiveRecord::Coercions::EmptyArrayToNullCoercion
+
+  def delete
+    throw "delete is disabled by default"
+  end
+
+  def destroy
+    throw "destroy is disabled by default"
+  end
 end

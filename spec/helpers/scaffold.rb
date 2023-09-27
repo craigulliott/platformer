@@ -10,7 +10,7 @@ module Helpers
     # scaffold do
     #
     #   table_for "Users::User" do
-    #     add_column :my_char, :char
+    #     add_column :my_text, :text
     #   end
     #
     #   model_for "Users::User" do
@@ -18,17 +18,17 @@ module Helpers
     #     schema :users
     #     # name this model `user` instead of `users_user`
     #     suppress_namespace
-    #     char_field :my_char
+    #     text_field :my_text
     #   end
     #
     #   schema_for "Users::User" do
     #     # root node causes this to be added as a root level query in the schema
     #     root_collection do
-    #       by_exact_string :my_char
+    #       by_exact_string :my_text
     #     end
-    #     # expose the my_char field
+    #     # expose the my_text field
     #     fields [
-    #       :my_char
+    #       :my_text
     #     ]
     #   end
     #

@@ -5,7 +5,6 @@ module Platformer
     module ForFieldMacros
       ALL_FIELDS = [
         :boolean_field,
-        :char_field,
         :citext_field,
         :date_field,
         :date_time_field,
@@ -31,7 +30,6 @@ module Platformer
       ]
 
       STRING_FIELDS = [
-        :char_field,
         :text_field,
         :citext_field
       ]

@@ -14,31 +14,31 @@ module Platformer
     # private singleton methods below
     # these are not exposed on the main Platformer module
     def self.logger base_class
-      logger = Logging.logger[base_class]
+      unless @setup_complete
+        setup
+        @setup_complete = true
+      end
 
+      # return the logger for this class
+      Logging.logger[base_class]
+    end
+
+    def self.setup
       # set the log level
-      logger.level = default_log_level
+      default_log_level = ENV["LOG_LEVEL"]&.to_sym || :warn
+      Logging.logger.root.level = default_log_level
 
       # are we logging to stouot
       unless ENV["SKIP_STDOUT_LOGGING"]
-        logger.add_appenders Logging.appenders.stdout
+        appender = Logging.appenders.stdout
+        Logging.logger.root.add_appenders appender
       end
 
       # are we also logging to a file
       if ENV["LOG_TO_FILE"]
-        logger.add_appenders Logging.appenders.file(Platformer.root("log/platformer.log"))
+        appender = Logging.appenders.file(Platformer.root("log/platformer.log"))
+        Logging.logger.root.add_appenders appender
       end
-
-      # return the logger
-      logger
-    end
-
-    def self.default_log_level
-      ENV["LOG_LEVEL"]&.to_sym || :warn
-    end
-
-    def self.default_log_target
-      ENV["LOG_TARGET"] || $stdout
     end
   end
 end

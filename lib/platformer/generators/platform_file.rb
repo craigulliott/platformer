@@ -65,7 +65,15 @@ module Platformer
       end
 
       def base_path
-        @base_path ||= Platformer.root "platform/#{schema_name}/#{base_type.to_s.pluralize}"
+        @base_path = base_class? ? schema_base_path : schema_base_type_base_path
+      end
+
+      def schema_base_type_base_path
+        @schema_base_type_base_path ||= Platformer.root "platform/#{schema_name}/#{base_type.to_s.pluralize}"
+      end
+
+      def schema_base_path
+        @schema_base_path ||= Platformer.root "platform/#{schema_name}"
       end
 
       def module_name

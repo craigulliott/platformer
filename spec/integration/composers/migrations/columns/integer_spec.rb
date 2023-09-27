@@ -61,6 +61,25 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Integer do
     end
   end
 
+  describe "for a User Model which has a integer column marked as bigint" do
+    before(:each) do
+      scaffold do
+        model_for "Users::User" do
+          database :postgres, :primary
+          integer_field :my_integer, bigint: true
+        end
+      end
+    end
+
+    subject {
+      Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:users)
+    }
+
+    context "creates a bigint column" do
+      it { expect(subject.column(:my_integer).data_type).to be :bigint }
+    end
+  end
+
   describe "for a User Model with an array of integers column named my_integer" do
     before(:each) do
       scaffold do

@@ -8,7 +8,7 @@ RSpec.describe Platformer::Composers::Migrations::Validations::Common::Strings d
       scaffold do
         model_for "User" do
           database :postgres, :primary
-          char_field :my_char do
+          text_field :my_char do
             validate_minimum_length 1
             validate_maximum_length 10
             validate_not_in ["foo", "bar"]

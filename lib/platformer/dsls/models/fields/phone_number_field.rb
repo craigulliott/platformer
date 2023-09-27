@@ -41,7 +41,7 @@ module Platformer
               # Common methods which are shared between fields
               import_shared :allow_null
               import_shared :unique_field
-              import_shared :field_comment
+              import_shared :field_description
               import_shared :immutable_validators
             end
           end

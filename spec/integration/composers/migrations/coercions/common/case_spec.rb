@@ -8,7 +8,7 @@ RSpec.describe Platformer::Composers::Migrations::Coercions::Common::Case do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          char_field :uppercase_char_field do
+          text_field :uppercase_text_field do
             uppercase
           end
           text_field :lowercase_text_field do
@@ -24,8 +24,8 @@ RSpec.describe Platformer::Composers::Migrations::Coercions::Common::Case do
 
     context "creates the expected validations for the DynamicMigrations table" do
       it {
-        expect(subject.validation(:uppercase_char_field_uppercase_only).check_clause).to eq <<~SQL.strip
-          uppercase_char_field IS NOT DISTINCT FROM upper(uppercase_char_field)
+        expect(subject.validation(:uppercase_text_field_uppercase_only).check_clause).to eq <<~SQL.strip
+          uppercase_text_field IS NOT DISTINCT FROM upper(uppercase_text_field)
         SQL
       }
 
@@ -42,7 +42,7 @@ RSpec.describe Platformer::Composers::Migrations::Coercions::Common::Case do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          char_field :uppercase_char_field, array: true do
+          text_field :uppercase_text_field, array: true do
             uppercase
           end
           text_field :lowercase_text_field, array: true do
@@ -58,8 +58,8 @@ RSpec.describe Platformer::Composers::Migrations::Coercions::Common::Case do
 
     context "creates the expected validations for the DynamicMigrations table" do
       it {
-        expect(subject.validation(:uppercase_char_field_uppercase_only).check_clause).to eq <<~SQL.strip
-          uppercase_char_field IS NULL OR upper(ARRAY_REMOVE(uppercase_char_field, NULL)::text) IS NOT DISTINCT FROM ARRAY_REMOVE(uppercase_char_field, NULL)::text
+        expect(subject.validation(:uppercase_text_field_uppercase_only).check_clause).to eq <<~SQL.strip
+          uppercase_text_field IS NULL OR upper(ARRAY_REMOVE(uppercase_text_field, NULL)::text) IS NOT DISTINCT FROM ARRAY_REMOVE(uppercase_text_field, NULL)::text
         SQL
       }
 

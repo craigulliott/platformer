@@ -15,9 +15,9 @@ RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::NotNull
         model_for "Users::User" do
           database :postgres, :primary
           schema :users
-          char_field :my_char do
+          text_field :my_char do
           end
-          char_field :my_nullable_char do
+          text_field :my_nullable_char do
             allow_null
           end
         end

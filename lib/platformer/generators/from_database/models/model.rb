@@ -69,7 +69,7 @@ module Platformer
               if column.name == :deleted_at
                 add_section "soft_deletable"
               else
-                add_section "action_field :#{column.name[0..-4]}, :#{column.name[0..-6]}"
+                add_section "action_field :#{column.name[0..-4]}, action_name: :#{column.name[0..-6]}"
               end
 
               # dont process these action fields again
@@ -103,7 +103,7 @@ module Platformer
         end
 
         def add_belongs_to foreign_key_constraint
-          foreign_model_name = "#{foreign_key_constraint.foreign_table.schema.name.to_s.camelize}::#{foreign_key_constraint.foreign_table.name.to_s.camelize}"
+          foreign_model_name = "#{foreign_key_constraint.foreign_table.schema.name.to_s.camelize}::#{foreign_key_constraint.foreign_table.name.to_s.singularize.camelize}Model"
           column_names = foreign_key_constraint.column_names
           foreign_column_names = foreign_key_constraint.foreign_column_names
 
@@ -142,7 +142,7 @@ module Platformer
 
         def add_has_many foreign_key_constraint
           # note that these are reversed from the `belongs_to` method above
-          foreign_model_name = "#{foreign_key_constraint.table.schema.name.to_s.camelize}::#{foreign_key_constraint.table.name.to_s.camelize}"
+          foreign_model_name = "#{foreign_key_constraint.table.schema.name.to_s.camelize}::#{foreign_key_constraint.table.name.to_s.singularize.camelize}Model"
           column_names = foreign_key_constraint.foreign_column_names
           foreign_column_names = foreign_key_constraint.column_names
 
@@ -174,17 +174,17 @@ module Platformer
 
           default_value = default_value_syntax_from_column column
 
-          field_method = if column.enum?
-            :enum
-          else
-            field_method_name_from_column column
-          end
-
+          field_method = field_method_name_from_column column
           syntax = "#{field_method} :#{field_name}"
 
           # if this is an array column, then add the optional argument
           if column.array?
             syntax << ", array: true"
+          end
+
+          # if this is an enum, then add the values here
+          if column.enum?
+            syntax << ", [\n  '#{column.enum.values.join("',\n  '")}'\n]"
           end
 
           # so we can add any code which needs to be represented in a block, and easily determine
@@ -318,29 +318,33 @@ module Platformer
 
         # get the name of the platformer field method which is used for the given column
         def field_method_name_from_column column
-          case column.base_data_type
-          when :integer
-            :integer_field
-          when :bigint
-            # todo
-            :integer_field
-          when :float
-            :float_field
-          when :text
-            :text_field
-          when :"character varying"
-            # todo
-            :text_field
-          when :boolean
-            :boolean_field
-          when :citext
-            (column.name == :email) ? :email_field : :citext_field
-          when :uuid
-            :uuid_field
-          when :"timestamp without time zone"
-            :datetime_field
+          if column.enum?
+            :enum_field
           else
-            raise UnexpectedColumnTypeError, "Unexpected column type `#{column.data_type}`"
+            case column.base_data_type
+            when :integer
+              :integer_field
+            when :bigint
+              # todo
+              :integer_field
+            when :float
+              :float_field
+            when :text
+              :text_field
+            when :"character varying"
+              # todo
+              :text_field
+            when :boolean
+              :boolean_field
+            when :citext
+              (column.name == :email) ? :email_field : :citext_field
+            when :uuid
+              :uuid_field
+            when :"timestamp without time zone"
+              :datetime_field
+            else
+              raise UnexpectedColumnTypeError, "Unexpected column type `#{column.data_type}`"
+            end
           end
         end
 
