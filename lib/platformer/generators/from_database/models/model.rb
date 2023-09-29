@@ -56,7 +56,7 @@ module Platformer
               skip_column_names << :latitude
             end
 
-            # phone_number colums
+            # phone_number columns
             {
               phone_number: :dialing_code,
               from_phone_number: :from_dialing_code,
@@ -65,9 +65,9 @@ module Platformer
               if table.has_column?(phone_number_col) && table.has_column?(dialing_code_col)
                 syntax = "phone_number_field"
                 if phone_number_col.start_with? "to_"
-                  syntax << ", prefix: :to"
+                  syntax << " prefix: :to"
                 elsif phone_number_col.start_with? "from_"
-                  syntax << ", prefix: :from"
+                  syntax << " prefix: :from"
                 end
                 if table.column(phone_number_col).null
                   syntax << " do\n  allow_null\nend"
@@ -82,12 +82,9 @@ module Platformer
               associations[:belongs_to]&.each do |name, options|
                 add_association :belongs_to, name, options
 
-                # the columns for default (single column) belongs_to associations
-                # do not need to be represented as uuid fields, so we add them to
-                # the ignore list here
-                if column_names.length == 1
-                  skip_column_names << :"{column_names.first}_id"
-                end
+                # the columns for belongs_to associations do not need to be
+                # represented as uuid fields, so we add them to the ignore list here
+                skip_column_names << :"{name}_id"
               end
               associations[:has_many]&.each do |name, options|
                 add_association :has_many, name, options
@@ -277,12 +274,16 @@ module Platformer
 
             # if this column is nullable
             if column.null
-              syntax << ", allow_null: true"
+              # add a comma if there has alredy been at least one argument
+              syntax << "," if / /.match?(syntax)
+              syntax << " allow_null: true"
             end
 
             # if this is an array column, then add the optional argument
             if column.array?
-              syntax << ", array: true"
+              # add a comma if there has alredy been at least one argument
+              syntax << "," if / /.match?(syntax)
+              syntax << " array: true"
             end
 
             unless column.default.nil?
