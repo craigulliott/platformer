@@ -30,15 +30,15 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Enum do
     end
   end
 
-  describe "for a User Model which has a enum column named my_enum that has a default value, allows null and has a comment" do
+  describe "for a User Model which has a enum column named my_enum that has a default value, allows null and has a description" do
     before(:each) do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
           enum_field :my_enum, ["foo", "bar"] do
             allow_null
-            comment "This is a comment"
-            default "foo"
+            description "This is a description"
+            database_default "foo"
           end
         end
       end
@@ -55,7 +55,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Enum do
 
       it { expect(subject.column(:my_enum).null).to be true }
 
-      it { expect(subject.column(:my_enum).description).to eq "This is a comment" }
+      it { expect(subject.column(:my_enum).description).to eq "This is a description" }
 
       it { expect(subject.column(:my_enum).default).to eq "foo" }
     end

@@ -18,7 +18,7 @@ RSpec.describe Platformer::Composers::Migrations::UniqueConstraints do
             unique scope: [:my_float, :my_integer], deferrable: true
           end
           double_field :my_double do
-            unique comment: "Test description"
+            unique description: "Test description"
           end
           double_field :my_text do
             unique scope: [:my_float, :my_integer], where: "my_integer > 0"

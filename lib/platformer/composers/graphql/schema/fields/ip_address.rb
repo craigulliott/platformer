@@ -6,12 +6,12 @@ module Platformer
       module Schema
         module Fields
           class IpAddress < Parsers::FinalModels::ForFields
-            for_field :ip_address_field do |name:, schema_definition_class:, graphql_type_class:, allow_null:, comment_text:|
+            for_field :ip_address_field do |name:, schema_definition_class:, graphql_type_class:, allow_null:, description:|
               if schema_definition_class
                 schema_reader = DSLReaders::Schema.new schema_definition_class
 
                 if schema_reader.has_field? name
-                  graphql_type_class.field name, String, comment_text, null: allow_null
+                  graphql_type_class.field name, String, description, null: allow_null
                 end
               end
             end

@@ -10,7 +10,7 @@ module Platformer
             for_fields :json_field do |name:, table:|
               column = table.column name
 
-              for_method :empty_json_to_null do |method_name:, comment:|
+              for_method :empty_json_to_null do |method_name:, description:|
                 add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that the `#{column.name}`
@@ -27,10 +27,10 @@ module Platformer
                 check_clause = <<~SQL
                   #{column.name} != '{}';
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, description: <<~COMMENT
-                  #{comment}
+                table.add_validation validation_name, [column.name], check_clause, description: <<~DESCRIPTION
+                  #{description}
                   This validation asserts that the empty_json_to_null coercion has been applied to this field
-                COMMENT
+                DESCRIPTION
               end
             end
           end

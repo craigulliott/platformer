@@ -18,7 +18,7 @@ RSpec.describe Platformer::Composers::Presenters::Fields::Currency do
     end
 
     subject {
-      user = Users::User.new(currency: "USD")
+      user = Users::User.new(currency: "CURRENCY_USD")
       Presenters::Users::User.new user
     }
 

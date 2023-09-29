@@ -20,7 +20,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Language do
     context "creates the expected columns within the DynamicMigrations table" do
       it { expect(subject.has_column?(:language)).to be true }
 
-      it { expect(subject.column(:language).data_type).to be :"platformer.iso_language_code" }
+      it { expect(subject.column(:language).data_type).to be :"platformer.iso_language" }
 
       it { expect(subject.column(:language).null).to be false }
 
@@ -30,15 +30,15 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Language do
     end
   end
 
-  describe "for a User Model which has a language field that has a default value, allows null and has a comment" do
+  describe "for a User Model which has a language field that has a default value, allows null and has a description" do
     before(:each) do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
           language_field do
             allow_null
-            comment "This is a comment"
-            default "en"
+            description "This is a description"
+            database_default "en"
           end
         end
       end
@@ -51,11 +51,11 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Language do
     context "creates the expected columns within the DynamicMigrations table" do
       it { expect(subject.has_column?(:language)).to be true }
 
-      it { expect(subject.column(:language).data_type).to be :"platformer.iso_language_code" }
+      it { expect(subject.column(:language).data_type).to be :"platformer.iso_language" }
 
       it { expect(subject.column(:language).null).to be true }
 
-      it { expect(subject.column(:language).description).to eq "This is a comment" }
+      it { expect(subject.column(:language).description).to eq "This is a description" }
 
       it { expect(subject.column(:language).default).to eq "en" }
     end
@@ -78,7 +78,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Language do
     context "creates the expected columns within the DynamicMigrations table" do
       it { expect(subject.has_column?(:language)).to be true }
 
-      it { expect(subject.column(:language).data_type).to be :"platformer.iso_language_code[]" }
+      it { expect(subject.column(:language).data_type).to be :"platformer.iso_language[]" }
     end
   end
 end

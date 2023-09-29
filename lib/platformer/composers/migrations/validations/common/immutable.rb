@@ -6,7 +6,7 @@ module Platformer
       module Validations
         module Common
           class Immutable < Parsers::FinalModels::ForFields
-            for_all_fields do |column_names:, database:, table:, comment_text:, allow_null:|
+            for_all_fields do |column_names:, database:, table:, description:, allow_null:|
               # Can never be changed after creation
               for_method :immutable do
                 add_documentation <<~DESCRIPTION

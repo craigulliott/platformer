@@ -12,10 +12,26 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::Currency do
         end
         schema_for "Users::User" do
           fields [
+            :currency,
             :currency_name,
-            :currency_code
+            :currency_code,
+            :currency_symbol
           ]
         end
+      end
+    end
+
+    context "the currency enum" do
+      subject {
+        Types::Users::User.fields["currency"]
+      }
+
+      context "creates the expected GraphQL Type class" do
+        it { expect(subject).to be_a GraphQL::Schema::Field }
+
+        it { expect(subject.type).to be_a GraphQL::Schema::NonNull }
+
+        it { expect(subject.type.of_type).to eq Types::CurrencyEnum }
       end
     end
 
@@ -43,7 +59,21 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::Currency do
 
         it { expect(subject.type).to be_a GraphQL::Schema::NonNull }
 
-        it { expect(subject.type.of_type).to eq Types::CurrencyCodeEnum }
+        it { expect(subject.type.of_type).to eq GraphQL::Types::String }
+      end
+    end
+
+    context "the currency symbol" do
+      subject {
+        Types::Users::User.fields["currencySymbol"]
+      }
+
+      context "creates the expected GraphQL Type class" do
+        it { expect(subject).to be_a GraphQL::Schema::Field }
+
+        it { expect(subject.type).to be_a GraphQL::Schema::NonNull }
+
+        it { expect(subject.type.of_type).to eq GraphQL::Types::String }
       end
     end
   end

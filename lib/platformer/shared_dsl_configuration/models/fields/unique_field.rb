@@ -37,9 +37,9 @@ module Platformer
                   DESCRIPTION
                 end
 
-                optional :comment, :string do
+                optional :description, :string do
                   description <<~DESCRIPTION
-                    A comment which explains the reason for uniqueness
+                    A description which explains the reason for uniqueness
                     on this field. This will be used to generate documentation,
                     and error messages
                   DESCRIPTION

@@ -30,15 +30,15 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Text do
     end
   end
 
-  describe "for a User Model which has a text column named my_text that has a default value, allows null and has a comment" do
+  describe "for a User Model which has a text column named my_text that has a default value, allows null and has a description" do
     before(:each) do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
           text_field :my_text do
             allow_null
-            comment "This is a comment"
-            default "Hi Katy!"
+            description "This is a description"
+            database_default "Hi Katy!"
           end
         end
       end
@@ -55,7 +55,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Text do
 
       it { expect(subject.column(:my_text).null).to be true }
 
-      it { expect(subject.column(:my_text).description).to eq "This is a comment" }
+      it { expect(subject.column(:my_text).description).to eq "This is a description" }
 
       it { expect(subject.column(:my_text).default).to eq "Hi Katy!" }
     end

@@ -13,10 +13,10 @@ module Platformer
 
                 column_name = name || :state
 
-                comment = reader.comment&.comment
+                description = reader.description&.description
 
                 if schema_reader.has_field? column_name
-                  graphql_type_class.field column_name, ::GraphQL::Types::String, comment, null: false
+                  graphql_type_class.field column_name, ::GraphQL::Types::String, description, null: false
                 end
               end
             end

@@ -6,7 +6,7 @@ module Platformer
       module Schema
         module Fields
           class PhoneNumber < Parsers::FinalModels::ForFields
-            for_field :phone_number_field do |prefix:, schema_definition_class:, graphql_type_class:, allow_null:, comment_text:|
+            for_field :phone_number_field do |prefix:, schema_definition_class:, graphql_type_class:, allow_null:, description:|
               if schema_definition_class
                 schema_reader = DSLReaders::Schema.new schema_definition_class
 
@@ -20,7 +20,7 @@ module Platformer
                   :"#{name_prepend}phone_number_international_formatted"
                 ].each do |name|
                   if schema_reader.has_field? name
-                    graphql_type_class.field name, String, comment_text, null: allow_null
+                    graphql_type_class.field name, String, description, null: allow_null
                   end
                 end
 

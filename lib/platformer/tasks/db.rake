@@ -2,7 +2,7 @@ require "platformer"
 
 namespace :db do
   desc "Create all the configured databases"
-  task :create_databases do
+  task create_databases: :environment do
     Platformer::Databases.servers(:postgres).each do |server|
       server.with_connection do |connection|
         server.database_names.each do |database_name|
@@ -15,7 +15,7 @@ namespace :db do
   end
 
   desc "Drop all the configured databases"
-  task :drop_databases do
+  task drop_databases: :environment do
     Platformer::Databases.servers(:postgres).each do |server|
       server.with_connection do |connection|
         server.database_names.each do |database_name|
@@ -32,7 +32,7 @@ namespace :db do
     database structure and dynamically generate migration files to
     resolve any differences
   DESC
-  task :generate_migrations do
+  task generate_migrations: :environment do
     Platformer::Databases::Migrations.new(Platformer.root("db/migrations")).generate_migration_files
   end
 
@@ -77,6 +77,5 @@ namespace :db do
     # because rake tasks can't usually be run twice, we reenable it here so the dynamic_migrate task can run this twice
     Rake::Task["db:migrate"].reenable
     Rake::Task["db:migrate"].invoke
-    puts "Dynamic Migrations Complete"
   end
 end

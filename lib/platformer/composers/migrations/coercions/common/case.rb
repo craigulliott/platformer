@@ -7,10 +7,10 @@ module Platformer
         module Common
           # install validations to assert that the case coercion rules were followed
           class Case < Parsers::FinalModels::ForFields
-            for_string_fields except: :citext_field do |name:, table:, array:, default:, comment_text:, allow_null:|
+            for_string_fields except: :citext_field do |name:, table:, array:, description:, allow_null:|
               column = table.column name
 
-              for_method [:uppercase, :lowercase] do |method_name:, comment:|
+              for_method [:uppercase, :lowercase] do |method_name:, description:|
                 wanted_case = method_name
                 unwanted_case = (method_name == :uppercase) ? :lowercase : :uppercase
                 template_class = (method_name == :uppercase) ? Databases::Migrations::Templates::Validations::Uppercase : Databases::Migrations::Templates::Validations::Lowercase
@@ -23,7 +23,7 @@ module Platformer
 
                 validation_name = :"#{column.name}_#{wanted_case}_only"
 
-                final_comment = comment || template_class::DEFAULT_COMMENT
+                final_description = description || template_class::DEFAULT_DESCRIPTION
 
                 # Add the validation to the table, assert that forcing everything to
                 # the desired case did not result in any differences. Note, it is safe to
@@ -39,7 +39,7 @@ module Platformer
                     #{column.name} IS NOT DISTINCT FROM #{pg_case_method_name}(#{column.name})
                   SQL
                 end
-                table.add_validation validation_name, [column.name], check_clause, template: wanted_case, description: final_comment
+                table.add_validation validation_name, [column.name], check_clause, template: wanted_case, description: final_description
               end
             end
           end

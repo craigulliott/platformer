@@ -11,7 +11,7 @@ module Platformer
           boolean_column_name = :"un#{name}"
           timestamp_column_name = :"#{name}_at"
 
-          comment = reader.comment&.comment
+          description = reader.description&.description
 
           # update the dynamic documentation
           add_documentation <<~DESCRIPTION
@@ -21,18 +21,18 @@ module Platformer
           DESCRIPTION
 
           # add the boolean to the DynamicMigrations table
-          boolean_column = table.add_column boolean_column_name, :boolean, null: true, description: <<~COMMENT
-            #{comment}
+          boolean_column = table.add_column boolean_column_name, :boolean, null: true, description: <<~DESCRIPTION
+            #{description}
             This column is true before the action `#{action_name}` has occured on this model, and will
             be set to NULL after the action has occured.
-          COMMENT
+          DESCRIPTION
 
           # add the timestamp to the DynamicMigrations table
-          timestamp_column = table.add_column timestamp_column_name, :"timestamp without time zone", null: true, description: <<~COMMENT
-            #{comment}
+          timestamp_column = table.add_column timestamp_column_name, :"timestamp without time zone", null: true, description: <<~DESCRIPTION
+            #{description}
             This column is NULL before the action `#{action_name}` has occured on this model, and will
             be set to the current time when the action occurs.
-          COMMENT
+          DESCRIPTION
 
           validation_name = :"#{name}_action_field"
           # add the validation to the table
@@ -40,7 +40,7 @@ module Platformer
             (#{boolean_column.name} IS NULL AND #{timestamp_column.name} IS NOT NULL)
             OR (#{boolean_column.name} IS TRUE AND #{timestamp_column.name} IS NULL)
           SQL
-          table.add_validation validation_name, [boolean_column.name, timestamp_column.name], check_clause, deferrable: false, initially_deferred: false, description: comment
+          table.add_validation validation_name, [boolean_column.name, timestamp_column.name], check_clause, deferrable: false, initially_deferred: false, description: description
         end
       end
     end

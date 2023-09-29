@@ -6,7 +6,7 @@ module Platformer
       module Columns
         # Add all citext columns to their respective tables within DynamicMigrations
         class Citext < Parsers::FinalModels::ForFields
-          for_field :citext_field do |name:, table:, database:, array:, default:, comment_text:, allow_null:|
+          for_field :citext_field do |name:, table:, database:, array:, database_default:, description:, allow_null:|
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION
               Add an #{array ? "array of citexts" : "citext"}
@@ -21,7 +21,7 @@ module Platformer
             database.ensure_postgres_extension :citext
 
             # add the column to the DynamicMigrations table
-            table.add_column name, data_type, null: allow_null, default: default, description: comment_text
+            table.add_column name, data_type, null: allow_null, default: database_default, description: description
           end
         end
       end

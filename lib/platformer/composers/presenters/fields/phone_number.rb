@@ -38,9 +38,3 @@ module Platformer
     end
   end
 end
-
-# full_number = Phony.normalize phone_number, cc: dialing_code
-# Phony.format full_number, format: :national
-
-# full_number = Phony.normalize phone_number, cc: dialing_code
-# Phony.format full_number, format: :international

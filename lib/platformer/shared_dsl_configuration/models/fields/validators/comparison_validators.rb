@@ -30,11 +30,11 @@ module Platformer
                     DESCRIPTION
                   end
 
-                  optional :comment, :string do
+                  optional :description, :string do
                     description <<~DESCRIPTION
-                      A comment which explains the reason for this validation
+                      A description which explains the reason for this validation
                       on this field. This will be used to generate documentation,
-                      and will be added as a comment to the database constraint.
+                      and will be added as a description to the database constraint.
                     DESCRIPTION
                   end
                 end
@@ -63,11 +63,11 @@ module Platformer
                     DESCRIPTION
                   end
 
-                  optional :comment, :string do
+                  optional :description, :string do
                     description <<~DESCRIPTION
-                      A comment which explains the reason for this validation
+                      A description which explains the reason for this validation
                       on this field. This will be used to generate documentation,
-                      and will be added as a comment to the database constraint.
+                      and will be added as a description to the database constraint.
                     DESCRIPTION
                   end
                 end
@@ -95,11 +95,11 @@ module Platformer
                     DESCRIPTION
                   end
 
-                  optional :comment, :string do
+                  optional :description, :string do
                     description <<~DESCRIPTION
-                      A comment which explains the reason for this validation
+                      A description which explains the reason for this validation
                       on this field. This will be used to generate documentation,
-                      and will be added as a comment to the database constraint.
+                      and will be added as a description to the database constraint.
                     DESCRIPTION
                   end
                 end

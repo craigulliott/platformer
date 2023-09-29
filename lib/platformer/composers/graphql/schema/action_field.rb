@@ -15,18 +15,18 @@ module Platformer
                 inverse_state_name = :"un#{name}"
                 timestamp_column_name = :"#{name}_at"
 
-                comment = reader.comment&.comment
+                description = reader.description&.description
 
                 if schema_reader.has_field? state_name
-                  graphql_type_class.field state_name, ::GraphQL::Types::Boolean, comment, null: false
+                  graphql_type_class.field state_name, ::GraphQL::Types::Boolean, description, null: false
                 end
 
                 if schema_reader.has_field? inverse_state_name
-                  graphql_type_class.field inverse_state_name, ::GraphQL::Types::Boolean, comment, null: false
+                  graphql_type_class.field inverse_state_name, ::GraphQL::Types::Boolean, description, null: false
                 end
 
                 if schema_reader.has_field? timestamp_column_name
-                  graphql_type_class.field timestamp_column_name, ::GraphQL::Types::ISO8601DateTime, comment, null: true
+                  graphql_type_class.field timestamp_column_name, ::GraphQL::Types::ISO8601DateTime, description, null: true
                 end
               end
             end

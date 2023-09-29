@@ -30,15 +30,15 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Cidr do
     end
   end
 
-  describe "for a User Model which has a cidr column named my_cidr that has a default value, allows null and has a comment" do
+  describe "for a User Model which has a cidr column named my_cidr that has a default value, allows null and has a description" do
     before(:each) do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
           cidr_field :my_cidr do
             allow_null
-            comment "This is a comment"
-            default "10.0.0.0/8"
+            description "This is a description"
+            database_default "10.0.0.0/8"
           end
         end
       end
@@ -55,7 +55,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Cidr do
 
       it { expect(subject.column(:my_cidr).null).to be true }
 
-      it { expect(subject.column(:my_cidr).description).to eq "This is a comment" }
+      it { expect(subject.column(:my_cidr).description).to eq "This is a description" }
 
       it { expect(subject.column(:my_cidr).default).to eq "10.0.0.0/8" }
     end

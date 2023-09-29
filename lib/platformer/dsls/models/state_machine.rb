@@ -57,7 +57,7 @@ module Platformer
                 DESCRIPTION
               end
 
-              optional :comment, :symbol do
+              optional :description, :symbol do
                 description <<~DESCRIPTION
                   A description of this state. This description will be used when generating
                   documentation for your model.
@@ -122,7 +122,7 @@ module Platformer
                 DESCRIPTION
               end
 
-              optional :comment, :symbol do
+              optional :description, :symbol do
                 description <<~DESCRIPTION
                   A description of this action. This description will be used when generating
                   documentation for your model.

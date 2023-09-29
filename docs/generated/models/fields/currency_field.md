@@ -16,7 +16,7 @@ Add a currency field to this model.
 ```ruby
 class MyModel < PlatformModel
   # required arguments only
-  currency_field 
+  currency_field
   # all possible arguments
   currency_field prefix: :value, array: false
 end
@@ -28,7 +28,7 @@ end
 | Name | Required | Type | Description |
 |:---|:---|:---|:---|
 | prefix | optional | Symbol | An optional prefix to use for the name of this field. This prefix will be prepended to the column names which back this model, and to the presenter methods, graphql queries and mutations. |
-| array | optional | Boolean | If true, then this field will be an array of currencys, and will be backed by a `platformer.currency_codes[]` type in PostgreSQL. |
+| array | optional | Boolean | If true, then this field will be an array of currencys, and will be backed by a `platformer.currencys[]` type in PostgreSQL. |
 
 ## Additional Configuration
 {: .no_toc }
@@ -69,7 +69,7 @@ NULL values
 class MyModel < PlatformModel
   currency_field  do
     ...
-    allow_null 
+    allow_null
     ...
   end
 end
@@ -91,7 +91,7 @@ class MyModel < PlatformModel
   currency_field  do
     ...
     # required arguments only
-    empty_array_to_null 
+    empty_array_to_null
     # all possible arguments
     empty_array_to_null comment: "comment"
     ...
@@ -116,7 +116,7 @@ class MyModel < PlatformModel
   currency_field  do
     ...
     # required arguments only
-    unique 
+    unique
     # all possible arguments
     unique deferrable: false, initially_deferred: false, where: "where", scope: [:value], message: "message", comment: "comment"
     ...
@@ -266,7 +266,7 @@ class MyModel < PlatformModel
   currency_field  do
     ...
     # required arguments only
-    immutable 
+    immutable
     # all possible arguments
     immutable message: "message"
     ...
@@ -296,7 +296,7 @@ class MyModel < PlatformModel
   currency_field  do
     ...
     # required arguments only
-    immutable_once_set 
+    immutable_once_set
     # all possible arguments
     immutable_once_set message: "message"
     ...
@@ -324,7 +324,7 @@ class MyModel < PlatformModel
   currency_field  do
     ...
     # required arguments only
-    remove_null_array_values 
+    remove_null_array_values
     # all possible arguments
     remove_null_array_values comment: "comment"
     ...

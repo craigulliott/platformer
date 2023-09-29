@@ -30,15 +30,15 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Uuid do
     end
   end
 
-  describe "for a User Model which has a uuid column named my_uuid that has a default value, allows null and has a comment" do
+  describe "for a User Model which has a uuid column named my_uuid that has a default value, allows null and has a description" do
     before(:each) do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
           uuid_field :my_uuid do
             allow_null
-            comment "This is a comment"
-            default "63510e31-bbf8-49e0-9878-ce2a974ead54"
+            description "This is a description"
+            database_default "63510e31-bbf8-49e0-9878-ce2a974ead54"
           end
         end
       end
@@ -55,7 +55,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Uuid do
 
       it { expect(subject.column(:my_uuid).null).to be true }
 
-      it { expect(subject.column(:my_uuid).description).to eq "This is a comment" }
+      it { expect(subject.column(:my_uuid).description).to eq "This is a description" }
 
       it { expect(subject.column(:my_uuid).default).to eq "63510e31-bbf8-49e0-9878-ce2a974ead54" }
     end

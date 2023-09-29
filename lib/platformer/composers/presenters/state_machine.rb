@@ -11,7 +11,7 @@ module Platformer
 
           presenter_class.add_presenter column_name
 
-          for_method :state do |name:, comment:|
+          for_method :state do |name:, description:|
             state_name = name
             presenter_class.add_presenter :"#{state_name}?" do
               public_send(column_name) == state_name

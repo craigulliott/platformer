@@ -6,7 +6,7 @@ module Platformer
           module Validators
             module SnakeCaseNameValidator
               DSLCompose::SharedConfiguration.add :snake_case_name_validator do
-                validate_format(/\A[a-z][a-z0-9]*(_[a-z][a-z0-9]*)*\Z/)
+                validate_format(/\A[a-z][a-z0-9]*(_[a-z0-9]+)*\Z/)
               end
             end
           end

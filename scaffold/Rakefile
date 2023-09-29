@@ -1,6 +1,10 @@
 # Add your own tasks in files placed in lib/tasks ending in .rake,
-# for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
+# for example lib/tasks/foo.rake, and they will automatically be available to Rake.
 
-require_relative "config/application"
+ENV["LOG_LEVEL"] ||= "info"
 
+require_relative "config/boot"
+
+# Load the platformer tasks, these include db:tasks and generate:tasks
+# run `rake -T` in your console to see all the available tasks
 Platformer.load_tasks

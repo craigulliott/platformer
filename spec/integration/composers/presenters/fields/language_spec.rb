@@ -18,7 +18,7 @@ RSpec.describe Platformer::Composers::Presenters::Fields::Language do
     end
 
     subject {
-      user = Users::User.new(language: "en")
+      user = Users::User.new(language: "LANG_EN")
       Presenters::Users::User.new user
     }
 
@@ -27,9 +27,9 @@ RSpec.describe Platformer::Composers::Presenters::Fields::Language do
 
       it { expect(subject.language_english_name).to eq "English" }
 
-      it { expect(subject.language_alpha2).to eq "en" }
+      it { expect(subject.language_code).to eq "en" }
 
-      it { expect(subject.language_alpha3).to eq "eng" }
+      it { expect(subject.language_alpha3_code).to eq "eng" }
     end
   end
 end

@@ -22,7 +22,7 @@ module Platformer
 
                 description <<~DESCRIPTION
                   An optional prefix to use for the name of this field. This prefix
-                  will be prepended to the column names which back this model, and
+                  will be prepended to the column names which back this field, and
                   to the presenter methods, graphql queries and mutations.
                 DESCRIPTION
               end
@@ -31,11 +31,16 @@ module Platformer
               #
               add_unique_method :default do
                 requires :dialing_code, :string do
-                  validate_format(/\+\d+/)
+                  validate_in Constants::ISO::DialingCode.values
                 end
                 requires :phone_number, :string do
-                  validate_format(/\d+/)
+                  validate_format(/\A\d+\z/)
                 end
+              end
+
+              add_unique_method :database_default do
+                requires :dialing_code, :string
+                requires :phone_number, :string
               end
 
               # Common methods which are shared between fields

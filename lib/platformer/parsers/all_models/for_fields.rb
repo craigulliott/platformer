@@ -14,12 +14,16 @@ module Platformer
           reader.method_called?(:allow_null)
         end
 
-        resolve_argument :comment_text do |reader:|
-          reader.comment&.comment
+        resolve_argument :description do |reader:|
+          reader.description&.description
         end
 
         resolve_argument :default do |reader:|
           reader.default&.default
+        end
+
+        resolve_argument :database_default do |reader:|
+          reader.database_default&.default
         end
 
         resolve_argument :column_name do |dsl_execution:|

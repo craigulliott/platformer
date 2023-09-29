@@ -30,15 +30,15 @@ RSpec.describe Platformer::Composers::Migrations::Columns::MacAddress do
     end
   end
 
-  describe "for a User Model which has a mac_address column named my_mac_address that has a default value, allows null and has a comment" do
+  describe "for a User Model which has a mac_address column named my_mac_address that has a default value, allows null and has a description" do
     before(:each) do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
           mac_address_field :my_mac_address do
             allow_null
-            comment "This is a comment"
-            default "58-50-4A-2E-29-AB"
+            description "This is a description"
+            database_default "58-50-4A-2E-29-AB"
           end
         end
       end
@@ -55,7 +55,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::MacAddress do
 
       it { expect(subject.column(:my_mac_address).null).to be true }
 
-      it { expect(subject.column(:my_mac_address).description).to eq "This is a comment" }
+      it { expect(subject.column(:my_mac_address).description).to eq "This is a description" }
 
       it { expect(subject.column(:my_mac_address).default).to eq "58-50-4A-2E-29-AB" }
     end

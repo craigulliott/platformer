@@ -29,13 +29,6 @@ module Platformer
 
             # add the default database to the structure
             @server.structure.add_database @name
-
-            # ensure we have the default schema
-            structure.add_configured_schema :public
-
-            # ensure we have the default extensions installed
-            structure.add_configured_extension :plpgsql
-            structure.add_configured_extension :citext
           end
 
           def structure
@@ -61,7 +54,7 @@ module Platformer
             platformer_schema.function function_name
           end
 
-          # returns the name to a shared enum type (such as currency_code or language_code)
+          # returns the name to a shared enum type (such as currency or language)
           # which is stored in the platformer schema
           warn "not tested"
           def find_or_create_shared_enum constant_class
@@ -92,6 +85,37 @@ module Platformer
           warn "not tested"
           def platformer_schema
             @platformer_schema ||= get_platformer_schema_structure
+          end
+
+          warn "not tested"
+          def schema_names skip_public: false, skip_pg_schemas: true, skip_information_schema: true
+            # create a temporary database connection and fetch the list of schema names
+            rows = server.with_connection do |connection|
+              connection.exec <<~SQL
+                SELECT schema_name FROM information_schema.schemata;
+              SQL
+            end
+
+            # turn them to symbols
+            schema_names = rows.map { |r| r["schema_name"].to_sym }
+
+            # optionally remove the public schema
+            if skip_public
+              schema_names.delete_if { |schema_name| schema_name == :public }
+            end
+
+            # optionally remove the internal pg_* schemas
+            if skip_pg_schemas
+              schema_names.delete_if { |schema_name| schema_name.start_with? "pg_" }
+            end
+
+            # optionally remove the internal :information_schema schema
+            if skip_information_schema
+              schema_names.delete_if { |schema_name| schema_name == :information_schema }
+            end
+
+            # return the list
+            schema_names
           end
 
           # return the required configuration to create an active record connection with

@@ -55,7 +55,7 @@ RSpec.describe Platformer::Databases::Migrations do
           expect(loader.migrations.count).to eq 1
           expect(loader.migrations.first).to be_a Platformer::Databases::Migrations::MigrationFile
           expect(loader.migrations.first.name).to eq :create_my_table
-          expect(loader.migrations.first.contents).to eq <<~RUBY
+          expect(loader.migrations.first.contents).to eq <<~RUBY.strip
             module Migrations
               module Postgres
                 module Primary
@@ -70,6 +70,7 @@ RSpec.describe Platformer::Databases::Migrations do
                             my table description
                           COMMENT
                           create_table :my_table, id: false, comment: table_comment do |t|
+
                           end
                         end
                       end

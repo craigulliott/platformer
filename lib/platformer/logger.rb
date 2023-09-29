@@ -5,6 +5,10 @@ module Platformer
       klass.extend(ClassMethods)
     end
 
+    def log
+      self.class.log
+    end
+
     module ClassMethods
       def log
         @logger ||= Logger.logger(self)

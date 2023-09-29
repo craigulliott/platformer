@@ -28,13 +28,9 @@ module Platformer
                 DESCRIPTION
               end
 
-              # Methods
-              #
-              add_unique_method :default do
-                requires :default, :string
-              end
-
               # Common methods which are shared between fields
+              import_shared :default
+              import_shared :database_default
               import_shared :allow_null
               import_shared :empty_array_to_null_coercion
               import_shared :unique_field

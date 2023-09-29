@@ -39,6 +39,7 @@ module Platformer
     include Platformer::DSLs::Models::Fields::CurrencyField
     include Platformer::DSLs::Models::Fields::CountryField
     include Platformer::DSLs::Models::Fields::LanguageField
+    include Platformer::DSLs::Models::Fields::TimeZoneField
     # json
     include Platformer::DSLs::Models::Fields::JsonField
     # network
@@ -48,6 +49,7 @@ module Platformer
     # special fields
     include Platformer::DSLs::Models::Fields::PhoneNumberField
     include Platformer::DSLs::Models::Fields::EmailField
+    include Platformer::DSLs::Models::Fields::GeoPointField
 
     # install all our relationship DSLs
     include Platformer::DSLs::Models::Associations::BelongsTo
@@ -57,7 +59,10 @@ module Platformer
     # soft deletable models (marks them as deleted instead of actually destroying the data)
     include Platformer::DSLs::Models::SoftDeletable
 
-    # special fields and utilities
+    # validations
+    include Platformer::DSLs::Models::AddValidation
+
+    # special fields
     include Platformer::DSLs::Models::StateMachine
     include Platformer::DSLs::Models::ActionField
     include Platformer::DSLs::Models::Positionable

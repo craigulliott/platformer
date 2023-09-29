@@ -29,10 +29,23 @@ module Platformer
               # Methods
               #
               add_unique_method :default do
-                requires :default, :boolean
+                description <<~DESCRIPTION
+                  This method is used to set a default value for this column, this default
+                  is set within active record and should be persisted to the database when
+                  the record is created. It does not configure the underlying database table
+                  to have a default value or expression. If you want to do that, then use
+                  the `database_default`.
+                DESCRIPTION
+
+                requires :default, :boolean do
+                  description <<~DESCRIPTION
+                    The default value to set for this column.
+                  DESCRIPTION
+                end
               end
 
               # Common methods which are shared between fields
+              import_shared :database_default
               import_shared :allow_null
               import_shared :empty_array_to_null_coercion
               import_shared :unique_field
@@ -54,11 +67,11 @@ module Platformer
                   DESCRIPTION
                 end
 
-                optional :comment, :string do
+                optional :description, :string do
                   description <<~DESCRIPTION
-                    A comment which explains the reason for this validation
+                    A description which explains the reason for this validation
                     on this field. This will be used to generate documentation,
-                    and will be added as a comment to the database constraint.
+                    and will be added as a description to the database constraint.
                   DESCRIPTION
                 end
               end
@@ -75,11 +88,11 @@ module Platformer
                   DESCRIPTION
                 end
 
-                optional :comment, :string do
+                optional :description, :string do
                   description <<~DESCRIPTION
-                    A comment which explains the reason for this validation
+                    A description which explains the reason for this validation
                     on this field. This will be used to generate documentation,
-                    and will be added as a comment to the database constraint.
+                    and will be added as a description to the database constraint.
                   DESCRIPTION
                 end
               end

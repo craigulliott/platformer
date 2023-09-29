@@ -6,7 +6,7 @@ module Platformer
       module Columns
         # Add all cidr columns to their respective tables within DynamicMigrations
         class Cidr < Parsers::FinalModels::ForFields
-          for_field :cidr_field do |name:, table:, array:, default:, comment_text:, allow_null:|
+          for_field :cidr_field do |name:, table:, array:, database_default:, description:, allow_null:|
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION
               Add an #{array ? "array of cidrs" : "cidr"}
@@ -18,7 +18,7 @@ module Platformer
             data_type = array ? :"cidr[]" : :cidr
 
             # add the column to the DynamicMigrations table
-            table.add_column name, data_type, null: allow_null, default: default, description: comment_text
+            table.add_column name, data_type, null: allow_null, default: database_default, description: description
           end
         end
       end

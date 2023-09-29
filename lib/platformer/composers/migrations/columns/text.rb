@@ -6,7 +6,7 @@ module Platformer
       module Columns
         # Add all text columns to their respective tables within DynamicMigrations
         class Text < Parsers::FinalModels::ForFields
-          for_field :text_field do |name:, table:, array:, default:, comment_text:, allow_null:|
+          for_field :text_field do |name:, table:, array:, database_default:, description:, allow_null:|
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION
               Add an #{array ? "array of texts" : "text"}
@@ -33,7 +33,7 @@ module Platformer
             data_type = array ? :"#{base_type}[]" : base_type
 
             # add the column to the DynamicMigrations table
-            table.add_column name, data_type, null: allow_null, default: default, description: comment_text
+            table.add_column name, data_type, null: allow_null, default: database_default, description: description
           end
         end
       end

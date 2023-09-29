@@ -11,11 +11,11 @@ module Platformer
           state_machine_name = name || :state
           enum_type_name = name.nil? ? :"#{table.name}__states" : :"#{table.name}__#{name}_states"
 
-          comment = reader.comment&.comment
+          description = reader.description&.description
 
           # process each state and build an array of the state names
           state_names = []
-          for_method :state do |name:, requires_presence_of:, requires_absence_of:, comment:|
+          for_method :state do |name:, requires_presence_of:, requires_absence_of:, description:|
             state_names << name
           end
 
@@ -30,16 +30,16 @@ module Platformer
             named `#{name}`. The column can never be NULL, and has to be one of '#{state_names.join("', '")}'.
           DESCRIPTION
 
-          enum = schema.add_enum enum_type_name, state_names, description: <<~COMMENT
+          enum = schema.add_enum enum_type_name, state_names, description: <<~DESCRIPTION
             This type is for the `#{state_machine_name}` state machine on the
             `#{table.schema.name}'.'#{table.name}` table.
-          COMMENT
+          DESCRIPTION
 
           # add the column to the DynamicMigrations table
-          table.add_column state_machine_name, enum.full_name, enum: enum, null: false, description: <<~COMMENT
-            #{comment}
+          table.add_column state_machine_name, enum.full_name, enum: enum, null: false, description: <<~DESCRIPTION
+            #{description}
             This column represents the current state machine state. Possible values are #{state_names.to_sentence}.
-          COMMENT
+          DESCRIPTION
         end
       end
     end

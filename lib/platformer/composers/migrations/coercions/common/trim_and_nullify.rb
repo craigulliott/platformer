@@ -7,10 +7,10 @@ module Platformer
         module Common
           # install validations to assert that the trim_and_nullify coercion rules were followed
           class TrimAndNullify < Parsers::FinalModels::ForFields
-            for_string_fields do |name:, database:, table:, array:, default:, comment_text:, allow_null:|
+            for_string_fields do |name:, database:, table:, array:, description:, allow_null:|
               column = table.column name
 
-              for_method :trim_and_nullify do |method_name:, comment:|
+              for_method :trim_and_nullify do |method_name:, description:|
                 add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
@@ -54,8 +54,8 @@ module Platformer
                   check_clause = <<~SQL
                     #{column.name} IS DISTINCT FROM '' AND REGEXP_REPLACE(REGEXP_REPLACE(#{column.name}, '^\s+', ''), '\s+$', '') IS NOT DISTINCT FROM #{column.name}
                   SQL
-                  final_comment = comment || Databases::Migrations::Templates::Validations::TrimmedAndNullified::DEFAULT_COMMENT
-                  table.add_validation validation_name, [column.name], check_clause, template: :trimmed_and_nullified, description: final_comment
+                  final_description = description || Databases::Migrations::Templates::Validations::TrimmedAndNullified::DEFAULT_DESCRIPTION
+                  table.add_validation validation_name, [column.name], check_clause, template: :trimmed_and_nullified, description: final_description
                 end
               end
             end

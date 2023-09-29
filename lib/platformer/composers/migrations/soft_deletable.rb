@@ -13,16 +13,16 @@ module Platformer
           DESCRIPTION
 
           # add the boolean to the DynamicMigrations table
-          table.add_column :undeleted, :boolean, null: true, description: <<~COMMENT
+          table.add_column :undeleted, :boolean, null: true, description: <<~DESCRIPTION
             This column is true before the delete has occured on this model, and will
             be set to NULL after the delete has occured.
-          COMMENT
+          DESCRIPTION
 
           # add the timestamp to the DynamicMigrations table
-          table.add_column :deleted_at, :"timestamp without time zone", null: true, description: <<~COMMENT
+          table.add_column :deleted_at, :"timestamp without time zone", null: true, description: <<~DESCRIPTION
             This column is NULL before the delete has occured on this model, and will
             be set to the current time when the delete occurs.
-          COMMENT
+          DESCRIPTION
 
           validation_name = :soft_deletable
           # add the validation to the table

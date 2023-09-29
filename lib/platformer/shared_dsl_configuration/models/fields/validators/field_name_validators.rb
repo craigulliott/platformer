@@ -27,15 +27,6 @@ module Platformer
                   # Reserved for Positionable models (manual sorting of records)
                   :position
                 ]
-
-                validate_not_end_with [
-                  # Reserved for foreign keys
-                  :_id,
-                  # Reserved for the type part of polymorphic associations
-                  :_type,
-                  # Reserved for active records count cache column
-                  :_count
-                ]
               end
             end
           end

@@ -3,7 +3,7 @@ module Platformer
     module Migrations
       module Associations
         class HasOne < Parsers::FinalModels
-          for_dsl :has_one do |model_definition_class:, dsl_name:, foreign_model:, as:, local_column_names:, foreign_column_names:, comment:, deferrable:, initially_deferred:, on_delete:, on_update:|
+          for_dsl :has_one do |model_definition_class:, dsl_name:, foreign_model:, as:, local_column_names:, foreign_column_names:, description:, deferrable:, initially_deferred:, on_delete:, on_update:|
             local_table = model_definition_class.table_structure
             foreign_table = foreign_model.table_structure
 
@@ -21,7 +21,7 @@ module Platformer
               column_name = :"#{as || local_table.name.to_s.singularize}_id"
               # add this column to the foreign table
               foreign_columns << foreign_table.add_column(column_name, :uuid, null: allow_null, description: <<~DESCRIPTION)
-                #{comment}
+                #{description}
                 This table belongs to `#{foreign_table.schema.name}'.'#{foreign_table.name}` table.
               DESCRIPTION
 
@@ -76,7 +76,7 @@ module Platformer
                 initially_deferred: initially_deferred,
                 on_delete: on_delete_action,
                 on_update: on_update_action,
-                description: comment
+                description: description
               }
 
               add_documentation <<~DESCRIPTION

@@ -14,31 +14,31 @@ module Platformer
           state_machine_name = name || :state
           namespace = (state_machine_name == :state) ? :state_machine : :"#{state_machine_name}_state_machine"
 
-          comment = reader.comment&.comment
+          description = reader.description&.description
 
           add_documentation <<~DESCRIPTION
             Create a state machine with the name `#{state_machine_name}` on this active record model.
           DESCRIPTION
 
           add_documentation <<~DESCRIPTION
-            #{comment}
+            #{description}
             The state machine has the following states:
           DESCRIPTION
 
           # process each state and build a hash representation of them
           state_configurations = {}
-          for_method :state do |name:, requires_presence_of:, requires_absence_of:, comment:|
+          for_method :state do |name:, requires_presence_of:, requires_absence_of:, description:|
             # generated documentation for this model
             add_documentation <<~DESCRIPTION
               `:#{name}`
 
-              #{comment}
+              #{description}
             DESCRIPTION
             # build the hash representation of the desired states
             state_configurations[name] = {
               requires_presence_of: requires_presence_of,
               requires_absence_of: requires_absence_of,
-              comment: comment
+              description: description
             }
           end
 
@@ -47,18 +47,18 @@ module Platformer
           end
 
           add_documentation <<~DESCRIPTION
-            #{comment}
+            #{description}
             The state machine has the following actions:
           DESCRIPTION
 
           # process each action and build a hash representation of them
           action_configurations = {}
-          for_method :action do |name:, from:, to:, guards:, comment:|
+          for_method :action do |name:, from:, to:, guards:, description:|
             # generated documentation for this model
             add_documentation <<~DESCRIPTION
               `:#{name}`
 
-              #{comment}
+              #{description}
             DESCRIPTION
 
             if active_record_class.instance_methods.include? name
@@ -70,7 +70,7 @@ module Platformer
               from: from,
               to: to,
               guards: guards,
-              comment: comment
+              description: description
             }
           end
 

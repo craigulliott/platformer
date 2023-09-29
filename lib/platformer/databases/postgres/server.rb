@@ -67,10 +67,13 @@ module Platformer
           )
           # perform work with the connection
           # todo: `yield connection` would have been preferred, but rbs/steep doesnt understand that syntax
-          yield connection
+          result = yield connection
 
           # close the connection
           connection.close
+
+          # return the result
+          result
         end
       end
     end

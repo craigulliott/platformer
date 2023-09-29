@@ -6,7 +6,7 @@ module Platformer
       module Columns
         # Add all json columns to their respective tables within DynamicMigrations
         class Json < Parsers::FinalModels::ForFields
-          for_field :json_field do |name:, table:, default:, comment_text:, allow_null:|
+          for_field :json_field do |name:, table:, database_default:, description:, allow_null:|
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION
               Add a json column named `#{name}`
@@ -15,7 +15,7 @@ module Platformer
             DESCRIPTION
 
             # add the column to the DynamicMigrations table
-            table.add_column name, :jsonb, null: allow_null, default: default, description: comment_text
+            table.add_column name, :jsonb, null: allow_null, default: database_default, description: description
           end
         end
       end

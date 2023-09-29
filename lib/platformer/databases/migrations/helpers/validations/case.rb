@@ -6,7 +6,7 @@ module Platformer
           module Case
             # these functions are called from our custom DynamicMigrations template, it exists just to make the
             # generated migrations cleaner and easier to read
-            def validate_uppercase table_name, column_name, array: false, name: nil, comment: nil
+            def validate_uppercase table_name, column_name, array: false, name: nil, description: nil
               final_name = name || :"#{column_name}_uppercase_only"
 
               check_clause = if array
@@ -19,14 +19,14 @@ module Platformer
                 SQL
               end
 
-              final_comment = comment || Templates::Validations::Uppercase::DEFAULT_COMMENT
+              final_description = description || Templates::Validations::Uppercase::DEFAULT_DESCRIPTION
 
-              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, comment: final_comment do
+              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, description: final_description do
                 check_clause
               end
             end
 
-            def validate_lowercase table_name, column_name, array: false, name: nil, comment: nil
+            def validate_lowercase table_name, column_name, array: false, name: nil, description: nil
               final_name = name || :"#{column_name}_lowercase_only"
 
               check_clause = if array
@@ -39,9 +39,9 @@ module Platformer
                 SQL
               end
 
-              final_comment = comment || Templates::Validations::Uppercase::DEFAULT_COMMENT
+              final_description = description || Templates::Validations::Uppercase::DEFAULT_DESCRIPTION
 
-              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, comment: final_comment do
+              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, description: final_description do
                 check_clause
               end
             end

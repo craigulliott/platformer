@@ -6,12 +6,12 @@ module Platformer
           module Format
             # this function is called from our custom DynamicMigrations template, it exists just to make the
             # generated migrations cleaner and easier to read
-            def validate_format table_name, column_name, regexp, name: nil, comment: nil
+            def validate_format table_name, column_name, regexp, name: nil, description: nil
               final_name = name || :"#{column_name}_format"
 
-              final_comment = comment || Templates::Validations::Format::DEFAULT_COMMENT
+              final_description = description || Templates::Validations::Format::DEFAULT_DESCRIPTION
 
-              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, comment: final_comment do
+              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, description: final_description do
                 <<~SQL
                   #{column_name} ~ '#{regexp}'
                 SQL

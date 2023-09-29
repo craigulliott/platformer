@@ -30,15 +30,15 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Boolean do
     end
   end
 
-  describe "for a User Model which has a boolean column named my_boolean that has a default value, allows null and has a comment" do
+  describe "for a User Model which has a boolean column named my_boolean that has a default value, allows null and has a description" do
     before(:each) do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
           boolean_field :my_boolean do
             allow_null
-            comment "This is a comment"
-            default true
+            description "This is a description"
+            database_default "true"
           end
         end
       end
@@ -55,7 +55,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Boolean do
 
       it { expect(subject.column(:my_boolean).null).to be true }
 
-      it { expect(subject.column(:my_boolean).description).to eq "This is a comment" }
+      it { expect(subject.column(:my_boolean).description).to eq "This is a description" }
 
       it { expect(subject.column(:my_boolean).default).to eq "true" }
     end

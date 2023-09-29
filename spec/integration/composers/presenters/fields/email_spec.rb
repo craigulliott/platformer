@@ -12,7 +12,7 @@ RSpec.describe Platformer::Composers::Presenters::Fields::Email do
         model_for "Users::User" do
           database :postgres, :primary
           schema :users
-          email_field :my_email
+          email_field name: :my_email
         end
       end
     end

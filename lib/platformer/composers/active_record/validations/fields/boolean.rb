@@ -10,7 +10,7 @@ module Platformer
             class IncompatibleWithArrayFieldError < StandardError
             end
 
-            for_field :boolean_field do |name:, active_record_class:, array:, default:, comment_text:, allow_null:|
+            for_field :boolean_field do |name:, active_record_class:, array:, default:, description:, allow_null:|
               unless array
                 add_documentation <<~DESCRIPTION
                   Create a validation on this active record model which asserts that

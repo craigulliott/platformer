@@ -8,7 +8,7 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::Fields::Email do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          email_field :my_email
+          email_field name: :my_email
         end
         schema_for "Users::User" do
           fields [

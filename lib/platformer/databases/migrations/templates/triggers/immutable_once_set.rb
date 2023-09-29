@@ -12,7 +12,7 @@ module Platformer
                 table: trigger.table,
                 migration_method: :add_trigger,
                 object: trigger,
-                code_comment: code_comment,
+                code_description: code_description,
                 migration: <<~RUBY
                   immutable_once_set :#{trigger.table.name}, [:#{column_names.join(", :")}]
                 RUBY

@@ -18,7 +18,7 @@ RSpec.describe Platformer::Composers::Presenters::Fields::Country do
     end
 
     subject {
-      user = Users::User.new(country: "US")
+      user = Users::User.new(country: "COUNTRY_US")
       Presenters::Users::User.new user
     }
 
@@ -31,9 +31,9 @@ RSpec.describe Platformer::Composers::Presenters::Fields::Country do
 
       it { expect(subject.country_subregion).to eq "Northern America" }
 
-      it { expect(subject.country_alpha2).to eq "US" }
+      it { expect(subject.country_code).to eq "US" }
 
-      it { expect(subject.country_alpha3).to eq "USA" }
+      it { expect(subject.country_alpha3_code).to eq "USA" }
 
       it { expect(subject.country_continent).to eq "North America" }
     end

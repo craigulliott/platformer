@@ -8,9 +8,9 @@ module Platformer
         class WhereCanNotBeUsedWithDeferrableError < StandardError
         end
 
-        for_all_fields do |column_names:, table:, database:, comment_text:, allow_null:|
+        for_all_fields do |column_names:, table:, database:, description:, allow_null:|
           # if the unique method was used within our field DSL
-          for_method :unique do |scope:, comment:, where:, deferrable:, initially_deferred:|
+          for_method :unique do |scope:, description:, where:, deferrable:, initially_deferred:|
             all_column_names = column_names + scope
 
             if where
@@ -36,7 +36,7 @@ module Platformer
             end
 
             name = "#{all_column_names.join("_")}_uniq"
-            database.add_unique_constraint name, table, all_column_names, where: where, deferrable: deferrable, initially_deferred: initially_deferred, comment: comment
+            database.add_unique_constraint name, table, all_column_names, where: where, deferrable: deferrable, initially_deferred: initially_deferred, description: description
           end
         end
       end

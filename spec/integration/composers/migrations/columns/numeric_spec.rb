@@ -30,15 +30,15 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Numeric do
     end
   end
 
-  describe "for a User Model which has a numeric column named my_numeric that has a default value, allows null and has a comment" do
+  describe "for a User Model which has a numeric column named my_numeric that has a default value, allows null and has a description" do
     before(:each) do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
           numeric_field :my_numeric do
             allow_null
-            comment "This is a comment"
-            default 8.80
+            description "This is a description"
+            database_default "8.80"
           end
         end
       end
@@ -55,9 +55,9 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Numeric do
 
       it { expect(subject.column(:my_numeric).null).to be true }
 
-      it { expect(subject.column(:my_numeric).description).to eq "This is a comment" }
+      it { expect(subject.column(:my_numeric).description).to eq "This is a description" }
 
-      it { expect(subject.column(:my_numeric).default).to eq "8.8" }
+      it { expect(subject.column(:my_numeric).default).to eq "8.80" }
     end
   end
 

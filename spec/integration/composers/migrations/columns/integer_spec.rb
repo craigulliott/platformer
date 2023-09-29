@@ -30,15 +30,15 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Integer do
     end
   end
 
-  describe "for a User Model which has a integer column named my_integer that has a default value, allows null and has a comment" do
+  describe "for a User Model which has a integer column named my_integer that has a default value, allows null and has a description" do
     before(:each) do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
           integer_field :my_integer do
             allow_null
-            comment "This is a comment"
-            default 88
+            description "This is a description"
+            database_default "88"
           end
         end
       end
@@ -55,7 +55,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Integer do
 
       it { expect(subject.column(:my_integer).null).to be true }
 
-      it { expect(subject.column(:my_integer).description).to eq "This is a comment" }
+      it { expect(subject.column(:my_integer).description).to eq "This is a description" }
 
       it { expect(subject.column(:my_integer).default).to eq "88" }
     end

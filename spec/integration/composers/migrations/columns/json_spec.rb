@@ -30,15 +30,15 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Json do
     end
   end
 
-  describe "for a User Model which has a json column named my_json that has a default value, allows null and has a comment" do
+  describe "for a User Model which has a json column named my_json that has a default value, allows null and has a description" do
     before(:each) do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
           json_field :my_json do
             allow_null
-            comment "This is a comment"
-            default '{"name": "Yoshimi"}'
+            description "This is a description"
+            database_default '{"name": "Yoshimi"}'
           end
         end
       end
@@ -55,7 +55,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Json do
 
       it { expect(subject.column(:my_json).null).to be true }
 
-      it { expect(subject.column(:my_json).description).to eq "This is a comment" }
+      it { expect(subject.column(:my_json).description).to eq "This is a description" }
 
       it { expect(subject.column(:my_json).default).to eq '{"name": "Yoshimi"}' }
     end

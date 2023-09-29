@@ -37,6 +37,13 @@ RSpec.configure do |config|
       # raise an error unless the database structure is empty
       Helpers::Postgres.pg_spec_helper.assert_database_empty!
     end
+
+    # make sure postgis has been installed
+    Helpers::Postgres.pg_spec_helper.connection.exec <<-SQL
+      CREATE SCHEMA IF NOT EXISTS postgis;
+      GRANT ALL ON SCHEMA postgis TO PUBLIC;
+      CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA postgis;
+    SQL
   end
 
   # Run the garbage collector before each test. This is nessessary because

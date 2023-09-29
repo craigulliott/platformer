@@ -8,7 +8,7 @@ module Platformer
         end
 
         for_dsl :positionable do |schema:, table:, database:, scope:, reader:|
-          comment = reader.comment&.comment
+          description = reader.description&.description
 
           # update the dynamic documentation
           add_documentation <<~DESCRIPTION
@@ -33,11 +33,11 @@ module Platformer
           add_documentation scope_description
 
           # add the column to the DynamicMigrations table
-          column = table.add_column :position, :integer, null: false, description: <<~COMMENT
-            #{comment}
+          column = table.add_column :position, :integer, null: false, description: <<~DESCRIPTION
+            #{description}
             This column represents the current position of this manually sortable record.
             #{scope_description}
-          COMMENT
+          DESCRIPTION
 
           # add a validation to ensure manually set position values are always greater than 0
           add_documentation <<~DESCRIPTION
@@ -53,7 +53,7 @@ module Platformer
           check_clause = <<~SQL
             #{column.name} > 0
           SQL
-          table.add_validation validation_name, [column.name], check_clause, deferrable: false, initially_deferred: false, description: comment
+          table.add_validation validation_name, [column.name], check_clause, deferrable: false, initially_deferred: false, description: description
 
           # add a deferrable unique constraint for the position of this model and its provided scope
           add_documentation <<~DESCRIPTION
@@ -64,7 +64,7 @@ module Platformer
           # add the unique constraint to the table
           unique_constraint_name = :positionable_uniq
           all_column_names = scope + [:position]
-          table.add_unique_constraint unique_constraint_name, all_column_names, deferrable: true, initially_deferred: true, description: comment
+          table.add_unique_constraint unique_constraint_name, all_column_names, deferrable: true, initially_deferred: true, description: description
         end
       end
     end

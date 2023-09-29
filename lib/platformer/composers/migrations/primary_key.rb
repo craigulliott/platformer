@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       class PrimaryKey < Parsers::FinalModels
         for_dsl :primary_key do |column_names:, table:, database:, reader:|
-          comment = reader.comment&.comment
+          description = reader.description&.description
 
           # if no column names were provided, then create a new one called `id`
           if column_names.empty?
@@ -19,7 +19,7 @@ module Platformer
             DESCRIPTION
 
             # add the column to the DynamicMigrations table
-            column = table.add_column default_column_name, :uuid, null: false, default: "gen_random_uuid()", description: comment
+            column = table.add_column default_column_name, :uuid, null: false, default: "gen_random_uuid()", description: description
 
             # make the ID immutable
             database.make_column_immutable column
@@ -39,7 +39,7 @@ module Platformer
 
           # add the column to the DynamicMigrations table
           primary_key_name = :"#{table.name}_pkey"
-          table.add_primary_key primary_key_name, final_column_names, description: comment
+          table.add_primary_key primary_key_name, final_column_names, description: description
         end
       end
     end

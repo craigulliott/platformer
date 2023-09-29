@@ -1,6 +1,8 @@
 module Platformer
   class Documentation
     class Markdown
+      include Logger
+
       attr_reader :file_path
 
       def initialize base_path, filename
@@ -183,7 +185,7 @@ module Platformer
 
       def write_to_file
         ensure_folder_exists
-        puts "Creating documentation file: #{@file_path}"
+        log.info "Creating documentation file: #{@file_path}"
         File.write(@file_path, to_markdown)
       end
 

@@ -44,7 +44,7 @@ module Platformer
           create_file_folders full_path
           # write the migration to disk
           if schema_name.nil?
-            File.write(full_path, <<~RUBY)
+            File.write(full_path, trim_lines(<<~RUBY))
               module Migrations
                 module #{type.to_s.camelize}
                   module #{server_name.to_s.camelize}
@@ -60,7 +60,7 @@ module Platformer
               end
             RUBY
           else
-            File.write(full_path, <<~RUBY)
+            File.write(full_path, trim_lines(<<~RUBY))
               module Migrations
                 module #{type.to_s.camelize}
                   module #{server_name.to_s.camelize}
@@ -96,7 +96,7 @@ module Platformer
           # set the current schema name so that migrations are run in the correct context
           unless schema_name.nil?
             migration_class.set_schema_name schema_name
-            migration_class.schema_search_path = "#{schema_name},public"
+            migration_class.schema_search_path = "#{schema_name},public,postgis"
           end
 
           # run the migrations
@@ -104,6 +104,10 @@ module Platformer
         end
 
         private
+
+        def trim_lines string
+          string.split("\n").map(&:rstrip).join("\n")
+        end
 
         def get_class
           require_file

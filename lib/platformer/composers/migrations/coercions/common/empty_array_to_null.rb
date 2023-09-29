@@ -10,8 +10,8 @@ module Platformer
             class UnsupportedEmptyArrayToNullError < StandardError
             end
 
-            for_all_single_column_fields except: :json_field do |column_name:, table:, array:, default:, comment_text:, allow_null:|
-              for_method :empty_array_to_null do |method_name:, comment:|
+            for_all_single_column_fields except: :json_field do |column_name:, table:, array:, description:, allow_null:|
+              for_method :empty_array_to_null do |method_name:, description:|
                 unless array
                   raise UnsupportedEmptyArrayToNullError, "`empty_array_to_null` can only be used on array fields"
                 end
@@ -35,10 +35,10 @@ module Platformer
                 check_clause = <<~SQL
                   #{column.name} IS NULL OR array_length(#{column.name}, 1) IS NOT NULL
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, description: <<~COMMENT
-                  #{comment}
+                table.add_validation validation_name, [column.name], check_clause, description: <<~DESCRIPTION
+                  #{description}
                   This validation asserts that the empty_array_to_null coercion has been applied to this field
-                COMMENT
+                DESCRIPTION
               end
             end
           end

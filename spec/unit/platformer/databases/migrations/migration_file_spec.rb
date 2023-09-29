@@ -91,7 +91,7 @@ RSpec.describe Platformer::Databases::Migrations::MigrationFile do
       expect(loader.migrations.count).to eq 1
       expect(loader.migrations.first).to be_a Platformer::Databases::Migrations::MigrationFile
       expect(loader.migrations.first.name).to eq :my_migration
-      expect(loader.migrations.first.contents).to eq <<~RUBY
+      expect(loader.migrations.first.contents).to eq <<~RUBY.strip
         module Migrations
           module Postgres
             module MyServer

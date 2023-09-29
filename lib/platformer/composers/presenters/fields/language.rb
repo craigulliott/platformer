@@ -10,24 +10,24 @@ module Platformer
 
             column_name = :"#{name_prepend}language"
 
-            presenter_class.add_presenter "#{name_prepend}language_alpha2" do
-              language_code = model.send(column_name)
-              unless language_code.nil?
-                ISO_639.find(language_code)&.alpha2
+            presenter_class.add_presenter "#{name_prepend}language_code" do
+              language = model.send(column_name)
+              unless language.nil?
+                Constants::ISO::Language.value_metadata(language, :code)
               end
             end
 
-            presenter_class.add_presenter "#{name_prepend}language_alpha3" do
-              language_code = model.send(column_name)
-              unless language_code.nil?
-                ISO_639.find(language_code)&.alpha3
+            presenter_class.add_presenter "#{name_prepend}language_alpha3_code" do
+              language = model.send(column_name)
+              unless language.nil?
+                Constants::ISO::Language.value_metadata(language, :alpha3_code)
               end
             end
 
             presenter_class.add_presenter "#{name_prepend}language_english_name" do
-              language_code = model.send(column_name)
-              unless language_code.nil?
-                ISO_639.find(language_code)&.english_name
+              language = model.send(column_name)
+              unless language.nil?
+                Constants::ISO::Language.value_metadata(language, :name)
               end
             end
           end

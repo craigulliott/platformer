@@ -9,7 +9,7 @@ module Platformer
           class PrecisionMustBeProvidedError < StandardError
           end
 
-          for_field :numeric_field do |name:, table:, allow_null:, comment_text:, default:, array:, reader:, precision:, scale:|
+          for_field :numeric_field do |name:, table:, allow_null:, database_default:, description:, array:, reader:, precision:, scale:|
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION
               Add an #{array ? "array of numerics" : "numeric"}
@@ -36,7 +36,7 @@ module Platformer
             end
 
             # add the column to the DynamicMigrations table
-            table.add_column name, data_type.to_sym, null: allow_null, default: default&.to_s, description: comment_text
+            table.add_column name, data_type.to_sym, null: allow_null, default: database_default, description: description
           end
         end
       end

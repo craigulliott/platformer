@@ -30,15 +30,15 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Citext do
     end
   end
 
-  describe "for a User Model which has a citext column named my_citext that has a default value, allows null and has a comment" do
+  describe "for a User Model which has a citext column named my_citext that has a default value, allows null and has a description" do
     before(:each) do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
           citext_field :my_citext do
             allow_null
-            comment "This is a comment"
-            default "Hi Katy"
+            description "This is a description"
+            database_default "Hi Katy"
           end
         end
       end
@@ -55,7 +55,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Citext do
 
       it { expect(subject.column(:my_citext).null).to be true }
 
-      it { expect(subject.column(:my_citext).description).to eq "This is a comment" }
+      it { expect(subject.column(:my_citext).description).to eq "This is a description" }
 
       it { expect(subject.column(:my_citext).default).to eq "Hi Katy" }
     end

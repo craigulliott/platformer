@@ -1,3 +1,1 @@
-Dir[File.expand_path("**/*.rb", __dir__)].each do |f|
-  require_relative f
-end
+Platformer.recursive_require_relative ".", __dir__

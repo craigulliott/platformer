@@ -7,10 +7,10 @@ module Platformer
         module Fields
           # install all the validations specifically designed for boolean fields
           class Boolean < Parsers::FinalModels::ForFields
-            for_field :boolean_field do |name:, table:, array:, default:, comment_text:, allow_null:|
+            for_field :boolean_field do |name:, table:, array:, description:, allow_null:|
               column = table.column name
 
-              for_method :validate_is_true do |comment:|
+              for_method :validate_is_true do |description:|
                 add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
@@ -23,10 +23,10 @@ module Platformer
                 check_clause = <<~SQL
                   #{column.name} IS TRUE
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, description: comment
+                table.add_validation validation_name, [column.name], check_clause, description: description
               end
 
-              for_method :validate_is_false do |comment:|
+              for_method :validate_is_false do |description:|
                 add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
@@ -39,7 +39,7 @@ module Platformer
                 check_clause = <<~SQL
                   #{column.name} IS FALSE
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, description: comment
+                table.add_validation validation_name, [column.name], check_clause, description: description
               end
             end
           end

@@ -11,6 +11,7 @@ module Platformer
       include Utilities::Indent
       include Utilities::TrimLines
       include Utilities::WordWrap
+      include Logger
 
       def initialize base_type, schema_name, table_name = nil
         unless Platformer::BASE_TYPES.include? base_type
@@ -36,7 +37,7 @@ module Platformer
 
         else
           File.write(@file_path, file_contents)
-          puts "Generated: #{@file_path}"
+          log.info "Generated: #{@file_path}"
         end
       end
 
@@ -85,11 +86,11 @@ module Platformer
       end
 
       def filename
-        @filename ||= base_class? ? "#{schema_name}_#{base_type}.rb" : "#{table_name}_#{base_type}.rb"
+        @filename ||= base_class? ? "#{schema_name}_#{base_type}.rb" : "#{table_name.to_s.singularize}_#{base_type}.rb"
       end
 
       def class_name
-        @class_name ||= base_class? ? "#{schema_name}_#{base_type}".camelize : "#{table_name}_#{base_type}".camelize
+        @class_name ||= base_class? ? "#{schema_name}_#{base_type}".camelize : "#{table_name.to_s.singularize}_#{base_type}".camelize
       end
 
       def base_class_name

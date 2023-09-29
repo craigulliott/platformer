@@ -18,11 +18,11 @@ module Platformer
                     used on fields which have been set to `array: true`.
                   DESCRIPTION
 
-                  optional :comment, :string do
+                  optional :description, :string do
                     description <<~DESCRIPTION
-                      A comment which explains the reason for adding coercing empty arrays
+                      A description which explains the reason for adding coercing empty arrays
                       to null on this field. This will be used to generate documentation,
-                      and will be added as a comment to the database constraint.
+                      and will be added as a description to the database constraint.
                     DESCRIPTION
                   end
                 end

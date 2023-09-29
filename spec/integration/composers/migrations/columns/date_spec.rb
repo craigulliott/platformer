@@ -30,15 +30,15 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Date do
     end
   end
 
-  describe "for a User Model which has a date column named my_date that has a default value, allows null and has a comment" do
+  describe "for a User Model which has a date column named my_date that has a default value, allows null and has a description" do
     before(:each) do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
           date_field :my_date do
             allow_null
-            comment "This is a comment"
-            default "1984-07-14"
+            description "This is a description"
+            database_default "1984-07-14"
           end
         end
       end
@@ -55,7 +55,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Date do
 
       it { expect(subject.column(:my_date).null).to be true }
 
-      it { expect(subject.column(:my_date).description).to eq "This is a comment" }
+      it { expect(subject.column(:my_date).description).to eq "This is a description" }
 
       it { expect(subject.column(:my_date).default).to eq "1984-07-14" }
     end

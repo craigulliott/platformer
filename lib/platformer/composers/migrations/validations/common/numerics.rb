@@ -7,11 +7,11 @@ module Platformer
         module Common
           # Add all numeric validations to their respective columns within DynamicMigrations
           class Numerics < Parsers::FinalModels::ForFields
-            for_numeric_fields do |name:, table:, array:, default:, comment_text:, allow_null:|
+            for_numeric_fields do |name:, table:, array:, description:, allow_null:|
               column = table.column name
 
               # if the validate_greater_than validation was used
-              for_method :validate_greater_than do |value:, deferrable:, initially_deferred:, comment:|
+              for_method :validate_greater_than do |value:, deferrable:, initially_deferred:, description:|
                 add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
@@ -26,17 +26,17 @@ module Platformer
 
                 validation_name = :"#{column.name}_gt"
 
-                final_comment = comment || Databases::Migrations::Templates::Validations::GreaterThan::DEFAULT_COMMENT
+                final_description = description || Databases::Migrations::Templates::Validations::GreaterThan::DEFAULT_DESCRIPTION
 
                 # add the validation to the table
                 check_clause = <<~SQL
                   #{column.name} > #{value}
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, template: :greater_than, deferrable: deferrable, initially_deferred: initially_deferred, description: final_comment
+                table.add_validation validation_name, [column.name], check_clause, template: :greater_than, deferrable: deferrable, initially_deferred: initially_deferred, description: final_description
               end
 
               # if the validate_greater_than_or_equal_to validation was used
-              for_method :validate_greater_than_or_equal_to do |value:, deferrable:, initially_deferred:, comment:|
+              for_method :validate_greater_than_or_equal_to do |value:, deferrable:, initially_deferred:, description:|
                 add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
@@ -51,17 +51,17 @@ module Platformer
 
                 validation_name = :"#{column.name}_gte"
 
-                final_comment = comment || Databases::Migrations::Templates::Validations::GreaterThanOrEqualTo::DEFAULT_COMMENT
+                final_description = description || Databases::Migrations::Templates::Validations::GreaterThanOrEqualTo::DEFAULT_DESCRIPTION
 
                 # add the validation to the table
                 check_clause = <<~SQL
                   #{column.name} >= #{value}
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, template: :greater_than_or_equal_to, deferrable: deferrable, initially_deferred: initially_deferred, description: final_comment
+                table.add_validation validation_name, [column.name], check_clause, template: :greater_than_or_equal_to, deferrable: deferrable, initially_deferred: initially_deferred, description: final_description
               end
 
               # if the validate_less_than validation was used
-              for_method :validate_less_than do |value:, deferrable:, initially_deferred:, comment:|
+              for_method :validate_less_than do |value:, deferrable:, initially_deferred:, description:|
                 add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
@@ -76,17 +76,17 @@ module Platformer
 
                 validation_name = :"#{column.name}_lt"
 
-                final_comment = comment || Databases::Migrations::Templates::Validations::LessThan::DEFAULT_COMMENT
+                final_description = description || Databases::Migrations::Templates::Validations::LessThan::DEFAULT_DESCRIPTION
 
                 # add the validation to the table
                 check_clause = <<~SQL
                   #{column.name} < #{value}
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, template: :less_than, deferrable: deferrable, initially_deferred: initially_deferred, description: final_comment
+                table.add_validation validation_name, [column.name], check_clause, template: :less_than, deferrable: deferrable, initially_deferred: initially_deferred, description: final_description
               end
 
               # if the validate_less_than_or_equal_to validation was used
-              for_method :validate_less_than_or_equal_to do |value:, deferrable:, initially_deferred:, comment:|
+              for_method :validate_less_than_or_equal_to do |value:, deferrable:, initially_deferred:, description:|
                 add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
@@ -101,17 +101,17 @@ module Platformer
 
                 validation_name = :"#{column.name}_lte"
 
-                final_comment = comment || Databases::Migrations::Templates::Validations::LessThanOrEqualTo::DEFAULT_COMMENT
+                final_description = description || Databases::Migrations::Templates::Validations::LessThanOrEqualTo::DEFAULT_DESCRIPTION
 
                 # add the validation to the table
                 check_clause = <<~SQL
                   #{column.name} <= #{value}
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, template: :less_than_or_equal_to, deferrable: deferrable, initially_deferred: initially_deferred, description: final_comment
+                table.add_validation validation_name, [column.name], check_clause, template: :less_than_or_equal_to, deferrable: deferrable, initially_deferred: initially_deferred, description: final_description
               end
 
               # if the validate_equal_to validation was used
-              for_method :validate_equal_to do |value:, deferrable:, initially_deferred:, comment:|
+              for_method :validate_equal_to do |value:, deferrable:, initially_deferred:, description:|
                 add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
@@ -126,13 +126,13 @@ module Platformer
 
                 validation_name = :"#{column.name}_eq"
 
-                final_comment = comment || Databases::Migrations::Templates::Validations::EqualTo::DEFAULT_COMMENT
+                final_description = description || Databases::Migrations::Templates::Validations::EqualTo::DEFAULT_DESCRIPTION
 
                 # add the validation to the table
                 check_clause = <<~SQL
                   #{column.name} = #{value}
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, deferrable: deferrable, initially_deferred: initially_deferred, description: final_comment
+                table.add_validation validation_name, [column.name], check_clause, deferrable: deferrable, initially_deferred: initially_deferred, description: final_description
               end
             end
           end

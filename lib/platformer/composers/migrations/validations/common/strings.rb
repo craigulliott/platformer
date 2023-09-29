@@ -7,7 +7,7 @@ module Platformer
         module Common
           # Add all string validations to their respective columns within DynamicMigrations
           class Strings < Parsers::FinalModels::ForFields
-            for_string_fields do |name:, table:, array:, default:, comment_text:, allow_null:|
+            for_string_fields do |name:, table:, array:, description:, allow_null:|
               column = table.column name
 
               # if the validate_minimum_length validation was used
@@ -15,7 +15,7 @@ module Platformer
                 :validate_minimum_length,
                 :validate_maximum_length,
                 :validate_length_is
-              ] do |method_name:, value:, deferrable:, initially_deferred:, comment:|
+              ] do |method_name:, value:, deferrable:, initially_deferred:, description:|
                 # the difference between the three length validations
                 case method_name
                 when :validate_minimum_length
@@ -52,17 +52,17 @@ module Platformer
                   DESCRIPTION
                 end
 
-                final_comment = comment || template_class::DEFAULT_COMMENT
+                final_description = description || template_class::DEFAULT_DESCRIPTION
 
                 # add the validation to the table
                 check_clause = <<~SQL
                   LENGTH(#{column.name}) #{operator} #{value}
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, template: template, deferrable: deferrable, initially_deferred: initially_deferred, description: final_comment
+                table.add_validation validation_name, [column.name], check_clause, template: template, deferrable: deferrable, initially_deferred: initially_deferred, description: final_description
               end
 
               # if the validate_format validation was used
-              for_method :validate_format do |value:, deferrable:, initially_deferred:, comment:|
+              for_method :validate_format do |value:, deferrable:, initially_deferred:, description:|
                 add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
@@ -77,21 +77,21 @@ module Platformer
 
                 validation_name = :"#{column.name}_format"
                 template = :format
-                final_comment = comment || Databases::Migrations::Templates::Validations::Format::DEFAULT_COMMENT
+                final_description = description || Databases::Migrations::Templates::Validations::Format::DEFAULT_DESCRIPTION
 
                 # add the validation to the table
                 # null values are automatically permitted with the sql below
                 check_clause = <<~SQL
                   #{column.name} ~ '#{value}'
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, template: template, deferrable: deferrable, initially_deferred: initially_deferred, description: final_comment
+                table.add_validation validation_name, [column.name], check_clause, template: template, deferrable: deferrable, initially_deferred: initially_deferred, description: final_description
               end
 
               # if the validate_in validation was used
               for_method [
                 :validate_in,
                 :validate_not_in
-              ] do |method_name:, values:, deferrable:, initially_deferred:, comment:|
+              ] do |method_name:, values:, deferrable:, initially_deferred:, description:|
                 # so we can easily differentiate between these two methods
                 not_in = method_name == :validate_not_in
 
@@ -110,7 +110,7 @@ module Platformer
                 validation_name = :"#{column.name}_#{not_in ? "not_in" : "in"}"
                 template = not_in ? :exclusion : :inclusion
                 template_class = not_in ? Databases::Migrations::Templates::Validations::Exclusion : Databases::Migrations::Templates::Validations::Inclusion
-                final_comment = comment || template_class::DEFAULT_COMMENT
+                final_description = description || template_class::DEFAULT_DESCRIPTION
 
                 # add the validation to the table
                 # null values are automatically permitted with the sql below
@@ -118,11 +118,11 @@ module Platformer
                 check_clause = <<~SQL
                   #{column.name} #{not_in ? "NOT IN" : "IN"} ('#{quoted_values.join("','")}')
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, template: template, deferrable: deferrable, initially_deferred: initially_deferred, description: final_comment
+                table.add_validation validation_name, [column.name], check_clause, template: template, deferrable: deferrable, initially_deferred: initially_deferred, description: final_description
               end
 
               # if the validate_in validation was used
-              for_method :validate_is_value do |value:, deferrable:, initially_deferred:, comment:|
+              for_method :validate_is_value do |value:, deferrable:, initially_deferred:, description:|
                 add_documentation <<~DESCRIPTION
                   Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
                   within DynamicMigrations and add a constraint to assert that any values provided
@@ -137,14 +137,14 @@ module Platformer
 
                 validation_name = :"#{column.name}_is"
                 template = :is_value
-                final_comment = comment || Databases::Migrations::Templates::Validations::IsValue::DEFAULT_COMMENT
+                final_description = description || Databases::Migrations::Templates::Validations::IsValue::DEFAULT_DESCRIPTION
 
                 # add the validation to the table
                 # null values are automatically permitted with the sql below
                 check_clause = <<~SQL
                   #{column.name} = '#{value}'
                 SQL
-                table.add_validation validation_name, [column.name], check_clause, template: template, deferrable: deferrable, initially_deferred: initially_deferred, description: final_comment
+                table.add_validation validation_name, [column.name], check_clause, template: template, deferrable: deferrable, initially_deferred: initially_deferred, description: final_description
               end
             end
           end
