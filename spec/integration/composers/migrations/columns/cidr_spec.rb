@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Cidr do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          cidr_field :my_cidr do
-            allow_null
+          cidr_field :my_cidr, allow_null: true do
             description "This is a description"
             database_default "10.0.0.0/8"
           end

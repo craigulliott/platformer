@@ -77,22 +77,17 @@ module Platformer
               end
             end
 
-            # we can skip the column names for standard belongs_to associations
-            table.foreign_key_constraints.each do |foreign_key_constraint|
-              column_names = foreign_key_constraint.column_names
-
-              # the columns for default (single column and predictable name) belongs_to associations
-              # do not need to be represented as uuid fields, so we capture an array of those column
-              # names here, so we can ignore them below
-              if column_names.length == 1 && column_names.first == predictable_column_name_from_foreign_key_contraint(foreign_key_constraint)
-                skip_column_names << column_names.first
-              end
-            end
-
             # add all our associations
             if (associations = ASSOCIATIONS[:"#{module_name}::#{class_name}"])
               associations[:belongs_to]&.each do |name, options|
                 add_association :belongs_to, name, options
+
+                # the columns for default (single column) belongs_to associations
+                # do not need to be represented as uuid fields, so we add them to
+                # the ignore list here
+                if column_names.length == 1
+                  skip_column_names << :"{column_names.first}_id"
+                end
               end
               associations[:has_many]&.each do |name, options|
                 add_association :has_many, name, options
@@ -158,7 +153,7 @@ module Platformer
             end
 
             if options[:class_name]
-              syntax << ", class_name: \"#{options[:class_name]}Model\""
+              syntax << ", model: \"#{options[:class_name]}Model\""
             end
 
             if options[:foreign_key]
@@ -167,34 +162,6 @@ module Platformer
 
             if options[:primary_key]
               syntax << ", local_columns: :#{options[:primary_key]}"
-            end
-
-            add_section syntax
-          end
-
-          def add_has_many foreign_key_constraint
-            # note that these are reversed from the `belongs_to` method above
-            foreign_model_name = "#{foreign_key_constraint.table.schema.name.to_s.camelize}::#{foreign_key_constraint.table.name.to_s.singularize.camelize}Model"
-            column_names = foreign_key_constraint.foreign_column_names
-            foreign_column_names = foreign_key_constraint.column_names
-
-            syntax = "has_many \"#{foreign_model_name}\""
-
-            if column_names.length > 1 || column_names.first != :id
-              syntax << ", local_column_names: [:#{column_names.join(", :")}]"
-            end
-
-            if foreign_column_names.length > 1 || foreign_column_names.first != predictable_column_name_from_foreign_key_contraint(foreign_key_constraint)
-              syntax << ", foreign_column_names: [:#{foreign_column_names.join(", :")}]"
-            end
-
-            # description comes last, so we can use HEREDOC syntax
-            if foreign_key_constraint.has_description?
-              syntax << ", " + <<~RUBY.strip
-                description: <<~DESCRIPTION
-                  #{word_wrap foreign_key_constraint.description, line_length: 80, indent: true}
-                DESCRIPTION
-              RUBY
             end
 
             add_section syntax

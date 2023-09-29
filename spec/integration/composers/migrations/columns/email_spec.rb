@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Email do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          email_field name: :my_email do
-            allow_null
+          email_field name: :my_email, allow_null: true do
             description "This is a description"
             database_default "katy@socialkaty.com"
           end

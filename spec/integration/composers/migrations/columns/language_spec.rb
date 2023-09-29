@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Language do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          language_field do
-            allow_null
+          language_field allow_null: true do
             description "This is a description"
             database_default "en"
           end

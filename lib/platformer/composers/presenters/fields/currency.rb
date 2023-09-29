@@ -10,6 +10,8 @@ module Platformer
 
             column_name = :"#{name_prepend}currency"
 
+            presenter_class.add_presenter "#{name_prepend}currency"
+
             presenter_class.add_presenter "#{name_prepend}currency_name" do
               currency = model.send(column_name)
               unless currency.nil?

@@ -25,6 +25,8 @@ RSpec.describe Platformer::Composers::Presenters::Fields::Language do
     context "creates the expected Presenter class" do
       it { expect(subject).to be_a Presenters::Base }
 
+      it { expect(subject.language).to eq "LANG_EN" }
+
       it { expect(subject.language_english_name).to eq "English" }
 
       it { expect(subject.language_code).to eq "en" }

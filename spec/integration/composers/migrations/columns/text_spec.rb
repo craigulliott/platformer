@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Text do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          text_field :my_text do
-            allow_null
+          text_field :my_text, allow_null: true do
             description "This is a description"
             database_default "Hi Katy!"
           end

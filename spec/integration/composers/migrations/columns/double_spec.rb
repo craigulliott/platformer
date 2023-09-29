@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Double do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          double_field :my_double do
-            allow_null
+          double_field :my_double, allow_null: true do
             description "This is a description"
             database_default "8.88"
           end

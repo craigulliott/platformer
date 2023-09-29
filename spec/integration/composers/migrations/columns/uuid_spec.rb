@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Uuid do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          uuid_field :my_uuid do
-            allow_null
+          uuid_field :my_uuid, allow_null: true do
             description "This is a description"
             database_default "63510e31-bbf8-49e0-9878-ce2a974ead54"
           end

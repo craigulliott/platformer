@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::TimeZone do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          time_zone_field do
-            allow_null
+          time_zone_field allow_null: true do
             description "This is a description"
             database_default "America/Chicago"
           end

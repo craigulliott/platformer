@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Json do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          json_field :my_json do
-            allow_null
+          json_field :my_json, allow_null: true do
             description "This is a description"
             database_default '{"name": "Yoshimi"}'
           end

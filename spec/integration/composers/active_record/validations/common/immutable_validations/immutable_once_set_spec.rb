@@ -14,8 +14,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::Immutab
         model_for "Users::User" do
           database :postgres, :primary
           schema :users
-          integer_field :foo do
-            allow_null
+          integer_field :foo, allow_null: true do
             immutable_once_set
           end
         end

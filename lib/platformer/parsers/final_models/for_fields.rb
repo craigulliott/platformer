@@ -10,10 +10,6 @@ module Platformer
           alias_method :for_fields, :for_dsl
         end
 
-        resolve_argument :allow_null do |reader:|
-          reader.method_called?(:allow_null)
-        end
-
         resolve_argument :description do |reader:|
           reader.description&.description
         end

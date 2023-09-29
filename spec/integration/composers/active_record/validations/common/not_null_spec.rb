@@ -17,8 +17,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::NotNull
           schema :users
           text_field :my_char do
           end
-          text_field :my_nullable_char do
-            allow_null
+          text_field :my_nullable_char, allow_null: true do
           end
         end
       end

@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Citext do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          citext_field :my_citext do
-            allow_null
+          citext_field :my_citext, allow_null: true do
             description "This is a description"
             database_default "Hi Katy"
           end

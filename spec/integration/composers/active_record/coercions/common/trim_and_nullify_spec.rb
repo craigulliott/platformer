@@ -15,9 +15,8 @@ RSpec.describe Platformer::Composers::ActiveRecord::Coercions::Common::TrimAndNu
         model_for "Users::User" do
           database :postgres, :primary
           schema :users
-          text_field :foo do
+          text_field :foo, allow_null: true do
             trim_and_nullify
-            allow_null
           end
         end
       end
@@ -112,9 +111,8 @@ RSpec.describe Platformer::Composers::ActiveRecord::Coercions::Common::TrimAndNu
         model_for "Users::User" do
           database :postgres, :primary
           schema :users
-          text_field :foo, array: true do
+          text_field :foo, array: true, allow_null: true do
             trim_and_nullify
-            allow_null
           end
         end
       end

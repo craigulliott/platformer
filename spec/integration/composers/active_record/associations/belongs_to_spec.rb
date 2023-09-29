@@ -17,7 +17,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::Associations::BelongsTo do
         model_for "Badge" do
           database :postgres, :primary
           uuid_field :id
-          belongs_to "UserModel"
+          belongs_to :user, model: "UserModel"
         end
       end
     end

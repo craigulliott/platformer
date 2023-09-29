@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Currency do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          currency_field do
-            allow_null
+          currency_field allow_null: true do
             description "This is a description"
             database_default "USD"
           end

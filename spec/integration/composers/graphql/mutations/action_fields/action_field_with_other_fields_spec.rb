@@ -16,11 +16,9 @@ RSpec.describe Platformer::Composers::GraphQL::Mutations::ActionFields do
         model_for "Project" do
           database :postgres, :primary
           action_field :published, action_name: :publish
-          text_field :foo do
-            allow_null
+          text_field :foo, allow_null: true do
           end
-          text_field :bar do
-            allow_null
+          text_field :bar, allow_null: true do
           end
         end
 

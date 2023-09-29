@@ -3,50 +3,55 @@ module Platformer
     module Migrations
       module Associations
         class HasOne < Parsers::FinalModels
-          for_dsl :has_one do |model_definition_class:, dsl_name:, foreign_model:, as:, local_column_names:, foreign_column_names:, description:, deferrable:, initially_deferred:, on_delete:, on_update:|
+          for_dsl :has_one do |model_definition_class:, module_name:, name:, model:, through:, allow_null:, local_columns:, foreign_columns:, description:, deferrable:, initially_deferred:, on_delete:, on_update:|
             local_table = model_definition_class.table_structure
+            foreign_model = model || "#{module_name}::#{name.classify}Model".constantize
             foreign_table = foreign_model.table_structure
-
-            allow_null = method_called?(:allow_null)
 
             add_documentation <<~DESCRIPTION
               Create a has_one association, where `#{local_table.schema.name}'.'#{local_table.name}` records
               can have one `#{foreign_table.schema.name}'.'#{foreign_table.name}` records.
             DESCRIPTION
 
-            # get (or build) the foreign columns (which also asserts that they exist)
-            foreign_columns = []
-            if foreign_column_names.empty?
+            # get the foreign columns (which also asserts that they exist)
+            foreign_cols = []
+            if foreign_columns.empty?
               # generate the foreign column name based off the name of the foreign table
-              column_name = :"#{as || local_table.name.to_s.singularize}_id"
-              # add this column to the foreign table
-              foreign_columns << foreign_table.add_column(column_name, :uuid, null: allow_null, description: <<~DESCRIPTION)
-                #{description}
-                This table belongs to `#{foreign_table.schema.name}'.'#{foreign_table.name}` table.
-              DESCRIPTION
+              column_name = :"#{local_table.name.to_s.singularize}_id"
+              # if the column already exists, then add it to the array of columns which
+              # will be used for the foreign key constraint
+              if foreign_table.has_column? column_name
+                foreign_cols << foreign_table.column(column_name)
 
-              add_documentation <<~DESCRIPTION
-                A uuid column named `#{column_name}` was automatically created on the foreign table.
-              DESCRIPTION
+              # automatically add this column to the foreign table
+              else
+                foreign_cols << foreign_table.add_column(column_name, :uuid, null: allow_null, description: <<~DESCRIPTION)
+                  #{description}
+                  This table belongs to `#{foreign_table.schema.name}'.'#{foreign_table.name}` table.
+                DESCRIPTION
 
+                add_documentation <<~DESCRIPTION
+                  A uuid column named `#{column_name}` was automatically created on the foreign table.
+                DESCRIPTION
+              end
             else
-              foreign_column_names.each do |column_name|
-                foreign_columns << foreign_table.column(column_name)
+              foreign_columns.each do |column_name|
+                foreign_cols << foreign_table.column(column_name)
               end
             end
 
             # get the local columns (which also asserts that they exist)
-            local_columns = []
-            if local_column_names.empty?
-              local_columns << local_table.column(:id)
+            local_cols = []
+            if local_columns.empty?
+              local_cols << local_table.column(:id)
             else
-              local_column_names.each do |column_name|
-                local_columns << local_table.column(column_name)
+              local_columns.each do |column_name|
+                local_cols << local_table.column(column_name)
               end
             end
 
-            local_column_descriptions = local_columns.map { |c| "#{c.name} (#{c.data_type})" }
-            foreign_column_descriptions = foreign_columns.map { |c| "#{c.name} (#{c.data_type})" }
+            local_column_descriptions = local_cols.map { |c| "#{c.name} (#{c.data_type})" }
+            foreign_column_descriptions = foreign_cols.map { |c| "#{c.name} (#{c.data_type})" }
 
             add_documentation <<~DESCRIPTION
               The association is between the foreign columns #{foreign_column_descriptions.to_sentence}
@@ -57,11 +62,13 @@ module Platformer
             # foreign key constraint
             if local_table.schema.database == foreign_table.schema.database
 
+              warn "TODO : make sure this doesnt already exist because of the belongs_to"
+
               # the values we need for the foreign key constraint
-              local_column_names = local_columns.map(&:name)
+              local_columns = local_cols.map(&:name)
               local_schema_name = local_table.schema.name
               local_table_name = local_table.name
-              foreign_column_names = foreign_columns.map(&:name)
+              foreign_columns = foreign_cols.map(&:name)
 
               on_delete_action = on_delete || :no_action
               on_update_action = on_update || :no_action
@@ -95,7 +102,7 @@ module Platformer
               end
 
               # create the foreign key constraint
-              foreign_table.add_foreign_key_constraint foreign_key_name, foreign_column_names, local_schema_name, local_table_name, local_column_names, **options
+              foreign_table.add_foreign_key_constraint foreign_key_name, foreign_columns, local_schema_name, local_table_name, local_columns, **options
             else
               add_documentation <<~DESCRIPTION
                 A foreign key constraint was not created because the tables are in different databases.

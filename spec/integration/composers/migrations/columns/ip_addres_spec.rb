@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::IpAddress do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          ip_address_field :my_ip_address do
-            allow_null
+          ip_address_field :my_ip_address, allow_null: true do
             description "This is a description"
             database_default "192.168.0.1"
           end

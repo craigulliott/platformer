@@ -18,24 +18,19 @@ RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::Numeric
           database :postgres, :primary
           schema :users
 
-          integer_field :my_integer do
-            allow_null
+          integer_field :my_integer, allow_null: true do
             validate_greater_than 0, message: "invalid my_integer"
           end
-          float_field :my_float do
-            allow_null
+          float_field :my_float, allow_null: true do
             validate_greater_than_or_equal_to 0, message: "invalid my_float"
           end
-          numeric_field :my_numeric do
-            allow_null
+          numeric_field :my_numeric, allow_null: true do
             validate_less_than 10, message: "invalid my_numeric"
           end
-          numeric_field :my_double do
-            allow_null
+          numeric_field :my_double, allow_null: true do
             validate_less_than_or_equal_to 10, message: "invalid my_double"
           end
-          numeric_field :my_other_double do
-            allow_null
+          numeric_field :my_other_double, allow_null: true do
             validate_equal_to 8, message: "invalid my_other_double"
           end
         end

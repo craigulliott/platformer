@@ -10,17 +10,19 @@ module Platformer
 
             column_name = :"#{name_prepend}time_zone"
 
+            presenter_class.add_presenter "#{name_prepend}time_zone"
+
             presenter_class.add_presenter "#{name_prepend}time_zone_name" do
               country_enum = model.send(column_name)
               unless country_enum.nil?
-                Constants::ISO::Country.value_metadata(country_enum, :name)
+                Constants::TimeZone.value_metadata(country_enum, :name)
               end
             end
 
             presenter_class.add_presenter "#{name_prepend}time_zone_identifier" do
               country_enum = model.send(column_name)
               unless country_enum.nil?
-                Constants::ISO::Country.value_metadata(country_enum, :identifier)
+                Constants::TimeZone.value_metadata(country_enum, :identifier)
               end
             end
           end

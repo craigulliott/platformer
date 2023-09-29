@@ -11,12 +11,10 @@ RSpec.describe Platformer::Composers::Migrations::Validations::Common::Immutable
           integer_field :my_integer do
             immutable
           end
-          text_field :my_text do
-            allow_null
+          text_field :my_text, allow_null: true do
             immutable_once_set
           end
-          text_field :my_other_text do
-            allow_null
+          text_field :my_other_text, allow_null: true do
             immutable_once_set
           end
         end

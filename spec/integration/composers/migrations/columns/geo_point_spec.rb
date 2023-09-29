@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::GeoPoint do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          geo_point_field prefix: :my do
-            allow_null
+          geo_point_field prefix: :my, allow_null: true do
             description "This is a description"
             database_default "katy@socialkaty.com"
           end

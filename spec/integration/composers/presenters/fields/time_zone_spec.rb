@@ -18,14 +18,18 @@ RSpec.describe Platformer::Composers::Presenters::Fields::TimeZone do
     end
 
     subject {
-      user = Users::User.new(time_zone: "America/Chicago")
+      user = Users::User.new(time_zone: "TZ_AMERICA_CHICAGO")
       Presenters::Users::User.new user
     }
 
     context "creates the expected Presenter class" do
       it { expect(subject).to be_a Presenters::Base }
 
-      it { expect(subject.time_zone).to eq "America/Chicago" }
+      it { expect(subject.time_zone).to eq "TZ_AMERICA_CHICAGO" }
+
+      it { expect(subject.time_zone_name).to eq "Central Time (US & Canada)" }
+
+      it { expect(subject.time_zone_identifier).to eq "America/Chicago" }
     end
   end
 end

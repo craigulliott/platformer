@@ -14,24 +14,39 @@ module Platformer
                 the ActiveRecord associations.
               DESCRIPTION
 
-              requires :foreign_model, :class do
-                validate_end_with :Model
-
-                description <<~DESCRIPTION
-                  The Model class which this Model belongs to.
-                DESCRIPTION
-              end
-
-              optional :as, :symbol do
+              requires :name, :symbol do
                 import_shared :snake_case_name_validator
 
                 description <<~DESCRIPTION
-                  An optional name for this association, if a name is not provided then
-                  a default will be used based off the name of the foreign model.
+                  A name for this association.
                 DESCRIPTION
               end
 
-              optional :local_column_names, :symbol, array: true do
+              optional :through, :symbol do
+                description <<~DESCRIPTION
+                  The name of another association on this model through which this association
+                  can be resolved
+                DESCRIPTION
+              end
+
+              optional :allow_null, :boolean do
+                description <<~DESCRIPTION
+                  If true, and `local_columns` were not provided, then the
+                  automatically generated column which is added to the local
+                  table can be `null`, which makes the `belongs_to` association optional.
+                DESCRIPTION
+              end
+
+              optional :model, :class do
+                validate_end_with :Model
+
+                description <<~DESCRIPTION
+                  The Model class which this Model belongs to. If one is not provided, then it
+                  will be inferred from the association name
+                DESCRIPTION
+              end
+
+              optional :local_columns, :symbol, array: true do
                 import_shared :snake_case_name_validator
 
                 description <<~DESCRIPTION
@@ -41,7 +56,7 @@ module Platformer
                 DESCRIPTION
               end
 
-              optional :foreign_column_names, :symbol, array: true do
+              optional :foreign_columns, :symbol, array: true do
                 import_shared :snake_case_name_validator
 
                 description <<~DESCRIPTION
@@ -97,14 +112,6 @@ module Platformer
                   :set_null,
                   :set_default
                 ]
-              end
-
-              add_unique_method :allow_null do
-                description <<~DESCRIPTION
-                  If true, and `local_column_names` were not provided, then the
-                  automatically generated column which is added to the local
-                  table can be `null`, which makes the `belongs_to` association optional.
-                DESCRIPTION
               end
             end
           end

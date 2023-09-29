@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Numeric do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          numeric_field :my_numeric do
-            allow_null
+          numeric_field :my_numeric, allow_null: true do
             description "This is a description"
             database_default "8.80"
           end

@@ -25,6 +25,8 @@ RSpec.describe Platformer::Composers::Presenters::Fields::Country do
     context "creates the expected Presenter class" do
       it { expect(subject).to be_a Presenters::Base }
 
+      it { expect(subject.country).to eq "COUNTRY_US" }
+
       it { expect(subject.country_name).to eq "United States of America" }
 
       it { expect(subject.country_full_name).to eq "The United States of America" }

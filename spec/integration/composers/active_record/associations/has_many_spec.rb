@@ -13,7 +13,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::Associations::HasMany do
         model_for "User" do
           database :postgres, :primary
           uuid_field :id
-          has_many "BadgeModel"
+          has_many :badges, model: "BadgeModel"
         end
         model_for "Badge" do
           database :postgres, :primary

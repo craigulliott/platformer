@@ -18,3 +18,5 @@ remove numeric_field :latitude and numeric_field :longitude from
 AvailabilityInstanceModel belongs to availability and also has an availability column (these names collide)
 rename `integer_field :attendees` to `integer_field :attending`
 rename `integer_field :availability` to `integer_field :available`
+
+rename all `as: :unknown` for associations

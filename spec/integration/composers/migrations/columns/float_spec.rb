@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Float do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          float_field :my_float do
-            allow_null
+          float_field :my_float, allow_null: true do
             description "This is a description"
             database_default "8.88"
           end

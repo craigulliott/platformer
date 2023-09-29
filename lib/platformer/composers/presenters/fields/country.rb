@@ -10,6 +10,8 @@ module Platformer
 
             column_name = :"#{name_prepend}country"
 
+            presenter_class.add_presenter "#{name_prepend}country"
+
             presenter_class.add_presenter "#{name_prepend}country_code" do
               country_enum = model.send(column_name)
               unless country_enum.nil?

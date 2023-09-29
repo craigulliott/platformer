@@ -38,8 +38,7 @@ RSpec.describe Platformer::Composers::GraphQL::Schema::Queries::RootNode do
           has_many "Hobbies::UserHobbyModel"
           belongs_to "Hobbies::HobbyModel", as: :favorite_hobby
           text_field :name
-          date_field :date_of_birth do
-            allow_null
+          date_field :date_of_birth, allow_null: true do
           end
         end
         model_for "Hobbies::UserHobby" do

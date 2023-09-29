@@ -3,11 +3,13 @@
 module Platformer
   module Constants
     class TimeZone < Constant
-      ActiveSupport::TimeZone.all.uniq { |tz| tz.tzinfo.identifier }.map do |tz|
+      ActiveSupport::TimeZone.all.uniq { |tz| tz.tzinfo.identifier }.sort.map do |tz|
         # skip this one
         next if tz.tzinfo.identifier == "Etc/GMT+12"
 
         symbol = tz.tzinfo.identifier.gsub(/[^_a-zA-Z0-9]/, "_").squeeze("_").upcase!
+
+        symbol = "UTC" if symbol == "ETC_UTC"
 
         add_constant "TZ_#{symbol}", {
           name: tz.name,

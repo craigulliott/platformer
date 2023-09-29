@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Integer do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          integer_field :my_integer do
-            allow_null
+          integer_field :my_integer, allow_null: true do
             description "This is a description"
             database_default "88"
           end

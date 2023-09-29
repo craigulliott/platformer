@@ -13,9 +13,8 @@ RSpec.describe Platformer::Composers::ActiveRecord::Coercions::Common::Case do
         model_for "Users::User" do
           database :postgres, :primary
           schema :users
-          text_field :foo do
+          text_field :foo, allow_null: true do
             uppercase
-            allow_null
           end
         end
       end
@@ -62,9 +61,8 @@ RSpec.describe Platformer::Composers::ActiveRecord::Coercions::Common::Case do
         model_for "Users::User" do
           database :postgres, :primary
           schema :users
-          text_field :foo, array: true do
+          text_field :foo, array: true, allow_null: true do
             uppercase
-            allow_null
           end
         end
       end

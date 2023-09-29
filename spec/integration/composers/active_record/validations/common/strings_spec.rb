@@ -20,32 +20,25 @@ RSpec.describe Platformer::Composers::ActiveRecord::Validations::Common::Strings
           database :postgres, :primary
           schema :users
 
-          text_field :my_char do
-            allow_null
+          text_field :my_char, allow_null: true do
             validate_minimum_length 3, message: "invalid my_char"
           end
-          text_field :my_text do
-            allow_null
+          text_field :my_text, allow_null: true do
             validate_maximum_length 5, message: "invalid my_text"
           end
-          text_field :my_second_char do
-            allow_null
+          text_field :my_second_char, allow_null: true do
             validate_length_is 10, message: "invalid my_second_char"
           end
-          text_field :my_second_text do
-            allow_null
+          text_field :my_second_text, allow_null: true do
             validate_format(/[a-z]+/, message: "invalid my_second_text")
           end
-          text_field :my_third_char do
-            allow_null
+          text_field :my_third_char, allow_null: true do
             validate_in ["foo", "bar"], message: "invalid my_third_char"
           end
-          text_field :my_third_text do
-            allow_null
+          text_field :my_third_text, allow_null: true do
             validate_not_in ["foo", "bar"], message: "invalid my_third_text"
           end
-          text_field :my_fourth_char do
-            allow_null
+          text_field :my_fourth_char, allow_null: true do
             validate_is_value "exact_value", message: "invalid my_fourth_char"
           end
         end

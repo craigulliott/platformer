@@ -21,6 +21,8 @@ module Platformer
                 validate_not_end_with :_at
               end
 
+              import_shared :allow_null
+
               add_method :empty_json_to_null do
                 description <<~DESCRIPTION
                   Ensures that the value of this field can not be an empty json object.
@@ -46,7 +48,6 @@ module Platformer
 
               # Common methods which are shared between fields
               import_shared :database_default
-              import_shared :allow_null
               import_shared :field_description
               import_shared :immutable_validators
               import_shared :unique_field

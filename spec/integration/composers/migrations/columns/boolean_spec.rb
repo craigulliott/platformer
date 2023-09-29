@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Boolean do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          boolean_field :my_boolean do
-            allow_null
+          boolean_field :my_boolean, allow_null: true do
             description "This is a description"
             database_default "true"
           end

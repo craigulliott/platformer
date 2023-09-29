@@ -12,8 +12,7 @@ RSpec.describe Platformer::Composers::GraphQL::Mutations::Updaters do
 
         model_for "User" do
           database :postgres, :primary
-          integer_field :my_integer do
-            allow_null
+          integer_field :my_integer, allow_null: true do
             validate_less_than 200
           end
         end

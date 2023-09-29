@@ -25,6 +25,8 @@ RSpec.describe Platformer::Composers::Presenters::Fields::Currency do
     context "creates the expected Presenter class" do
       it { expect(subject).to be_a Presenters::Base }
 
+      it { expect(subject.currency).to eq "CURRENCY_USD" }
+
       it { expect(subject.currency_name).to eq "United States Dollar" }
 
       it { expect(subject.currency_code).to eq "USD" }

@@ -12,9 +12,8 @@ RSpec.describe Platformer::Composers::ActiveRecord::Coercions::Common::ZeroToNul
         model_for "Users::User" do
           database :postgres, :primary
           schema :users
-          integer_field :foo do
+          integer_field :foo, allow_null: true do
             zero_to_null
-            allow_null
           end
         end
       end
@@ -83,9 +82,8 @@ RSpec.describe Platformer::Composers::ActiveRecord::Coercions::Common::ZeroToNul
         model_for "Users::User" do
           database :postgres, :primary
           schema :users
-          integer_field :foo, array: true do
+          integer_field :foo, array: true, allow_null: true do
             zero_to_null
-            allow_null
           end
         end
       end

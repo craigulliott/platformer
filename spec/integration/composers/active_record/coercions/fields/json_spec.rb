@@ -15,9 +15,8 @@ RSpec.describe Platformer::Composers::ActiveRecord::Coercions::Fields::Json do
           database :postgres, :primary
           schema :users
 
-          json_field :my_json do
+          json_field :my_json, allow_null: true do
             empty_json_to_null
-            allow_null
           end
         end
       end

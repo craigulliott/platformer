@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::MacAddress do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          mac_address_field :my_mac_address do
-            allow_null
+          mac_address_field :my_mac_address, allow_null: true do
             description "This is a description"
             database_default "58-50-4A-2E-29-AB"
           end

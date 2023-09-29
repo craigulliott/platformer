@@ -21,7 +21,7 @@ module Platformer
         # resolve the base arguments
         final_args = resolve_base_arguments desired_arg_names
 
-        # the list of argumetn names which were not resolved by the base arguments
+        # the list of argument names which were not resolved by the base arguments
         unresolved_argument_names = desired_arg_names - final_args.keys
 
         # try and resolve the missing arguments with custom resolvers
@@ -128,6 +128,9 @@ module Platformer
 
           when :public_name
             final_base_args[:public_name] = DSLReaders::Model.new(@child_class.model_definition_class).public_name
+
+          when :module_name
+            final_base_args[:module_name] = @child_class.name.split("::").first
 
           # if the argument exists within the dsl's arguments, then
           # resolve it automatically to that value

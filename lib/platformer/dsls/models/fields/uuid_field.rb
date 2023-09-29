@@ -18,6 +18,8 @@ module Platformer
                 validate_length minimum: 1, maximum: 63
               end
 
+              import_shared :allow_null
+
               # add an optional attribute which can be used to
               # denote this as an array of uuids
               optional :array, :boolean do
@@ -30,7 +32,6 @@ module Platformer
               # Common methods which are shared between fields
               import_shared :default
               import_shared :database_default
-              import_shared :allow_null
               import_shared :empty_array_to_null_coercion
               import_shared :unique_field
               import_shared :field_description

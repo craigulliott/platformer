@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Enum do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          enum_field :my_enum, ["foo", "bar"] do
-            allow_null
+          enum_field :my_enum, ["foo", "bar"], allow_null: true do
             description "This is a description"
             database_default "foo"
           end

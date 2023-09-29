@@ -13,7 +13,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::BelongsTo do
         model_for "Gamification::Badge" do
           database :postgres, :primary
           schema :gamification
-          belongs_to "Users::UserModel"
+          belongs_to :user, model: "Users::UserModel"
         end
       end
     end
@@ -23,7 +23,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::BelongsTo do
     }
 
     context "generates the expected column and foreign key constraint on the local table" do
-      it { expect(subject.has_foreign_key_constraint?(:association_to_users)).to be true }
+      it { expect(subject.has_foreign_key_constraint?(:belongs_to_users)).to be true }
 
       it { expect(subject.has_column?(:user_id)).to be true }
     end
@@ -41,7 +41,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::BelongsTo do
           database :postgres, :primary
           uuid_field :a_id
           uuid_field :b_id
-          belongs_to "BarModel", local_column_names: [:a_id, :b_id], foreign_column_names: [:a_id, :b_id]
+          belongs_to :bar, model: "BarModel", local_columns: [:a_id, :b_id], foreign_columns: [:a_id, :b_id]
         end
       end
     end
@@ -51,7 +51,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::BelongsTo do
     }
 
     it "generates the foreign key constraint on the local table" do
-      expect(subject.has_foreign_key_constraint?(:association_to_bars)).to be true
+      expect(subject.has_foreign_key_constraint?(:belongs_to_bars)).to be true
     end
 
     it "automatically creates a usable index on the foreign table" do

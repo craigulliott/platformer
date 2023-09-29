@@ -13,9 +13,8 @@ RSpec.describe Platformer::Composers::ActiveRecord::Coercions::Common::RemoveNul
         model_for "Users::User" do
           database :postgres, :primary
           schema :users
-          text_field :foo, array: true do
+          text_field :foo, array: true, allow_null: true do
             remove_null_array_values
-            allow_null
           end
         end
       end

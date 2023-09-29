@@ -9,7 +9,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::HasOne do
         model_for "Users::User" do
           database :postgres, :primary
           uuid_field :id
-          has_one "Gamification::BadgeModel"
+          has_one :badge, model: "Gamification::BadgeModel"
         end
         model_for "Gamification::Badge" do
           database :postgres, :primary
@@ -41,7 +41,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::HasOne do
           database :postgres, :primary
           uuid_field :a_id
           uuid_field :b_id
-          has_one "BarModel", local_column_names: [:a_id, :b_id], foreign_column_names: [:a_id, :b_id]
+          has_one :bar, model: "BarModel", local_columns: [:a_id, :b_id], foreign_columns: [:a_id, :b_id]
         end
       end
     end

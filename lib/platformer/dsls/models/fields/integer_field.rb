@@ -19,6 +19,8 @@ module Platformer
                 validate_not_end_with :_at
               end
 
+              import_shared :allow_null
+
               # add an optional attribute which can be used to
               # denote this as an array of integers
               optional :array, :boolean do
@@ -41,7 +43,6 @@ module Platformer
               # Common methods which are shared between fields
               import_shared :numeric_default
               import_shared :database_default
-              import_shared :allow_null
               import_shared :empty_array_to_null_coercion
               import_shared :unique_field
               import_shared :field_description

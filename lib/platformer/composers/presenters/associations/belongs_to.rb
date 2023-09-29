@@ -6,8 +6,10 @@ module Platformer
       module Associations
         class BelongsTo < Parsers::AllModels
           warn "not tested"
-          for_dsl :belongs_to do |foreign_model:, as:, presenter_class:|
-            association_name = as || foreign_model.active_record_class.name.split("::").last.underscore.to_sym
+          for_dsl :belongs_to do |model:, module_name:, name:, presenter_class:|
+            association_name = name
+            foreign_model = model || "#{module_name}::#{name.classify}Model".constantize
+
             foreign_model_presenter_class = foreign_model.presenter_class
             presenter_class.add_presenter association_name do
               foreign_model = model.public_send association_name

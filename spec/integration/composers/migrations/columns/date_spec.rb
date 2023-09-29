@@ -35,8 +35,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Date do
       scaffold do
         model_for "Users::User" do
           database :postgres, :primary
-          date_field :my_date do
-            allow_null
+          date_field :my_date, allow_null: true do
             description "This is a description"
             database_default "1984-07-14"
           end

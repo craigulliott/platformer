@@ -10,6 +10,8 @@ module Platformer
 
             column_name = :"#{name_prepend}language"
 
+            presenter_class.add_presenter "#{name_prepend}language"
+
             presenter_class.add_presenter "#{name_prepend}language_code" do
               language = model.send(column_name)
               unless language.nil?
