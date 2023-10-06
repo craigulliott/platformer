@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module Presenters
       module Fields
-        class Text < Parsers::FinalModels::ForFields
+        class Text < Parsers::Models::ForFields
           for_field :text_field do |name:, presenter_class:|
             presenter_class.add_presenter name
           end

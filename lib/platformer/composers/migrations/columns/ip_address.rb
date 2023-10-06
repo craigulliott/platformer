@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all ip_address columns to their respective tables within DynamicMigrations
-        class IpAddress < Parsers::FinalModels::ForFields
+        class IpAddress < Parsers::Models::ForFields
           for_field :ip_address_field do |name:, table:, array:, database_default:, description:, allow_null:|
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION

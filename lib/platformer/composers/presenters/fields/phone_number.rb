@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module Presenters
       module Fields
-        class PhoneNumber < Parsers::FinalModels::ForFields
+        class PhoneNumber < Parsers::Models::ForFields
           for_field :phone_number_field do |prefix:, presenter_class:|
             # only require this library if we have a phone number field
             require "phony"

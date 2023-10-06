@@ -4,9 +4,9 @@ module Platformer
   module Composers
     module ActiveRecord
       module Associations
-        class HasOne < Parsers::AllModels
+        class HasOne < Parsers::Models
           for_dsl :has_one do |active_record_class:, module_name:, name:, model:, through:, local_columns:, foreign_columns:|
-            foreign_model_class_name = model&.active_record_class&.name || "#{module_name}::#{name.classify}Model"
+            foreign_model_class_name = model&.active_record_class&.name || "#{module_name}::#{name.to_s.classify}Model"
 
             add_documentation <<~DESCRIPTION
               Add a has one association between this model and #{foreign_model_class_name}.

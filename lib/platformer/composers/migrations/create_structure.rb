@@ -6,11 +6,11 @@ module Platformer
       # Create a table within DynamicMigrations for the correct server, database and
       # schema to represent the table which is expected to exist for each model which
       # has been defined for our system.
-      class CreateStructure < Parsers::FinalModels
+      class CreateStructure < Parsers::Models
         # Process the parser for every decendant of BaseModel which does not have
         # it's own decendents. These represent Models which will have a coresponding
         # ActiveRecord class created for them, and thus a table within the database
-        for_final_models do |model_definition_class:, model_reader:|
+        for_models do |model_definition_class:, model_reader:|
           # Create a dsl reader for the Database DSLs.
           dsl_reader = DSLReaders::Models::Database.new model_definition_class
 

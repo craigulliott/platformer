@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module Presenters
       module Fields
-        class TimeZone < Parsers::FinalModels::ForFields
+        class TimeZone < Parsers::Models::ForFields
           for_field :time_zone_field do |prefix:, presenter_class:|
             name_prepend = prefix.nil? ? "" : "#{prefix}_"
 

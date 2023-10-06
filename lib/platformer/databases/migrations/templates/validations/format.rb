@@ -11,12 +11,14 @@ module Platformer
             VALUE_FROM_CHECK_CLAUSE = /
               \A # start of string
               \(? # optional opening parenthesis around the whole check clause
+              \(? # optional opening parenthesis around the column name
               "? # optional opening quote around the column name
               \w+ # the column name
-              "? # optional opening quote around the column name
+              "? # optional closing quote around the column name
+              \)? # optional closing parenthesis around the column name
+              (?:::text)? # optional cast to text after the column name
               \s # whitespace
               ~ # regex comparitor part of the check clause
-              \* # optional case insensitive part of the regex comparitor
               \s # whitespace
               ' # opening single quote around the regex
               (?<value> # named capture group
@@ -24,6 +26,7 @@ module Platformer
               ) # close capture group
               ' # closing single quote around the regex
               (?:::citext)? # optional cast to citext after the regex
+              (?:::text)? # optional cast to text after the regex
               \)? # optional closing parenthesis around the whole check clause
               \z # end of string
             /x
@@ -41,7 +44,7 @@ module Platformer
                 table: validation.table,
                 migration_method: :add_validation,
                 object: validation,
-                code_description: code_description,
+                code_comment: code_comment,
                 migration: <<~RUBY
                   validate_format :#{validation.table.name}, :#{column_name}, /#{value}/#{options_string}
                 RUBY

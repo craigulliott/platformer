@@ -20,3 +20,6 @@ rename `integer_field :attendees` to `integer_field :attending`
 rename `integer_field :availability` to `integer_field :available`
 
 rename all `as: :unknown` for associations
+
+
+has_many :charges, model: "Billing::InvoiceChargeModel"  should be  has_many :charges, model: "Billing::Charges::InvoiceChargeModel"

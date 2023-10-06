@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module Presenters
       module Fields
-        class GeoPoint < Parsers::FinalModels::ForFields
+        class GeoPoint < Parsers::Models::ForFields
           for_field :geo_point_field do |prefix:, presenter_class:|
             name_prepend = prefix.nil? ? "" : "#{prefix}_"
             column_name = "#{name_prepend}lonlat"

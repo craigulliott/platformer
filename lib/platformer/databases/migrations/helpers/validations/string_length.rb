@@ -9,24 +9,24 @@ module Platformer
             def validate_minimum_length table_name, column_name, value, name: nil, description: nil
               final_name = name || :"#{column_name}_min_len"
               final_description = description || Templates::Validations::MinimumLength::DEFAULT_DESCRIPTION
-              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, description: final_description do
-                "LENGTH(#{column_name}) >= #{value}"
+              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, comment: final_description do
+                "length(#{column_name}) >= #{value}"
               end
             end
 
             def validate_maximum_length table_name, column_name, value, name: nil, description: nil
               final_name = name || :"#{column_name}_max_len"
               final_description = description || Templates::Validations::MaximumLength::DEFAULT_DESCRIPTION
-              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, description: final_description do
-                "LENGTH(#{column_name}) <= #{value}"
+              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, comment: final_description do
+                "length(#{column_name}) <= #{value}"
               end
             end
 
             def validate_length_is table_name, column_name, value, name: nil, description: nil
               final_name = name || :"#{column_name}_length"
               final_description = description || Templates::Validations::LengthIs::DEFAULT_DESCRIPTION
-              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, description: final_description do
-                "LENGTH(#{column_name}) = #{value}"
+              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, comment: final_description do
+                "length(#{column_name}) = #{value}"
               end
             end
           end

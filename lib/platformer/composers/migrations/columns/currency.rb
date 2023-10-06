@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all currency columns to their respective tables within DynamicMigrations
-        class Currency < Parsers::FinalModels::ForFields
+        class Currency < Parsers::Models::ForFields
           # for each time the :currency_field DSL was used on this Model
           for_field :currency_field do |prefix:, database:, table:, array:, database_default:, description:, allow_null:|
             name_prepend = prefix.nil? ? "" : "#{prefix}_"

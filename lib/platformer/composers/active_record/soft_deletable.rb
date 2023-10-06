@@ -3,7 +3,7 @@
 module Platformer
   module Composers
     module ActiveRecord
-      class SoftDeletable < Parsers::FinalModels
+      class SoftDeletable < Parsers::Models
         class ModelAlreadyDeletedError < StandardError
         end
 

@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module Presenters
       module Fields
-        class Json < Parsers::FinalModels::ForFields
+        class Json < Parsers::Models::ForFields
           for_field :json_field do |name:, presenter_class:|
             presenter_class.add_presenter name
           end

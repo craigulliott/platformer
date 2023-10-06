@@ -3,7 +3,7 @@
 module Platformer
   module Composers
     module Migrations
-      class ActionField < Parsers::FinalModels
+      class ActionField < Parsers::Models
         class MissingStatesError < StandardError
         end
 

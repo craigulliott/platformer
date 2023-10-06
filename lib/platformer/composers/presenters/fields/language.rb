@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module Presenters
       module Fields
-        class Language < Parsers::FinalModels::ForFields
+        class Language < Parsers::Models::ForFields
           for_field :language_field do |prefix:, presenter_class:|
             name_prepend = prefix.nil? ? "" : "#{prefix}_"
 

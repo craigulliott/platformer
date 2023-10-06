@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all text columns to their respective tables within DynamicMigrations
-        class Text < Parsers::FinalModels::ForFields
+        class Text < Parsers::Models::ForFields
           for_field :text_field do |name:, table:, array:, database_default:, description:, allow_null:|
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION

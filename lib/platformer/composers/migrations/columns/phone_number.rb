@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all phone_number columns to their respective tables within DynamicMigrations
-        class PhoneNumber < Parsers::FinalModels::ForFields
+        class PhoneNumber < Parsers::Models::ForFields
           for_field :phone_number_field do |prefix:, database:, table:, reader:, description:, allow_null:|
             name_prepend = prefix.nil? ? "" : "#{prefix}_"
 

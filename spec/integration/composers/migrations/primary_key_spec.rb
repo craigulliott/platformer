@@ -3,10 +3,10 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::Migrations::PrimaryKey do
-  describe "for a new PhotoModel which defines a simple new model with a positionable column" do
+  describe "for a new PhotoModel which defines a simple new model with a a primary key" do
     before(:each) do
       scaffold do
-        model_for "Photo" do
+        model_for "Users::Photo" do
           database :postgres, :primary
           primary_key
         end

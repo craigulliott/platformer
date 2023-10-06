@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all language columns to their respective tables within DynamicMigrations
-        class Language < Parsers::FinalModels::ForFields
+        class Language < Parsers::Models::ForFields
           # for each time the :language_field DSL was used on this Model
           for_field :language_field do |prefix:, database:, table:, array:, database_default:, description:, allow_null:|
             name_prepend = prefix.nil? ? "" : "#{prefix}_"

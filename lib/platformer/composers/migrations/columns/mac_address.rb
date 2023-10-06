@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all mac_address columns to their respective tables within DynamicMigrations
-        class MacAddress < Parsers::FinalModels::ForFields
+        class MacAddress < Parsers::Models::ForFields
           for_field :mac_address_field do |name:, table:, array:, database_default:, description:, allow_null:|
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION

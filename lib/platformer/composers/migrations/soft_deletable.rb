@@ -3,7 +3,7 @@
 module Platformer
   module Composers
     module Migrations
-      class SoftDeletable < Parsers::FinalModels
+      class SoftDeletable < Parsers::Models
         for_dsl :soft_deletable do |schema:, table:|
           # update the dynamic documentation
           add_documentation <<~DESCRIPTION

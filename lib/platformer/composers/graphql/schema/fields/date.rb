@@ -5,7 +5,7 @@ module Platformer
     module GraphQL
       module Schema
         module Fields
-          class Date < Parsers::FinalModels::ForFields
+          class Date < Parsers::Models::ForFields
             for_field :date_field do |name:, schema_definition_class:, graphql_type_class:, allow_null:, description:|
               if schema_definition_class
                 schema_reader = DSLReaders::Schema.new schema_definition_class

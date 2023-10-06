@@ -5,7 +5,7 @@ module Platformer
     module ActiveRecord
       module Coercions
         module Common
-          class RemoveNullArrayValues < Parsers::AllModels::ForFields
+          class RemoveNullArrayValues < Parsers::Models::ForFields
             # install all the remove_null_array_values coercions for each model
             for_all_single_column_fields except: :json_field do |column_name:, active_record_class:, array:, allow_null:|
               for_method :remove_null_array_values do

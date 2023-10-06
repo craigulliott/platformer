@@ -6,7 +6,7 @@ module Platformer
       module Schema
         module Fields
           warn "not tested"
-          class ActionField < Parsers::FinalModels
+          class ActionField < Parsers::Models
             for_dsl :action_field do |name:, action_name:, schema_definition_class:, graphql_type_class:, reader:|
               if schema_definition_class
                 schema_reader = DSLReaders::Schema.new schema_definition_class

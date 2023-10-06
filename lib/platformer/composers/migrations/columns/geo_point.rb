@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all geo_point columns to their respective tables within DynamicMigrations
-        class GeoPoint < Parsers::FinalModels::ForFields
+        class GeoPoint < Parsers::Models::ForFields
           for_field :geo_point_field do |prefix:, database:, table:, array:, database_default:, description:, allow_null:|
             name_prepend = prefix.nil? ? "" : "#{prefix}_"
             name = :"#{name_prepend}lonlat"

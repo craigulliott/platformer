@@ -24,6 +24,7 @@ module Platformer
             has_one: {
               organization: {
                 through: "booking",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               },
               location: {
@@ -32,6 +33,7 @@ module Platformer
               },
               user: {
                 through: "booking",
+                class_name: "Users::User",
                 has_lambda: false
               }
             },
@@ -352,12 +354,13 @@ module Platformer
             has_one: {
               organization: {
                 through: "invoice",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               },
               booking_balance_invoice_bookings: {
                 through: "booking",
                 source: "invoice_booking_balance",
-                class_name: "InvoiceBookings::Balance",
+                class_name: "Billing::InvoiceBookings::Balance",
                 has_lambda: true
               }
             },
@@ -370,7 +373,7 @@ module Platformer
           "Billing::InvoiceBookingDiscountModel": {
             belongs_to: {
               invoice_booking: {
-                class_name: "InvoiceBookings::InvoiceBooking",
+                class_name: "Billing::InvoiceBookings::InvoiceBooking",
                 has_lambda: false
               }
             },
@@ -381,10 +384,12 @@ module Platformer
               },
               organization: {
                 through: "invoice",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               },
               booking: {
                 through: "invoice_booking",
+                class_name: "Studios::Booking",
                 has_lambda: false
               }
             }
@@ -402,6 +407,7 @@ module Platformer
               },
               organization: {
                 through: "invoice",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               }
             }
@@ -471,7 +477,7 @@ module Platformer
                 has_lambda: false
               },
               duplicate_of: {
-                class_name: "Lead",
+                class_name: "Leads::Lead",
                 has_lambda: false
               },
               organization: {
@@ -493,7 +499,7 @@ module Platformer
             },
             has_many: {
               duplicates: {
-                class_name: "Lead",
+                class_name: "Leads::Lead",
                 foreign_key: "duplicate_of_id",
                 has_lambda: true
               },
@@ -539,11 +545,11 @@ module Platformer
                 has_lambda: false
               },
               source_engine_configuration_option_version: {
-                class_name: "EngineConfigurationOptionVersion",
+                class_name: "Library::EngineConfigurationOptionVersion",
                 has_lambda: false
               },
               required_if_engine_configuration_option: {
-                class_name: "EngineConfigurationOption",
+                class_name: "Library::EngineConfigurationOption",
                 has_lambda: false
               }
             },
@@ -563,7 +569,7 @@ module Platformer
                 has_lambda: false
               },
               source_engine_event_parameter_version: {
-                class_name: "EngineEventParameterVersion",
+                class_name: "Library::EngineEventParameterVersion",
                 has_lambda: false
               },
               widget: {
@@ -586,7 +592,7 @@ module Platformer
                 has_lambda: false
               },
               source_engine_method_parameter_version: {
-                class_name: "EngineMethodParameterVersion",
+                class_name: "Library::EngineMethodParameterVersion",
                 has_lambda: false
               },
               engine_configuration_option: {
@@ -612,7 +618,7 @@ module Platformer
                 has_lambda: false
               },
               source_engine_method_version: {
-                class_name: "EngineMethodVersion",
+                class_name: "Library::EngineMethodVersion",
                 has_lambda: false
               },
               engine_configuration_option: {
@@ -639,14 +645,14 @@ module Platformer
               undeleted_engine_modules: {
                 through: "engine_method_modules",
                 source: "engine_module",
-                class_name: "EngineModule",
+                class_name: "Library::EngineModule",
                 has_lambda: true
               },
               engine_method_parameter_versions: {
                 has_lambda: false
               },
               undeleted_engine_method_parameter_versions: {
-                class_name: "EngineMethodParameterVersion",
+                class_name: "Library::EngineMethodParameterVersion",
                 has_lambda: true
               }
             }
@@ -660,7 +666,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_event_parameter_version: {
-                class_name: "ObjectEventParameterVersion",
+                class_name: "Library::ObjectEventParameterVersion",
                 has_lambda: false
               },
               object_constant: {
@@ -686,7 +692,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_method_parameter_version: {
-                class_name: "ObjectMethodParameterVersion",
+                class_name: "Library::ObjectMethodParameterVersion",
                 has_lambda: false
               },
               object_configuration_value: {
@@ -715,7 +721,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_method_version: {
-                class_name: "ObjectMethodVersion",
+                class_name: "Library::ObjectMethodVersion",
                 has_lambda: false
               },
               object_configuration_value: {
@@ -742,14 +748,14 @@ module Platformer
               undeleted_engine_modules: {
                 through: "object_method_modules",
                 source: "engine_module",
-                class_name: "EngineModule",
+                class_name: "Library::EngineModule",
                 has_lambda: true
               },
               object_method_parameter_versions: {
                 has_lambda: false
               },
               undeleted_object_method_parameter_versions: {
-                class_name: "ObjectMethodParameterVersion",
+                class_name: "Library::ObjectMethodParameterVersion",
                 has_lambda: true
               }
             }
@@ -773,7 +779,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_version: {
-                class_name: "ObjectVersion",
+                class_name: "Library::ObjectVersion",
                 has_lambda: false
               }
             },
@@ -782,7 +788,7 @@ module Platformer
                 has_lambda: false
               },
               undeleted_object_method_versions: {
-                class_name: "ObjectMethodVersion",
+                class_name: "Library::ObjectMethodVersion",
                 has_lambda: true
               },
               object_methods: {
@@ -791,7 +797,7 @@ module Platformer
               },
               undeleted_object_methods: {
                 through: "undeleted_object_method_versions",
-                class_name: "ObjectMethodVersion",
+                class_name: "Library::ObjectMethodVersion",
                 has_lambda: false
               },
               object_included_engine_method_versions: {
@@ -802,7 +808,7 @@ module Platformer
                 has_lambda: false
               },
               undeleted_object_included_engine_method_versions: {
-                class_name: "ObjectIncludedEngineMethodVersion",
+                class_name: "Library::ObjectIncludedEngineMethodVersion",
                 has_lambda: true
               },
               engine_methods: {
@@ -817,7 +823,7 @@ module Platformer
                 has_lambda: false
               },
               undeleted_object_event_versions: {
-                class_name: "ObjectEventVersion",
+                class_name: "Library::ObjectEventVersion",
                 has_lambda: true
               },
               object_events: {
@@ -826,7 +832,7 @@ module Platformer
               },
               undeleted_object_events: {
                 through: "undeleted_object_event_versions",
-                class_name: "ObjectEventVersion",
+                class_name: "Library::ObjectEventVersion",
                 has_lambda: false
               },
               object_included_engine_event_versions: {
@@ -837,7 +843,7 @@ module Platformer
                 has_lambda: false
               },
               undeleted_object_included_engine_event_versions: {
-                class_name: "ObjectIncludedEngineEventVersion",
+                class_name: "Library::ObjectIncludedEngineEventVersion",
                 has_lambda: true
               },
               engine_events: {
@@ -852,7 +858,7 @@ module Platformer
                 has_lambda: false
               },
               undeleted_object_constant_versions: {
-                class_name: "ObjectConstantVersion",
+                class_name: "Library::ObjectConstantVersion",
                 has_lambda: true
               },
               object_constants: {
@@ -863,7 +869,7 @@ module Platformer
                 has_lambda: false
               },
               undeleted_object_configuration_templates: {
-                class_name: "ObjectConfigurationTemplate",
+                class_name: "Library::ObjectConfigurationTemplate",
                 has_lambda: true
               },
               object_configuration_values: {
@@ -872,7 +878,7 @@ module Platformer
               },
               undeleted_object_configuration_values: {
                 through: "undeleted_object_configuration_templates",
-                class_name: "ObjectConfigurationValue",
+                class_name: "Library::ObjectConfigurationValue",
                 has_lambda: true
               },
               engine_configuration_template_versions: {
@@ -887,7 +893,7 @@ module Platformer
                 has_lambda: false
               },
               undeleted_object_reactions: {
-                class_name: "ObjectReaction",
+                class_name: "Library::ObjectReaction",
                 has_lambda: true
               }
             }
@@ -986,6 +992,7 @@ module Platformer
               },
               users: {
                 through: "memberships",
+                class_name: "Users::User",
                 has_lambda: false
               },
               projects: {
@@ -1007,6 +1014,7 @@ module Platformer
                 has_lambda: false
               },
               ownerships: {
+                class_name: "Organizations::Ownership",
                 has_lambda: true
               },
               owners: {
@@ -1016,6 +1024,7 @@ module Platformer
                 has_lambda: false
               },
               instructorships: {
+                class_name: "Organizations::Instructorship",
                 has_lambda: true
               },
               instructors: {
@@ -1025,6 +1034,7 @@ module Platformer
                 has_lambda: false
               },
               studentships: {
+                class_name: "Organizations::Studentship",
                 has_lambda: true
               },
               students: {
@@ -1034,6 +1044,7 @@ module Platformer
                 has_lambda: false
               },
               pickupships: {
+                class_name: "Organizations::Pickupship",
                 has_lambda: true
               },
               pickups: {
@@ -1043,6 +1054,7 @@ module Platformer
                 has_lambda: false
               },
               attendships: {
+                class_name: "Organizations::Attendship",
                 has_lambda: true
               },
               attends: {
@@ -1052,7 +1064,7 @@ module Platformer
                 has_lambda: false
               },
               membership_requests: {
-                class_name: "Membership",
+                class_name: "Organizations::Membership",
                 has_lambda: true
               },
               invited_users: {
@@ -1062,7 +1074,7 @@ module Platformer
                 has_lambda: false
               },
               ownership_requests: {
-                class_name: "Ownership",
+                class_name: "Organizations::Ownership",
                 has_lambda: true
               },
               invited_owners: {
@@ -1072,7 +1084,7 @@ module Platformer
                 has_lambda: false
               },
               instructorship_requests: {
-                class_name: "Instructorship",
+                class_name: "Organizations::Instructorship",
                 has_lambda: true
               },
               invited_instructors: {
@@ -1082,7 +1094,7 @@ module Platformer
                 has_lambda: false
               },
               studentship_requests: {
-                class_name: "Studentship",
+                class_name: "Organizations::Studentship",
                 has_lambda: true
               },
               invited_students: {
@@ -1202,53 +1214,56 @@ module Platformer
                 has_lambda: false
               },
               invitations: {
-                class_name: "::Organizations::Membership",
+                class_name: "Organizations::Membership",
                 has_lambda: true
               },
               memberships: {
-                class_name: "::Organizations::Membership",
+                class_name: "Organizations::Membership",
                 has_lambda: true
               },
               ownerships: {
-                class_name: "::Organizations::Ownership",
+                class_name: "Organizations::Ownership",
                 has_lambda: true
               },
               instructorships: {
-                class_name: "::Organizations::Instructorship",
+                class_name: "Organizations::Instructorship",
                 has_lambda: true
               },
               studentships: {
-                class_name: "::Organizations::Studentship",
+                class_name: "Organizations::Studentship",
                 has_lambda: true
               },
               pickupships: {
-                class_name: "::Organizations::Pickupship",
+                class_name: "Organizations::Pickupship",
                 has_lambda: true
               },
               attendships: {
-                class_name: "::Organizations::Attendship",
+                class_name: "Organizations::Attendship",
                 has_lambda: true
               },
               organizations: {
                 through: "memberships",
-                class_name: "::Organizations::Organization",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               },
               organizations_owned: {
                 through: "ownerships",
-                class_name: "::Organizations::Organization",
+                class_name: "Organizations::Organization",
                 source: "organization",
                 has_lambda: true
               },
               membership_groups: {
                 through: "memberships",
+                class_name: "Organizations::MembershipGroup",
                 has_lambda: false
               },
               groups: {
                 through: "membership_groups",
+                class_name: "Organizations::Group",
                 has_lambda: false
               },
               sessions: {
+                class_name: "Auth::Session",
                 has_lambda: false
               },
               password_resets: {
@@ -1359,6 +1374,7 @@ module Platformer
                 has_lambda: false
               },
               subscriptions: {
+                class_name: "Billing::Subscription",
                 through: "organizations",
                 has_lambda: false
               },
@@ -1375,22 +1391,23 @@ module Platformer
                 has_lambda: false
               },
               projects: {
-                class_name: "::Projects::Project",
+                class_name: "Projects::Project",
                 has_lambda: false
               },
               revisions: {
-                class_name: "::Projects::Revision",
+                class_name: "Projects::Revision",
                 has_lambda: false
               },
               project_revisions: {
-                class_name: "::Projects::Revision",
+                class_name: "Projects::Revision",
                 has_lambda: false
               },
               shares: {
-                class_name: "::Projects::Share",
+                class_name: "Projects::Share",
                 has_lambda: false
               },
               project_statistics: {
+                class_name: "Analytics::ProjectStatistic",
                 has_lambda: false
               },
               public_apps: {
@@ -1406,12 +1423,12 @@ module Platformer
                 has_lambda: false
               },
               incident_involvements: {
-                class_name: "::Incidents::Involvement",
+                class_name: "Incidents::Involvement",
                 has_lambda: false
               },
               incidents: {
                 through: "incident_involvements",
-                class_name: "::Incidents::Incident",
+                class_name: "Incidents::Incident",
                 has_lambda: false
               },
               bookings: {
@@ -1423,11 +1440,11 @@ module Platformer
                 has_lambda: false
               },
               note_involvements: {
-                class_name: "::Notes::Involvement",
+                class_name: "Notes::Involvement",
                 has_lambda: false
               },
               notes: {
-                class_name: "::Notes::Note",
+                class_name: "Notes::Note",
                 through: "note_involvements",
                 has_lambda: false
               },
@@ -1436,30 +1453,30 @@ module Platformer
                 has_lambda: false
               },
               mission_achievements: {
-                class_name: "::Curriculum::MissionAchievement",
+                class_name: "Curriculum::MissionAchievement",
                 has_lambda: false
               },
               missions: {
                 through: "mission_achievements",
-                class_name: "::Curriculum::Missions::Mission",
+                class_name: "Curriculum::Missions::Mission",
                 has_lambda: false
               },
               badge_achievements: {
-                class_name: "::Curriculum::BadgeAchievement",
+                class_name: "Curriculum::BadgeAchievement",
                 has_lambda: false
               },
               badges: {
                 through: "badge_achievements",
-                class_name: "::Curriculum::Badge",
+                class_name: "Curriculum::Badge",
                 has_lambda: false
               },
               accomplishments: {
-                class_name: "::Curriculum::Accomplishment",
+                class_name: "Curriculum::Accomplishment",
                 has_lambda: false
               },
               activities: {
                 through: "accomplishments",
-                class_name: "::Curriculum::Activities::Activity",
+                class_name: "Curriculum::Activities::Activity",
                 has_lambda: false
               },
               scores: {
@@ -1467,21 +1484,21 @@ module Platformer
                 has_lambda: false
               },
               participations: {
-                class_name: "::Communication::Participations::Participation",
+                class_name: "Communication::Participations::Participation",
                 has_lambda: false
               },
               meetings: {
                 through: "participations",
-                class_name: "::Communication::Meeting",
+                class_name: "Communication::Meeting",
                 has_lambda: false
               },
               employee_reviews: {
-                class_name: "::Staff::EmployeeReview",
+                class_name: "Staff::EmployeeReview",
                 foreign_key: "employee_id",
                 has_lambda: false
               },
               checklist_submissions: {
-                class_name: "::Checklists::Submission",
+                class_name: "Checklists::Submission",
                 has_lambda: false
               },
               phone_numbers: {
@@ -1518,9 +1535,6 @@ module Platformer
               },
               checkr_account: {
                 class_name: "Guides::CheckrAccount",
-                has_lambda: false
-              },
-              statistics: {
                 has_lambda: false
               },
               first_public_session: {
@@ -1674,6 +1688,7 @@ module Platformer
               },
               mission: {
                 through: "mission_achievement",
+                class_name: "Curriculum::Mission",
                 has_lambda: false
               }
             }
@@ -1905,7 +1920,7 @@ module Platformer
               },
               dependent_badges: {
                 through: "badge_dependent_badges",
-                class_name: "Badge",
+                class_name: "Curriculum::Badge",
                 has_lambda: false
               },
               badge_skills: {
@@ -1913,7 +1928,7 @@ module Platformer
               },
               skills: {
                 through: "badge_skills",
-                class_name: "Skill",
+                class_name: "Curriculum::Skill",
                 has_lambda: false
               },
               badge_conditions: {
@@ -1925,17 +1940,17 @@ module Platformer
               badges_in_series: {
                 foreign_key: "first_badge_id",
                 primary_key: "first_badge_id",
-                class_name: "Badge",
+                class_name: "Curriculum::Badge",
                 has_lambda: false
               }
             },
             belongs_to: {
               previous_badge: {
-                class_name: "Badge",
+                class_name: "Curriculum::Badge",
                 has_lambda: false
               },
               first_badge: {
-                class_name: "Badge",
+                class_name: "Curriculum::Badge",
                 has_lambda: false
               },
               keyring: {
@@ -2003,13 +2018,13 @@ module Platformer
                 has_lambda: false
               },
               extends_engine_version: {
-                class_name: "EngineVersion",
+                class_name: "Library::EngineVersion",
                 has_lambda: false
               }
             },
             has_one: {
               source_engine_version: {
-                class_name: "EngineVersion",
+                class_name: "Library::EngineVersion",
                 has_lambda: false
               }
             },
@@ -2148,7 +2163,7 @@ module Platformer
           "Curriculum::MissionSteps::MissionStepModel": {
             belongs_to: {
               mission: {
-                class_name: "Missions::Standard",
+                class_name: "Curriculum::Missions::Standard",
                 has_lambda: false
               }
             },
@@ -2187,7 +2202,7 @@ module Platformer
           "Curriculum::MissionStepInsertableModel": {
             belongs_to: {
               mission_step: {
-                class_name: "MissionSteps::MissionStep",
+                class_name: "Curriculum::MissionSteps::MissionStep",
                 has_lambda: false
               }
             }
@@ -2269,6 +2284,7 @@ module Platformer
             has_one: {
               organization: {
                 through: "booking",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               },
               occasion: {
@@ -2280,7 +2296,7 @@ module Platformer
           "Curriculum::MultipleChoiceModel": {
             belongs_to: {
               mission_step: {
-                class_name: "MissionSteps::MissionStep",
+                class_name: "Curriculum::MissionSteps::MissionStep",
                 has_lambda: false
               }
             }
@@ -2333,6 +2349,7 @@ module Platformer
             has_one: {
               organization: {
                 through: "opportunity",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               }
             }
@@ -2414,7 +2431,7 @@ module Platformer
             },
             has_many: {
               membership_groups: {
-                class_name: "MembershipGroup",
+                class_name: "Organizations::MembershipGroup",
                 has_lambda: false
               },
               memberships: {
@@ -2423,6 +2440,7 @@ module Platformer
               },
               users: {
                 through: "memberships",
+                class_name: "Users::User",
                 has_lambda: false
               }
             }
@@ -2430,11 +2448,11 @@ module Platformer
           "Organizations::MembershipGroupModel": {
             belongs_to: {
               membership: {
-                class_name: "Membership",
+                class_name: "Organizations::Membership",
                 has_lambda: false
               },
               group: {
-                class_name: "Group",
+                class_name: "Organizations::Group",
                 has_lambda: false
               }
             }
@@ -2503,7 +2521,7 @@ module Platformer
                 has_lambda: false
               },
               locations: {
-                class_name: "Studios::Locations",
+                class_name: "Studios::Location",
                 has_lambda: false
               }
             }
@@ -2540,6 +2558,7 @@ module Platformer
             has_one: {
               organization: {
                 through: "invoice",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               }
             }
@@ -2571,20 +2590,20 @@ module Platformer
                 has_lambda: false
               },
               invoice_bookings: {
-                class_name: "InvoiceBookings::InvoiceBooking",
+                class_name: "Billing::InvoiceBookings::InvoiceBooking",
                 has_lambda: false
               },
               invoice_deposit_bookings: {
-                class_name: "InvoiceBookings::Deposit",
+                class_name: "Billing::InvoiceBookings::Deposit",
                 has_lambda: false
               },
               invoice_balance_bookings: {
-                class_name: "InvoiceBookings::Balance",
+                class_name: "Billing::InvoiceBookings::Balance",
                 has_lambda: false
               },
               booking_balance_invoice_bookings: {
                 through: "invoice_bookings",
-                class_name: "InvoiceBookings::Balance",
+                class_name: "Billing::InvoiceBookings::Balance",
                 has_lambda: false
               },
               invoice_coupons: {
@@ -2617,6 +2636,7 @@ module Platformer
             has_one: {
               organization: {
                 through: "invoice",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               }
             }
@@ -2635,6 +2655,7 @@ module Platformer
               },
               occasions: {
                 through: "coupon_occasions",
+                class_name: "Studios::Occasion",
                 has_lambda: false
               },
               coupon_subscription_discounts: {
@@ -2711,6 +2732,7 @@ module Platformer
             has_one: {
               organization: {
                 through: "invoice",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               }
             },
@@ -2816,6 +2838,7 @@ module Platformer
             has_one: {
               organization: {
                 through: "invoice",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               }
             }
@@ -2832,6 +2855,7 @@ module Platformer
             has_one: {
               organization: {
                 through: "invoice",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               }
             }
@@ -2868,6 +2892,7 @@ module Platformer
             has_one: {
               organization: {
                 through: "invoice",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               }
             }
@@ -2939,7 +2964,7 @@ module Platformer
           "Users::PhoneNumberModel": {
             belongs_to: {
               organization: {
-                class_name: "::Organizations::Organization",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               },
               user: {
@@ -3148,7 +3173,7 @@ module Platformer
                 has_lambda: true
               },
               current_version: {
-                class_name: "ObjectVersion",
+                class_name: "Library::ObjectVersion",
                 has_lambda: true
               }
             },
@@ -3195,13 +3220,13 @@ module Platformer
             },
             belongs_to: {
               extends_engine: {
-                class_name: "Engine",
+                class_name: "Library::Engine",
                 has_lambda: false
               }
             },
             has_one: {
               current_version: {
-                class_name: "EngineVersion",
+                class_name: "Library::EngineVersion",
                 has_lambda: true
               },
               unpublished_version: {
@@ -3223,7 +3248,7 @@ module Platformer
                 has_lambda: false
               },
               undeleted_engine_method_versions: {
-                class_name: "EngineMethodVersion",
+                class_name: "Library::EngineMethodVersion",
                 has_lambda: true
               },
               engine_method_modules: {
@@ -3344,7 +3369,7 @@ module Platformer
                 has_lambda: false
               },
               undeleted_engine_event_versions: {
-                class_name: "EngineEventVersion",
+                class_name: "Library::EngineEventVersion",
                 has_lambda: true
               },
               engine_event_parameters: {
@@ -3560,7 +3585,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_configuration_template: {
-                class_name: "ObjectConfigurationTemplate",
+                class_name: "Library::ObjectConfigurationTemplate",
                 has_lambda: false
               }
             },
@@ -3573,7 +3598,7 @@ module Platformer
                 has_lambda: false
               },
               undeleted_object_configuration_values: {
-                class_name: "ObjectConfigurationValue",
+                class_name: "Library::ObjectConfigurationValue",
                 has_lambda: true
               }
             },
@@ -3754,7 +3779,7 @@ module Platformer
               skills: {
                 has_lambda: false
               },
-              learning_path_skill_levels: {
+              learning_path_level_skill_levels: {
                 has_lambda: false
               }
             }
@@ -3762,7 +3787,7 @@ module Platformer
           "Curriculum::MissionStepTipModel": {
             belongs_to: {
               mission_step: {
-                class_name: "MissionSteps::MissionStep",
+                class_name: "Curriculum::MissionSteps::MissionStep",
                 has_lambda: false
               }
             }
@@ -3784,7 +3809,7 @@ module Platformer
                 has_lambda: false
               },
               current_revision: {
-                class_name: "Revision",
+                class_name: "Projects::Revision",
                 has_lambda: false
               }
             },
@@ -3847,7 +3872,7 @@ module Platformer
                 has_lambda: false
               },
               replying_to: {
-                class_name: "VersionComment",
+                class_name: "Projects::VersionComment",
                 has_lambda: false
               },
               reviewer: {
@@ -3978,7 +4003,7 @@ module Platformer
                 has_lambda: false
               },
               organization: {
-                class_name: "::Organizations::Organization",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               }
             },
@@ -4215,12 +4240,13 @@ module Platformer
               slots: {
                 foreign_key: "occasion_id",
                 primary_key: "occasion_id",
+                class_name: "Studios::Slot",
                 has_lambda: true
               },
               overlapping_bookings: {
                 foreign_key: "occasion_id",
                 primary_key: "occasion_id",
-                class_name: "Booking",
+                class_name: "Studios::Booking",
                 has_lambda: true
               }
             }
@@ -4351,6 +4377,7 @@ module Platformer
             },
             has_many: {
               availability_instances: {
+                class_name: "Guides::AvailabilityInstance",
                 has_lambda: false
               }
             }
@@ -4437,7 +4464,7 @@ module Platformer
           "Checklists::ChecklistModel": {
             belongs_to: {
               current_version: {
-                class_name: "Version",
+                class_name: "Checklists::Version",
                 has_lambda: false
               }
             },
@@ -4491,7 +4518,7 @@ module Platformer
           "Users::AddressModel": {
             belongs_to: {
               organization: {
-                class_name: "::Organizations::Organization",
+                class_name: "Organizations::Organization",
                 has_lambda: false
               },
               user: {
@@ -4512,7 +4539,7 @@ module Platformer
                 has_lambda: false
               },
               dependent_badge: {
-                class_name: "Badge",
+                class_name: "Curriculum::Badge",
                 has_lambda: false
               }
             }
@@ -4520,7 +4547,7 @@ module Platformer
           "Contracts::ContractModel": {
             belongs_to: {
               current_version: {
-                class_name: "Version",
+                class_name: "Contracts::Version",
                 has_lambda: false
               }
             },
@@ -4653,7 +4680,7 @@ module Platformer
                 has_lambda: false
               },
               source_engine_event_module: {
-                class_name: "EngineEventModule",
+                class_name: "Library::EngineEventModule",
                 has_lambda: false
               }
             },
@@ -4673,7 +4700,7 @@ module Platformer
                 has_lambda: false
               },
               source_engine_method_module: {
-                class_name: "EngineMethodModule",
+                class_name: "Library::EngineMethodModule",
                 has_lambda: false
               }
             },
@@ -4693,7 +4720,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_event_module: {
-                class_name: "ObjectEventModule",
+                class_name: "Library::ObjectEventModule",
                 has_lambda: false
               }
             },
@@ -4713,7 +4740,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_method_module: {
-                class_name: "ObjectMethodModule",
+                class_name: "Library::ObjectMethodModule",
                 has_lambda: false
               }
             },
@@ -4730,7 +4757,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_reaction: {
-                class_name: "ObjectReaction",
+                class_name: "Library::ObjectReaction",
                 has_lambda: false
               }
             },
@@ -4751,7 +4778,7 @@ module Platformer
               undeleted_engine_modules: {
                 through: "object_reaction_modules",
                 source: "engine_module",
-                class_name: "EngineModule",
+                class_name: "Library::EngineModule",
                 has_lambda: true
               }
             }
@@ -4765,7 +4792,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_reaction_module: {
-                class_name: "ObjectReactionModule",
+                class_name: "Library::ObjectReactionModule",
                 has_lambda: false
               }
             },
@@ -4779,11 +4806,11 @@ module Platformer
           "Curriculum::MissionStepActivityModel": {
             belongs_to: {
               mission_step: {
-                class_name: "MissionSteps::MissionStep",
+                class_name: "Curriculum::MissionSteps::MissionStep",
                 has_lambda: false
               },
               activity: {
-                class_name: "Activities::Activity",
+                class_name: "Curriculum::Activities::Activity",
                 has_lambda: false
               }
             }
@@ -4959,7 +4986,7 @@ module Platformer
               email: {
                 foreign_key: "mandrill_email_id",
                 primary_key: "mandrill_id",
-                class_name: "Emails::Email",
+                class_name: "Communication::Emails::Email",
                 has_lambda: false
               }
             }
@@ -5019,15 +5046,15 @@ module Platformer
             },
             has_one: {
               easy: {
-                class_name: "Difficulty",
+                class_name: "Curriculum::Difficulty",
                 has_lambda: true
               },
               medium: {
-                class_name: "Difficulty",
+                class_name: "Curriculum::Difficulty",
                 has_lambda: true
               },
               hard: {
-                class_name: "Difficulty",
+                class_name: "Curriculum::Difficulty",
                 has_lambda: true
               }
             }
@@ -5097,7 +5124,7 @@ module Platformer
                 has_lambda: false
               },
               point_adjustment: {
-                class_name: "PointAdjustments::PointAdjustment",
+                class_name: "Curriculum::PointAdjustments::PointAdjustment",
                 has_lambda: false
               }
             }
@@ -5116,7 +5143,7 @@ module Platformer
                 has_lambda: false
               },
               step: {
-                class_name: "Steps::Step",
+                class_name: "Curriculum::Steps::Step",
                 has_lambda: false
               }
             },
@@ -5148,7 +5175,7 @@ module Platformer
           "Curriculum::TutorialModel": {
             has_many: {
               steps: {
-                class_name: "Steps::Step",
+                class_name: "Curriculum::Steps::Step",
                 has_lambda: true
               }
             },
@@ -5191,7 +5218,7 @@ module Platformer
                 has_lambda: false
               },
               booking: {
-                class_name: "Billing::Booking",
+                class_name: "Studios::Booking",
                 has_lambda: false
               }
             }
@@ -5266,13 +5293,6 @@ module Platformer
               }
             }
           },
-          "Hardware::VendorModel": {
-            has_many: {
-              models: {
-                has_lambda: false
-              }
-            }
-          },
           "I18n::TranslationModel": {
             belongs_to: {
               translation_source: {
@@ -5302,7 +5322,7 @@ module Platformer
                 has_lambda: false
               },
               source_engine_configuration_template_version: {
-                class_name: "EngineConfigurationTemplateVersion",
+                class_name: "Library::EngineConfigurationTemplateVersion",
                 has_lambda: false
               }
             },
@@ -5317,7 +5337,7 @@ module Platformer
                 has_lambda: false
               },
               undeleted_engine_configuration_option_versions: {
-                class_name: "EngineConfigurationOptionVersion",
+                class_name: "Library::EngineConfigurationOptionVersion",
                 has_lambda: true
               }
             }
@@ -5328,7 +5348,7 @@ module Platformer
                 has_lambda: false
               },
               source_engine_event_tip: {
-                class_name: "EngineEventTip",
+                class_name: "Library::EngineEventTip",
                 has_lambda: false
               }
             },
@@ -5348,7 +5368,7 @@ module Platformer
                 has_lambda: false
               },
               source_engine_event_version: {
-                class_name: "EngineEventVersion",
+                class_name: "Library::EngineEventVersion",
                 has_lambda: false
               }
             },
@@ -5372,14 +5392,14 @@ module Platformer
               undeleted_engine_modules: {
                 through: "engine_event_modules",
                 source: "engine_module",
-                class_name: "EngineModule",
+                class_name: "Library::EngineModule",
                 has_lambda: true
               },
               engine_event_parameter_versions: {
                 has_lambda: false
               },
               undeleted_engine_event_parameter_versions: {
-                class_name: "EngineEventParameterVersion",
+                class_name: "Library::EngineEventParameterVersion",
                 has_lambda: true
               }
             }
@@ -5390,7 +5410,7 @@ module Platformer
                 has_lambda: false
               },
               source_engine_method_tip: {
-                class_name: "EngineMethodTip",
+                class_name: "Library::EngineMethodTip",
                 has_lambda: false
               }
             },
@@ -5410,7 +5430,7 @@ module Platformer
                 has_lambda: false
               },
               source_engine_module_version: {
-                class_name: "EngineModuleVersion",
+                class_name: "Library::EngineModuleVersion",
                 has_lambda: false
               }
             },
@@ -5430,7 +5450,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_constant_value_version: {
-                class_name: "ObjectConstantValueVersion",
+                class_name: "Library::ObjectConstantValueVersion",
                 has_lambda: false
               }
             },
@@ -5450,7 +5470,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_constant_version: {
-                class_name: "ObjectConstantVersion",
+                class_name: "Library::ObjectConstantVersion",
                 has_lambda: false
               }
             },
@@ -5465,11 +5485,11 @@ module Platformer
                 has_lambda: false
               },
               undeleted_object_constant_value_versions: {
-                class_name: "ObjectConstantValueVersion",
+                class_name: "Library::ObjectConstantValueVersion",
                 has_lambda: true
               },
               undeleted_object_constant_value_versions_in_order: {
-                class_name: "ObjectConstantValueVersion",
+                class_name: "Library::ObjectConstantValueVersion",
                 has_lambda: true
               }
             }
@@ -5480,7 +5500,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_event_tip: {
-                class_name: "ObjectEventTip",
+                class_name: "Library::ObjectEventTip",
                 has_lambda: false
               }
             },
@@ -5500,7 +5520,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_event_version: {
-                class_name: "ObjectEventVersion",
+                class_name: "Library::ObjectEventVersion",
                 has_lambda: false
               }
             },
@@ -5524,14 +5544,14 @@ module Platformer
               undeleted_engine_modules: {
                 through: "object_event_modules",
                 source: "engine_module",
-                class_name: "EngineModule",
+                class_name: "Library::EngineModule",
                 has_lambda: true
               },
               object_event_parameter_versions: {
                 has_lambda: false
               },
               undeleted_object_event_parameter_versions: {
-                class_name: "ObjectEventParameterVersion",
+                class_name: "Library::ObjectEventParameterVersion",
                 has_lambda: true
               }
             }
@@ -5545,7 +5565,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_included_engine_event_version: {
-                class_name: "ObjectIncludedEngineEvent",
+                class_name: "Library::ObjectIncludedEngineEvent",
                 has_lambda: false
               }
             },
@@ -5569,7 +5589,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_included_engine_method_version: {
-                class_name: "ObjectIncludedEngineMethod",
+                class_name: "Library::ObjectIncludedEngineMethod",
                 has_lambda: false
               }
             },
@@ -5590,7 +5610,7 @@ module Platformer
                 has_lambda: false
               },
               source_object_method_tip: {
-                class_name: "ObjectMethodTip",
+                class_name: "Library::ObjectMethodTip",
                 has_lambda: false
               }
             },
@@ -5651,13 +5671,11 @@ module Platformer
           },
           "Marketing::PublicSessionModel": {
             has_many: {
-              children_counts: {
-                has_lambda: false
-              },
               events: {
                 has_lambda: false
               },
               zip_codes: {
+                class_name: "Constants::ZipCode",
                 has_lambda: false
               }
             }
@@ -5709,6 +5727,7 @@ module Platformer
           "Products::MissionPackModel": {
             belongs_to: {
               mission: {
+                class_name: "Curriculum::Mission",
                 has_lambda: false
               },
               pack: {
@@ -5726,6 +5745,7 @@ module Platformer
           "Products::SeriesModel": {
             belongs_to: {
               previous_series: {
+                class_name: "Products::Series",
                 has_lambda: false
               }
             }
@@ -5733,6 +5753,7 @@ module Platformer
           "Products::TradingCardModel": {
             belongs_to: {
               object: {
+                class_name: "Library::Object",
                 has_lambda: false
               }
             }

@@ -6,11 +6,13 @@ RSpec.describe Platformer::Composers::ActiveRecord::StateMachine do
   describe "for a new PhotoModel which defines a simple new model with a state machine" do
     before(:each) do
       scaffold do
-        table_for "Photo" do
+        table_for "Users::Photo" do
           add_column :state, :text
         end
-        model_for "Photo" do
+        model_for "Users::Photo" do
           database :postgres, :primary
+          schema :users
+
           state_machine do
             state :new
             state :published
@@ -22,7 +24,7 @@ RSpec.describe Platformer::Composers::ActiveRecord::StateMachine do
     end
 
     it "creates the expected state machine on the active record model" do
-      photo = Photo.new
+      photo = Users::Photo.new
       expect(photo.state).to eq "new"
 
       photo.save!

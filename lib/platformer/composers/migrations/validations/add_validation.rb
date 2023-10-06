@@ -6,10 +6,10 @@ module Platformer
       module Validations
         # install all the custom validations for this model
         warn "not tested"
-        class AddValidation < Parsers::FinalModels
+        class AddValidation < Parsers::Models
           for_dsl :add_validation do |name:, check_clause:, table:, description:|
             add_documentation <<~DESCRIPTION
-              Update this models table (`#{column.table.schema.name}'.'#{column.table.name}`)
+              Update this models table (`#{table.schema.name}'.'#{table.name}`)
               within DynamicMigrations and add a custom validation named `#{name}`.
               The validation's check clause is:
               #{check_clause}

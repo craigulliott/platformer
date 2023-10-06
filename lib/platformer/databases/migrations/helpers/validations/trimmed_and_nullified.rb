@@ -11,7 +11,7 @@ module Platformer
 
               final_description = description || Templates::Validations::TrimmedAndNullified::DEFAULT_DESCRIPTION
 
-              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, description: final_description do
+              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, comment: final_description do
                 <<~SQL
                   #{column_name} IS DISTINCT FROM '' AND REGEXP_REPLACE(REGEXP_REPLACE(#{column_name}, '^ +', ''), ' +$', '') IS NOT DISTINCT FROM #{column_name}
                 SQL

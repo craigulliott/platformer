@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module Presenters
       module Fields
-        class IpAddress < Parsers::FinalModels::ForFields
+        class IpAddress < Parsers::Models::ForFields
           for_field :ip_address_field do |name:, presenter_class:|
             presenter_class.add_presenter name
           end

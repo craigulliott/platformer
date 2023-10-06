@@ -8,7 +8,7 @@ module Presenters
     end
 
     def self.add_presenter name, &block
-      if instance_methods.include? name
+      if instance_methods.include?(name) && name != :object_id
         raise PresenterMethodAlreadyExistsError, "Method `#{name}` already exists for this `#{self.name}` presenter"
       end
 

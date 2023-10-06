@@ -6,7 +6,7 @@ module Platformer
       module Validations
         module Common
           # Install a presence validation for all fields which are not allow_null for each model
-          class NotNull < Parsers::AllModels::ForFields
+          class NotNull < Parsers::Models::ForFields
             for_all_fields do |column_names:, reader:, active_record_class:, allow_null:|
               unless allow_null
                 add_documentation <<~DESCRIPTION

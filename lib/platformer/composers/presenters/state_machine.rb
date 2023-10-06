@@ -3,7 +3,7 @@
 module Platformer
   module Composers
     module Presenters
-      class StateMachine < Parsers::FinalModels
+      class StateMachine < Parsers::Models
         warn "not tested"
 
         for_dsl :state_machine do |name:, presenter_class:|

@@ -3,7 +3,99 @@ module Platformer
     class UnexpectedBaseError < StandardError
     end
 
+    class PlatformClassNamingConventionError < StandardError
+    end
+
+    class InvalidModelClassNameError < StandardError
+    end
+
+    class NotStiClassError < StandardError
+    end
+
     include DSLCompose::Composer
+
+    # All platform definition files which live within the /platform folder must follow these
+    # strict naming and class hierachy conventions. For simplicity, only models are shown here
+    # but in reality each schema will also have other definition files for things like policies,
+    # services graphql mutations etc.
+    #
+    # platform/
+    # ├─ billing/
+    # │  ├─ billing_model.rb      # `module Billing ... class BillingModel < PlatformModel`
+    # │  ├─ models/
+    # │  │  ├─ subscription.rb    # `module Billing ... SubscriptionModel < BillingModel`
+    # │  │  ├─ credit_card.rb     # `module Billing ... CreditCardModel < BillingModel`
+    # ├─ users/
+    # │  ├─ users_model.rb        # `module Users ... UsersModel < PlatformModel`
+    # │  ├─ models/
+    # │  │  ├─ user.rb            # `module Users ... UserModel < UsersModel`
+    # ├─ communication/
+    # │  ├─ text_message.rb       # `module Communication ... TextMessageModel < PlatformModel`
+    # │  ├─ text_messages/
+    # │  |  ├─ auth.rb            # an STI model : `module Communication::TextMessages ... AuthModel < TextMessageModel`
+    # │  |  ├─ welcome.rb         # an STI model : `module Communication::TextMessages ... WelcomeModel < TextMessageModel`
+    def self.validate_naming_and_hierachy_conventions subclass, type
+      # assert the subclass name ends with the expected type ('Model', 'Policy', 'Callback' etc.)
+      unless subclass.name.end_with? type
+        raise InvalidModelClassNameError, "#{type} class names must end with '#{type}'"
+      end
+
+      case subclass.name
+      # The base class for all classes of this type within the platform, this should directly extend the internal platformer
+      # class of the expected type. For example, `PlatformModel` should directly extend `Platformer::BaseModel`
+      when /\APlatform#{type}\z/
+        if subclass.ancestors[1].name != "Platformer::Base#{type}"
+          raise PlatformClassNamingConventionError, "Invalid class hierachy. `#{subclass.name}` should directly extend `Platformer::Base#{type}`."
+        end
+
+      # All other classes must be namespaced
+      when /\A[a-zA-Z0-9]+\z/
+        raise PlatformClassNamingConventionError, "Invalid class name/hierachy. `#{subclass.name}` should be namespaced (placed within a module)."
+
+      # Classes which are within a single namespace (one level deep), such as `Users::UserModel`
+      when /\A(?<schema_name>[a-zA-Z0-9]+)::(?:[a-zA-Z0-9]+)\z/
+        schema_name = $LAST_MATCH_INFO["schema_name"]
+
+        # Each schema should have a dedicated class of each type which all other classes of this type will extend from.
+        # For example, the users schema should have a class named `Users::UserModel` which extends `PlatformModel`, all models
+        # within the users schema must then extend from this `Users::UserModel`
+        #
+        # If the subclass is this base class.
+        if subclass.name == "#{schema_name}::#{schema_name}#{type}"
+          # Assert that this subclass directly extends the expected base class. I.e. assert that `Users::UserModel`
+          # directly extends `PlatformModel`
+          unless subclass.ancestors[1].name == "Platform#{type}"
+            raise PlatformClassNamingConventionError, "Invalid class hierachy. The special base class `#{subclass.name}` must extend `Platform#{type}`."
+          end
+
+        # If this subclass is not the base class
+        elsif subclass.ancestors[1].name != "#{schema_name}::#{schema_name}#{type}"
+          # Assert that the subclass extends from the base class. I.e. assert that `Users::AvatarModel` extends from `Users::UserModel`
+          raise PlatformClassNamingConventionError, "Invalid class hierachy `#{subclass.name}`. All #{type} classes within the #{schema_name} schema must directly extend `#{schema_name}::#{schema_name}#{type}`."
+        end
+
+      # Classes which are namespaced by two levels (two levels deep), such as `Communication::TextMessages::WelcomeModel`. These
+      # classes are automatically assumed to be STI models (single table innheritance)
+      when /\A(?<schema_name>[a-zA-Z0-9]+)::(?<sti_namespace>[a-zA-Z0-9]+)::(?:[a-zA-Z0-9]+)\z/
+        schema_name = $LAST_MATCH_INFO["schema_name"]
+        sti_namespace = $LAST_MATCH_INFO["sti_namespace"]
+
+        # STI classes which are represented by a namepacing of three levels must directly extend a base class of the expected name.
+        # For example, `Communication::TextMessages::WelcomeModel` should directly extend from the base class `Communication::TextMessageModel`.
+        unless subclass.ancestors[1].name == "#{schema_name}::#{sti_namespace.singularize}Model"
+          raise PlatformClassNamingConventionError, "Invalid class hierachy. Expected STI class `#{subclass.name}` to be an ancestor of `#{schema_name}::#{sti_namespace.singularize}Model`."
+        end
+
+      # Assert that the subclass extends from
+
+      # classes which do not fit any of the patterns above (such as having 4 levels of namepacing) are not valid
+      else
+        raise PlatformClassNamingConventionError, "Unexpected class name `#{subclass.name}`. Please refer to the documentation about class hierachy and naming conventions."
+      end
+
+      # the type of definition file this is, such as 'Model', 'Policy', 'Callback' etc.
+      subclass
+    end
 
     # base documentation for the models which inherit from this class
     def self.describe_class class_description
@@ -80,44 +172,63 @@ module Platformer
       # generate the expected class name based on the from_base and
       # setting the desired string at the end of the class name
       # unfortunately, we can not use a case statement to compare classes
-      class_name = if self < BaseCallback
-        namespace + name.gsub(/Callback\Z/, target_append)
-
-      elsif self < BaseJob
-        namespace + name.gsub(/Job\Z/, target_append)
-
-      elsif self < BaseModel
-        namespace + name.gsub(/Model\Z/, target_append)
-
-      elsif self < BaseMutation
-        namespace + name.gsub(/Mutation\Z/, target_append)
-
-      elsif self < BasePolicy
-        namespace + name.gsub(/Policy\Z/, target_append)
-
-      elsif self < BasePresenter
-        namespace + name.gsub(/Presenter\Z/, target_append)
-
-      elsif self < BaseSchema
-        namespace + name.gsub(/Schema\Z/, target_append)
-
-      elsif self < BaseService
-        namespace + name.gsub(/Service\Z/, target_append)
-
-      elsif self < BaseSubscription
-        namespace + name.gsub(/Subscription\Z/, target_append)
-
-      # Types::BaseObject and Presenters::Base are not listed here
-      # because those classes do not extend from this class
-
-      else
-        raise UnexpectedBaseError, "Unexpected base class `#{self}`"
-      end
+      class_name = namespace + name.gsub(/#{base_type}\Z/, target_append)
 
       # if the constant exists, then return it, else return nil
       if Object.const_defined? class_name
         class_name&.constantize
       end
+    end
+
+    def self.base_type
+      if self < BaseCallback
+        "Callback"
+
+      elsif self < BaseJob
+        "Job"
+
+      elsif self < BaseModel
+        "Model"
+
+      elsif self < BaseMutation
+        "Mutation"
+
+      elsif self < BasePolicy
+        "Policy"
+
+      elsif self < BasePresenter
+        "Presenter"
+
+      elsif self < BaseSchema
+        "Schema"
+
+      elsif self < BaseService
+        "Service"
+
+      elsif self < BaseSubscription
+        "Subscription"
+
+      else
+        raise UnexpectedBaseError, "Unexpected base class `#{self}`"
+      end
+    end
+
+    # is this an STI class?
+    # sti classes are namespaced with 3 parts, such as `Communication::TextMessages:WelcomeModel`
+    def self.sti_class?
+      name.split("::").count == 3
+    end
+
+    # get the base class for an sti class
+    # if this class is a `Communication::TextMessages:WelcomeModel` then this
+    # method will return the constant `Communication::TextMessageModel`
+    def self.sti_base_class
+      namespace_parts = name.split("::")
+      unless namespace_parts.count == 3
+        raise NotStiClassError, "This `#{self}` is not an STI class (sti classes are namespaced with 3 parts, such as `Communication::TextMessages:WelcomeModel`)"
+      end
+      # return the expected constant
+      "#{namespace_parts[0]}::#{namespace_parts[1].singularize}#{base_type}".constantize
     end
 
     # callback_definition_classes

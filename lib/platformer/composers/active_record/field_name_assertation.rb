@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module ActiveRecord
       # install all the validations specifically designed for boolean fields
-      class FieldNameAssertation < Parsers::AllModels::ForFields
+      class FieldNameAssertation < Parsers::Models::ForFields
         class ReservedAttributeNameError < StandardError
         end
 

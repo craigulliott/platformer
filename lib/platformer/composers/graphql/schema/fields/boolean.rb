@@ -5,7 +5,7 @@ module Platformer
     module GraphQL
       module Schema
         module Fields
-          class Boolean < Parsers::FinalModels::ForFields
+          class Boolean < Parsers::Models::ForFields
             for_field :boolean_field do |name:, schema_definition_class:, graphql_type_class:, allow_null:, description:|
               if schema_definition_class
                 schema_reader = DSLReaders::Schema.new schema_definition_class

@@ -6,25 +6,29 @@ RSpec.describe Platformer::Composers::GraphQL::Mutations::Creators do
   describe "for a User model with an integer_field that has a creation mutation" do
     before(:each) do
       scaffold do
-        table_for "User" do
+        table_for "Users::User" do
           add_column :my_integer, :integer
         end
 
-        model_for "User" do
+        model_for "Users::User" do
           database :postgres, :primary
+          schema :users
+          # createUser instead of createUsersUser
+          suppress_namespace
+
           integer_field :my_integer, allow_null: true do
             validate_less_than 200
           end
         end
 
-        mutation_for "User" do
+        mutation_for "Users::User" do
           # a mutation to create this model
           create do
             fields [:my_integer]
           end
         end
 
-        schema_for "User" do
+        schema_for "Users::User" do
           # a schema to create this model
           fields [:my_integer]
         end
@@ -53,7 +57,7 @@ RSpec.describe Platformer::Composers::GraphQL::Mutations::Creators do
       expect(results["data"]["createUser"]["user"]["myInteger"]).to eq 123
       expect(results["data"]["createUser"]["errors"]).to eql []
 
-      user = User.find_by! my_integer: 123
+      user = Users::User.find_by! my_integer: 123
       expect(user.my_integer).to eq 123
     end
 

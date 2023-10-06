@@ -55,7 +55,9 @@ module Platformer
         # before automatically closing the connection again. This is useful for
         # executing one time queries against the database server, such as maintenance
         # tasks, but should not be used for normal database access when processing
-        # things like API request or background jobs.
+        # things like API request or background jobs. Note that this does not connect
+        # to a specific database, for that you should use the equivilent method in the
+        # database object.
         def with_connection &block
           # create a temporary connection to the server
           connection = PG.connect(
@@ -65,8 +67,8 @@ module Platformer
             password: @password,
             sslmode: "prefer"
           )
+
           # perform work with the connection
-          # todo: `yield connection` would have been preferred, but rbs/steep doesnt understand that syntax
           result = yield connection
 
           # close the connection

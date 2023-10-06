@@ -3,7 +3,7 @@
 module Platformer
   module Composers
     module Presenters
-      class ActionField < Parsers::FinalModels
+      class ActionField < Parsers::Models
         warn "not tested"
 
         for_dsl :action_field do |name:, action_name:, presenter_class:|

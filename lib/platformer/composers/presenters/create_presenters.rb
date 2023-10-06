@@ -8,7 +8,7 @@ module Platformer
       # For example, if we have created a UserModel and an OrganizationModel
       # which extend BaseModel, then this composer will generate a `Presenters::User`
       # and a `Presenters::Organization` class which are extended from Presenters::Base
-      class CreatePresenters < Parsers::AllModels
+      class CreatePresenters < Parsers::Models
         # Process the parser for every decendant of BaseModel
         for_models do |model_definition_class:|
           add_documentation <<~DESCRIPTION

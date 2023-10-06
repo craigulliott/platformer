@@ -11,7 +11,7 @@ module Platformer
         # and a `Types::Organization` class which are extended from Types::BaseObject
         class CreateTypes < Parsers::Schemas
           # Process the parser for every final decendant of BaseSchema
-          for_final_schemas do |model_definition_class:|
+          for_schemas do |model_definition_class:|
             # if one was provided, then extract the description
             class_description = nil
             for_dsl :description do |description:|

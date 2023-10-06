@@ -1,9 +1,9 @@
 module Platformer
   class BaseModel < Base
-    class InvalidModelClassName < StandardError
-      def message
-        "Model class names must end with 'Model'"
-      end
+    class NoTableStructureForModelError < StandardError
+    end
+
+    class NoDatabaseForModelError < StandardError
     end
 
     describe_class <<~DESCRIPTION
@@ -56,6 +56,9 @@ module Platformer
     include Platformer::DSLs::Models::Associations::HasMany
     include Platformer::DSLs::Models::Associations::HasOne
 
+    # single table inheritance (for customizing the column)
+    include Platformer::DSLs::Models::InheritanceField
+
     # soft deletable models (marks them as deleted instead of actually destroying the data)
     include Platformer::DSLs::Models::SoftDeletable
 
@@ -73,7 +76,7 @@ module Platformer
 
     # all model class names must end with "Model"
     def self.inherited subclass
-      raise InvalidModelClassName unless subclass.name.end_with? "Model"
+      validate_naming_and_hierachy_conventions subclass, "Model"
     end
 
     # we cache the resulting structure object here so that the
@@ -83,10 +86,14 @@ module Platformer
     end
 
     def self.table_structure
-      if @table_structure.nil?
-        raise NoTableStructureForModelError, "No table structure object has been added for class `#{self.class}`"
+      if sti_class?
+        sti_base_class.table_structure
+      else
+        if @table_structure.nil?
+          raise NoTableStructureForModelError, "No table structure object has been added for class `#{self}`"
+        end
+        @table_structure
       end
-      @table_structure
     end
 
     # we cache the resulting database object here so that the
@@ -97,7 +104,7 @@ module Platformer
 
     def self.configured_database
       if @configured_database.nil?
-        raise NoDatabaseForModelError, "No database object has been added for class `#{self.class}`"
+        raise NoDatabaseForModelError, "No database object has been added for class `#{self}`"
       end
       @configured_database
     end

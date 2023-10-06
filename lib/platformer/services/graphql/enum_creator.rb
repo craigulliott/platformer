@@ -54,7 +54,7 @@ module Platformer
         def enum_class_name
           # if a models public name was provided, then namespace the enum
           if @model_public_name
-            "Types::#{@model_public_name.classify}#{@enum_name.to_s.classify}Enum"
+            "Types::#{@model_public_name.to_s.classify}#{@enum_name.to_s.classify}Enum"
 
           # if no public name was provided to scope this enum to a particular model, then this
           # enum is shared across the whole system

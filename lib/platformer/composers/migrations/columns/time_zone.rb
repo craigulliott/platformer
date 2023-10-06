@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all time_zone columns to their respective tables within DynamicMigrations
-        class TimeZone < Parsers::FinalModels::ForFields
+        class TimeZone < Parsers::Models::ForFields
           # for each time the :time_zone_field DSL was used on this Model
           for_field :time_zone_field do |prefix:, database:, table:, array:, database_default:, description:, allow_null:|
             name_prepend = prefix.nil? ? "" : "#{prefix}_"

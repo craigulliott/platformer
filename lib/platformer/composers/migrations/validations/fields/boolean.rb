@@ -6,7 +6,7 @@ module Platformer
       module Validations
         module Fields
           # install all the validations specifically designed for boolean fields
-          class Boolean < Parsers::FinalModels::ForFields
+          class Boolean < Parsers::Models::ForFields
             for_field :boolean_field do |name:, table:, array:, description:, allow_null:|
               column = table.column name
 

@@ -5,7 +5,7 @@ module Platformer
     module GraphQL
       module Schema
         module Fields
-          class Float < Parsers::FinalModels::ForFields
+          class Float < Parsers::Models::ForFields
             for_field :float_field do |name:, schema_definition_class:, graphql_type_class:, allow_null:, description:|
               if schema_definition_class
                 schema_reader = DSLReaders::Schema.new schema_definition_class

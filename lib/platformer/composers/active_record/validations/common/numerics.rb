@@ -6,7 +6,7 @@ module Platformer
       module Validations
         module Common
           # install all the common/shared numeric validations for each model
-          class Numerics < Parsers::AllModels::ForFields
+          class Numerics < Parsers::Models::ForFields
             class IncompatibleWithArrayFieldError < StandardError
             end
 

@@ -6,7 +6,7 @@ RSpec.describe Platformer::Composers::Migrations::Positionable do
   describe "for a new PhotoModel which defines a simple new model with a positionable column" do
     before(:each) do
       scaffold do
-        model_for "Photo" do
+        model_for "Users::Photo" do
           database :postgres, :primary
           uuid_field :user_id
           positionable scope: [:user_id]

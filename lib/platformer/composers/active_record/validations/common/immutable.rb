@@ -6,7 +6,7 @@ module Platformer
       module Validations
         module Common
           # Install all the immutable validations for each model
-          class Immutable < Parsers::AllModels::ForFields
+          class Immutable < Parsers::Models::ForFields
             class IncompatibleImmutableValidationError < StandardError
             end
 

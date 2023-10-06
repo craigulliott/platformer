@@ -20,7 +20,7 @@ module Platformer
                 table: validation.table,
                 migration_method: :add_validation,
                 object: validation,
-                code_description: code_description,
+                code_comment: code_comment,
                 migration: <<~RUBY
                   validate_trimmed_and_nullified :#{validation.table.name}, :#{column_name}#{options_string}
                 RUBY

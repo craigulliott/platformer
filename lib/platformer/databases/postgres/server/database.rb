@@ -90,7 +90,7 @@ module Platformer
           warn "not tested"
           def schema_names skip_public: false, skip_pg_schemas: true, skip_information_schema: true
             # create a temporary database connection and fetch the list of schema names
-            rows = server.with_connection do |connection|
+            rows = with_connection do |connection|
               connection.exec <<~SQL
                 SELECT schema_name FROM information_schema.schemata;
               SQL
@@ -143,6 +143,32 @@ module Platformer
               password: @server.password,
               database: @name
             }
+          end
+
+          # Opens a connection to the database, and yields the provided block
+          # before automatically closing the connection again. This is useful for
+          # executing one time queries against the database server, such as maintenance
+          # tasks, but should not be used for normal database access when processing
+          # things like API request or background jobs.
+          def with_connection &block
+            # create a temporary connection to the server
+            connection = PG.connect(
+              host: server.host,
+              port: server.port,
+              user: server.username,
+              password: server.password,
+              dbname: @name,
+              sslmode: "prefer"
+            )
+
+            # perform work with the connection
+            result = yield connection
+
+            # close the connection
+            connection.close
+
+            # return the result
+            result
           end
 
           private

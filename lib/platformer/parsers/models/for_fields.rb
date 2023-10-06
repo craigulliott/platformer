@@ -2,8 +2,8 @@ module Platformer
   module Parsers
     # A convenience wrapper for a DSL compose parser which removes some
     # common code from all the field parsers
-    class AllModels
-      class ForFields < AllModels
+    class Models
+      class ForFields < Models
         include ForFieldMacros
 
         class << self

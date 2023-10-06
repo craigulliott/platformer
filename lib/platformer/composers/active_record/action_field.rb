@@ -3,7 +3,7 @@
 module Platformer
   module Composers
     module ActiveRecord
-      class ActionField < Parsers::AllModels::ForFields
+      class ActionField < Parsers::Models::ForFields
         class MethodAlreadyExistsError < StandardError
         end
 

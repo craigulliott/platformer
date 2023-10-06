@@ -8,49 +8,55 @@ module Platformer
       # For example, if we have created a UserModel and an OrganizationModel
       # which extend BaseModel, then this composer will generate a `User`
       # and an `Organization` class which are extended from ActiveRecord::Base
-      class CreateActiveModels < Parsers::AllModels
+      class CreateActiveModels < Parsers::Models
         # Process the parser for every decendant of BaseModel
-        for_models do |model_definition_class:|
+        for_models include_schema_base_classes: true, include_sti_classes: true do |is_schema_base_class:, model_definition_class:|
           add_documentation <<~DESCRIPTION
             Create an ActiveRecord class which corresponds to this model class.
           DESCRIPTION
 
-          subclasses = ClassMap.subclasses(model_definition_class)
-          has_subclasses = subclasses.count > 0
+          sti_class = model_definition_class.name.split("::").count == 3
 
-          if has_subclasses
-            add_documentation <<~DESCRIPTION
-              Because this model class is subclassed by #{subclasses.count}
-              other classes including `#{subclasses.first.name}` the corresponding
-              ActiveRecord class will be marked as abstract with `self.abstract_class = true`
-            DESCRIPTION
-          end
+          # the class name which will be used for this new active record class, this is
+          # just the model class name without the word "Model" at the end.
+          # the definition `Users::AvatarModel` results in an active record class `Users::Avatar`
+          class_name = model_definition_class.name.gsub(/Model\z/, "")
 
-          # Get the ActiveRecord class which this new ActiveRecord cass should extend from
+          class_name = "#{class_name}Record" if is_schema_base_class
+
+          # Each schema should have a dedicated class of each type which all other classes
+          # of this type will extend from. For example, the users schema should have a class
+          # named `Users::UsersModel` which extends `PlatformModel`, all models within the users
+          # schema must then extend from this `Users::UsersModel`.
+          #
+          # This special base class should be created as an ActiveRecord abstract class.
+          schema_name = model_definition_class.name.split("::").first
+
+          # Get the ActiveRecord class which this new ActiveRecord class should extend from
           #
           # For example...
+          # class `Communication::CommunicationModel` should extend `ApplicationRecord`
+          # class `Communication::TemplateModel` should extend `Communication::Communication`
+          # class `Communication::TextMessageModel` should extend `Communication::Communication`
+          # class `Communication::TextMessages::WelcomeModel` is an STI class and
+          # should extend `Communication::TextMessage`
           #
-          # class UsersModel < BaseModel
-          # end
-          #
-          # class AdminModel < UsersModel
-          # end
-          #
-          # With the model class hieracy above, the expected base_classes are:
-          #   base_class for AdminModel is UsersModel
-          #   base_class for UsersModel is BaseModel
-          #   base_class for BaseModel is ApplicationRecord
-          base_class = if model_definition_class.ancestors[1] == BaseModel
+          # This hieracy is validated when the classes are built, so does not not
+          # need to be validated here.
+          base_class = if model_definition_class.ancestors[1] == PlatformModel
             ApplicationRecord
+
+          elsif !is_schema_base_class && !sti_class
+            "#{schema_name}::#{schema_name}Record".constantize
+
           else
             # return the active_record class which was already created for this
             # models direct ancestor
             model_definition_class.ancestors[1].active_record_class
           end
 
-          active_record_class = ClassMap.create_class model_definition_class.name.gsub(/Model\z/, ""), base_class do
-            # if the model has subclasses, then this is an abstract class
-            if has_subclasses
+          active_record_class = ClassMap.create_class class_name, base_class do
+            if is_schema_base_class
               self.abstract_class = true
             end
           end

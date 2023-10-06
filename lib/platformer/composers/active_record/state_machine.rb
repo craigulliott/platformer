@@ -3,7 +3,7 @@
 module Platformer
   module Composers
     module ActiveRecord
-      class StateMachine < Parsers::AllModels
+      class StateMachine < Parsers::Models
         class MissingStatesError < StandardError
         end
 

@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module Presenters
       module Fields
-        class Integer < Parsers::FinalModels::ForFields
+        class Integer < Parsers::Models::ForFields
           for_field :integer_field do |name:, presenter_class:|
             presenter_class.add_presenter name
           end

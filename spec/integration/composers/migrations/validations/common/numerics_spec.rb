@@ -6,7 +6,7 @@ RSpec.describe Platformer::Composers::Migrations::Validations::Common::Numerics 
   describe "for a new UserModel which defines a simple new model with numeric columns and each type of numeric validation" do
     before(:each) do
       scaffold do
-        model_for "User" do
+        model_for "Users::User" do
           database :postgres, :primary
           integer_field :my_integer do
             validate_greater_than 0

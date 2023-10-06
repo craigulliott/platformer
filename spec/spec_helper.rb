@@ -17,6 +17,9 @@ RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
 
+  # Remove the default exclusion pattern (show full backtraces by default)
+  config.backtrace_exclusion_patterns = []
+
   config.include Helpers::Scaffold
   config.include Helpers::Postgres
 

@@ -16,7 +16,7 @@ module Platformer
                   table: trigger.table,
                   migration_method: :add_trigger,
                   object: trigger,
-                  code_description: code_description,
+                  code_comment: code_comment,
                   migration: <<~RUBY
                     trimmed_and_nullified_array :#{trigger.table.name}, :#{column_name}
                   RUBY

@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all country columns to their respective tables within DynamicMigrations
-        class Country < Parsers::FinalModels::ForFields
+        class Country < Parsers::Models::ForFields
           # for each time the :country_field DSL was used on this Model
           for_field :country_field do |prefix:, database:, table:, array:, database_default:, description:, allow_null:|
             name_prepend = prefix.nil? ? "" : "#{prefix}_"

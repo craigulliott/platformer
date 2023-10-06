@@ -6,7 +6,7 @@ RSpec.describe Platformer::Composers::Migrations::SoftDeletable do
   describe "for a new PhotoModel which is soft deletable" do
     before(:each) do
       scaffold do
-        model_for "Photo" do
+        model_for "Users::Photo" do
           database :postgres, :primary
           soft_deletable
         end

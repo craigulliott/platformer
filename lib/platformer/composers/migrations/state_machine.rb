@@ -3,7 +3,7 @@
 module Platformer
   module Composers
     module Migrations
-      class StateMachine < Parsers::FinalModels
+      class StateMachine < Parsers::Models
         class MissingStatesError < StandardError
         end
 

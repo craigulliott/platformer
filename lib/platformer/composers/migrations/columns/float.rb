@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all float columns to their respective tables within DynamicMigrations
-        class Float < Parsers::FinalModels::ForFields
+        class Float < Parsers::Models::ForFields
           for_field :float_field do |name:, table:, array:, description:, database_default:, allow_null:|
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION

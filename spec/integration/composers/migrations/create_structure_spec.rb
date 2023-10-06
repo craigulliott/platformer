@@ -6,7 +6,7 @@ RSpec.describe Platformer::Composers::Migrations::CreateStructure do
   describe "for a new UserModel which defines a simple new model in a postgres database and schema" do
     before(:each) do
       scaffold do
-        model_for "User" do
+        model_for "Users::User" do
           database :postgres, :primary
           schema :users
         end

@@ -6,7 +6,7 @@ module Platformer
       module Schema
         module StateMachine
           warn "not tested"
-          class StateMachine < Parsers::FinalModels
+          class StateMachine < Parsers::Models
             for_dsl :state_machine do |name:, schema_definition_class:, graphql_type_class:, reader:|
               if schema_definition_class
                 schema_reader = DSLReaders::Schema.new schema_definition_class

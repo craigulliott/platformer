@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "sti_class_uncomposable_error"
+
 #
 # composers, added in the required order
 #
@@ -18,9 +20,16 @@ Platformer.recursive_require_relative "graphql/schema", __dir__
 Platformer.recursive_require_relative "graphql/mutations", __dir__
 
 # Migrations
+#
+# create all the columns first
 require_relative "migrations/create_structure"
 require_relative "migrations/primary_key"
 Platformer.recursive_require_relative "migrations/columns", __dir__
+require_relative "migrations/associations/belongs_to/create_column"
+require_relative "migrations/associations/has_one/create_column"
+require_relative "migrations/associations/has_many/create_column"
+# now that all the columns have been created, run the rest of the composers
+Platformer.recursive_require_relative "migrations/primary_key", __dir__
 Platformer.recursive_require_relative "migrations/indexes", __dir__
 Platformer.recursive_require_relative "migrations/associations", __dir__
 

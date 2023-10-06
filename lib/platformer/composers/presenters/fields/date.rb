@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module Presenters
       module Fields
-        class Date < Parsers::FinalModels::ForFields
+        class Date < Parsers::Models::ForFields
           for_field :date_field do |name:, presenter_class:|
             presenter_class.add_presenter name
           end

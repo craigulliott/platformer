@@ -6,31 +6,34 @@ RSpec.describe Platformer::Composers::GraphQL::Mutations::Updaters do
   describe "for a User model with an integer_field that has an updater mutation" do
     before(:each) do
       scaffold do
-        table_for "User" do
+        table_for "Users::User" do
           add_column :my_integer, :integer
         end
 
-        model_for "User" do
+        model_for "Users::User" do
           database :postgres, :primary
+          schema :users
+          # updateUser instead of updateUsersUser
+          suppress_namespace
           integer_field :my_integer, allow_null: true do
             validate_less_than 200
           end
         end
 
-        mutation_for "User" do
+        mutation_for "Users::User" do
           update do
             fields [:my_integer]
           end
         end
 
-        schema_for "User" do
+        schema_for "Users::User" do
           fields [:my_integer]
         end
       end
     end
 
     it "executes an appropriate query successfully" do
-      user = User.create! my_integer: 10
+      user = Users::User.create! my_integer: 10
       global_id = user.to_gid_param
 
       results = Schema.execute <<~QUERY
@@ -60,7 +63,7 @@ RSpec.describe Platformer::Composers::GraphQL::Mutations::Updaters do
     end
 
     it "handles errors as expected when we pass a value of myInteger which exceeds the max permitted value" do
-      user = User.create! my_integer: 10
+      user = Users::User.create! my_integer: 10
       global_id = user.to_gid_param
 
       results = Schema.execute <<~QUERY

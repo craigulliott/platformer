@@ -6,20 +6,22 @@ RSpec.describe Platformer::DSLReaders::Models::Database do
   describe "for a new UserModel which defines a simple new model and uses the database dsl" do
     before(:each) do
       # where no specific database name is provided
-      create_class "Users::UserModel", Platformer::BaseModel do
-        database :postgres, :primary
-        schema :users
-      end
+      scaffold do
+        model_for "Users::User" do
+          database :postgres, :primary
+          schema :users
+        end
 
-      # where a specific database name is provided
-      create_class "Users::UserInSpecificDatabaseModel", Platformer::BaseModel do
-        database :postgres, :primary, database_name: :specific_database
-        schema :users
-      end
+        # where a specific database name is provided
+        model_for "Users::UserInSpecificDatabase" do
+          database :postgres, :primary, database_name: :specific_database
+          schema :users
+        end
 
-      # where a schema was not provided
-      create_class "Users::UserWithoutSchemaModel", Platformer::BaseModel do
-        database :postgres, :primary
+        # where a schema was not provided
+        model_for "Users::UserWithoutSchema" do
+          database :postgres, :primary
+        end
       end
     end
 

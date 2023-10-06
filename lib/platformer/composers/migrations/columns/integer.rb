@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all integer columns to their respective tables within DynamicMigrations
-        class Integer < Parsers::FinalModels::ForFields
+        class Integer < Parsers::Models::ForFields
           for_field :integer_field do |name:, table:, bigint:, array:, database_default:, description:, allow_null:|
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION

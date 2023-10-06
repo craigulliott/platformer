@@ -3,110 +3,125 @@
 require "spec_helper"
 
 RSpec.describe Platformer::Composers::ActiveRecord::CreateActiveModels do
-  describe "for a new UserModel which defines a simple new model with an integer field" do
+  describe "for a schema base class" do
     before(:each) do
-      create_class "Users::UserModel", Platformer::BaseModel do
-        integer_field :age
+      scaffold do
+        # note that both of these name space parts are Users (plural)
+        model_for "Users::Users" do
+          database :postgres, :primary
+          schema :users
+        end
       end
     end
 
-    after(:each) do
-      destroy_class Users::User
-    end
-
-    it "creates the expected ActiveRecord class" do
-      # now that the UserModel has been created, we rerun the composer
-      Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
-
-      expect(Users::User < ApplicationRecord).to be true
-      expect(ApplicationRecord < ActiveRecord::Base).to be true
-    end
-  end
-
-  describe "for a new FooModel which extends a BarModel" do
-    before(:each) do
-      create_class "BarModel", Platformer::BaseModel do
-      end
-      create_class "FooModel", BarModel do
-      end
-    end
-
-    after(:each) do
-      destroy_class Foo
-      destroy_class Bar
+    it "creates an abstract class" do
+      expect(Users::UsersRecord.abstract_class).to be true
     end
 
     it "creates the expected ActiveRecord class hierachy" do
-      # now that the UserModel has been created, we rerun the composer
-      Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
+      expect(Users::UsersRecord < ApplicationRecord).to be true
 
-      expect(Foo < Bar).to be true
-      expect(Bar < ApplicationRecord).to be true
       expect(ApplicationRecord < ActiveRecord::Base).to be true
-    end
-  end
-
-  describe "for a new UserModel which connects to a postgres server and a default database" do
-    before(:each) do
-      create_class "Users::UserModel", Platformer::BaseModel do
-        database :postgres, :primary
-      end
-    end
-
-    after(:each) do
-      destroy_class Users::User
     end
 
     it "creates the expected ActiveRecord connection" do
-      # now that the UserModel has been created, we rerun the composer
-      Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
-
       expect {
-        Users::User.connection
+        Users::UsersRecord.connection
       }.to_not raise_error
 
-      expect(Users::User.connected?).to be true
-    end
-  end
-
-  describe "for a new UserModel which connects to a postgres server and a specific database" do
-    before(:each) do
-      create_class "Users::UserModel", Platformer::BaseModel do
-        database :postgres, :primary, database_name: :specific_database
-      end
-    end
-
-    after(:each) do
-      destroy_class Users::User
-    end
-
-    it "creates the expected ActiveRecord connection configuration" do
-      # now that the UserModel has been created, we rerun the composer
-
-      Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
-
-      # note we dont actually test the configuration here, because this
-      # database doesn't exist
-      expect(Users::User.connection_db_config.database).to eq "specific_database"
-    end
-  end
-
-  describe "for a new UserModel which uses a specifc postgres database schema" do
-    before(:each) do
-      create_class "Users::UserModel", Platformer::BaseModel do
-        schema :users
-      end
-    end
-
-    after(:each) do
-      destroy_class Users::User
+      expect(Users::UsersRecord.connected?).to be true
     end
 
     it "returns an active record class with the expected table_name_prefix" do
-      # now that the UserModel has been created, we rerun the composer
-      Platformer::Composers::ActiveRecord::CreateActiveModels.rerun
+      expect(Users::UsersRecord.table_name_prefix).to eq("users.")
+    end
+  end
 
-      expect(Users::User.table_name_prefix).to eq("users.")
+  describe "for a simple Users::AvatarModel" do
+    before(:each) do
+      scaffold do
+        model_for "Users::Avatar" do
+          database :postgres, :primary
+          schema :users
+        end
+      end
+    end
+
+    it "creates the expected ActiveRecord class hierachy" do
+      expect(Users::Avatar < Users::UsersRecord).to be true
+
+      expect(Users::UsersRecord < ApplicationRecord).to be true
+
+      expect(ApplicationRecord < ActiveRecord::Base).to be true
+    end
+
+    it "creates an abstract schema base class" do
+      expect(Users::UsersRecord.abstract_class).to be true
+    end
+
+    it "creates a non abstract class for the Avatar" do
+      expect(Users::Avatar.abstract_class).to_not be true
+    end
+
+    it "creates the expected ActiveRecord connection" do
+      expect {
+        Users::Avatar.connection
+      }.to_not raise_error
+
+      expect(Users::Avatar.connected?).to be true
+    end
+
+    it "returns an active record class with the expected table_name_prefix" do
+      expect(Users::Avatar.table_name_prefix).to eq("users.")
+    end
+  end
+
+  describe "for a simple Users::AvatarModel which connects to a specific postgres database" do
+    before(:each) do
+      scaffold do
+        model_for "Users::Avatar" do
+          database :postgres, :primary, database_name: :specific_database
+          schema :users
+        end
+      end
+    end
+
+    it "creates the expected ActiveRecord class hierachy" do
+      expect(Users::Avatar < Users::UsersRecord).to be true
+
+      expect(Users::UsersRecord < ApplicationRecord).to be true
+
+      expect(ApplicationRecord < ActiveRecord::Base).to be true
+    end
+
+    it "creates the expected ActiveRecord connection configuration" do
+      # note we dont actually test the configuration here, because this
+      # database doesn't exist
+      expect(Users::Avatar.connection_db_config.database).to eq "specific_database"
+    end
+  end
+
+  describe "for an STI model" do
+    before(:each) do
+      scaffold do
+        model_for "Communication::TextMessage" do
+          database :postgres, :primary
+          schema :users
+        end
+
+        model_for "Communication::TextMessages::Welcome", Communication::TextMessageModel do
+        end
+      end
+    end
+
+    it "creates the expected ActiveRecord class hierachy" do
+      expect(Communication::TextMessages::Welcome < Communication::TextMessage).to be true
+
+      expect(Communication::TextMessage < Communication::CommunicationRecord).to be true
+
+      expect(Communication::CommunicationRecord < ApplicationRecord).to be true
+
+      expect(ApplicationRecord < ActiveRecord::Base).to be true
     end
   end
 end

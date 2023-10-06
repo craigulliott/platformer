@@ -6,7 +6,7 @@ module Platformer
       module Validations
         module Common
           # Add all string validations to their respective columns within DynamicMigrations
-          class Strings < Parsers::FinalModels::ForFields
+          class Strings < Parsers::Models::ForFields
             for_string_fields do |name:, table:, array:, description:, allow_null:|
               column = table.column name
 
@@ -56,7 +56,7 @@ module Platformer
 
                 # add the validation to the table
                 check_clause = <<~SQL
-                  LENGTH(#{column.name}) #{operator} #{value}
+                  length(#{column.name}) #{operator} #{value}
                 SQL
                 table.add_validation validation_name, [column.name], check_clause, template: template, deferrable: deferrable, initially_deferred: initially_deferred, description: final_description
               end

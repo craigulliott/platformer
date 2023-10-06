@@ -24,22 +24,32 @@ module Platformer
             end
 
             # primary key
-            if table.has_primary_key?
-              column_names = table.primary_key.column_names
-              if column_names.length == 1 && column_names.first == :id
-                add_section "primary_key"
-              else
-                add_section "primary_key column_names: [:#{column_names.join(", :")}]"
+            unless table.has_primary_key?
+              add_section "# todo - add description as to why\nprimary_key skip: true"
+            end
+
+            # any STI models
+            if (sti = STI_MODELS[:"#{module_name}::#{class_name.gsub(/Model\z/, "")}"] || STI_MODELS[:"#{module_name}::#{class_name.gsub(/Model\z/, "").pluralize}::#{class_name.gsub(/Model\z/, "")}"])
+              sti.each do |column_name, values|
+                add_section "inheritance_field :#{column_name}"
+
+                # create empty models which extend this class inheritance
+                values.each do |enum_value|
+                  value = enum_value.gsub(/\A#{table.schema.name.to_s.camelize}::/, "").gsub(/\A#{table.name.to_s.pluralize.camelize}::/, "").gsub("::", "_").underscore
+                  StiModel.new(table, value).write_to_file
+                end
               end
             end
 
             # common timestamp fields
             if table.has_column?(:created_at) && table.has_column?(:updated_at)
-              add_section "core_timestamps"
+              # do nothing, its inherited from `PlatformModel`
             elsif table.has_column?(:created_at)
               add_section "core_timestamps updated_at: false"
             elsif table.has_column?(:updated_at)
               add_section "core_timestamps created_at: false"
+            else
+              add_section "core_timestamps created_at: false, updated_at: false"
             end
 
             # position column
@@ -84,7 +94,7 @@ module Platformer
 
                 # the columns for belongs_to associations do not need to be
                 # represented as uuid fields, so we add them to the ignore list here
-                skip_column_names << :"{name}_id"
+                skip_column_names << :"#{name}_id"
               end
               associations[:has_many]&.each do |name, options|
                 add_association :has_many, name, options
@@ -143,6 +153,36 @@ module Platformer
               syntax << "# TODO: this association originally had a lambda:\n"
             end
 
+            # comment these out for now
+            if options[:class_name]&.start_with? "Doorkeeper::"
+              type = "# #{type}"
+              syntax << "# TODO: doorkeeper is not installed:\n"
+            end
+
+            # comment these out for now
+            if options[:polymorphic]
+              type = "# #{type}"
+              syntax << "# TODO: not doing polymorphic anymore, find a better way:\n"
+            end
+
+            # comment these out for now
+            if options[:class_name]&.start_with? "I18n::"
+              type = "# #{type}"
+              syntax << "# TODO: need to put this in a different namespace because I18n is already taken:\n"
+            end
+
+            # comment these out for now
+            if options[:class_name] == "Projects::PublicApp"
+              type = "# #{type}"
+              syntax << "# TODO: this is a view, views are not implemented yet:\n"
+            end
+
+            # comment these out for now
+            if name.end_with?("_summary", "_summaries")
+              type = "# #{type}"
+              syntax << "# TODO: this is a view, views are not implemented yet:\n"
+            end
+
             syntax << "#{type} :#{name}"
 
             if options[:through]
@@ -150,15 +190,56 @@ module Platformer
             end
 
             if options[:class_name]
-              syntax << ", model: \"#{options[:class_name]}Model\""
+              class_name_option = options[:class_name]
+
+              # if this is an STI model, then update the locaion of the file
+              # convert Curriculum::Steps::StepModel into Curriculum::StepModel
+              class_name_parts = options[:class_name].split("::")
+              if class_name_parts.count == 3 && options[:class_name] == "#{class_name_parts[0]}::#{class_name_parts[1]}::#{class_name_parts[1].singularize}"
+                class_name_option = "#{class_name_parts.first}::#{class_name_parts.last}"
+              end
+
+              if class_name_option == "Billing::InvoiceCharge"
+                class_name_option = "Billing::Charges::InvoiceCharge"
+              end
+
+              if class_name_option == "Organizations::Ownership"
+                class_name_option = "Organizations::Memberships::Ownership"
+              end
+
+              if class_name_option == "Organizations::Instructorship"
+                class_name_option = "Organizations::Memberships::Instructorship"
+              end
+
+              if class_name_option == "Organizations::Studentship"
+                class_name_option = "Organizations::Memberships::Studentship"
+              end
+
+              if class_name_option == "Organizations::Pickupship"
+                class_name_option = "Organizations::Memberships::Pickupship"
+              end
+
+              if class_name_option == "Organizations::Attendship"
+                class_name_option = "Organizations::Memberships::Attendship"
+              end
+
+              syntax << ", model: \"#{class_name_option}Model\""
             end
 
-            if options[:foreign_key]
-              syntax << ", foreign_columns: :#{options[:foreign_key]}"
-            end
-
-            if options[:primary_key]
-              syntax << ", local_columns: :#{options[:primary_key]}"
+            if type == :belongs_to
+              if options[:primary_key]
+                syntax << ", foreign_columns: :#{options[:primary_key]}"
+              end
+              if options[:foreign_key]
+                syntax << ", local_columns: :#{options[:foreign_key]}"
+              end
+            else
+              if options[:foreign_key]
+                syntax << ", foreign_columns: :#{options[:foreign_key]}"
+              end
+              if options[:primary_key]
+                syntax << ", local_columns: :#{options[:primary_key]}"
+              end
             end
 
             add_section syntax
@@ -168,6 +249,13 @@ module Platformer
           def add_field column
             field_name = column.name
 
+            # AvailabilityInstanceModel belongs to availability and also has an availability column (these names collide)
+            if column.name == :attendees && column.table.name == :availability_instances
+              field_name = :attending
+            elsif column.name == :availability && column.table.name == :availability_instances
+              field_name = :available
+            end
+
             # so we can add any code which needs to be represented in a block, and easily determine
             # later if any code was actually added (determine if the block was even needed)
             block_lines = []
@@ -175,8 +263,17 @@ module Platformer
             # build this up below
             syntax = ""
 
+            # make sure we don't add these twice (sue to char and varcahr columns)
+            length_validation_added = false
+            max_length_validation_added = false
+
             if column.enum?
-              if column.name == :time_zone
+              # if this appears to be an STI enum
+              if column.enum.values.first.start_with? column.table.schema.name.to_s.camelize + "::"
+                # skip it
+                return
+
+              elsif column.name == :time_zone
                 syntax << "time_zone_field"
 
               elsif column.name == :country
@@ -233,11 +330,13 @@ module Platformer
                 syntax << "text_field :#{field_name}"
                 unless $LAST_MATCH_INFO["length"].nil?
                   block_lines << "validate_maximum_length #{$LAST_MATCH_INFO["length"]}"
+                  max_length_validation_added = true
                 end
 
               when /\Acharacter\((?<length>\d+)\)\z/
                 syntax << "text_field :#{field_name}"
                 block_lines << "validate_length_is #{$LAST_MATCH_INFO["length"]}"
+                length_validation_added = true
 
               when :citext
                 syntax << ((column.name == :email) ? "email_field" : "citext_field :#{field_name}")
@@ -304,7 +403,7 @@ module Platformer
             end
 
             # add any validations
-            column_validations(column).each do |validation|
+            column_validations(column, max_length_validation_added, length_validation_added).each do |validation|
               block_lines << validation
             end
 
@@ -352,7 +451,7 @@ module Platformer
 
           # process validations for a specific column (only validations which cover one
           # column are picked up here)
-          def column_validations column
+          def column_validations column, max_length_validation_added, length_validation_added
             validations = []
 
             column.table.validations.each do |validation|
@@ -362,7 +461,7 @@ module Platformer
               if validation.columns.count == 1 && validation.columns.first == column
                 # if there is a template, then we can add the validation inside this field, otherwise
                 # it needs to be added to the model (not be nested in a field)
-                if (template = validation_template_from_check_clause validation.check_clause)
+                if (template = validation_template_from_check_clause validation.check_clause, max_length_validation_added, length_validation_added)
                   validations << template
                 end
               end
@@ -371,7 +470,43 @@ module Platformer
             validations
           end
 
-          def validation_template_from_check_clause check_clause
+          def validation_template_from_check_clause check_clause, max_length_validation_added = false, length_validation_added = false
+            alternate_format_check_clause = /
+              \A # start of string
+              \(? # optional opening parenthesis around the whole check clause
+              \(? # optional opening parenthesis around the first condition
+              \(? # optional opening parenthesis around the column name
+              "? # optional opening quote around the column name
+              \w+ # the column name
+              "? # optional closing quote around the column name
+              \)? # optional closing parenthesis around the column name
+              (?:::text)? # optional cast to text after the column name
+              \s # whitespace
+              ~ # regex comparitor part of the check clause
+              \*? # optional case insensitive part of the regex comparitor
+              \s # whitespace
+              ' # opening single quote around the regex
+              (?<value> # named capture group
+              .+ # the regex
+              ) # close capture group
+              ' # closing single quote around the regex
+              (?:::citext)? # optional cast to citext after the regex
+              (?:::text)? # optional cast to text after the regex
+              \)? # optional closing parenthesis around the first condition
+              \s # whitespace
+              OR
+              \s # whitespace
+              \( # second condition
+              \(? # optional opening quote around the column name
+              \w+
+              \)? # optional closing quote around the column name
+              \s # whitespace
+              IS\sNULL
+              \) # closing second condition
+              \)? # optional closing parenthesis around the whole check clause
+              \z # end of string
+            /x
+
             case check_clause
             when Databases::Migrations::Templates::Validations::EqualTo::VALUE_FROM_CHECK_CLAUSE
               "validate_equal_to \"#{$LAST_MATCH_INFO["value"]}\""
@@ -388,7 +523,7 @@ module Platformer
               "validate_format /#{final_regex}/"
 
             # an older version of the format validation template which included a null check
-            when /\A\(?\("?\w+"?\s~\*\s'(?<value>.+)'(?:::citext)?\) OR \(\w+ IS NULL\)\)?\z/
+            when alternate_format_check_clause
               # switch ^ and $ with \A and \z (because activerecord complains about them as a security concern)
               final_regex = $LAST_MATCH_INFO["value"].gsub(/\A\^/, '\A').gsub(/\$\z/, '\z')
               "validate_format /#{final_regex}/"
@@ -409,18 +544,18 @@ module Platformer
               "validate_is \"#{$LAST_MATCH_INFO["value"]}\""
 
             when Databases::Migrations::Templates::Validations::LengthIs::VALUE_FROM_CHECK_CLAUSE
-              "validate_length_is #{$LAST_MATCH_INFO["value"]}"
+              unless length_validation_added
+                "validate_length_is #{$LAST_MATCH_INFO["value"]}"
+              end
 
             when Databases::Migrations::Templates::Validations::MaximumLength::VALUE_FROM_CHECK_CLAUSE
-              "validate_maximum_length #{$LAST_MATCH_INFO["value"]}"
+              unless max_length_validation_added
+                "validate_maximum_length #{$LAST_MATCH_INFO["value"]}"
+              end
 
             when Databases::Migrations::Templates::Validations::MinimumLength::VALUE_FROM_CHECK_CLAUSE
               "validate_minimum_length #{$LAST_MATCH_INFO["value"]}"
             end
-          end
-
-          # get the name of the platformer field method which is used for the given column
-          def field_method_name_from_column column
           end
         end
       end

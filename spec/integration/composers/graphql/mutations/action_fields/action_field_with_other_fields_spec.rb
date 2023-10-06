@@ -6,15 +6,19 @@ RSpec.describe Platformer::Composers::GraphQL::Mutations::ActionFields do
   describe "for a Project model with an publish action_field and a publish mutation which allows updating other fields" do
     before(:each) do
       scaffold do
-        table_for "Project" do
+        table_for "Projects::Project" do
           add_column :unpublished, :boolean, null: true
           add_column :published_at, :timestamp, null: true
           add_column :foo, :text, null: true
           add_column :bar, :text, null: true
         end
 
-        model_for "Project" do
+        model_for "Projects::Project" do
           database :postgres, :primary
+          schema :projects
+          # publishProject instead of publishProjectsProject
+          suppress_namespace
+
           action_field :published, action_name: :publish
           text_field :foo, allow_null: true do
           end
@@ -22,20 +26,20 @@ RSpec.describe Platformer::Composers::GraphQL::Mutations::ActionFields do
           end
         end
 
-        mutation_for "Project" do
+        mutation_for "Projects::Project" do
           action :publish do
             fields [:foo, :bar]
           end
         end
 
-        schema_for "Project" do
+        schema_for "Projects::Project" do
           fields [:published, :foo, :bar]
         end
       end
     end
 
     it "executes an appropriate query successfully" do
-      project = Project.create!
+      project = Projects::Project.create!
       global_id = project.to_gid_param
 
       results = Schema.execute <<~QUERY

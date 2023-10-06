@@ -6,7 +6,7 @@ RSpec.describe Platformer::Composers::Migrations::Validations::Common::Strings d
   describe "for a new UserModel which defines a simple new model with string columns and each type of string validation" do
     before(:each) do
       scaffold do
-        model_for "User" do
+        model_for "Users::User" do
           database :postgres, :primary
           text_field :my_char do
             validate_minimum_length 1
@@ -34,13 +34,13 @@ RSpec.describe Platformer::Composers::Migrations::Validations::Common::Strings d
     context "creates the expected validations for the DynamicMigrations table" do
       it {
         expect(subject.validation(:my_char_min_len).check_clause).to eq <<~SQL.strip
-          LENGTH(my_char) >= 1
+          length(my_char) >= 1
         SQL
       }
 
       it {
         expect(subject.validation(:my_char_max_len).check_clause).to eq <<~SQL.strip
-          LENGTH(my_char) <= 10
+          length(my_char) <= 10
         SQL
       }
 
@@ -52,7 +52,7 @@ RSpec.describe Platformer::Composers::Migrations::Validations::Common::Strings d
 
       it {
         expect(subject.validation(:my_citext_length).check_clause).to eq <<~SQL.strip
-          LENGTH(my_citext) = 5
+          length(my_citext) = 5
         SQL
       }
 

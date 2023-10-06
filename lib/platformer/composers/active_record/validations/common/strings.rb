@@ -6,7 +6,7 @@ module Platformer
       module Validations
         module Common
           # install all the common/shared string validations for each model
-          class Strings < Parsers::AllModels::ForFields
+          class Strings < Parsers::Models::ForFields
             class IncompatibleWithArrayFieldError < StandardError
             end
 

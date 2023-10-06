@@ -6,7 +6,7 @@ module Platformer
       module Validations
         module Common
           # Add all numeric validations to their respective columns within DynamicMigrations
-          class Numerics < Parsers::FinalModels::ForFields
+          class Numerics < Parsers::Models::ForFields
             for_numeric_fields do |name:, table:, array:, description:, allow_null:|
               column = table.column name
 

@@ -3,7 +3,7 @@
 module Platformer
   module Composers
     module Migrations
-      class Positionable < Parsers::FinalModels
+      class Positionable < Parsers::Models
         class MissingStatesError < StandardError
         end
 

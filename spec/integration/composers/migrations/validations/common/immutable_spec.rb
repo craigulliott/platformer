@@ -6,7 +6,7 @@ RSpec.describe Platformer::Composers::Migrations::Validations::Common::Immutable
   describe "for a new UserModel which defines a simple new model with numeric columns and each type of immutable validation" do
     before(:each) do
       scaffold do
-        model_for "User" do
+        model_for "Users::User" do
           database :postgres, :primary
           integer_field :my_integer do
             immutable

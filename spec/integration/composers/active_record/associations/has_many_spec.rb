@@ -6,24 +6,28 @@ RSpec.describe Platformer::Composers::ActiveRecord::Associations::HasMany do
   describe "for a new BadgeModel which belongs to a UserModel" do
     before(:each) do
       scaffold do
-        table_for "User"
-        table_for "Badge" do
+        table_for "Users::User"
+        table_for "Users::Badge" do
           add_column :user_id, :uuid
         end
-        model_for "User" do
+        model_for "Users::User" do
           database :postgres, :primary
+          schema :users
+
           uuid_field :id
-          has_many :badges, model: "BadgeModel"
+          has_many :badges, model: "Users::BadgeModel"
         end
-        model_for "Badge" do
+        model_for "Users::Badge" do
           database :postgres, :primary
+          schema :users
+
           uuid_field :id
         end
       end
     end
 
     it "adds the expected association to the Badge class" do
-      user = User.create
+      user = Users::User.create
       badge = user.badges.create!
       user.reload
 

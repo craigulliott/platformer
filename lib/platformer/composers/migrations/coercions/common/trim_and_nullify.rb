@@ -6,7 +6,7 @@ module Platformer
       module Coercions
         module Common
           # install validations to assert that the trim_and_nullify coercion rules were followed
-          class TrimAndNullify < Parsers::FinalModels::ForFields
+          class TrimAndNullify < Parsers::Models::ForFields
             for_string_fields do |name:, database:, table:, array:, description:, allow_null:|
               column = table.column name
 

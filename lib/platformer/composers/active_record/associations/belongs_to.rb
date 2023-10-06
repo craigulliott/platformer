@@ -4,9 +4,9 @@ module Platformer
   module Composers
     module ActiveRecord
       module Associations
-        class BelongsTo < Parsers::AllModels
+        class BelongsTo < Parsers::Models
           for_dsl :belongs_to do |active_record_class:, module_name:, name:, model:, through:, local_columns:, foreign_columns:|
-            foreign_model_class_name = model&.active_record_class&.name || "#{module_name}::#{name.classify}Model"
+            foreign_model_class_name = model&.active_record_class&.name || "#{module_name}::#{name.to_s.classify}Model"
 
             add_documentation <<~DESCRIPTION
               Add a belongs to association between this model and #{foreign_model_class_name}.

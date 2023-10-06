@@ -21,7 +21,7 @@ module Platformer
 
               final_description = description || Templates::Validations::Uppercase::DEFAULT_DESCRIPTION
 
-              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, description: final_description do
+              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, comment: final_description do
                 check_clause
               end
             end
@@ -41,7 +41,7 @@ module Platformer
 
               final_description = description || Templates::Validations::Uppercase::DEFAULT_DESCRIPTION
 
-              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, description: final_description do
+              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, comment: final_description do
                 check_clause
               end
             end

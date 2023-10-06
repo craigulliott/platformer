@@ -6,9 +6,18 @@ namespace :db do
     Platformer::Databases.servers(:postgres).each do |server|
       server.with_connection do |connection|
         server.database_names.each do |database_name|
+          # create the database using the connection to the server
           connection.exec <<~SQL
             CREATE DATABASE #{database_name} ENCODING 'utf8';
           SQL
+
+          # open a connection to the new database (because we can't create
+          # a schema from the databaseless server connection)
+          server.database(database_name).with_connection do |connection|
+            connection.exec <<~SQL
+              CREATE SCHEMA platformer;
+            SQL
+          end
         end
       end
     end

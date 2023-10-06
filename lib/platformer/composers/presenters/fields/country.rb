@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module Presenters
       module Fields
-        class Country < Parsers::FinalModels::ForFields
+        class Country < Parsers::Models::ForFields
           for_field :country_field do |prefix:, presenter_class:|
             name_prepend = prefix.nil? ? "" : "#{prefix}_"
 

@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Columns
         # Add all uuid columns to their respective tables within DynamicMigrations
-        class Uuid < Parsers::FinalModels::ForFields
+        class Uuid < Parsers::Models::ForFields
           for_field :uuid_field do |name:, table:, array:, database_default:, description:, allow_null:|
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION

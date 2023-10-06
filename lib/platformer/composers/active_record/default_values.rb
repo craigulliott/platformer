@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module ActiveRecord
       # set all the default values (this is done within active record, they are not set as defaults in postgres)
-      class DefaultValues < Parsers::AllModels::ForFields
+      class DefaultValues < Parsers::Models::ForFields
         for_all_fields except: [:phone_number_field, :geo_point_field] do |column_name:, default:, active_record_class:|
           unless default.nil?
             default_value = default

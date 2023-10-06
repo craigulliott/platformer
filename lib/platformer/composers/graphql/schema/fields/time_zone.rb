@@ -5,7 +5,7 @@ module Platformer
     module GraphQL
       module Schema
         module Fields
-          class TimeZone < Parsers::FinalModels::ForFields
+          class TimeZone < Parsers::Models::ForFields
             for_field :time_zone_field do |prefix:, schema_definition_class:, graphql_type_class:, allow_null:, description:|
               if schema_definition_class
                 schema_reader = DSLReaders::Schema.new schema_definition_class

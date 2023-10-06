@@ -8,17 +8,15 @@ module Platformer
               Add a primary key to this table.
             DESCRIPTION
 
-            optional :column_names, :symbol, array: true do
-              import_shared :snake_case_name_validator
-
+            optional :skip, :boolean do
               description <<~DESCRIPTION
-                If provided, then these existing columns will be used to build the primary key.
-                If ommited, then a default column named `id` with a datatype of `uuid` will be added
-                automatically and used for the primary key.
+                If skip is true, then the primary key will not be added to this model.
+                This is useful if you are vcalling `primary_key` somewhere like
+                `PlatformModel` because you want to add it to most of your models, but
+                then wish to override that for a specific model which inherits from
+                `PlatformModel`.
               DESCRIPTION
             end
-
-            import_shared :field_description
           end
         end
       end

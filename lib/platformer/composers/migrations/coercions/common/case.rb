@@ -6,7 +6,7 @@ module Platformer
       module Coercions
         module Common
           # install validations to assert that the case coercion rules were followed
-          class Case < Parsers::FinalModels::ForFields
+          class Case < Parsers::Models::ForFields
             for_string_fields except: :citext_field do |name:, table:, array:, description:, allow_null:|
               column = table.column name
 

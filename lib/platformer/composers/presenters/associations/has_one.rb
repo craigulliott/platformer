@@ -4,11 +4,11 @@ module Platformer
   module Composers
     module Presenters
       module Associations
-        class HasOne < Parsers::AllModels
+        class HasOne < Parsers::Models
           warn "not tested"
           for_dsl :has_one do |model:, module_name:, name:, presenter_class:|
             association_name = name
-            foreign_model = model || "#{module_name}::#{name.classify}Model".constantize
+            foreign_model = model || "#{module_name}::#{name.to_s.classify}Model".constantize
 
             foreign_model_presenter_class = foreign_model.presenter_class
             presenter_class.add_presenter association_name do

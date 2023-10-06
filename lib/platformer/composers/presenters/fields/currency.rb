@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module Presenters
       module Fields
-        class Currency < Parsers::FinalModels::ForFields
+        class Currency < Parsers::Models::ForFields
           for_field :currency_field do |prefix:, presenter_class:|
             name_prepend = prefix.nil? ? "" : "#{prefix}_"
 
