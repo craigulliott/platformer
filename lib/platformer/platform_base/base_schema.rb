@@ -28,17 +28,5 @@ module Platformer
     def self.inherited subclass
       raise InvalidSchemaClassName unless subclass.name.end_with? "Schema"
     end
-
-    def self.active_record_class
-      get_equivilent_class ApplicationRecord
-    end
-
-    def self.model_class
-      get_equivilent_class BaseModel
-    end
-
-    def self.graphql_type_class
-      get_equivilent_class Types::BaseObject
-    end
   end
 end

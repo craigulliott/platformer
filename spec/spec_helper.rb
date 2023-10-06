@@ -32,6 +32,9 @@ RSpec.configure do |config|
 
   # assert that our test suite is empty before running the test suite
   config.before(:suite) do
+    # make sure the database exists and has the platformer schema
+    Helpers::Postgres.initialize_database
+
     # optionally provide DYNAMIC_MIGRATIONS_CLEAR_DB_ON_STARTUP=true to
     # force reset your database structure
     if ENV["DYNAMIC_MIGRATIONS_CLEAR_DB_ON_STARTUP"]

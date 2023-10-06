@@ -108,17 +108,5 @@ module Platformer
       end
       @configured_database
     end
-
-    def self.active_record_class
-      get_equivilent_class ApplicationRecord
-    end
-
-    def self.schema_class
-      get_equivilent_class BaseSchema
-    end
-
-    def self.graphql_type_class
-      get_equivilent_class Types::BaseObject
-    end
   end
 end

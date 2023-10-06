@@ -29,6 +29,9 @@ module Platformer
 
             # add the default database to the structure
             @server.structure.add_database @name
+
+            # add the dyanmic migrations schema to the structure
+            structure.add_configured_schema :dynamic_migrations
           end
 
           def structure
@@ -85,6 +88,25 @@ module Platformer
           warn "not tested"
           def platformer_schema
             @platformer_schema ||= get_platformer_schema_structure
+          end
+
+          warn "not tested"
+          def exists?
+            server.with_connection do |connection|
+              rows = connection.exec <<~SQL
+                SELECT FROM pg_database WHERE datname = '#{name}'
+              SQL
+              rows.count > 0
+            end
+          end
+
+          warn "not tested"
+          def create!
+            server.with_connection do |connection|
+              connection.exec <<~SQL
+                CREATE DATABASE #{name};
+              SQL
+            end
           end
 
           warn "not tested"

@@ -84,7 +84,7 @@ module Platformer
 
       # yields the provided block for all final classes for the provided base class
       # base_class should be something like BaseModel, BaseSchema or BaseMigration
-      def self.for_base_class include_schema_base_classes: false, include_sti_classes: false, called_from: nil, &block
+      def self.for_base_class include_schema_base_classes: false, include_sti_classes: false, only_sti_classes: false, called_from: nil, &block
         called_from ||= caller(1..1).first
 
         # remember the parser so we can pass to the ArgumentsResolver and get
@@ -110,8 +110,11 @@ module Platformer
             next if child_class.name == "#{schema_name}::#{schema_name}#{child_class.base_type}"
           end
 
-          # are we skipping the sti classes, such as `Communication::TextMessages::WelcomeModel`
-          unless include_sti_classes
+          # are we only processing, or skipping the sti classes
+          # classes such as `Communication::TextMessages::WelcomeModel`
+          if only_sti_classes
+            next unless child_class.name.split("::").count == 3
+          elsif ! include_sti_classes
             next if child_class.name.split("::").count == 3
           end
 
@@ -135,6 +138,9 @@ module Platformer
       # If `include_sti_classes` is true, then this block will yeild for STI classes such as
       # Communication::TextMessages::WelcomeModel, otherwise these classes will be skipped.
       #
+      # If `only_sti_classes` is true, then this block will only yeild for STI classes such
+      # as Communication::TextMessages::WelcomeModel.
+      #
       # If `skip_inherited_dsls` is true, then this block will only yeild
       # for DSLs which were used directly on the subject class, otherwise this block
       # will yeild for DSLs which were used on the subject class or any of the subject classes
@@ -145,7 +151,7 @@ module Platformer
       # first in the class will be selected, and if the class does not use the DSL then each of
       # the classes ancestors will be tested until an execution is found (only the current class
       # will be tested if skip_inherited_dsls has been set to true).
-      def self.dsl_for_base_class dsl_names, include_schema_base_classes: false, include_sti_classes: false, skip_inherited_dsls: false, first_use_only: false, &block
+      def self.dsl_for_base_class dsl_names, include_schema_base_classes: false, include_sti_classes: false, only_sti_classes: false, skip_inherited_dsls: false, first_use_only: false, &block
         called_from = caller(1..1).first
 
         # remember the parser so we can pass to the ArgumentsResolver and get
@@ -153,7 +159,7 @@ module Platformer
         parser_class = self
 
         # Processes every ancestor of the base_class class.
-        for_base_class include_schema_base_classes: include_schema_base_classes, include_sti_classes: include_sti_classes, called_from: called_from do |child_class:|
+        for_base_class include_schema_base_classes: include_schema_base_classes, include_sti_classes: include_sti_classes, only_sti_classes: only_sti_classes, called_from: called_from do |child_class:|
           # Yields the provided block and provides the requested values for each use of the provided DSL
           on_ancestor_class = !skip_inherited_dsls
           for_dsl dsl_names, on_ancestor_class: on_ancestor_class, first_use_only: first_use_only do |dsl_name:, reader:, dsl_arguments:, dsl_execution:|

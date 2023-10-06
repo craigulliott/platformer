@@ -16,7 +16,7 @@ module Platformer
           # process each state and build an array of the state names
           state_names = []
           for_method :state do |name:, requires_presence_of:, requires_absence_of:, description:|
-            state_names << name
+            state_names << name.to_s
           end
 
           unless state_names.count >= 2

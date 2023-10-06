@@ -4,5 +4,5 @@
 DynamicMigrations::Postgres.remove_unused_extensions = false
 
 # store the materialized views which represent a cached representation of the
-# database structure in the platformer schema instead of public
-DynamicMigrations::Postgres.cache_schema_name = :platformer
+# database structure in the dynamic_migrations schema instead of public
+DynamicMigrations::Postgres.cache_schema_name = :dynamic_migrations

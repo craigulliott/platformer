@@ -16,6 +16,7 @@ namespace :db do
           server.database(database_name).with_connection do |connection|
             connection.exec <<~SQL
               CREATE SCHEMA platformer;
+              CREATE SCHEMA dynamic_migrations;
             SQL
           end
         end
