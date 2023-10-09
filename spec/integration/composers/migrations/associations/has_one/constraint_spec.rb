@@ -23,7 +23,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::HasOne::Constrai
     }
 
     context "generates the expected foreign key constraint on the foreign table" do
-      it { expect(subject.has_foreign_key_constraint?(:has_one_from_users)).to be true }
+      it { expect(subject.has_foreign_key_constraint?(:users_has_one_badge)).to be true }
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::HasOne::Constrai
     }
 
     it "generates the foreign key constraint on the foreign table" do
-      expect(subject.has_foreign_key_constraint?(:has_one_from_foos)).to be true
+      expect(subject.has_foreign_key_constraint?(:foos_has_one_bar)).to be true
     end
 
     it "automatically creates a usable index on the foreign table" do

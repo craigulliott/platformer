@@ -21,6 +21,12 @@ module Platformer
                   #{word_wrap table.description, line_length: 80, indent: true}
                 DESCRIPTION
               RUBY
+            else
+              add_section <<~RUBY
+                description <<~DESCRIPTION
+                  # TODO - add a description for this table
+                DESCRIPTION
+              RUBY
             end
 
             # primary key
@@ -66,27 +72,6 @@ module Platformer
               skip_column_names << :latitude
             end
 
-            # phone_number columns
-            {
-              phone_number: :dialing_code,
-              from_phone_number: :from_dialing_code,
-              to_phone_number: :to_dialing_code
-            }.each do |phone_number_col, dialing_code_col|
-              if table.has_column?(phone_number_col) && table.has_column?(dialing_code_col)
-                syntax = "phone_number_field"
-                if phone_number_col.start_with? "to_"
-                  syntax << " prefix: :to"
-                elsif phone_number_col.start_with? "from_"
-                  syntax << " prefix: :from"
-                end
-                if table.column(phone_number_col).null
-                  syntax << " do\n  allow_null\nend"
-                end
-                skip_column_names << phone_number_col
-                skip_column_names << dialing_code_col
-              end
-            end
-
             # add all our associations
             if (associations = ASSOCIATIONS[:"#{module_name}::#{class_name}"])
               associations[:belongs_to]&.each do |name, options|
@@ -122,10 +107,40 @@ module Platformer
               end
             end
 
+            # phone_number columns
+            {
+              phone_number: :dialing_code,
+              from_phone_number: :from_dialing_code,
+              to_phone_number: :to_dialing_code
+            }.each do |phone_number_col, dialing_code_col|
+              if table.has_column?(phone_number_col) && table.has_column?(dialing_code_col)
+                extras = []
+                if phone_number_col.start_with? "to_"
+                  extras << " prefix: :to"
+                elsif phone_number_col.start_with? "from_"
+                  extras << " prefix: :from"
+                end
+                if table.column(phone_number_col).null
+                  extras << " allow_null: true"
+                end
+                skip_column_names << phone_number_col
+                skip_column_names << dialing_code_col
+                add_section "phone_number_field#{extras.join(",")}"
+              end
+            end
+
             # all other fields which have not already been processed
             table.columns.each do |column|
               # skip any columns which have already been processed
               next if skip_column_names.include? column.name
+
+              # skip these text sti fields which are now going to be enums
+              next if column.name == :product && table.name == :subscription_add_ons
+              next if column.name == :reason && table.name == :subscription_discounts
+              next if column.name == :template && table.name == :emails
+              next if column.name == :template && table.name == :text_messages
+              next if column.name == :synthesizer && table.name == :voices
+              next if column.name == :topic && table.name == :assignments
 
               add_field column
             end
@@ -199,28 +214,8 @@ module Platformer
                 class_name_option = "#{class_name_parts.first}::#{class_name_parts.last}"
               end
 
-              if class_name_option == "Billing::InvoiceCharge"
-                class_name_option = "Billing::Charges::InvoiceCharge"
-              end
-
-              if class_name_option == "Organizations::Ownership"
-                class_name_option = "Organizations::Memberships::Ownership"
-              end
-
-              if class_name_option == "Organizations::Instructorship"
-                class_name_option = "Organizations::Memberships::Instructorship"
-              end
-
-              if class_name_option == "Organizations::Studentship"
-                class_name_option = "Organizations::Memberships::Studentship"
-              end
-
-              if class_name_option == "Organizations::Pickupship"
-                class_name_option = "Organizations::Memberships::Pickupship"
-              end
-
-              if class_name_option == "Organizations::Attendship"
-                class_name_option = "Organizations::Memberships::Attendship"
+              if RENAMED_CLASSES[class_name_option.to_sym]
+                class_name_option = RENAMED_CLASSES[class_name_option.to_sym]
               end
 
               syntax << ", model: \"#{class_name_option}Model\""
@@ -414,6 +409,12 @@ module Platformer
                   #{word_wrap column.description, line_length: 80, indent: true}
                 DESCRIPTION
               RUBY
+            else
+              block_lines << <<~RUBY.strip
+                description <<~DESCRIPTION
+                  # TODO - add a description for this field
+                DESCRIPTION
+              RUBY
             end
 
             # if anything was added to the block, then create a block and add it to the syntax
@@ -438,9 +439,32 @@ module Platformer
               # ignored because it is added automatically as part of the action_field definition
 
             else
-              syntax = "add_validation :#{validation.name}"
+              name = validation.name
+
+              # a wrong name we found
+              if name == :phone_number_from_usa_10_digits && validation.table.name == :payment_methods
+                name = :last_four_required_for_cards
+              end
+
+              syntax = "add_validation :#{name}"
               syntax << ", deferrable: true" if validation.deferrable
               syntax << ", initially_deferred: true" if validation.initially_deferred
+
+              new_check_clause = validation.check_clause
+              # remove casts, they will be added automatically for us
+              unless new_check_clause.match(/ALL/m) || new_check_clause.match(/ANY/m)
+                new_check_clause.gsub!(/::[a-z_]+\.[a-z_]+/, '')
+                new_check_clause.gsub!(/::[a-z]+/, '')
+              end
+
+              # fix the regex validations
+              new_check_clause.gsub!(") ~* '", ")::text ~* '")
+
+              # STI models which changed names
+              RENAMED_CLASSES.each do |old_name, new_name|
+                new_check_clause.gsub! old_name.to_s, new_name
+              end
+
               add_section syntax + ", " + <<~RUBY.strip
                 <<~SQL
                   #{validation.check_clause}

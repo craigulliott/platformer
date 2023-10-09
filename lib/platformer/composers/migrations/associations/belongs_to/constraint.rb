@@ -9,6 +9,9 @@ module Platformer
                 raise StiClassUncomposableError, "Can not add associations on STI models, add the association to the STI model base class instead"
               end
 
+              # no foreign key constraint on associations which are "through" another model
+              next if through
+
               local_table = model_definition_class.table_structure
               foreign_model = model || "#{module_name}::#{name.to_s.classify}Model".constantize
               foreign_table = foreign_model.table_structure

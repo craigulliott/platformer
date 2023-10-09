@@ -20,7 +20,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Enum do
     context "creates the expected columns within the DynamicMigrations table" do
       it { expect(subject.has_column?(:my_enum)).to be true }
 
-      it { expect(subject.column(:my_enum).data_type).to be :"public.users__my_enum_values" }
+      it { expect(subject.column(:my_enum).data_type).to be :"public.users_my_enums" }
 
       it { expect(subject.column(:my_enum).null).to be false }
 
@@ -50,7 +50,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Enum do
     context "creates the expected columns within the DynamicMigrations table" do
       it { expect(subject.has_column?(:my_enum)).to be true }
 
-      it { expect(subject.column(:my_enum).data_type).to be :"public.users__my_enum_values" }
+      it { expect(subject.column(:my_enum).data_type).to be :"public.users_my_enums" }
 
       it { expect(subject.column(:my_enum).null).to be true }
 
@@ -77,7 +77,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Enum do
     context "creates the expected columns within the DynamicMigrations table" do
       it { expect(subject.has_column?(:my_enum)).to be true }
 
-      it { expect(subject.column(:my_enum).data_type).to be :"public.users__my_enum_values[]" }
+      it { expect(subject.column(:my_enum).data_type).to be :"public.users_my_enums[]" }
     end
   end
 end

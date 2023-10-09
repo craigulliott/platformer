@@ -15,6 +15,7 @@ module Platformer
 
     # all policy class names must end with "Policy"
     def self.inherited subclass
+      super
       raise InvalidPolicyClassName unless subclass.name.end_with? "Policy"
     end
   end

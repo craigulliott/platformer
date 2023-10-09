@@ -39,7 +39,7 @@ module Helpers
     # class and also accessed from within the before(:suite) callbacks
     def self.pg_spec_helper
       if @pg_spec_helper.nil?
-        @pg_spec_helper = PGSpecHelper.new(**default_database.pg_configuration)
+        @pg_spec_helper = PGSpecHelper.new(**default_database.pg_configuration.except(:sslmode))
 
         # don't delete the postgis schema between tests
         @pg_spec_helper.ignore_schema :postgis

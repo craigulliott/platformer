@@ -9,6 +9,9 @@ module Platformer
                 raise StiClassUncomposableError, "Can not add associations on STI models, add the association to the STI model base class instead"
               end
 
+              # no foreign key constraint on associations which are "through" another model
+              next if through
+
               local_table = model_definition_class.table_structure
               foreign_model = model || "#{module_name}::#{name.to_s.classify}Model".constantize
               foreign_table = foreign_model.table_structure
@@ -51,8 +54,6 @@ module Platformer
               # if these tables are in the same database then create a
               # foreign key constraint
               if local_table.schema.database == foreign_table.schema.database
-
-                warn "TODO : make sure this doesnt already exist because of the belongs_to"
 
                 # the values we need for the foreign key constraint
                 local_columns = local_cols.map(&:name)

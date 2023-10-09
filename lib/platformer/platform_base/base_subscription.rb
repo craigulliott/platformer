@@ -15,6 +15,7 @@ module Platformer
 
     # all subscription class names must end with "Subscription"
     def self.inherited subclass
+      super
       raise InvalidSubscriptionClassName unless subclass.name.end_with? "Subscription"
     end
   end

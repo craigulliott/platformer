@@ -38,34 +38,34 @@ module Platformer
               "Communication::Emails::VirtualClassTwentyFourHourReminder",
               "Communication::Emails::WelcomeKit",
               "Communication::Emails::AcquisitionStreamFollowUp::Attended",
-              "Communication::Emails::AcquisitionStreamFollowUp::TrialInformation",
+
               "Communication::Emails::AcquisitionStreamFollowUp::FollowUp1",
               "Communication::Emails::AcquisitionStreamFollowUp::FollowUp2",
-              "Communication::Emails::AcquisitionStreamRegistered::RegistrationCreated",
-              "Communication::Emails::AcquisitionStreamRegistered::JoinStreamLink",
-              "Communication::Emails::AcquisitionStreamRegistered::TwentyFourHourReminder",
-              "Communication::Emails::AcquisitionStreamRegistered::TwoHourReminder",
+
+
+
+
               "Communication::Emails::AdultPlayerHighIntent::AccountCreated",
               "Communication::Emails::AdultPlayerLowIntent::AccountCreated",
               "Communication::Emails::CanceledMember::Confirmation",
               "Communication::Emails::CanceledMember::CheckIn",
               "Communication::Emails::ConversionStreamFollowUp::Attended",
-              "Communication::Emails::ConversionStreamFollowUp::TrialInformation",
+
               "Communication::Emails::ConversionStreamFollowUp::FollowUp1",
               "Communication::Emails::ConversionStreamFollowUp::FollowUp2",
-              "Communication::Emails::ConversionStreamRegistered::RegistrationCreated",
-              "Communication::Emails::ConversionStreamRegistered::JoinStreamLink",
-              "Communication::Emails::ConversionStreamRegistered::TwentyFourHourReminder",
-              "Communication::Emails::ConversionStreamRegistered::TwoHourReminder",
+
+
+
+
               "Communication::Emails::GiftOfCode::Welcome",
               "Communication::Emails::MissedTrialSession::WeMissedYou",
               "Communication::Emails::PastDueSubscription::BookingsCanceled",
               "Communication::Emails::PastDueSubscription::UpdatePaymentInfo",
               "Communication::Emails::GuideCertification::Welcome",
               "Communication::Emails::GuideCertification::FollowUp",
-              "Communication::Emails::GuideContractorAgreementSigned::RenewalNotice",
-              "Communication::Emails::GuideContractorAgreementSigned::RenewalNoticeWithoutRaise",
-              "Communication::Emails::GuideContractorAgreementSigned::TerminationNotice",
+
+
+
               "Communication::Emails::GuideOnboarding::Welcome",
               "Communication::Emails::GuideOnboarding::FollowUp",
               "Communication::Emails::InfluencerProgramLead::AccountSetup",
@@ -77,19 +77,19 @@ module Platformer
               "Communication::Emails::OnDemandStreamFollowUp::Attended",
               "Communication::Emails::OnDemandStreamFollowUp::FollowUp1",
               "Communication::Emails::OnDemandStreamFollowUp::FollowUp2",
-              "Communication::Emails::OnDemandStreamRegistered::RegistrationCreated",
+
               "Communication::Emails::PartnerGroupClassBooked::BookingCreated",
-              "Communication::Emails::PartnerGroupClassBooked::TwentyFourHourReminder",
-              "Communication::Emails::PartnerGroupClassBooked::TwoHourReminder",
+
+
               "Communication::Emails::PartnerGroupClassFollowUp::ClassRecap",
-              "Communication::Emails::PartnerGroupClassFollowUp::MembershipInformation",
+
               "Communication::Emails::UnusedCredits::EndOfCycleReminder",
               "Communication::Emails::UnusedCredits::NewCredits",
               "Communication::Emails::UnusedCredits::OneWeekReminder",
-              "Communication::Emails::UsscVirtualCampBooked::RegistrationPacket",
+
               "Communication::Emails::UsscVirtualCampBooked::TwoDayReminder",
               "Communication::Emails::UsscVirtualCampBooked::CampRecap",
-              "Communication::Emails::UsscVirtualCampFollowUp::TrialInformation",
+
               "Communication::Emails::VirtualClassesLead::AccountCreated",
               "Communication::Emails::VirtualClassesLead::ShareGames",
               "Communication::Emails::VirtualClassesLead::ShareVideos",
@@ -104,14 +104,14 @@ module Platformer
               "Communication::Emails::VirtualClassesProspect::CheckingIn2",
               "Communication::Emails::VirtualTrialBooked::OneHourReminder",
               "Communication::Emails::VirtualTrialBooked::TrialCreated",
-              "Communication::Emails::VirtualTrialBooked::TwentyFourHourReminder",
+
               "Communication::Emails::VirtualTrialFollowUp::Attended",
               "Communication::Emails::VirtualTrialPeriod::Day5",
-              "Communication::Emails::VirtualTrialPeriod::Day5WithSubscription",
+
               "Communication::Emails::VirtualTrialPeriod::Day7",
-              "Communication::Emails::VirtualTrialPeriod::Day7WithSubscription",
+
               "Communication::Emails::VirtualTrialPeriod::TrialCreated",
-              "Communication::Emails::VirtualTrialPeriod::TrialCreatedWithSubscription"
+
             ]
           },
           "Hardware::Components::Component": {
@@ -275,12 +275,12 @@ module Platformer
               "Billing::SubscriptionDiscounts::NovaRetentionIncentive",
               "Billing::SubscriptionDiscounts::NovaReferralCredit",
               "Billing::SubscriptionDiscounts::NovaLoyaltyIncentive",
-              "Billing::SubscriptionDiscounts::SupernovaStarterSignUpIncentive",
-              "Billing::SubscriptionDiscounts::SupernovaStarterRetentionIncentive",
+
+
               "Billing::SubscriptionDiscounts::SupernovaStarterReferralCredit",
-              "Billing::SubscriptionDiscounts::SupernovaStarterLoyaltyIncentive",
+
               "Billing::SubscriptionDiscounts::SupernovaLiteSignUpIncentive",
-              "Billing::SubscriptionDiscounts::SupernovaLiteRetentionIncentive",
+
               "Billing::SubscriptionDiscounts::SupernovaLiteReferralCredit",
               "Billing::SubscriptionDiscounts::SupernovaLiteLoyaltyIncentive",
               "Billing::SubscriptionDiscounts::SupernovaSignUpIncentive",
@@ -306,106 +306,106 @@ module Platformer
               "Communication::TextMessages::VirtualExpeditionReminder1",
               "Communication::TextMessages::VirtualExpeditionReminder2",
               "Communication::TextMessages::InfluencerClassOneHourReminder",
-              "Communication::TextMessages::InfluencerClassTwentyFourHourReminder",
+
               "Communication::TextMessages::PartnerGroupClassOneHourReminder",
-              "Communication::TextMessages::PartnerGroupClassTwentyFourHourReminder",
-              "Communication::TextMessages::AcquisitionStreamFollowUp::Attended",
-              "Communication::TextMessages::AcquisitionStreamFollowUp::ExpressedInterest",
-              "Communication::TextMessages::AcquisitionStreamFollowUp::FollowUp1",
-              "Communication::TextMessages::AcquisitionStreamFollowUp::FollowUp2",
-              "Communication::TextMessages::AcquisitionStreamFollowUp::LeftVoicemail",
-              "Communication::TextMessages::AcquisitionStreamFollowUp::PhoneCallNoAnswer",
-              "Communication::TextMessages::AcquisitionStreamFollowUp::TrialInformation",
-              "Communication::TextMessages::AcquisitionStreamRegistered::OneHourReminder",
-              "Communication::TextMessages::AcquisitionStreamRegistered::RegistrationCreated",
-              "Communication::TextMessages::AcquisitionStreamRegistered::TwentyFourHourReminder",
-              "Communication::TextMessages::AcquisitionStreamRegistered::TenMinuteReminder",
+
+
+
+
+
+
+
+
+
+
+
+
               "Communication::TextMessages::CanceledMember::CheckIn",
               "Communication::TextMessages::CanceledMember::LeftVoicemail",
               "Communication::TextMessages::CanceledMember::PhoneCallNoAnswer",
               "Communication::TextMessages::CollectLearningStyles::Fallback",
-              "Communication::TextMessages::CollectLearningStyles::FallbackReminder",
-              "Communication::TextMessages::CollectLearningStyles::LeftVoicemail",
-              "Communication::TextMessages::CollectLearningStyles::PhoneCallNoAnswer",
-              "Communication::TextMessages::ConversionStreamFollowUp::Attended",
-              "Communication::TextMessages::ConversionStreamFollowUp::ExpressedInterest",
-              "Communication::TextMessages::ConversionStreamFollowUp::FollowUp1",
-              "Communication::TextMessages::ConversionStreamFollowUp::FollowUp2",
-              "Communication::TextMessages::ConversionStreamFollowUp::LeftVoicemail",
-              "Communication::TextMessages::ConversionStreamFollowUp::PhoneCallNoAnswer",
-              "Communication::TextMessages::ConversionStreamFollowUp::TrialInformation",
-              "Communication::TextMessages::ConversionStreamRegistered::OneHourReminder",
-              "Communication::TextMessages::ConversionStreamRegistered::RegistrationCreated",
-              "Communication::TextMessages::ConversionStreamRegistered::TwentyFourHourReminder",
-              "Communication::TextMessages::ConversionStreamRegistered::TenMinuteReminder",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               "Communication::TextMessages::GiftOfCode::Welcome",
-              "Communication::TextMessages::InfluencerProgramLead::AccountSetup",
+
               "Communication::TextMessages::InfluencerProgramLead::FollowUp1",
               "Communication::TextMessages::InfluencerProgramLead::FollowUp2",
               "Communication::TextMessages::InfluencerProgramLead::FollowUp3",
               "Communication::TextMessages::InfluencerProgramLead::FollowUp4",
-              "Communication::TextMessages::MissedMemberSession::LeftVoicemail",
-              "Communication::TextMessages::MissedMemberSession::PhoneCallNoAnswer",
+
+
               "Communication::TextMessages::MissedMemberSession::WeMissedYou",
-              "Communication::TextMessages::MissedTrialSession::ExpressedInterest",
+
               "Communication::TextMessages::MissedTrialSession::LeftVoicemail",
-              "Communication::TextMessages::MissedTrialSession::PhoneCallNoAnswer",
+
               "Communication::TextMessages::MissedTrialSession::WeMissedYou",
               "Communication::TextMessages::OnDemandStreamFollowUp::Attended",
-              "Communication::TextMessages::OnDemandStreamFollowUp::ExpressedInterest",
+
               "Communication::TextMessages::OnDemandStreamFollowUp::FollowUp1",
               "Communication::TextMessages::OnDemandStreamFollowUp::FollowUp2",
-              "Communication::TextMessages::OnDemandStreamFollowUp::LeftVoicemail",
-              "Communication::TextMessages::OnDemandStreamFollowUp::PhoneCallNoAnswer",
-              "Communication::TextMessages::OnDemandStreamRegistered::RegistrationCreated",
-              "Communication::TextMessages::PastDueSubscription::BookingsCanceled",
-              "Communication::TextMessages::PastDueSubscription::LeftVoicemail",
-              "Communication::TextMessages::PastDueSubscription::PhoneCallNoAnswer",
-              "Communication::TextMessages::PastDueSubscription::UpdatePaymentInfo",
-              "Communication::TextMessages::PartnerGroupClassFollowUp::ExpressedInterest",
-              "Communication::TextMessages::PartnerGroupClassFollowUp::LeftVoicemail",
-              "Communication::TextMessages::PartnerGroupClassFollowUp::MembershipInformation",
-              "Communication::TextMessages::PartnerGroupClassFollowUp::PhoneCallNoAnswer",
+
+
+
+
+
+
+
+
+
+
+
               "Communication::TextMessages::UnhappySurvey::LeftVoicemail",
               "Communication::TextMessages::UnhappySurvey::PhoneCallNoAnswer",
               "Communication::TextMessages::UnusedCredits::EndOfCycleReminder",
               "Communication::TextMessages::UnusedCredits::NewCredits",
               "Communication::TextMessages::UnusedCredits::OneWeekReminder",
-              "Communication::TextMessages::UsscVirtualCampBooked::TwoDayReminder",
-              "Communication::TextMessages::UsscVirtualCampFollowUp::ExpressedInterest",
-              "Communication::TextMessages::UsscVirtualCampFollowUp::LeftVoicemail",
-              "Communication::TextMessages::UsscVirtualCampFollowUp::PhoneCallNoAnswer",
-              "Communication::TextMessages::VirtualClassesLead::ExpressedInterest",
-              "Communication::TextMessages::VirtualClassesLead::LeftVoicemail1",
-              "Communication::TextMessages::VirtualClassesLead::LeftVoicemail2",
-              "Communication::TextMessages::VirtualClassesLead::PhoneCallNoAnswer1",
-              "Communication::TextMessages::VirtualClassesLead::PhoneCallNoAnswer2",
+
+
+
+
+
+
+
+
+
               "Communication::TextMessages::VirtualClassesLead::SuggestTimes",
               "Communication::TextMessages::VirtualClassesLead::ShareGames",
               "Communication::TextMessages::VirtualClassesLead::ShareVideos",
               "Communication::TextMessages::VirtualClassesLead::ShareEvents",
               "Communication::TextMessages::VirtualClassesLead::CheckingIn1",
               "Communication::TextMessages::VirtualClassesLead::CheckingIn2",
-              "Communication::TextMessages::VirtualClassesProspect::ExpressedInterest",
-              "Communication::TextMessages::VirtualClassesProspect::LeftVoicemail1",
-              "Communication::TextMessages::VirtualClassesProspect::LeftVoicemail2",
-              "Communication::TextMessages::VirtualClassesProspect::PhoneCallNoAnswer1",
-              "Communication::TextMessages::VirtualClassesProspect::PhoneCallNoAnswer2",
-              "Communication::TextMessages::VirtualClassesProspect::SuggestTimes",
-              "Communication::TextMessages::VirtualClassesProspect::ShareGames",
-              "Communication::TextMessages::VirtualClassesProspect::ShareVideos",
-              "Communication::TextMessages::VirtualClassesProspect::ShareEvents",
-              "Communication::TextMessages::VirtualClassesProspect::CheckingIn1",
-              "Communication::TextMessages::VirtualClassesProspect::CheckingIn2",
-              "Communication::TextMessages::VirtualTrialBooked::EveningBeforeReminder",
-              "Communication::TextMessages::VirtualTrialBooked::OneHourReminder",
+
+
+
+
+
+
+
+
+
+
+
+
+
               "Communication::TextMessages::VirtualTrialFollowUp::Attended",
-              "Communication::TextMessages::VirtualTrialFollowUp::ExpressedInterest1",
-              "Communication::TextMessages::VirtualTrialFollowUp::ExpressedInterest2",
-              "Communication::TextMessages::VirtualTrialFollowUp::LeftVoicemail1",
-              "Communication::TextMessages::VirtualTrialFollowUp::LeftVoicemail2",
-              "Communication::TextMessages::VirtualTrialFollowUp::PhoneCallNoAnswer1",
-              "Communication::TextMessages::VirtualTrialFollowUp::PhoneCallNoAnswer2",
+
+
+
+
+
+
               "Communication::TextMessages::VirtualTrialPeriod::Day5",
               "Communication::TextMessages::VirtualTrialPeriod::Day7",
               "Communication::TextMessages::VirtualTrialPeriod::TrialCreated"
@@ -485,21 +485,21 @@ module Platformer
           "Opportunities::Assignments::Assignment": {
             topic: [
               "Opportunities::Assignments::VirtualClassesLead::PhoneCall",
-              "Opportunities::Assignments::VirtualClassesLead::InboundCommunication",
+
               "Opportunities::Assignments::VirtualClassesProspect::PhoneCall",
-              "Opportunities::Assignments::VirtualClassesProspect::InboundCommunication",
+
               "Opportunities::Assignments::InfluencerProgramLead::PhoneCall",
-              "Opportunities::Assignments::InfluencerProgramLead::InboundCommunication",
-              "Opportunities::Assignments::ConversionStreamFollowUp::PhoneCall",
-              "Opportunities::Assignments::ConversionStreamFollowUp::InboundCommunication",
-              "Opportunities::Assignments::AcquisitionStreamFollowUp::PhoneCall",
-              "Opportunities::Assignments::AcquisitionStreamFollowUp::InboundCommunication",
+
+
+
+
+
               "Opportunities::Assignments::OnDemandStreamFollowUp::PhoneCall",
-              "Opportunities::Assignments::OnDemandStreamFollowUp::InboundCommunication",
+
               "Opportunities::Assignments::CollectLearningStyles::PhoneCall",
-              "Opportunities::Assignments::CollectLearningStyles::InboundCommunication",
+
               "Opportunities::Assignments::MissedTrialSession::PhoneCall",
-              "Opportunities::Assignments::VirtualTrialPeriod::InboundCommunication",
+
               "Opportunities::Assignments::VirtualTrialFollowUp::PhoneCall",
               "Opportunities::Assignments::CanceledMember::AccountReview",
               "Opportunities::Assignments::CanceledMember::PhoneCall",
@@ -510,11 +510,11 @@ module Platformer
               "Opportunities::Assignments::UnhappySurvey::PhoneCall",
               "Opportunities::Assignments::UnusedCredits::PhoneCall",
               "Opportunities::Assignments::GuideCertification::TrainingReview",
-              "Opportunities::Assignments::GuideContractorAgreementSigned::RenewalReview",
-              "Opportunities::Assignments::GuideContractorAgreementSigned::TerminationFollowUp",
+
+
               "Opportunities::Assignments::GuideOnboarding::TrainingReview",
               "Opportunities::Assignments::GuideOnboarding::CheckoutReview",
-              "Opportunities::Assignments::PartnerGroupClassFollowUp::PhoneCall",
+
               "Opportunities::Assignments::UsscVirtualCampFollowUp::PhoneCall"
             ]
           },

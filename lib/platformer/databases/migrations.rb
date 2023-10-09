@@ -3,6 +3,8 @@
 module Platformer
   module Databases
     class Migrations
+      include Logger
+
       def initialize base_path
         @base_path = Pathname.new(base_path)
       end
@@ -10,14 +12,17 @@ module Platformer
       # Generate Migration objects from DynamicMigrations. These migrations would
       # bring all the current databases up to date with the configured structure.
       def generate_migration_files
+        log.info "Generating migration files"
         # load the current database structure into DynamicMigrations
         # this will ensure the generated migrations are based off the
         # most current real structure of the database
+        log.info "Loading current database structure"
         load_database_structure
 
         # process each of the postgres servers
         Databases.servers(:postgres).each do |server|
           server.databases.each do |database|
+            log.info "Processing database: `#{database.name}` (postgres server `#{server.name}`)"
             # generate all the required migrations for this database
             database.structure.differences.to_migrations.each do |migration|
               # create the Platformer migration file from the DynamicMigrations migration object

@@ -8,7 +8,7 @@ module Platformer
         class Enum < Parsers::Models::ForFields
           # for each time the :enum_field DSL was used on this Model
           for_field :enum_field do |name:, values:, schema:, table:, array:, database_default:, description:, allow_null:|
-            enum_type_name = :"#{table.name}__#{name}_values"
+            enum_type_name = :"#{table.name}_#{name.to_s.pluralize}"
 
             # update the dynamic documentation
             add_documentation <<~DESCRIPTION

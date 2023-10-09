@@ -20,6 +20,7 @@ module Platformer
 
     # all mutation class names must end with "Mutation"
     def self.inherited subclass
+      super
       raise InvalidMutationClassName unless subclass.name.end_with? "Mutation"
     end
   end

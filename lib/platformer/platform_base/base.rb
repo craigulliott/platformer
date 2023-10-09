@@ -40,6 +40,11 @@ module Platformer
         raise InvalidModelClassNameError, "#{type} class names must end with '#{type}'"
       end
 
+      # assert the subclass name for STI models is not greater than 63 characters
+      if subclass.sti_class? && subclass.base_name.length > 63
+        raise InvalidModelClassNameError, "#{type} class names for STI models can not exceed 63 characters long. `#{subclass.base_name}` is too long (#{subclass.base_name.length} characters)."
+      end
+
       case subclass.name
       # The base class for all classes of this type within the platform, this should directly extend the internal platformer
       # class of the expected type. For example, `PlatformModel` should directly extend `Platformer::BaseModel`
@@ -172,7 +177,7 @@ module Platformer
       # generate the expected class name based on the from_base and
       # setting the desired string at the end of the class name
       # unfortunately, we can not use a case statement to compare classes
-      class_name = namespace + name.gsub(/#{base_type}\Z/, target_append)
+      class_name = "#{namespace}#{base_name}#{target_append}"
 
       # if the constant exists, then return it, else return nil
       if Object.const_defined? class_name
@@ -180,6 +185,14 @@ module Platformer
       end
     end
 
+    # return the class name, without the type on the end. For example, class
+    # `Users::UserModel` would return `Users::User`
+    def self.base_name
+      name.gsub(/#{base_type}\Z/, "")
+    end
+
+    # returns the type of this class, such as 'Model', 'Policy', 'Callback' etc.
+    # for example, `Users::UserModel` would return `Model`
     def self.base_type
       if self < BaseCallback
         "Callback"

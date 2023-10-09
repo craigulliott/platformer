@@ -15,6 +15,7 @@ module Platformer
 
     # all job class names must end with "Job"
     def self.inherited subclass
+      super
       raise InvalidJobClassName unless subclass.name.end_with? "Job"
     end
   end

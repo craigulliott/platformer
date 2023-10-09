@@ -26,6 +26,7 @@ module Platformer
 
     # all schema class names must end with "Schema"
     def self.inherited subclass
+      super
       raise InvalidSchemaClassName unless subclass.name.end_with? "Schema"
     end
   end

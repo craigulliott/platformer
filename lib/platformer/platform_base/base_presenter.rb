@@ -15,6 +15,7 @@ module Platformer
 
     # all presenter class names must end with "Presenter"
     def self.inherited subclass
+      super
       raise InvalidPresenterClassName unless subclass.name.end_with? "Presenter"
     end
   end

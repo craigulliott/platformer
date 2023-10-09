@@ -76,6 +76,7 @@ module Platformer
 
     # all model class names must end with "Model"
     def self.inherited subclass
+      super
       validate_naming_and_hierachy_conventions subclass, "Model"
     end
 

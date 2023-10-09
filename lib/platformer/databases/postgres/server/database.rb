@@ -28,14 +28,14 @@ module Platformer
             @name = name.to_sym
 
             # add the default database to the structure
-            @server.structure.add_database @name
+            server.structure.add_database name
 
             # add the dyanmic migrations schema to the structure
             structure.add_configured_schema :dynamic_migrations
           end
 
           def structure
-            @server.structure.database @name
+            server.structure.database name
           end
 
           # returns a reference to a shared postgres function, the first time
@@ -140,31 +140,25 @@ module Platformer
             schema_names
           end
 
-          # return the required configuration to create an active record connection with
+          # return the required configuration to create an ActiveRecord connection with
           # this database
           def active_record_configuration
             {
-              host: @server.host,
-              port: @server.port,
-              username: @server.username,
-              password: @server.password,
-              database: @name.to_s,
+              host: server.host,
+              port: server.port,
+              username: server.username,
+              password: server.password,
+              database: name.to_s,
               encoding: "utf8",
               adapter: "postgis",
               schema_search_path: "public,postgis"
             }
           end
 
-          # return the required configuration to create a pg connection with
-          # this database
+          # return the required configuration to create a PG connection (via the PG gem)
+          # to this database
           def pg_configuration
-            {
-              host: @server.host,
-              port: @server.port,
-              username: @server.username,
-              password: @server.password,
-              database: @name
-            }
+            server.pg_configuration.merge(dbname: name)
           end
 
           # Opens a connection to the database, and yields the provided block
@@ -174,14 +168,7 @@ module Platformer
           # things like API request or background jobs.
           def with_connection &block
             # create a temporary connection to the server
-            connection = PG.connect(
-              host: server.host,
-              port: server.port,
-              user: server.username,
-              password: server.password,
-              dbname: @name,
-              sslmode: "prefer"
-            )
+            connection = PG.connect(pg_configuration)
 
             # perform work with the connection
             result = yield connection

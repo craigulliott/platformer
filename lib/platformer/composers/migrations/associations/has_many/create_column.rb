@@ -13,7 +13,7 @@ module Platformer
               foreign_model = model || "#{module_name}::#{name.to_s.classify}Model".constantize
               foreign_table = foreign_model.table_structure
 
-              if foreign_columns.empty?
+              if foreign_columns.empty? && through.nil?
                 # generate the foreign column name based off the name of the foreign table
                 column_name = :"#{local_table.name.to_s.singularize}_id"
 

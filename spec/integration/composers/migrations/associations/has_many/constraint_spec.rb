@@ -23,7 +23,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::HasMany::Constra
     }
 
     context "generates the expected foreign key constraint on the foreign table" do
-      it { expect(subject.has_foreign_key_constraint?(:has_many_from_users)).to be true }
+      it { expect(subject.has_foreign_key_constraint?(:users_has_many_badges)).to be true }
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::HasMany::Constra
     }
 
     it "generates the foreign key constraint on the local table" do
-      expect(subject.has_foreign_key_constraint?(:has_many_from_foos)).to be true
+      expect(subject.has_foreign_key_constraint?(:foos_has_many_bars)).to be true
     end
 
     it "automatically creates a usable index on the foreign table" do

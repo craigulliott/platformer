@@ -23,7 +23,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::BelongsTo::Const
     }
 
     context "generates the expected foreign key constraint on the local table" do
-      it { expect(subject.has_foreign_key_constraint?(:belongs_to_users)).to be true }
+      it { expect(subject.has_foreign_key_constraint?(:belongs_to_user)).to be true }
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::BelongsTo::Const
     }
 
     it "generates the foreign key constraint on the local table" do
-      expect(subject.has_foreign_key_constraint?(:belongs_to_bars)).to be true
+      expect(subject.has_foreign_key_constraint?(:belongs_to_bar)).to be true
     end
 
     it "automatically creates a usable index on the foreign table" do

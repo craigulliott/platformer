@@ -17,6 +17,7 @@ module Platformer
 
     # all callback class names must end with "Callback"
     def self.inherited subclass
+      super
       raise InvalidCallbackClassName unless subclass.name.end_with? "Callback"
     end
   end

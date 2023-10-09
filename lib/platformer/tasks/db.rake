@@ -16,7 +16,20 @@ namespace :db do
           server.database(database_name).with_connection do |connection|
             connection.exec <<~SQL
               CREATE SCHEMA platformer;
+              CREATE SCHEMA IF NOT EXISTS public;
               CREATE SCHEMA dynamic_migrations;
+            SQL
+
+            # todo, remove this (below) once we have finished the codeverse migration
+            # as this will typically be resolved much earlier in the definition
+            # of your platform
+            connection.exec <<~SQL
+              -- postgis
+              CREATE SCHEMA IF NOT EXISTS postgis;
+              GRANT ALL ON SCHEMA postgis TO PUBLIC;
+              CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA postgis;
+              -- citext
+              CREATE EXTENSION IF NOT EXISTS citext SCHEMA public;
             SQL
           end
         end
@@ -29,9 +42,16 @@ namespace :db do
     Platformer::Databases.servers(:postgres).each do |server|
       server.with_connection do |connection|
         server.database_names.each do |database_name|
-          connection.exec <<~SQL
-            DROP DATABASE #{database_name};
+          # does the database exist
+          rows = connection.exec <<~SQL
+            SELECT 1 FROM pg_database WHERE datname = '#{database_name}';
           SQL
+          # drop it
+          if rows.count > 0
+            connection.exec <<~SQL
+              DROP DATABASE #{database_name};
+            SQL
+          end
         end
       end
     end

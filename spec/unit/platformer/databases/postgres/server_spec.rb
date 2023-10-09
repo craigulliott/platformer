@@ -70,6 +70,18 @@ RSpec.describe Platformer::Databases::Postgres::Server do
     end
   end
 
+  describe :pg_configuration do
+    it "returns the expected pg_configuration" do
+      expect(server.pg_configuration).to eql({
+        host: database_configuration["postgres"]["primary"]["host"],
+        port: database_configuration["postgres"]["primary"]["port"],
+        user: database_configuration["postgres"]["primary"]["username"],
+        password: database_configuration["postgres"]["primary"]["password"],
+        sslmode: "prefer"
+      })
+    end
+  end
+
   describe :databases do
     it "returns an empty array because no databases have been configured" do
       expect(server.databases).to eql []

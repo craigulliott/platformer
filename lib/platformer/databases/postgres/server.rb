@@ -24,7 +24,7 @@ module Platformer
           @password = Configuration.value(:postgres, name, :password)
 
           # The DynamicMigrations representation of the server
-          @structure = DynamicMigrations::Postgres::Server.new(@host, @port, @username, @password)
+          @structure = DynamicMigrations::Postgres::Server.new(host, port, username, password)
         end
 
         # Return a specific database on this server, if this database configuration
@@ -51,6 +51,18 @@ module Platformer
           database @default_database
         end
 
+        # return the required configuration to create a PG connection (via the PG gem)
+        # to this database server
+        def pg_configuration
+          {
+            host: host,
+            port: port,
+            user: username,
+            password: password,
+            sslmode: "prefer"
+          }
+        end
+
         # Opens a connection to the database server, and yields the provided block
         # before automatically closing the connection again. This is useful for
         # executing one time queries against the database server, such as maintenance
@@ -60,13 +72,7 @@ module Platformer
         # database object.
         def with_connection &block
           # create a temporary connection to the server
-          connection = PG.connect(
-            host: @host,
-            port: @port,
-            user: @username,
-            password: @password,
-            sslmode: "prefer"
-          )
+          connection = PG.connect(pg_configuration)
 
           # perform work with the connection
           result = yield connection

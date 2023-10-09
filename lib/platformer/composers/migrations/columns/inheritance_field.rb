@@ -16,11 +16,11 @@ module Platformer
             # default column name is :type, but it can be overridden by calling
             # the `inheritance_field` DSL on the model definition class
             sti_column_name = :type
-            for_dsl :inheritance_field, first_use_only: true do |name:|
+            for_dsl :inheritance_field, first_use_only: true, on_ancestor_class: true do |name:|
               sti_column_name = name
             end
 
-            enum_name = :"#{table.name}__#{sti_column_name}_sti_values"
+            enum_name = :"#{table.name}_#{sti_column_name.to_s.pluralize}"
 
             enum_value = model_definition_class.name.gsub(/Model\z/, "")
 

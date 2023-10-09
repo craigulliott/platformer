@@ -116,14 +116,18 @@ module Platformer
 
   # compose and initialize the platform
   def self.initialize!
+    log.info "Connecting to default postgres database"
+
     # Connect to the default postgres database
     ApplicationRecord.establish_connection(Platformer::Databases.server(:postgres, :primary).default_database.active_record_configuration)
 
     # run all the composers
+    log.info "Running all composers"
     compose!
 
     # initialize the GraphQL server last, because it requires all the queries, mutations
     # and subscriptions to been composed first
+    log.info "Initializing GraphQL server"
     Schema.initialize!
   end
 end

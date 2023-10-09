@@ -8,7 +8,16 @@ module Platformer
     # Crucially, classes returned by this parser are guaranteed to have a corresponding table
     # object, which reflects the structure of the database table supporting the model.
     class ClassParser < DSLCompose::Parser
+      include Logger
+
       class ArgumentNotAvailableError < StandardError
+      end
+
+      def self.inherited subclass
+        super
+        if subclass.name.start_with?("Platformer::Composers::")
+          log.info "Processing Composer: #{subclass.name.gsub(/\APlatformer::Composers::/, "").underscore}"
+        end
       end
 
       # allows child parsers (parsers which extend this class) to providing argument names and blocks
@@ -114,7 +123,7 @@ module Platformer
           # classes such as `Communication::TextMessages::WelcomeModel`
           if only_sti_classes
             next unless child_class.name.split("::").count == 3
-          elsif ! include_sti_classes
+          elsif !include_sti_classes
             next if child_class.name.split("::").count == 3
           end
 

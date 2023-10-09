@@ -12,8 +12,6 @@ module Platformer
               Add a belongs to association between this model and #{foreign_model_class_name}.
             DESCRIPTION
 
-            warn "add a check that there are the same number of local_columns and foreign_columns"
-            warn "no test case for local and foreign column names being specified"
             if local_columns.any? || foreign_columns.any?
               if through
                 raise "not currently supported"

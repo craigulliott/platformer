@@ -15,6 +15,7 @@ module Platformer
 
     # all service class names must end with "Service"
     def self.inherited subclass
+      super
       raise InvalidServiceClassName unless subclass.name.end_with? "Service"
     end
   end

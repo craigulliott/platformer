@@ -6,6 +6,8 @@ module Platformer
   module Databases
     class Migrations
       class MigrationFile
+        include Logger
+
         class MissingMigrationContentsError < StandardError
         end
 
@@ -78,6 +80,7 @@ module Platformer
               end
             RUBY
           end
+          log.info "  Generated Migration: #{full_path}"
         end
 
         # return the contents of the file, raises an error

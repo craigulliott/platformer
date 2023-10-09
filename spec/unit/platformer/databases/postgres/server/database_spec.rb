@@ -53,9 +53,10 @@ RSpec.describe Platformer::Databases::Postgres::Server::Database do
       expect(database.pg_configuration).to eql({
         host: database_configuration["postgres"]["primary"]["host"],
         port: database_configuration["postgres"]["primary"]["port"],
-        username: database_configuration["postgres"]["primary"]["username"],
+        user: database_configuration["postgres"]["primary"]["username"],
         password: database_configuration["postgres"]["primary"]["password"],
-        database: :foo_database
+        dbname: :foo_database,
+        sslmode: "prefer"
       })
     end
   end
