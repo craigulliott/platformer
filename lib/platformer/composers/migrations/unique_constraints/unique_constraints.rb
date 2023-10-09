@@ -35,8 +35,15 @@ module Platformer
               end
             end
 
-            name = "#{all_column_names.join("_")}_uniq"
-            database.add_unique_constraint name, table, all_column_names, where: where, deferrable: deferrable, initially_deferred: initially_deferred, description: description
+            column_names_shortened = all_column_names.map { |c| Databases.abbreviate_table_name c }.join("_")
+
+            unique_constraint_name = "#{table.name}_#{column_names_shortened}_uniq"
+            if unique_constraint_name.length > 63
+              short_name = Databases.abbreviate_table_name table.name
+              unique_constraint_name = :"#{short_name}_#{column_names_shortened}_uniq"
+            end
+
+            database.add_unique_constraint unique_constraint_name, table, all_column_names, where: where, deferrable: deferrable, initially_deferred: initially_deferred, description: description
           end
         end
       end

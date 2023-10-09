@@ -40,7 +40,11 @@ require "byebug"
 # flexible logging library based on design of log4j
 require "logging"
 
+# library for defining using and parsing DSL's
 require "dsl_compose"
+
+# library for defining database structure via configuration, comparing it to the
+# actual database structure and generating migrations to reconsile any differences
 require "dynamic_migrations"
 
 # require "bcrypt"

@@ -100,10 +100,10 @@ module Platformer
         # will be appended.
         def generate_name type, server_name, database_name, schema_name, name
           i = nil
-          while migration_name_exists? type, server_name, database_name, schema_name, "#{name}#{i}".to_sym
+          while migration_name_exists? type, server_name, database_name, schema_name, :"#{name}#{i}"
             i = i.nil? ? 1 : i + 1
           end
-          "#{name}#{i}".to_sym
+          :"#{name}#{i}"
         end
 
         # add the migration to this objects internal representation of current migrations

@@ -68,6 +68,48 @@ module Platformer
 
                 foreign_key_name = :"#{local_table_name}_has_many_#{name}"
 
+                if foreign_key_name.length > 63
+                  short_name = Databases.abbreviate_table_name name
+                  foreign_key_name = :"#{local_table_name}_has_many_#{short_name}"
+
+                  # if it is still too long, then shorten the other table  name too
+                  if foreign_key_name.length > 63
+                    short_table_name = Databases.abbreviate_table_name local_table_name
+                    foreign_key_name = :"#{short_table_name}_has_many_#{short_name}"
+                  end
+                end
+
+                # is there a primary key or unique constraint on the foreign columns to satisfy
+                # the requirements of the foreign key
+                satisfied_by_primary_key = local_columns.count == 1 && local_columns.first.name == :id && local_table.has_primary_key?
+                satisfied_by_existing_unique_constraint = false
+                local_table.unique_constraints.each do |unique_constraint|
+                  # if the column names are exactly the same (same names, same count and same order)
+                  if unique_constraint.column_names == local_columns
+                    satisfied_by_existing_unique_constraint = true
+                    break
+                  end
+                end
+
+                # is there is no primary key or unique constraint to satisfy the requirements of the
+                # foreign key constraint then we create a unique constraint here
+                unless satisfied_by_primary_key || satisfied_by_existing_unique_constraint
+                  unique_constraint_name = :"#{local_table_name}_#{foreign_key_name}"
+                  if unique_constraint_name.length > 63
+                    short_name = Databases.abbreviate_table_name local_table_name
+                    unique_constraint_name = :"#{short_name}_#{foreign_key_name}"
+                  end
+
+                  add_documentation <<~DESCRIPTION
+                    Automatically creating a unique constraint named `#{unique_constraint_name}` for foreign
+                    key `#{foreign_key_name}` on table `#{foreign_table.schema.name}'.'#{local_table_name}`.
+                  DESCRIPTION
+
+                  local_table.add_unique_constraint unique_constraint_name, local_columns, deferrable: deferrable, initially_deferred: initially_deferred, description: <<~DESCRIPTION
+                    Automatically created unique constraint to satisfy foreign key `#{unique_constraint_name}`
+                  DESCRIPTION
+                end
+
                 options = {
                   deferrable: deferrable,
                   initially_deferred: initially_deferred,

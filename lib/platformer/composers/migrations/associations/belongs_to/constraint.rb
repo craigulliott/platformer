@@ -61,13 +61,48 @@ module Platformer
                 foreign_table_name = foreign_table.name
                 foreign_columns = foreign_cols.map(&:name)
 
+                foreign_key_name = :"belongs_to_#{name}"
+                if foreign_key_name.length > 63
+                  short_name = Databases.abbreviate_table_name name
+                  foreign_key_name = :"belongs_to_#{short_name}"
+                end
+
+                # is there a primary key or unique constraint on the foreign columns to satisfy
+                # the requirements of the foreign key
+                satisfied_by_primary_key = foreign_columns.count == 1 && foreign_columns.first.name == :id && foreign_table.has_primary_key?
+                satisfied_by_existing_unique_constraint = false
+                foreign_table.unique_constraints.each do |unique_constraint|
+                  # if the column names are exactly the same (same names, same count and same order)
+                  if unique_constraint.column_names == foreign_columns
+                    satisfied_by_existing_unique_constraint = true
+                    break
+                  end
+                end
+
+                # is there is no primary key or unique constraint to satisfy the requirements of the
+                # foreign key then we create a unique constraint here
+                unless satisfied_by_primary_key || satisfied_by_existing_unique_constraint
+                  unique_constraint_name = :"#{foreign_table_name}_#{foreign_key_name}"
+                  if unique_constraint_name.length > 63
+                    short_name = Databases.abbreviate_table_name foreign_table_name
+                    unique_constraint_name = :"#{short_name}_#{foreign_key_name}"
+                  end
+
+                  add_documentation <<~DESCRIPTION
+                    Automatically creating a unique constraint named `#{unique_constraint_name}` for foreign
+                    key `#{foreign_key_name}` on table `#{foreign_table.schema.name}'.'#{foreign_table_name}`.
+                  DESCRIPTION
+
+                  foreign_table.add_unique_constraint unique_constraint_name, foreign_columns, deferrable: deferrable, initially_deferred: initially_deferred, description: <<~DESCRIPTION
+                    Automatically created unique constraint to satisfy foreign key `#{unique_constraint_name}`
+                  DESCRIPTION
+                end
+
                 on_delete_action = on_delete || :no_action
                 on_update_action = on_update || :no_action
 
                 on_delete_action_name = on_delete_action.to_s.tr("_", " ").upcase
                 on_update_action_name = on_update_action.to_s.tr("_", " ").upcase
-
-                foreign_key_name = :"belongs_to_#{name}"
 
                 options = {
                   deferrable: deferrable,

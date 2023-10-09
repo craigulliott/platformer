@@ -31,6 +31,8 @@ require_relative "migrations/associations/has_many/create_column"
 # now that all the columns have been created, run the rest of the composers
 Platformer.recursive_require_relative "migrations/primary_key", __dir__
 Platformer.recursive_require_relative "migrations/indexes", __dir__
+# creating the constraints for the associations last becuause they depend on
+# columns, primary_keys and unique constraints to have all been created
 Platformer.recursive_require_relative "migrations/associations", __dir__
 
 # the rest can be required in any order (and it's safe to require files twice)

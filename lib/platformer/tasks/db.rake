@@ -19,7 +19,6 @@ namespace :db do
               CREATE SCHEMA IF NOT EXISTS public;
               CREATE SCHEMA dynamic_migrations;
             SQL
-
             # todo, remove this (below) once we have finished the codeverse migration
             # as this will typically be resolved much earlier in the definition
             # of your platform

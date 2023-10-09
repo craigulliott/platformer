@@ -68,6 +68,16 @@ module Platformer
                 on_update_action_name = on_update_action.to_s.tr("_", " ").upcase
 
                 foreign_key_name = :"#{local_table_name}_has_one_#{name}"
+                if foreign_key_name.length > 63
+                  short_name = Databases.abbreviate_table_name name
+                  foreign_key_name = :"#{local_table_name}_has_one_#{short_name}"
+
+                  # if it is still too long, then shorten the other table  name too
+                  if foreign_key_name.length > 63
+                    short_table_name = Databases.abbreviate_table_name local_table_name
+                    foreign_key_name = :"#{short_table_name}_has_one_#{short_name}"
+                  end
+                end
 
                 options = {
                   deferrable: deferrable,

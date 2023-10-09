@@ -30,6 +30,9 @@ module Platformer
             # add the default database to the structure
             server.structure.add_database name
 
+            # ensure we have a public schema
+            structure.add_configured_schema :public
+
             # add the dyanmic migrations schema to the structure
             structure.add_configured_schema :dynamic_migrations
           end

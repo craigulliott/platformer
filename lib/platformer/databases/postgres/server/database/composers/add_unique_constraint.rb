@@ -19,11 +19,17 @@ module Platformer
                 # if a where was provided, then we must use a unique index rather than a unique constraint
                 if where
                   # add the unique index to the table
-                  unique_index_name = "#{table.name}_#{name}".to_sym
+                  unique_index_name = :"#{table.name}_#{name}"
+                  if unique_index_name.length > 63
+                    short_name = Databases.abbreviate_table_name table.name
+                    unique_index_name = :"#{short_name}_#{name}"
+                  end
+
                   table.add_index unique_index_name, column_names, unique: true, where: where, description: description
                 else
                   # add the unique constraint to the table
                   unique_constraint_name = name.to_sym
+
                   table.add_unique_constraint unique_constraint_name, column_names, deferrable: deferrable, initially_deferred: initially_deferred, description: description
                 end
               end

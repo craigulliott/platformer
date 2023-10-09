@@ -62,7 +62,12 @@ module Platformer
           DESCRIPTION
 
           # add the unique constraint to the table
-          unique_constraint_name = :positionable_uniq
+          unique_constraint_name = :"#{table.name}_pos_uniq"
+          if unique_constraint_name.length > 63
+            short_name = Databases.abbreviate_table_name table.name
+            unique_constraint_name = :"#{short_name}_pos_uniq"
+          end
+
           all_column_names = scope + [:position]
           table.add_unique_constraint unique_constraint_name, all_column_names, deferrable: true, initially_deferred: true, description: description
         end

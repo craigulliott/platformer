@@ -60,7 +60,7 @@ GEM
     dnsruby (1.70.0)
       simpleidn (~> 0.2.1)
     dsl_compose (2.15.5)
-    dynamic_migrations (3.8.6)
+    dynamic_migrations (3.8.7)
       logging (~> 2.3)
       pg (~> 1.5)
     em-websocket (0.5.3)
