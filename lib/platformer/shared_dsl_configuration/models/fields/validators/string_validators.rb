@@ -23,9 +23,6 @@ module Platformer
                     DESCRIPTION
                   end
 
-                  # add `deferrable: boolean` and `initially_deferred: boolean` options
-                  import_shared :deferrable_constraint
-
                   optional :message, :string do
                     description <<~DESCRIPTION
                       The message which will be raised if the validation fails.
@@ -56,9 +53,6 @@ module Platformer
                       a number of characters less than or equal to this value
                     DESCRIPTION
                   end
-
-                  # add `deferrable: boolean` and `initially_deferred: boolean` options
-                  import_shared :deferrable_constraint
 
                   optional :message, :string do
                     description <<~DESCRIPTION
@@ -91,9 +85,6 @@ module Platformer
                     DESCRIPTION
                   end
 
-                  # add `deferrable: boolean` and `initially_deferred: boolean` options
-                  import_shared :deferrable_constraint
-
                   optional :message, :string do
                     description <<~DESCRIPTION
                       The message which will be raised if the validation fails.
@@ -124,9 +115,6 @@ module Platformer
                       must match successfully against this regex.
                     DESCRIPTION
                   end
-
-                  # add `deferrable: boolean` and `initially_deferred: boolean` options
-                  import_shared :deferrable_constraint
 
                   optional :message, :string do
                     description <<~DESCRIPTION

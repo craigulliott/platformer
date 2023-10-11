@@ -58,6 +58,15 @@ namespace :db do
 
   desc <<~DESC.strip
     Compare the structure of each configured database to the actual
+    database structure and output the differences (JSON formatted)
+  DESC
+  task differences: :environment do
+    differences = Platformer::Databases::Migrations.new(Platformer.root("db/migrations")).differences
+    puts JSON.pretty_generate(differences)
+  end
+
+  desc <<~DESC.strip
+    Compare the structure of each configured database to the actual
     database structure and dynamically generate migration files to
     resolve any differences
   DESC

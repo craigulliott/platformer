@@ -66,16 +66,16 @@ module Platformer
                 on_delete_action_name = on_delete_action.to_s.tr("_", " ").upcase
                 on_update_action_name = on_update_action.to_s.tr("_", " ").upcase
 
-                foreign_key_name = :"#{local_table_name}_has_many_#{name}"
+                foreign_key_name = :"#{local_table_name}_has_many_#{name}_fk"
 
                 if foreign_key_name.length > 63
                   short_name = Databases.abbreviate_table_name name
-                  foreign_key_name = :"#{local_table_name}_has_many_#{short_name}"
+                  foreign_key_name = :"#{local_table_name}_has_many_#{short_name}_fk"
 
                   # if it is still too long, then shorten the other table  name too
                   if foreign_key_name.length > 63
                     short_table_name = Databases.abbreviate_table_name local_table_name
-                    foreign_key_name = :"#{short_table_name}_has_many_#{short_name}"
+                    foreign_key_name = :"#{short_table_name}_has_many_#{short_name}_fk"
                   end
                 end
 
@@ -94,19 +94,15 @@ module Platformer
                 # is there is no primary key or unique constraint to satisfy the requirements of the
                 # foreign key constraint then we create a unique constraint here
                 unless satisfied_by_primary_key || satisfied_by_existing_unique_constraint
-                  unique_constraint_name = :"#{local_table_name}_#{foreign_key_name}"
-                  if unique_constraint_name.length > 63
-                    short_name = Databases.abbreviate_table_name local_table_name
-                    unique_constraint_name = :"#{short_name}_#{foreign_key_name}"
-                  end
 
                   add_documentation <<~DESCRIPTION
-                    Automatically creating a unique constraint named `#{unique_constraint_name}` for foreign
-                    key `#{foreign_key_name}` on table `#{foreign_table.schema.name}'.'#{local_table_name}`.
+                    Automatically creating a unique constraint named `#{foreign_key_name}` for foreign
+                    key with the same name on table `#{foreign_table.schema.name}'.'#{local_table_name}`.
                   DESCRIPTION
 
+                  unique_constraint_name = foreign_key_name.to_s.gsub(/_fk\z/, "_uq").to_sym
                   local_table.add_unique_constraint unique_constraint_name, local_columns, deferrable: deferrable, initially_deferred: initially_deferred, description: <<~DESCRIPTION
-                    Automatically created unique constraint to satisfy foreign key `#{unique_constraint_name}`
+                    Automatically created unique constraint to satisfy foreign key `#{foreign_key_name}`
                   DESCRIPTION
                 end
 

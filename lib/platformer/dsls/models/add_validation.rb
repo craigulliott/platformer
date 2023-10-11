@@ -22,9 +22,6 @@ module Platformer
               DESCRIPTION
             end
 
-            # add `deferrable: boolean` and `initially_deferred: boolean` options
-            import_shared :deferrable_constraint
-
             optional :description, :string do
               description <<~DESCRIPTION
                 A description which explains the reason for this validation

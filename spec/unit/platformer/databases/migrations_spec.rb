@@ -33,7 +33,7 @@ RSpec.describe Platformer::Databases::Migrations do
   describe :generate_migration_files do
     describe "for a configured database with only a public schema" do
       let(:database) { Platformer::Databases.server(:postgres, :primary).default_database }
-      let(:schema) { database.structure.add_configured_schema :public }
+      let(:schema) { database.structure.configured_schema :public }
 
       before(:each) do
         schema

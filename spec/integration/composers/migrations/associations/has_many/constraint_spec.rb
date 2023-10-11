@@ -23,7 +23,7 @@ RSpec.describe Platformer::Composers::Migrations::Associations::HasMany::Constra
     }
 
     context "generates the expected foreign key constraint on the foreign table" do
-      it { expect(subject.has_foreign_key_constraint?(:users_has_many_badges)).to be true }
+      it { expect(subject.has_foreign_key_constraint?(:users_has_many_badges_fk)).to be true }
     end
   end
 
@@ -44,16 +44,28 @@ RSpec.describe Platformer::Composers::Migrations::Associations::HasMany::Constra
       end
     end
 
-    subject {
-      Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:bars)
-    }
+    describe "the local table" do
+      subject {
+        Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:bars)
+      }
 
-    it "generates the foreign key constraint on the local table" do
-      expect(subject.has_foreign_key_constraint?(:foos_has_many_bars)).to be true
+      it "generates the foreign key constraint on the local table" do
+        expect(subject.has_foreign_key_constraint?(:foos_has_many_bars_fk)).to be true
+      end
     end
 
-    it "automatically creates a usable index on the foreign table" do
-      raise "todo"
+    describe "the foreign table" do
+      subject {
+        Platformer::Databases.server(:postgres, :primary).default_database.structure.configured_schema(:public).table(:foos)
+      }
+
+      it "automatically creates a unique constraint (usable index) on the foreign table" do
+        expect(subject.has_unique_constraint?(:foos_has_many_bars_uq)).to be true
+      end
+
+      it "automatically creates a unique constraint with the expected columns on the foreign table" do
+        expect(subject.unique_constraint(:foos_has_many_bars_uq).column_names).to eql [:a_id, :b_id]
+      end
     end
   end
 end

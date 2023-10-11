@@ -32,23 +32,25 @@ RSpec.describe Platformer::Composers::Migrations::UniqueConstraints do
     }
 
     context "creates the expected unique constraint for the DynamicMigrations table" do
-      it { expect(subject.unique_constraint(:my_integer_uniq).column_names).to eql [:my_integer] }
+      it { expect(subject.unique_constraint(:users_my_integer_uq).column_names).to eql [:my_integer] }
 
-      it { expect(subject.unique_constraint(:my_float_my_integer_uniq).deferrable).to be false }
+      it { expect(subject.unique_constraint(:users_my_float_my_integer_uq).deferrable).to be false }
 
-      it { expect(subject.unique_constraint(:my_float_my_integer_uniq).column_names).to eql [:my_float, :my_integer] }
+      it { expect(subject.unique_constraint(:users_my_float_my_integer_uq).column_names).to eql [:my_float, :my_integer] }
 
-      it { expect(subject.unique_constraint(:my_numeric_my_float_my_integer_uniq).column_names).to eql [:my_numeric, :my_float, :my_integer] }
+      it { expect(subject.unique_constraint(:users_my_numeric_my_float_my_integer_uq).column_names).to eql [:my_numeric, :my_float, :my_integer] }
 
-      it { expect(subject.unique_constraint(:my_numeric_my_float_my_integer_uniq).deferrable).to be true }
+      it { expect(subject.unique_constraint(:users_my_numeric_my_float_my_integer_uq).deferrable).to be true }
 
-      it { expect(subject.unique_constraint(:my_double_uniq).column_names).to eql [:my_double] }
+      it { expect(subject.unique_constraint(:users_my_double_uq).column_names).to eql [:my_double] }
 
-      it { expect(subject.unique_constraint(:my_double_uniq).description).to eq "Test description" }
+      it { expect(subject.unique_constraint(:users_my_double_uq).description).to eq "Test description" }
 
-      it { expect(subject.index(:users_my_text_my_float_my_integer_uniq).column_names).to eql [:my_text, :my_float, :my_integer] }
+      it { expect(subject.index(:users_my_text_my_float_my_integer_uq).column_names).to eql [:my_text, :my_float, :my_integer] }
 
-      it { expect(subject.index(:users_my_text_my_float_my_integer_uniq).where).to eq "my_integer > 0" }
+      it {
+        expect(subject.index(:users_my_text_my_float_my_integer_uq).where).to eq "my_integer > 0"
+      }
     end
   end
 end

@@ -21,9 +21,6 @@ module Platformer
                     DESCRIPTION
                   end
 
-                  # add `deferrable: boolean` and `initially_deferred: boolean` options
-                  import_shared :deferrable_constraint
-
                   optional :message, :string do
                     description <<~DESCRIPTION
                       The message which will be raised if the validation fails.
@@ -54,9 +51,6 @@ module Platformer
                     DESCRIPTION
                   end
 
-                  # add `deferrable: boolean` and `initially_deferred: boolean` options
-                  import_shared :deferrable_constraint
-
                   optional :message, :string do
                     description <<~DESCRIPTION
                       The message which will be raised if the validation fails.
@@ -85,9 +79,6 @@ module Platformer
                       The value to compare against.
                     DESCRIPTION
                   end
-
-                  # add `deferrable: boolean` and `initially_deferred: boolean` options
-                  import_shared :deferrable_constraint
 
                   optional :message, :string do
                     description <<~DESCRIPTION

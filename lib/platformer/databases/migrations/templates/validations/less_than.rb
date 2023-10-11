@@ -33,7 +33,6 @@ module Platformer
 
             warn "not tested"
             def fragment_arguments
-              assert_not_deferred!
               assert_column_count! 1
 
               column_name = first_column.name

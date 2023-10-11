@@ -53,7 +53,7 @@ module Platformer
           check_clause = <<~SQL
             #{column.name} > 0
           SQL
-          table.add_validation validation_name, [column.name], check_clause, deferrable: false, initially_deferred: false, description: description
+          table.add_validation validation_name, [column.name], check_clause, description: description
 
           # add a deferrable unique constraint for the position of this model and its provided scope
           add_documentation <<~DESCRIPTION
@@ -62,10 +62,10 @@ module Platformer
           DESCRIPTION
 
           # add the unique constraint to the table
-          unique_constraint_name = :"#{table.name}_pos_uniq"
+          unique_constraint_name = :"#{table.name}_pos_uq"
           if unique_constraint_name.length > 63
             short_name = Databases.abbreviate_table_name table.name
-            unique_constraint_name = :"#{short_name}_pos_uniq"
+            unique_constraint_name = :"#{short_name}_pos_uq"
           end
 
           all_column_names = scope + [:position]

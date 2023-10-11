@@ -40,7 +40,7 @@ module Platformer
             (#{boolean_column.name} IS NULL AND #{timestamp_column.name} IS NOT NULL)
             OR (#{boolean_column.name} IS TRUE AND #{timestamp_column.name} IS NULL)
           SQL
-          table.add_validation validation_name, [boolean_column.name, timestamp_column.name], check_clause, deferrable: false, initially_deferred: false, description: description
+          table.add_validation validation_name, [boolean_column.name, timestamp_column.name], check_clause, description: description
         end
       end
     end

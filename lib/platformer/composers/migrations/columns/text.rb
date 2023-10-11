@@ -27,7 +27,7 @@ module Platformer
 
             # if an exact length is set, then use the equivilent varchar column
             for_method :validate_length_is do |value:|
-              base_type = :"char(#{value})"
+              base_type = :"character(#{value})"
             end
 
             data_type = array ? :"#{base_type}[]" : base_type

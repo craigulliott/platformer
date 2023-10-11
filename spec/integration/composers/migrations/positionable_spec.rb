@@ -23,7 +23,7 @@ RSpec.describe Platformer::Composers::Migrations::Positionable do
     end
 
     it "creates the expected unique constraint in DynamicMigrations" do
-      expect(subject.unique_constraint(:positionable_uniq).column_names).to eql [:user_id, :position]
+      expect(subject.unique_constraint(:photos_pos_uq).column_names).to eql [:user_id, :position]
     end
   end
 end

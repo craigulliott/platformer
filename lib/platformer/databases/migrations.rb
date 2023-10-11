@@ -37,6 +37,24 @@ module Platformer
         end
       end
 
+      warn "not tested"
+      def differences
+        load_database_structure
+
+        results = {
+          servers: {}
+        }
+        Databases.servers(:postgres).each do |server|
+          results[:servers][server.name] = {
+            databases: {}
+          }
+          server.databases.each do |database|
+            results[:servers][server.name][:databases][database.name] = database.structure.differences.to_h
+          end
+        end
+        results
+      end
+
       private
 
       def current

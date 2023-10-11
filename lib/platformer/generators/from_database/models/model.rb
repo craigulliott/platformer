@@ -403,14 +403,14 @@ module Platformer
             end
 
             # if there is a description, then add it to the block
-            if column.has_description?
-              block_lines << <<~RUBY.strip
+            block_lines << if column.has_description?
+              <<~RUBY.strip
                 description <<~DESCRIPTION
                   #{word_wrap column.description, line_length: 80, indent: true}
                 DESCRIPTION
               RUBY
             else
-              block_lines << <<~RUBY.strip
+              <<~RUBY.strip
                 description <<~DESCRIPTION
                   # TODO - add a description for this field
                 DESCRIPTION
@@ -447,14 +447,12 @@ module Platformer
               end
 
               syntax = "add_validation :#{name}"
-              syntax << ", deferrable: true" if validation.deferrable
-              syntax << ", initially_deferred: true" if validation.initially_deferred
 
-              new_check_clause = validation.check_clause
+              new_check_clause = validation.check_clause.dup
               # remove casts, they will be added automatically for us
               unless new_check_clause.match(/ALL/m) || new_check_clause.match(/ANY/m)
-                new_check_clause.gsub!(/::[a-z_]+\.[a-z_]+/, '')
-                new_check_clause.gsub!(/::[a-z]+/, '')
+                new_check_clause.gsub!(/::[a-z_]+\.[a-z_]+/, "")
+                new_check_clause.gsub!(/::[a-z]+/, "")
               end
 
               # fix the regex validations
@@ -467,7 +465,7 @@ module Platformer
 
               add_section syntax + ", " + <<~RUBY.strip
                 <<~SQL
-                  #{validation.check_clause}
+                  #{new_check_clause}
                 SQL
               RUBY
             end

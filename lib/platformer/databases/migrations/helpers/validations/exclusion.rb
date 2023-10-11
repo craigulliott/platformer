@@ -9,7 +9,7 @@ module Platformer
             def validate_not_in table_name, column_name, values, name: nil, description: nil
               final_name = name || :"#{column_name}_not_in"
               final_description = description || Templates::Validations::Exclusion::DEFAULT_DESCRIPTION
-              add_validation table_name, name: final_name, initially_deferred: false, deferrable: false, comment: final_description do
+              add_validation table_name, name: final_name, comment: final_description do
                 "#{column_name} NOT IN ('#{values.join("','")}')"
               end
             end

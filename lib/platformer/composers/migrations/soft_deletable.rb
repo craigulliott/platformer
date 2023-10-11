@@ -30,7 +30,7 @@ module Platformer
             (undeleted IS NULL AND deleted_at IS NOT NULL)
             OR (undeleted IS TRUE AND deleted_at IS NULL)
           SQL
-          table.add_validation validation_name, [:undeleted, :deleted_at], check_clause, deferrable: false, initially_deferred: false
+          table.add_validation validation_name, [:undeleted, :deleted_at], check_clause
         end
       end
     end

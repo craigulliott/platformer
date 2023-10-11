@@ -98,7 +98,7 @@ RSpec.describe Platformer::Composers::Migrations::Columns::Text do
     }
 
     context "creates a varchar column" do
-      it { expect(subject.column(:my_text).data_type).to be :"char(5)" }
+      it { expect(subject.column(:my_text).data_type).to be :"character(5)" }
     end
   end
 
