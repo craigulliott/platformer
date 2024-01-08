@@ -37,7 +37,7 @@ module Platformer
         end
       end
 
-      warn "not tested"
+      # todo: not tested
       def differences
         load_database_structure
 

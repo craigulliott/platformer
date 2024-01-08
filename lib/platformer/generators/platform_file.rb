@@ -1,6 +1,6 @@
 module Platformer
   module Generators
-    warn "not tested"
+    # todo: not tested
     class PlatformFile
       class InvalidBaseTypeError < StandardError
       end
@@ -20,7 +20,7 @@ module Platformer
 
         @base_type = base_type
         @schema_name = schema_name
-        @table_name = table_name
+        @table_name = (table_name&.to_sym == :media) ? :medias : table_name
         @sti_model_name = sti_model_name
 
         # to hold the contents of the file as we progressively build it

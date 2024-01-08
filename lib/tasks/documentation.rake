@@ -25,5 +25,6 @@ namespace :documentation do
     Platformer::Documentation.new(:callbacks, Platformer::BaseCallback, base_path, nav_order += 1).generate
     Platformer::Documentation.new(:jobs, Platformer::BaseJob, base_path, nav_order += 1).generate
     Platformer::Documentation.new(:services, Platformer::BaseService, base_path, nav_order += 1).generate
+    Platformer::Documentation.new(:apis, Platformer::BaseAPI, base_path, nav_order += 1).generate
   end
 end

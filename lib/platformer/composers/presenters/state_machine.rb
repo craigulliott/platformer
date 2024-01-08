@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module Presenters
       class StateMachine < Parsers::Models
-        warn "not tested"
+        # todo: not tested
 
         for_dsl :state_machine do |name:, presenter_class:|
           column_name = name || :state
@@ -13,7 +13,7 @@ module Platformer
 
           for_method :state do |name:, description:|
             state_name = name
-            presenter_class.add_presenter :"#{state_name}?" do
+            presenter_class.add_presenter :"#{state_name}?" do |model, presenter|
               public_send(column_name) == state_name
             end
           end

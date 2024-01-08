@@ -6,7 +6,6 @@ module Platformer
       class Generate
         include Logger
 
-        warn "not tested"
         def initialize schema, overwrite
           @schema = schema
           @overwrite = overwrite

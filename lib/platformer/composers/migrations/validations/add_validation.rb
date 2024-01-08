@@ -5,7 +5,7 @@ module Platformer
     module Migrations
       module Validations
         # install all the custom validations for this model
-        warn "not tested"
+        # todo: not tested
         class AddValidation < Parsers::Models
           for_dsl :add_validation do |name:, check_clause:, table:, description:|
             add_documentation <<~DESCRIPTION

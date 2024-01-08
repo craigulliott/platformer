@@ -43,7 +43,7 @@ module Platformer
 
           # returns a reference to a shared postgres function, the first time
           # the function is referenced it will be created
-          warn "not tested"
+          # todo: not tested
           def find_or_create_shared_function function_class
             unless function_class < Functions::Function
               raise UnexpectedFunctionError, function_class
@@ -62,7 +62,7 @@ module Platformer
 
           # returns the name to a shared enum type (such as currency or language)
           # which is stored in the platformer schema
-          warn "not tested"
+          # todo: not tested
           def find_or_create_shared_enum constant_class
             unless constant_class < Constants::Constant
               raise UnexpectedConstantError, constant_class
@@ -81,19 +81,19 @@ module Platformer
           end
 
           # ensure we have a provided extensions installed into the provided database
-          warn "not tested"
+          # todo: not tested
           def ensure_postgres_extension extension_name
             unless structure.has_configured_extension? extension_name
               structure.add_configured_extension extension_name
             end
           end
 
-          warn "not tested"
+          # todo: not tested
           def platformer_schema
             @platformer_schema ||= get_platformer_schema_structure
           end
 
-          warn "not tested"
+          # todo: not tested
           def exists?
             server.with_connection do |connection|
               rows = connection.exec <<~SQL
@@ -103,7 +103,7 @@ module Platformer
             end
           end
 
-          warn "not tested"
+          # todo: not tested
           def create!
             server.with_connection do |connection|
               connection.exec <<~SQL
@@ -112,7 +112,7 @@ module Platformer
             end
           end
 
-          warn "not tested"
+          # todo: not tested
           def schema_names skip_public: false, skip_pg_schemas: true, skip_information_schema: true
             # create a temporary database connection and fetch the list of schema names
             rows = with_connection do |connection|

@@ -1,4 +1,3 @@
-require_relative "routes/explorer"
-require_relative "routes/graphql"
-require_relative "routes/health_check"
-require_relative "server"
+Platformer.recursive_require_relative "routes", __dir__
+
+require_relative "root"

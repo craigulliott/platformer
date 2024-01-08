@@ -2,7 +2,6 @@ module Platformer
   module Generators
     module FromDatabase
       module Models
-        warn "not tested"
         class Model < PlatformFile
           class UnexpectedColumnTypeError < StandardError
           end

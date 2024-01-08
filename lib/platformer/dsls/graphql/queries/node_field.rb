@@ -17,21 +17,9 @@ module Platformer
                 to the other model through that join model.
               DESCRIPTION
 
-              requires :foreign_model, :class do
-                validate_end_with :Model
-
+              requires :name, :symbol do
                 description <<~DESCRIPTION
-                  The model which is associated to this model via the `has_one` or `belongs_to`
-                  association.
-                DESCRIPTION
-              end
-
-              optional :association_name, :symbol do
-                import_shared :snake_case_name_validator
-
-                description <<~DESCRIPTION
-                  If a custom name was used when creating the association between this model
-                  and the foreign model, then this name should be provided here.
+                  The corresponding association name from this models definition.
                 DESCRIPTION
               end
             end

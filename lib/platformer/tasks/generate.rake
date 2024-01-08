@@ -55,4 +55,11 @@ namespace :generate do
       Platformer::Generators::FromDatabase::Generate.new(schema, overwrite).generate
     end
   end
+
+  desc <<~DESC
+    Generate APIs using the grape json export from our old platform repo.
+  DESC
+  task :from_grape do
+    Platformer::Generators::FromGrape::Generate.new.generate
+  end
 end

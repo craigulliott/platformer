@@ -13,7 +13,7 @@ module Platformer
         @dsl_execution = dsl_execution
       end
 
-      warn "not tested"
+      # todo: not tested
       def resolve_arguments_for_block &block
         # only resolve the arguments which the block is trying to use
         desired_arg_names = block.parameters.map(&:last)
@@ -102,6 +102,9 @@ module Platformer
           when :service_definition_class
             final_base_args[:service_definition_class] = @child_class.service_definition_class
 
+          when :api_definition_class
+            final_base_args[:api_definition_class] = @child_class.api_definition_class
+
           when :subscription_definition_class
             final_base_args[:subscription_definition_class] = @child_class.subscription_definition_class
 
@@ -114,6 +117,11 @@ module Platformer
             # get the equivilent Presenter class (based on naming conventions)
             # will return nil if the desired Presenter class does not exist
             final_base_args[:presenter_class] = @child_class.presenter_class
+
+          when :serializer_class
+            # get the equivilent Serializer class (based on naming conventions)
+            # will return nil if the desired Serializer class does not exist
+            final_base_args[:serializer_class] = @child_class.serializer_class
 
           when :graphql_type_class
             # get the equivilent GraphQL Type class (based on naming conventions)

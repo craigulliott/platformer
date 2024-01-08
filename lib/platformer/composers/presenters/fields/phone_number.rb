@@ -17,18 +17,18 @@ module Platformer
             presenter_class.add_presenter dialing_code_method
             presenter_class.add_presenter phone_number_method
 
-            presenter_class.add_presenter "#{name_prepend}phone_number_formatted" do
-              dialing_code = model.send(dialing_code_method)
+            presenter_class.add_presenter "#{name_prepend}phone_number_formatted" do |model, presenter|
+              dialing_code = model.public_send(dialing_code_method)
               unless model.dialing_code.nil?
-                phone_number = model.send(phone_number_method)
+                phone_number = model.public_send(phone_number_method)
                 Phony.format "#{dialing_code}#{phone_number}", format: :national
               end
             end
 
-            presenter_class.add_presenter "#{name_prepend}phone_number_international_formatted" do
-              dialing_code = model.send(dialing_code_method)
+            presenter_class.add_presenter "#{name_prepend}phone_number_international_formatted" do |model, presenter|
+              dialing_code = model.public_send(dialing_code_method)
               unless model.dialing_code.nil?
-                phone_number = model.send(phone_number_method)
+                phone_number = model.public_send(phone_number_method)
                 Phony.format "#{dialing_code}#{phone_number}", format: :international
               end
             end

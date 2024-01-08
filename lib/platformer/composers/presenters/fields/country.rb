@@ -12,43 +12,43 @@ module Platformer
 
             presenter_class.add_presenter "#{name_prepend}country"
 
-            presenter_class.add_presenter "#{name_prepend}country_code" do
-              country_enum = model.send(column_name)
+            presenter_class.add_presenter "#{name_prepend}country_code" do |model, presenter|
+              country_enum = model.public_send(column_name)
               unless country_enum.nil?
                 Constants::ISO::Country.value_metadata(country_enum, :code)
               end
             end
 
-            presenter_class.add_presenter "#{name_prepend}country_alpha3_code" do
-              country_enum = model.send(column_name)
+            presenter_class.add_presenter "#{name_prepend}country_alpha3_code" do |model, presenter|
+              country_enum = model.public_send(column_name)
               unless country_enum.nil?
                 Constants::ISO::Country.value_metadata(country_enum, :alpha3_code)
               end
             end
 
-            presenter_class.add_presenter "#{name_prepend}country_name" do
-              country_enum = model.send(column_name)
+            presenter_class.add_presenter "#{name_prepend}country_name" do |model, presenter|
+              country_enum = model.public_send(column_name)
               unless country_enum.nil?
                 Constants::ISO::Country.value_metadata(country_enum, :name)
               end
             end
 
-            presenter_class.add_presenter "#{name_prepend}country_full_name" do
-              country_enum = model.send(column_name)
+            presenter_class.add_presenter "#{name_prepend}country_full_name" do |model, presenter|
+              country_enum = model.public_send(column_name)
               unless country_enum.nil?
                 Constants::ISO::Country.value_metadata(country_enum, :full_name)
               end
             end
 
-            presenter_class.add_presenter "#{name_prepend}country_subregion" do
-              country_enum = model.send(column_name)
+            presenter_class.add_presenter "#{name_prepend}country_subregion" do |model, presenter|
+              country_enum = model.public_send(column_name)
               unless country_enum.nil?
                 Constants::ISO::Country.value_metadata(country_enum, :subregion)
               end
             end
 
-            presenter_class.add_presenter "#{name_prepend}country_continent" do
-              country_enum = model.send(column_name)
+            presenter_class.add_presenter "#{name_prepend}country_continent" do |model, presenter|
+              country_enum = model.public_send(column_name)
               unless country_enum.nil?
                 Constants::ISO::Country.value_metadata(country_enum, :continent)
               end

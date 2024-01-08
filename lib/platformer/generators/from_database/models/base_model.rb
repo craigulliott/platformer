@@ -2,7 +2,6 @@ module Platformer
   module Generators
     module FromDatabase
       module Models
-        warn "not tested"
         class BaseModel < PlatformFile
           def initialize schema
             super :model, schema.name

@@ -4,6 +4,9 @@ module Presenters
     end
 
     def initialize model
+      unless model.class < ActiveRecord::Base
+        raise "model #{model} (#{model.class}) must extend from ActiveRecord::Base"
+      end
       @model = model
     end
 
@@ -17,9 +20,11 @@ module Presenters
 
       # if a block was not added, then assume the model
       # already has a method of the same name
-      block ||= -> { model.send(name) }
+      block ||= ->(model, presenter) { model.public_send(name) }
 
-      define_method name, &block
+      define_method name do
+        block.call model, self
+      end
     end
 
     def self.presenter_methods

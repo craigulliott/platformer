@@ -7,7 +7,6 @@ module Platformer
       klass.extend(ClassMethods)
     end
 
-    warn "not tested"
     module ClassMethods
       # returns either :production, :development or :test depending on the PLATFORMER_ENV setting
       def env

@@ -41,7 +41,7 @@ module Platformer
       @servers && @servers[server_type]&.values || []
     end
 
-    warn "not tested"
+    # todo: not tested
     def self.abbreviate_table_name table_name
       table_name.to_s.split("_").map { |v| v[0..2] }.join("_")
     end

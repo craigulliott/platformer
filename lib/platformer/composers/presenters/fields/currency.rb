@@ -12,22 +12,22 @@ module Platformer
 
             presenter_class.add_presenter "#{name_prepend}currency"
 
-            presenter_class.add_presenter "#{name_prepend}currency_name" do
-              currency = model.send(column_name)
+            presenter_class.add_presenter "#{name_prepend}currency_name" do |model, presenter|
+              currency = model.public_send(column_name)
               unless currency.nil?
                 Constants::ISO::Currency.value_metadata(currency, :name)
               end
             end
 
-            presenter_class.add_presenter "#{name_prepend}currency_code" do
-              currency = model.send(column_name)
+            presenter_class.add_presenter "#{name_prepend}currency_code" do |model, presenter|
+              currency = model.public_send(column_name)
               unless currency.nil?
                 Constants::ISO::Currency.value_metadata(currency, :code)
               end
             end
 
-            presenter_class.add_presenter "#{name_prepend}currency_symbol" do
-              currency = model.send(column_name)
+            presenter_class.add_presenter "#{name_prepend}currency_symbol" do |model, presenter|
+              currency = model.public_send(column_name)
               unless currency.nil?
                 Constants::ISO::Currency.value_metadata(currency, :symbol)
               end

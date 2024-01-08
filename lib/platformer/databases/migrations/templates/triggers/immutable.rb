@@ -4,7 +4,7 @@ module Platformer
       module Templates
         module Triggers
           class Immutable < DynamicMigrations::Postgres::Generator::TriggerTemplateBase
-            warn "not tested"
+            # todo: not tested
             def fragment_arguments
               column_names = trigger.parameters
               {

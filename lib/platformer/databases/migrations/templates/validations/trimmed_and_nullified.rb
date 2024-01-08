@@ -8,7 +8,7 @@ module Platformer
               This validation asserts that the trim_and_nullify coercion has been applied to this field.
             DESCRIPTION
 
-            warn "not tested"
+            # todo: not tested
             def fragment_arguments
               assert_column_count! 1
 

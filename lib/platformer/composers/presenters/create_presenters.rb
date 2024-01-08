@@ -16,7 +16,10 @@ module Platformer
           DESCRIPTION
 
           presenter_definition_class_name = "Presenters::#{model_definition_class.name.gsub(/Model\z/, "")}"
-          ClassMap.create_class presenter_definition_class_name, ::Presenters::Base
+          presenter_class = ClassMap.create_class presenter_definition_class_name, ::Presenters::Base
+
+          # all presenters expose at least the objects ID
+          presenter_class.add_presenter :id
         end
       end
     end

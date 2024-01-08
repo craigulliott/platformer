@@ -1,7 +1,7 @@
 module Platformer
   module DSLReaders
     module Models
-      warn "not tested"
+      # todo: not tested
       class Field < DSLCompose::Reader::ExecutionReader
         class ColumnNameError < StandardError
         end

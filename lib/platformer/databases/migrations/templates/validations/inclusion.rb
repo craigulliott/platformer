@@ -28,7 +28,7 @@ module Platformer
               \z # end of string
             /x
 
-            warn "not tested"
+            # todo: not tested
             def fragment_arguments
               assert_column_count! 1
 

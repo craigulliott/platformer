@@ -40,7 +40,7 @@ module Platformer
               end
             end
 
-            warn "not tested"
+            # todo: not tested
             DSLCompose::SharedConfiguration.add :database_default do
               add_unique_method :database_default do
                 description <<~DESCRIPTION

@@ -1,7 +1,7 @@
 module Platformer
   module Utilities
     module WordWrap
-      warn "not tested"
+      # todo: not tested
       # splitting the string into words and then adding them one by
       # one to the result string, adding line breaks when the length
       # exceeds a certain limit

@@ -5,7 +5,7 @@ module Platformer
     module Presenters
       module Associations
         class HasMany < Parsers::Models
-          warn "not tested"
+          # todo: not tested
           for_dsl :has_many do |model:, module_name:, name:, presenter_class:|
             association_name = name
             # note, this does not return presenter classes, because we need to be able to

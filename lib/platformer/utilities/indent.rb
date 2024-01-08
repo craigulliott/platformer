@@ -1,7 +1,7 @@
 module Platformer
   module Utilities
     module Indent
-      warn "not tested"
+      # todo: not tested
 
       def indent multi_line_string, levels: 1
         spaces = "  " * levels

@@ -1,6 +1,6 @@
 module Platformer
   module DSLReaders
-    warn "not tested"
+    # todo: not tested
     class Model
       class BaseClassCanNotBeNilError < StandardError
       end
@@ -32,6 +32,16 @@ module Platformer
 
       def description
         last_execution_of_description&.arguments&.description
+      end
+
+      def association_class! association_name
+        execution = DSLCompose::Reader.new(@base_class, :belongs_to).executions.find { |a| association_name == a.arguments.name } ||
+          DSLCompose::Reader.new(@base_class, :has_one).executions.find { |a| association_name == a.arguments.name } ||
+          DSLCompose::Reader.new(@base_class, :has_many).executions.find { |a| association_name == a.arguments.name }
+        if execution.nil?
+          raise "association #{association_name} not found"
+        end
+        execution.arguments.model.to_class
       end
 
       private

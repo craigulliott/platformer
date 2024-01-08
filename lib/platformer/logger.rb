@@ -1,5 +1,5 @@
 module Platformer
-  warn "not tested"
+  # todo: not tested
   module Logger
     def self.included(klass)
       klass.extend(ClassMethods)

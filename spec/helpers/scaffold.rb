@@ -34,7 +34,7 @@ module Helpers
     #     ]
     #   end
     #
-    #   # you can also use the methods `callback_for`, `job_for`, `mutation_for`, `policy_for` and `service_for`
+    #   # you can also use the methods `api_for`, `callback_for`, `job_for`, `mutation_for`, `policy_for` and `service_for`
     # end
 
     def create_class fully_qualified_class_name, base_class = nil, &block
@@ -62,6 +62,7 @@ module Helpers
         destroy_graphql_type_class name
         destroy_graphql_mutation_classes name
         destroy_presenter_class name
+        destroy_serializer_class name
       end
       class_spec_helper.remove_all_dynamically_created_classes
       @to_destroy = []
@@ -124,6 +125,14 @@ module Helpers
       end
     end
 
+    # check for, and destroy the Serializer class
+    def destroy_serializer_class name
+      serializer_class_name = "Serializers::#{name}"
+      if Object.const_defined? serializer_class_name
+        class_spec_helper.destroy_class serializer_class_name.constantize
+      end
+    end
+
     def remember_class_name_to_destroy_later name
       @to_destroy ||= []
       @to_destroy << name
@@ -131,6 +140,14 @@ module Helpers
 
     def rerun_composers
       DSLCompose::Parser.rerun_all
+    end
+
+    # DSL for creating an API definition
+    def api_for name, base_class = nil, &block
+      remember_class_name_to_destroy_later name
+
+      base_class ||= base_class_or_schema_base_class name, "API"
+      class_spec_helper.create_class "#{name}API", base_class, &block
     end
 
     # DSL for creating a Callback definition

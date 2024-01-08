@@ -2,7 +2,7 @@ module Platformer
   module Services
     module GraphQL
       class EnumCreator
-        warn "not tested"
+        # todo: not tested
         class EnumAlreadyExistsError < StandardError
         end
 

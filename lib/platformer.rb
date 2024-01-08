@@ -74,12 +74,8 @@ require "globalid"
 # graphql
 require "graphql"
 
-# sinatra is a thin webserver built on top of rack
-require "sinatra/base"
-require "sinatra/json"
-
-# required for parsing json request bodies
-require "rack/contrib"
+# grape is a thin api server built on top of rack
+require_relative "grape/all"
 
 # the base class which all active record models extend from
 # and any active record exensions / plugins
@@ -93,9 +89,15 @@ require_relative "schema/all"
 # the base Presenter which all other presenters extend from
 require_relative "presenters/base"
 
+# JSON API
+require "jsonapi-serializers"
+# the base Serializer which all other serializers extend from
+require_relative "serializers/base"
+
 module Platformer
   include Logger
   include Environment
+  include DomainName
   include Root
   include LoadTasks
 
@@ -108,6 +110,7 @@ module Platformer
     :policy,
     :callback,
     :job,
+    :api,
     :service
   ]
 

@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 ENV["PLATFORMER_ENV"] = "test"
+ENV["DOMAIN_NAME"] = "platformer.local"
 
 require_relative "../config/application"
 
 require "byebug"
 require "timecop"
+require "rack/test"
 
 require "helpers/postgres"
 require_relative "helpers/scaffold"

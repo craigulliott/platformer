@@ -1,8 +1,10 @@
 module Platformer
-  class Server < Sinatra::Base
-    module Explorer
-      def self.included klass
-        klass.get "/explore" do
+  module Server
+    module Routes
+      class Explorer < Grape::API
+        content_type :html, "text/html; charset=utf-8"
+
+        get :explore do
           <<~HTML
             <html>
               <head>

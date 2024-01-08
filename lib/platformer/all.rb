@@ -4,8 +4,11 @@ require_relative "version"
 
 require_relative "environment"
 require_relative "root"
+require_relative "domain_name"
 require_relative "logger"
 require_relative "load_tasks"
+
+Platformer.recursive_require_relative "config", __dir__
 
 require_relative "server/all"
 

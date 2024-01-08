@@ -4,7 +4,7 @@ module Platformer
   module Composers
     module Migrations
       class CoreTimestamps < Parsers::Models
-        warn "not tested"
+        # todo: not tested
         for_dsl :core_timestamps, first_use_only: true do |created_at:, updated_at:, database:, table:|
           #
           # the created_at timestamp

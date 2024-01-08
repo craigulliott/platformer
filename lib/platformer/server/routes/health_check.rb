@@ -1,10 +1,14 @@
 module Platformer
-  class Server < Sinatra::Base
-    module HealthCheck
-      def self.included klass
-        klass.get "/health_check" do
-          message = {success: true, message: "OK"}
-          json message
+  module Server
+    module Routes
+      class HealthCheck < Grape::API
+        format :json
+
+        get :health_check do
+          {
+            success: true,
+            message: "OK"
+          }
         end
       end
     end

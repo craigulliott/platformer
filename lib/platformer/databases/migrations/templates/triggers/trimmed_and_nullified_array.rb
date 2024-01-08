@@ -4,7 +4,7 @@ module Platformer
       module Templates
         module Triggers
           class TrimmedAndNullifiedArray < DynamicMigrations::Postgres::Generator::TriggerTemplateBase
-            warn "not tested"
+            # todo: not tested
             def fragment_arguments
               # this trigger will be called before `insert` and `update`, but is only created once
               # here because the convenience method `trimmed_and_nullified_array` will set up both

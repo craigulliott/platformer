@@ -1,6 +1,5 @@
 module Platformer
   module ActiveRecord
-    warn "not tested"
     module InstallMethod
       extend ActiveSupport::Concern
 

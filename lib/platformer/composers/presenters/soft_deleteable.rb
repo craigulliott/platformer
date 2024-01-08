@@ -4,11 +4,11 @@ module Platformer
   module Composers
     module Presenters
       class SoftDeletable < Parsers::Models
-        warn "not tested"
+        # todo: not tested
 
         for_dsl :soft_deletable do |presenter_class:|
           # deleted
-          presenter_class.add_presenter :deleted do
+          presenter_class.add_presenter :deleted do |model|
             model.deleted?
           end
 

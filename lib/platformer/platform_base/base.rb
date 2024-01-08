@@ -37,7 +37,7 @@ module Platformer
     def self.validate_naming_and_hierachy_conventions subclass, type
       # assert the subclass name ends with the expected type ('Model', 'Policy', 'Callback' etc.)
       unless subclass.name.end_with? type
-        raise InvalidModelClassNameError, "#{type} class names must end with '#{type}'"
+        raise InvalidModelClassNameError, "#{type} class names must end with '#{type}' (#{subclass.name} does not end with #{type})"
       end
 
       # assert the subclass name for STI models is not greater than 63 characters
@@ -114,7 +114,7 @@ module Platformer
     # for swapping between classes, such as finding the Model class from it's
     # corresponding Schema class. If the corresponding model does not exist
     # then nil will be returned.
-    warn "not tested"
+    # todo: not tested
     def self.get_equivilent_class target_base_class
       if target_base_class < self
         raise UnexpectedBaseError, "Refusing to to return the `#{target_base_class}` equivilent of this #{self}"
@@ -124,6 +124,10 @@ module Platformer
       # unfortunately, we can not use a case statement to compare classes
       if target_base_class == ApplicationRecord
         target_append = ""
+        namespace = ""
+
+      elsif target_base_class == BaseAPI
+        target_append = "API"
         namespace = ""
 
       elsif target_base_class == BaseCallback
@@ -170,6 +174,10 @@ module Platformer
         target_append = ""
         namespace = "Presenters::"
 
+      elsif target_base_class == Serializers::Base
+        target_append = ""
+        namespace = "Serializers::"
+
       else
         raise UnexpectedBaseError, "Unexpected base class `#{target_base_class}`"
       end
@@ -194,7 +202,10 @@ module Platformer
     # returns the type of this class, such as 'Model', 'Policy', 'Callback' etc.
     # for example, `Users::UserModel` would return `Model`
     def self.base_type
-      if self < BaseCallback
+      if self < BaseAPI
+        "API"
+
+      elsif self < BaseCallback
         "Callback"
 
       elsif self < BaseJob
@@ -242,6 +253,11 @@ module Platformer
       end
       # return the expected constant
       "#{namespace_parts[0]}::#{namespace_parts[1].singularize}#{base_type}".constantize
+    end
+
+    # api_definition_classes
+    def self.api_definition_class
+      get_equivilent_class BaseAPI
     end
 
     # callback_definition_classes
@@ -302,6 +318,11 @@ module Platformer
     # presenter_classes
     def self.presenter_class
       get_equivilent_class Presenters::Base
+    end
+
+    # serializer_classes
+    def self.serializer_class
+      get_equivilent_class Serializers::Base
     end
   end
 end

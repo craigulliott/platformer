@@ -3,7 +3,8 @@
 module Platformer
   module Composers
     module ActiveRecord
-      # install all the validations specifically designed for boolean fields
+      # raises an error if any of the columns we are creating already
+      # exist as instance methods on the active record class
       class FieldNameAssertation < Parsers::Models::ForFields
         class ReservedAttributeNameError < StandardError
         end

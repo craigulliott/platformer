@@ -55,12 +55,13 @@ Gem::Specification.new do |spec|
   # logging
   spec.add_dependency "logging", "~> 2.3"
 
-  # sinatra is a thin webserver built on top of rack
-  spec.add_dependency "sinatra", "~> 3.1"
-  # common extensions for sinatra
-  spec.add_dependency "sinatra-contrib", "~> 3.1"
-  # required for parsing json request bodies
-  spec.add_dependency "rack-contrib", "~> 2.3"
+  # grape is an opinionated framework for creating REST-like APIs in Ruby
+  spec.add_dependency "grape", "~> 2.0"
+  # we run grape on rack
+  spec.add_dependency "rack", "~> 3.0"
+
+  # We use the JSONAPI standard for rest APIs
+  spec.add_dependency "jsonapi-serializers", "~> 1.0.1"
 
   # state machines
   spec.add_dependency "aasm", "~> 5.5"
@@ -76,6 +77,11 @@ Gem::Specification.new do |spec|
   spec.add_dependency "activesupport", "~> 7.0"
   spec.add_dependency "activemodel", "~> 7.0"
   spec.add_dependency "activerecord", "~> 7.0"
+
+  # "off the rails" tool for managing the database connection pool
+  # todo - determine if we really need this
+  # spec.add_dependency "otr-activerecord", "~> 2.2"
+
   # rails GlobalID provides a unique ID for every object, and ability to easily load
   # objects based on these IDs. We use it in conjunction with GraphQL to make our server
   # relay compatible

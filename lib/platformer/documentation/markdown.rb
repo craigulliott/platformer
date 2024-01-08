@@ -10,7 +10,7 @@ module Platformer
         @file_path = @base_path + "/#{filename}"
       end
 
-      warn "not tested"
+      # todo: not tested
       def jekyll_header title, parent: nil, grand_parent: nil, has_children: false, nav_order: nil, has_toc: false
         lines = []
         lines << "---"
@@ -162,7 +162,7 @@ module Platformer
         markdown
       end
 
-      warn "not tested"
+      # todo: not tested
       def table header, rows
         lines = []
         lines << "| #{header.join(" | ")} |"

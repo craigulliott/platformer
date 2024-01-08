@@ -1,6 +1,6 @@
 module Platformer
   module DSLReaders
-    warn "not tested"
+    # todo: not tested
     class Schema
       class BaseClassCanNotBeNilError < StandardError
       end
